@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>AHPUT高校论坛后台首页</title>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+    <link type="text/css" rel="stylesheet" th:href="@{/css/base.css}"/>
+    <link type="text/css" rel="stylesheet" th:href="@{/css/posts.css}"/>
+    <link type="text/css" rel="stylesheet" th:href="@{/css/paging.css}"/>
+    <link type="text/css" rel="stylesheet" th:href="@{/css/topic.css}"/>
+    <link type="text/css" rel="stylesheet" th:href="@{/js/weditor/css/wangEditor.min.css}"/>
+    <style>
+	    body {
+			padding: 0px;
+			margin: 0px;
+			background: #F0F0F0;
+			font-family: "微软雅黑";
+			font-size: 12px;
+		}
+		a.delete{
+			color:#264385;
+			size:14px;
+		}
+		a.delete:hover{
+			color:#f00;
+		}
+    </style>
+  </head>
+  <body>
+  	<div id="all">
+	 	<!-- header部分开始 -->
+		<div id="header">
+			<div id="logo">
+				<a th:href="${#mvc.url('BC#adminPosts').build()}"><img th:src="@{/images/logo.png}"/></a>
+			</div>
+			<div id="navigation">
+				<ul>
+					<li id="user">
+						<input id="user_id" type="hidden" th:attr="data-id = ${session.loginAdmin.id}"/>
+						<a class="nickname" th:text="${session.loginAdmin.nickname}"></a>
+						<ul id="user_list">
+							<li>
+								<a th:href="${#mvc.url('UC#show').arg(0, session.loginAdmin.id).build()}" target="_blank">个人中心</a></li>
+							<li>
+								<a th:href="${#mvc.url('UC#logout').arg(0, session.loginAdmin.id).build()}">退出</a></li>
+						</ul>
+					</li>
+					<li><a class="table" th:href="${#mvc.url('NC#notices').arg(3, session.loginAdmin.id).build()}">公告</a></li>
+					<li><a class="table" th:href="${#mvc.url('UC#adminUsers').build()}">用户</a></li>
+					<li><a class="table" th:href="${#mvc.url('BC#adminPosts').build()}">帖子</a></li>
+				</ul>
+			</div>
+		</div>
+		<!-- header部分结束 -->
+		
+		<form id="search" th:action="@{/admins/search}" method="get">
+			<input type="text" id="search_input" name="title" placeholder="请输入搜索内容"/>
+			<input type="submit" id="search_icon" th:attr="style='background:url('+@{/images/search.png}+') no-repeat'" value=""/>
+		</form>
+		
+		<!-- body部分开始 -->
+		<div id="body">
+			<div id="content_wrap">
+				<div id="post_container">
+					<ul id="posts">
+						<li class="post" th:each="post : ${postPage.content}">
+							<div class="post_header">
+								<a th:href="${#mvc.url('BC#show').arg(0, post.id).build()}" style='color:#F2934A'>
+									【<span class="post_topic" th:text="${post.getTopicTypeByKey()}">话题</span>】
+									<span class="post_title" style="color:#222" th:utext="${post.title.length() > 35 ? post.title.substring(0, 35) : post.title}">标题</span></a>&nbsp;
+								<!-- 删除 -->
+								<span class="delete" th:attr="data-id = ${post.id}" onclick="deletePost(this)" th:text="删除帖子">删除</span>
+								
+							</div>
+							<div class="post_body" th:utext="${post.content}">内容</div>
+							<div class="post_footer">
+								<!-- 作者 -->
+								<i th:attr="style='background:url('+@{/images/post_author.png}+') no-repeat'"></i>
+								<a class="post_author" target="_blank" th:href="${#mvc.url('UC#show').arg(3, post.user.id).build()}" th:utext="${post.user.nickname}">作者</a>&nbsp;&nbsp;
+								<!-- 时间 -->
+								<i th:attr="style='background:url('+@{/images/post_time.png}+') no-repeat'"></i>
+								<span class="post_time" th:text="${#dates.format(post.createTime,'yyyy-MM-dd HH:mm')}">发表时间</span>&nbsp;&nbsp;
+								<!-- 浏览次数 -->
+								<i th:attr="style='background:url('+@{/images/post_view_times.png}+') no-repeat'"></i>
+								<span th:text="${post.viewedTimes}">浏览次数</span>&nbsp;&nbsp;
+							</div>
+						</li>
+					</ul>
+				</div>
+					
+				<!-- 分页 -->
+				<div id="paging" th:if="${totalPages >= 2}">
+					<a th:href="${#mvc.url('BC#adminPosts').arg(0, 0).arg(2, 0).build()}">首页</a>
+					<a th:if="${curPage - 1 >= 0}" th:href="${#mvc.url('BC#adminPosts').arg(0, firstPage).arg(1, curPage).arg(2, curPage - 1).build()}">上一页</a>
+					<a class="no_hover" th:if="${curPage - 1 lt 0}">上一页</a>
+					<a th:if="${firstPage le totalPages - 1}" th:attr="class = ${curPage == firstPage ? 'clicked' : ''}"
+						th:href="${#mvc.url('BC#adminPosts').arg(0, firstPage).arg(1, curPage).arg(2, firstPage).build()}" th:text="${firstPage + 1}">1</a>
+					<a th:if="${firstPage + 1 le totalPages - 1}" th:attr="class = ${curPage == firstPage + 1 ? 'clicked' : ''}"
+						th:href="${#mvc.url('BC#adminPosts').arg(0, firstPage).arg(1, curPage).arg(2, firstPage + 1).build()}" th:text="${firstPage + 2}">2</a>
+					<a th:if="${firstPage + 2 le totalPages - 1}" th:attr="class = ${curPage == firstPage + 2 ? 'clicked' : ''}"
+						th:href="${#mvc.url('BC#adminPosts').arg(0, firstPage).arg(1, curPage).arg(2, firstPage + 2).build()}" th:text="${firstPage + 3}">3</a>
+					<a th:if="${firstPage + 3 le totalPages - 1}" th:attr="class = ${curPage == firstPage + 3  ? 'clicked' : ''}"
+						th:href="${#mvc.url('BC#adminPosts').arg(0, firstPage).arg(1, curPage).arg(2, firstPage + 3).build()}" th:text="${firstPage + 4}">4</a>
+					<a th:if="${firstPage + 4 le totalPages - 1}" th:attr="class = ${curPage == firstPage + 4  ? 'clicked' : ''}"
+						th:href="${#mvc.url('BC#adminPosts').arg(0, firstPage).arg(1, curPage).arg(2, firstPage + 4).build()}" th:text="${firstPage + 5}">5</a>
+					<a th:if="${curPage + 2 le totalPages}" th:href="${#mvc.url('BC#adminPosts').arg(0, firstPage).arg(1, curPage).arg(2, curPage + 1).build()}">下一页</a>
+					<a class="no_hover" th:if="${curPage + 2 > totalPages}">下一页</a>
+					<a th:href="${#mvc.url('BC#adminPosts').arg(0, totalPages - 6).arg(2, totalPages - 1).build()}">尾页</a>
+					<a class="no_hover">共<span th:text="${totalPages}"></span>页</a>
+				</div>
+			</div>
+			
+			<!-- sidebar部分开始 -->
+			<div id="sidebar">
+				<!-- 话题分类部分开始 -->
+				<div id="topics_container" class="sidebar_module">
+					<h2 class="sidebar_module_theme">话题分类 </h2>
+					<ul id="topics">
+						<li th:each="topicType : ${topicTypes}" th:if="${topicType != null}">
+							<a class="topic" th:href="${#mvc.url('BC#adminTopic').arg(3, topicType.key).build()}" th:text="${topicType.value}"></a></li>
+					</ul>
+				</div>
+			</div><div style="clear:both;"></div>
+		</div>
+		<!-- body部分结束-->
+		
+		<!-- footer部分开始 -->
+		<div id="footer">
+			<p>Copyright &copy; 2016 by wuchao</p>
+		</div>
+		<!-- footer部分结束 -->
+  	</div>
+	
+		
+	<script type="text/javascript" th:src="@{/js/jquery-1.11.1.min.js}"></script>
+	<script type="text/javascript" th:src="@{/js/post.js}"></script>
+	<script type="text/javascript" th:src="@{/js/weditor/js/wangEditor.min.js}"></script>
+ 	<script type="text/javascript">
+	/*<![CDATA[*/
+		$("#user").mouseover(function(){
+			$("#user_list").show();
+		}).mouseleave(function(){
+			$("#user_list").hide();
+		});
+		
+   		//与首页中的不一样，所以重写了
+   		/*初始化内容格式*/
+		$("#posts").find(".post").each(function(){
+			var $post = $(this).find(".post_body");
+			var postText = $post.text();
+			var postText_trim = postText.length > 100 ? postText.substr(0, 100)+"..." : postText;
+			$post.text(postText_trim);
+		});
+		   		
+
+		//判断字符串是否为空
+	 	function isEmpty(str){
+			if (str == '' || str == null || str == undefined) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+		
+		function getLocalTime(time) {     
+			var date = new Date(time);
+			Y = date.getFullYear() + '-';
+			M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
+			D = date.getDate() < 10 ? '0'+date.getDate()+' ' : date.getDate() + ' ';
+			h = date.getHours() < 10 ? '0'+date.getHours()+':' : date.getHours() + ':';
+			m = date.getMinutes() < 10 ? '0'+date.getMinutes()+':' : date.getMinutes() + ':';
+			s = date.getSeconds() < 10 ? '0'+date.getSeconds() : date.getSeconds(); 
+			return(Y+M+D+h+m+s); 
+  		}
+		
+	/*]]>*/
+ 	</script>
+  </body>
+</html>

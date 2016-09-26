@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+	<title>AHPUT高校论坛首页</title>
+	<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+	<link type="text/css" rel="stylesheet" th:href="@{/resources/js/swfupload/swfupload.css}"/>
+	<link type="text/css" rel="stylesheet" th:href="@{/resources/css/base.css}"/>
+	<link type="text/css" rel="stylesheet" th:href="@{/resources/css/blogs.css}"/>
+    <link type="text/css" rel="stylesheet" th:href="@{/resources/css/paging.css}"/>
+	<link type="text/css" rel="stylesheet" th:href="@{/resources/css/user.css}"/>
+	<style>
+		body {
+			padding: 0px;
+			margin: 0px;
+			background: #F0F0F0;
+			font-family: "微软雅黑";
+			font-size: 12px;
+			position:relative;
+		}
+		
+		a.user_care {
+			display:inline-block;
+			width:80px;
+			height:24px;
+			padding:0px 8px;
+			margin-right:8px;
+			border:1px solid #92B7E9;
+			border-radius:2px;
+			background:#F0F0F1;
+			color: #AAAEBE;
+			line-height:24px;
+			text-align:center;
+		}
+		a.user_care:hover {
+			background:#DCDCDE;
+		}
+		.visited{
+			color:#fff;
+			background:#0081A1;
+		}
+		.no_hover:hover {
+			background:#0081A1;
+		}
+	</style>
+</head>
+
+<body>
+	<div id="all">
+		<!-- header部分开始 -->
+		<div id="header">
+			<div id="logo">
+				<a th:href="@{/posts/index}"><img th:src="@{/resources/images/logo.png}" /></a>
+			</div>
+			<div id="navigation">
+				<ul>
+					<li id="user" th:if="${session.loginUser != null}">
+						<input id="login_user_id" type="hidden" th:attr="data-id = ${session.loginUser.id}"/>
+						<a class="nickname" id="user_name" th:text="${session.loginUser.nickname}"></a>
+						<ul id="user_list">
+							<li>
+								<a th:href="${#mvc.url('UC#logout').arg(0, session.loginUser.id).build()}">退出</a></li>
+						</ul>
+					</li>
+					<li th:if="${session.loginUser == null}">
+						<a class="table" th:href="@{/users/login}">登录</a>
+					</li>
+					<li th:if="${session.loginUser != null}"><a class="table" th:href="${#mvc.url('UC#careUsers').arg(3, session.loginUser.id).build()}">关注的人</a></li>
+					<li th:if="${session.loginUser != null}"><a class="table" th:href="${#mvc.url('UC#collects').arg(3, session.loginUser.id).build()}">我的收藏</a></li>
+					<li th:if="${session.loginUser != null}"><a class="table" th:href="${#mvc.url('UC#blogs').arg(3, session.loginUser.id).build()}">我的发帖</a></li>
+					<li><a class="table" th:href="@{/posts/index}">首页</a></li>
+				</ul>
+			</div>
+		</div>
+		<!-- header结束 -->
+
+		<!-- body部分开始 -->
+		<div id="body" th:if="${isSelf}" style="background:#fff;">
+			<form th:action="${#mvc.url('UC#update').arg(0,session.loginUser.id).build()}" method="post" id="user_info">
+				<input type="hidden" id="user_id" th:attr="data-id = ${session.loginUser.id}"/>
+				<p>昵称：<input type="text" name="nickname" id="nickname" th:value="${user.nickname}"/></p>
+				<p>邮箱：<input type="text" name="email" th:value="${user.email}"/></p>
+				<p>号码：<input type="text" name="phone" th:value="${user.phone}"/></p>
+				<div id="description_container">
+					介绍自己：<textarea name="description" id="description" th:text="${user.description}"></textarea>
+				</div>
+				<input type="submit" id="user_info_btn" value="保存修改" />
+			</form>
+			
+			<div id="password_container">
+				<table>
+					<tr>
+						<td>原密码：</td>
+						<td><input type="password" id="old_password" class="password_text" maxlength="16"/></td>
+					</tr>
+					<tr>
+						<td>新密码：</td>
+						<td><input type="password" id="new_password" class="password_text" maxlength="16"/></td>
+					</tr>
+					<tr>
+						<td>确认密码：</td>
+						<td><input type="password" id="re_new_password" class="password_text" maxlength="16"/></td>
+					</tr>
+				</table>
+				<input type="button" id="password_btn" onclick="updatePassword(this)" value="修改密码"/>
+			</div>
+	
+			<!-- 头像上传 -->
+			<div id="avatar_container">
+				<img id="avatar" th:src="'/blog/resources/images/avatars/'+${user.avatar}"/>
+				<div class="upload_list" id="fsUploadProgress">
+					<!-- <span class="legend">更换头像</span> -->
+			 	</div>
+			 	<div>
+					<span id="spanButtonPlaceHolder"></span>
+					<input id="btnCancel" type="button" value="取消上传" onclick="swfu.cancelQueue()" disabled="disabled" style="margin-left:2px;font-size:8pt;height:29px;"/>
+				</div>
+			</div>
+		</div>
+		
+		<div id="body" th:if="${!isSelf}" style="background:#fff;">
+			<div id="user_info2">
+				<input type="hidden" id="user_id" th:attr="data-id = ${userId}"/>
+				<span id="user_care_container" th:if="${session.loginUser == null or (session.loginUser != null and session.loginUser.isAdmin != 1)}">
+					<a th:if="${!isCare}" class="user_care" id="user_care" onclick="careUser(this)">加关注</a>
+					<a th:if="${isCare}" class="user_care visited no_hover" id="user_cared" onclick="cancelCareUser(this)">已关注</a>
+				</span>
+				<span id="user_care_container" th:if="${session.loginUser != null and session.loginUser.isAdmin == 1}">
+					<a class="delete" th:attr="data-id = ${userId}" onclick="deleteUser_show(this)">删除用户</a>
+				</span>
+				<img id="avatar2" th:src="'/blog/resources/images/avatars/'+${user.avatar}"/>
+				<p id="nickname2" th:text="${user.nickname}"></p>
+				<div id="description2" th:text="${user.description}"></div>
+			</div>
+			<p id="blogs_before">TA的帖子</p>
+			<!-- <div id="blog_container">
+				<ul id="posts">
+					<li class="post" th:each="post : ${blogPage.content}">
+						<div class="post_header">
+							<a th:href="${#mvc.url('BC#show').arg(0, post.id).build()}" style='color:#F2934A'>
+								【<span class="post_topic" th:text="${post.getTopicTypeByKey()}">话题</span>】
+								<span class="post_title" style="color:#222" th:utext="${post.title.length() > 35 ? post.title.substring(0, 35) : post.title}">标题</span></a>&nbsp;
+						</div>
+						<div class="post_body" th:utext="${post.content}">内容</div>
+						<div class="post_footer">
+							<i th:attr="style='background:url('+@{/images/post_time.png}+') no-repeat'"></i>
+							<span class="post_time" th:text="${#dates.format(post.createTime,'yyyy-MM-dd HH:mm')}">发表时间</span>&nbsp;&nbsp;
+							<i th:attr="style='background:url('+@{/images/post_view_times.png}+') no-repeat'"></i>
+							<span th:text="${post.viewedTimes}">浏览次数</span>&nbsp;&nbsp;
+						</div>
+					</li>
+				</ul>
+			</div>
+			
+			<div id="paging" th:if="${totalPages >= 2}">
+				<a th:href="${#mvc.url('UC#show').arg(0, 0).arg(2, 0).arg(3, userId).build()}">首页</a>
+				<a th:if="${prePage - 1 >= 0}" th:href="${#mvc.url('UC#show').arg(0, firstResult).arg(1, prePage).arg(2, prePage - 1).arg(3, userId).build()}">上一页</a>
+				<a class="no_hover" th:if="${prePage - 1 lt 0}">上一页</a>
+				<a th:if="${firstResult le totalPages - 1}" th:attr="class = ${prePage == firstResult ? 'clicked' : ''}"
+					th:href="${#mvc.url('UC#show').arg(0, firstResult).arg(1, prePage).arg(2, firstResult).arg(3, userId).build()}" th:text="${firstResult + 1}">1</a>
+				<a th:if="${firstResult + 1 le totalPages - 1}" th:attr="class = ${prePage == firstResult + 1 ? 'clicked' : ''}"
+					th:href="${#mvc.url('UC#show').arg(0, firstResult).arg(1, prePage).arg(2, firstResult + 1).arg(3, userId).build()}" th:text="${firstResult + 2}">2</a>
+				<a th:if="${firstResult + 2 le totalPages - 1}" th:attr="class = ${prePage == firstResult + 2 ? 'clicked' : ''}"
+					th:href="${#mvc.url('UC#show').arg(0, firstResult).arg(1, prePage).arg(2, firstResult + 2).arg(3, userId).build()}" th:text="${firstResult + 3}">3</a>
+				<a th:if="${firstResult + 3 le totalPages - 1}" th:attr="class = ${prePage == firstResult + 3  ? 'clicked' : ''}"
+					th:href="${#mvc.url('UC#show').arg(0, firstResult).arg(1, prePage).arg(2, firstResult + 3).arg(3, userId).build()}" th:text="${firstResult + 4}">4</a>
+				<a th:if="${firstResult + 4 le totalPages - 1}" th:attr="class = ${prePage == firstResult + 4  ? 'clicked' : ''}"
+					th:href="${#mvc.url('UC#show').arg(0, firstResult).arg(1, prePage).arg(2, firstResult + 4).arg(3, userId).build()}" th:text="${firstResult + 5}">5</a>
+				<a th:if="${prePage + 2 le totalPages}" th:href="${#mvc.url('UC#show').arg(0, firstResult).arg(1, prePage).arg(2, prePage + 1).arg(3, userId).build()}">下一页</a>
+				<a class="no_hover" th:if="${prePage + 2 > totalPages}">下一页</a>
+				<a th:href="${#mvc.url('UC#show').arg(0, totalPages - 6).arg(2, totalPages - 1).arg(3, userId).build()}">尾页</a>
+				<a class="no_hover">共<span th:text="${totalPages}"></span>页</a>
+			</div> -->
+		</div>
+		<!-- body部分结束 -->
+
+		<!-- footer部分开始 -->
+		<div id="footer">
+			<p>Copyright &copy; 2016 by wuchao</p>
+		</div>
+		<!-- footer部分结束 -->
+	</div>
+
+	<script type="text/javascript" th:src="@{/resources/js/swfupload/swfupload.js}"></script>
+	<script type="text/javascript" th:src="@{/resources/js/swfupload/swfupload.queue.js}"></script>
+	<script type="text/javascript" th:src="@{/resources/js/swfupload/fileprogress.js}"></script>
+	<script type="text/javascript" th:src="@{/resources/js/swfupload/handlers.js}"></script>
+	<script type="text/javascript" th:src="@{/resources/js/jquery-1.11.1.min.js}"></script>
+	<script type="text/javascript" th:src="@{/resources/js/user.js}"></script>
+	<script type="text/javascript">
+	/*<![CDATA[*/
+	$("#user").mouseover(function(){
+		$("#user_list").show();
+	}).mouseleave(function(){
+		$("#user_list").hide();
+	});	
+	
+	$("#spanButtonPlaceHolder").click(function(){
+		$("#fsUploadProgress").addClass("upload_list_show");
+	});
+	
+	var login_user_id = $("#login_user_id").data("id");
+	var user_id = $("#user_id").data("id");//使用/*[[]]*/加载不了？？？？？？？？？？？？？？？？？？？？？？？？？？？？
+	var swfu;
+	window.onload = function() {
+		var settings = {
+			flash_url : "/blog/resources/js/swfupload/swfupload.swf",
+			upload_url: "/blog/users/"+user_id+"/uploadAvatar",	//上传的服务器的地址
+			file_size_limit : "10 MB",//上传上传的过来
+			//file_types : "*.*",
+			file_types : "*.jpg;*.png;*.gif;*jpeng",//格式过滤
+			file_types_description : "请选择图片文件",
+			file_upload_limit : 20,  //配置上传个数
+			file_queue_limit : 0,
+			debug: false,
+		
+			custom_settings : {
+				progressTarget : "fsUploadProgress",
+				cancelButtonId : "btnCancel"
+			},
+
+			// Button settings
+			button_image_url:"/blog/resources/images/TestImageNoText_65x29.png",
+			button_width: "80",
+			button_height: "30",
+			button_placeholder_id: "spanButtonPlaceHolder",
+			button_text: '<span class="theFont">修改</span>',
+			button_text_style: ".theFont { font-size: 16; }",
+			button_text_left_padding: 12,
+			button_text_top_padding: 3,
+			
+			file_queued_handler : fileQueued,
+			file_queue_error_handler : fileQueueError,
+			file_dialog_complete_handler : fileDialogComplete,
+
+			upload_start_handler : uploadStart,
+			upload_progress_handler : uploadProgress,
+			upload_error_handler : uploadError,
+			upload_success_handler : function(file, imgUrl){alert(imgUrl);
+				$("#avatar").attr({src:imgUrl});
+				$("#fsUploadProgress").removeClass("upload_list_show");
+			},
+			upload_complete_handler : function(file){
+				$("#"+file.id).fadeOut("slow",function(){
+					$(this).remove();
+				});
+			},
+			queue_complete_handler : queueComplete
+		};
+		swfu = new SWFUpload(settings);
+     };
+     
+	
+	/*加关注*/
+	function careUser(obj){
+		if(isEmpty(login_user_id)){
+			alert("请先登录");
+			return;
+		}
+		
+		$.ajax({
+			type:"post",
+			url:"/blog/users/"+ login_user_id +"/care/" + user_id,
+			success:function(data){
+				if(data.trim() == "success"){
+					$(obj).addClass("visited no_hover").text("已关注").unbind("click");
+					return;
+				}else{
+					return;
+				}
+			}
+		});
+	}
+	
+	//判断字符串是否为空
+ 	function isEmpty(str){
+		if (str == '' || str == null || str == undefined) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	/*]]>*/
+	</script>
+</body>
+</html>

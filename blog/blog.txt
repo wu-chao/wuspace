@@ -1,0 +1,3 @@
+Exceptions：
+1.java.lang.NoSuchMethodError: org.slf4j.spi.LocationAwareLogger.log
+slf4j与bean-validation.jar里面的LocationAwareLogger.log(...)冲突，可能
