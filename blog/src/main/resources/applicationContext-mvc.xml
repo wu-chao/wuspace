@@ -10,8 +10,7 @@
         http://www.springframework.org/schema/mvc 
         http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
 
-    <mvc:annotation-driven/>
-
+   <!-- <mvc:annotation-driven/>
     <context:component-scan base-package="com.wuspace.controller"></context:component-scan>
 
     <bean id="templateResolver"
@@ -29,38 +28,13 @@
         <property name="templateResolver" ref="templateResolver"></property>
     </bean>
 
-    <!-- 参考：http://stackoverflow.com/questions/24260520/error-resolving-template-pages-template-might-not-exist-or-might-not-be-acces -->
-    <!-- <bean id="tilesConfigurer" class="org.thymeleaf.extras.tiles2.spring4.web.configurer.ThymeleafTilesConfigurer">
-        <property name="definitions">
-            <list>
-                <value>/WEB-INF/tiles-defs.xml</value>
-            </list>
-        </property>
-    </bean> -->
-
     <bean id="tilesViewResolver"
           class="org.thymeleaf.spring4.view.ThymeleafViewResolver">
 
         <property name="templateEngine" ref="templateEngine"></property>
         <property name="characterEncoding" value="UTF-8"></property>
         <property name="order" value="1"></property>
-        <!-- <property name="viewClass" value="org.thymeleaf.extras.tiles2.spring4.web.view.ThymeleafTilesView"></property> -->
-        <!-- <property name="viewNames" value="templates/*,pages/*"/> -->
-    </bean>
-
-    <bean id="multipartResolver"
-          class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-
-    </bean>
-
-    <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
-
-        <property name="messageConverters">
-            <list>
-                <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"></bean>
-            </list>
-        </property>
-    </bean>
-
-
+        &lt;!&ndash; <property name="viewClass" value="org.thymeleaf.extras.tiles2.spring4.web.view.ThymeleafTilesView"></property> &ndash;&gt;
+        &lt;!&ndash; <property name="viewNames" value="templates/*,pages/*"/> &ndash;&gt;
+    </bean>-->
 </beans>
