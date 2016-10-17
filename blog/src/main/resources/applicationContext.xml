@@ -23,12 +23,6 @@
 	<context:component-scan base-package="com.wuspace.model"></context:component-scan>
 	<context:component-scan base-package="com.wuspace.service"></context:component-scan>
 	<context:component-scan base-package="com.wuspace.controller"></context:component-scan>
-Spring
-	<!--访问静态资源-->
-	<!--<mvc:default-servlet-handler default-servlet-name="default"/>-->
-	<!--<mvc:resources mapping="/css/**" location="/resources/css/"/>
-	<mvc:resources mapping="/images/**" location="/resources/images/"/>
-	<mvc:resources mapping="/js/**" location="/resources/js/"/>-->
 
 	<!-- 引入数据库配置文件 -->
 	<context:property-placeholder location="classpath:config/db.properties" />
@@ -78,5 +72,6 @@ Spring
 	
 	<!-- 配置SpringData -->
 	<jpa:repositories base-package="com.wuspace.model" entity-manager-factory-ref="entityManagerFactory"></jpa:repositories>
-	
+
+	<bean
 </beans>

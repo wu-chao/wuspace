@@ -181,6 +181,7 @@ public class BlogController {
 
 		Pageable pageRequest = new PageRequest(curPage, 10, new Sort(Direction.DESC, "createTime"));
 		Page<Blog> blogPage = blogRepository.findAll(pageRequest);
+		List<Blog> blogs = blogRepository.findAll();
 		
 		int totalPages = blogPage.getTotalPages();
 		//判断分页按钮的显示方式
@@ -194,17 +195,11 @@ public class BlogController {
 			firstResult--;
 		}
 		
-		//侧边栏-公告
-		Query query = entityManager.createQuery(
-				"select n from Notice n order by n.createTime desc").setFirstResult(0).setMaxResults(5);
-		List<Notice> notices = query.getResultList();
-		
 		model.addAttribute("blogPage", blogPage);
 		model.addAttribute("totalPages", totalPages);
 		model.addAttribute("firstResult", firstResult);
 		model.addAttribute("prePage", curPage);
 		model.addAttribute("topicTypes", TopicType.getTopicTypes());
-		model.addAttribute("notices", notices);
 
 		return "blogs/index";
 	}
@@ -444,4 +439,5 @@ public class BlogController {
 		blogRepository.save(blog);
 		return "success";
 	}
+
 }

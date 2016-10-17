@@ -11,7 +11,6 @@ import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.thymeleaf.TemplateEngine;
-import org.thymeleaf.dialect.IDialect;
 import org.thymeleaf.dialect.springdata.SpringDataDialect;
 import org.thymeleaf.spring4.SpringTemplateEngine;
 import org.thymeleaf.spring4.templateresolver.SpringResourceTemplateResolver;
@@ -19,14 +18,11 @@ import org.thymeleaf.spring4.view.ThymeleafViewResolver;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ITemplateResolver;
 
-import java.util.LinkedHashSet;
-import java.util.Set;
-
 /**
  * Created by WUCHAO on 2016/10/17.
  */
-@EnableWebMvc
-@Configuration //<mvc:annotation-driven/>
+@EnableWebMvc //<mvc:annotation-driven/>
+@Configuration
 @ComponentScan("com.wuspace.controller") //<context:component-scan base-package="com.wuspace.controller"></context:component-scan>
 public class ThymeleafConfig extends WebMvcConfigurerAdapter implements ApplicationContextAware {
 
@@ -38,11 +34,13 @@ public class ThymeleafConfig extends WebMvcConfigurerAdapter implements Applicat
     }
 
     private ITemplateResolver templateResolver() {
-        SpringResourceTemplateResolver resolver = new SpringResourceTemplateResolver();
-        resolver.setApplicationContext(applicationContext);
-        resolver.setPrefix("/WEB-INF/templates");
-        resolver.setTemplateMode(TemplateMode.HTML);
-        return resolver;
+        SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();
+        templateResolver.setApplicationContext(this.applicationContext);
+        templateResolver.setPrefix("classpath:/templates/");
+        templateResolver.setSuffix(".html");
+        templateResolver.setTemplateMode(TemplateMode.HTML);
+        templateResolver.setCacheable(true);
+        return templateResolver;
     }
 
     @Bean
@@ -53,6 +51,7 @@ public class ThymeleafConfig extends WebMvcConfigurerAdapter implements Applicat
         engine.addDialect(new SpringDataDialect());
         /*urlHelper*/
         engine.setTemplateResolver(templateResolver());
+        engine.setEnableSpringELCompiler(true);
         return engine;
     }
 
