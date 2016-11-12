@@ -1,4 +1,4 @@
-package com.wuspace.model;
+package com.wuspace.domain;
 
 import static javax.persistence.GenerationType.IDENTITY;
 

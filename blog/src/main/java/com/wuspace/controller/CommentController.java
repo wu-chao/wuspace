@@ -13,12 +13,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.wuspace.model.Blog;
-import com.wuspace.model.BlogRepository;
-import com.wuspace.model.Comment;
-import com.wuspace.model.CommentRepository;
-import com.wuspace.model.User;
-import com.wuspace.model.UserRepository;
+import com.wuspace.domain.Blog;
+import com.wuspace.domain.BlogRepository;
+import com.wuspace.domain.Comment;
+import com.wuspace.domain.CommentRepository;
+import com.wuspace.domain.User;
+import com.wuspace.domain.UserRepository;
 
 @Controller
 public class CommentController {

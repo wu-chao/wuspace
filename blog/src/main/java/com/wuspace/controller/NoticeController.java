@@ -22,10 +22,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.wuspace.common.Const;
-import com.wuspace.model.Notice;
-import com.wuspace.model.NoticeRepository;
-import com.wuspace.model.User;
-import com.wuspace.model.UserRepository;
+import com.wuspace.domain.Notice;
+import com.wuspace.domain.NoticeRepository;
+import com.wuspace.domain.User;
+import com.wuspace.domain.UserRepository;
 
 @Controller
 public class NoticeController {

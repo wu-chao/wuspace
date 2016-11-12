@@ -25,15 +25,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.wuspace.common.Const;
-import com.wuspace.model.Blog;
-import com.wuspace.model.BlogRepository;
-import com.wuspace.model.BlogSearch;
-import com.wuspace.model.CommentRepository;
-import com.wuspace.model.Notice;
-import com.wuspace.model.ReplyRepository;
-import com.wuspace.model.TopicType;
-import com.wuspace.model.User;
-import com.wuspace.model.UserRepository;
+import com.wuspace.domain.Blog;
+import com.wuspace.domain.BlogRepository;
+import com.wuspace.domain.CommentRepository;
+import com.wuspace.domain.ReplyRepository;
+import com.wuspace.domain.TopicType;
+import com.wuspace.domain.User;
+import com.wuspace.domain.UserRepository;
 
 @Controller
 public class BlogController {
@@ -172,7 +170,7 @@ public class BlogController {
 	/*
 	 * 分页（Page<T>形式）Controller
 	 */
-	@RequestMapping(value = "/blogs/index", method = RequestMethod.GET)
+	@RequestMapping(value = "/blogs", method = RequestMethod.GET)
 	public String index(
 			@RequestParam(value = "firstResult", defaultValue = "0") Integer firstResult,
 			@RequestParam(value = "prePage", defaultValue = "0") Integer prePage,

@@ -1,4 +1,4 @@
-package com.wuspace.model;
+package com.wuspace.domain;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
