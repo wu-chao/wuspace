@@ -1,0 +1,41 @@
+#pageContainer {
+	margin: 50px auto;
+	text-align: center;
+}
+
+#pages {
+	display: inline-block;
+}
+
+#pages a {
+	display: inline-block;
+	float: left;
+	padding: 4px 12px;
+	margin:0px 4px 0px 0px;
+	background: #EFEEEC;
+	text-align: center;
+	line-height: 24px;
+	font-size: 16px;
+	font-weight: 600;
+	color: #666;
+}
+
+#pages a:hover {
+	cursor: pointer;
+}
+
+#pages a.no_hover:hover {
+	background: #EFEEEC;
+	
+	color: #666;
+	cursor: default;
+}
+#pages .clicked {
+	/*background:#5788AA;*/
+	background: #4C9ED9;
+	color: #fff;
+}
+#pages .clicked:hover{
+	background: #4C9ED9;
+	color: #fff;
+}

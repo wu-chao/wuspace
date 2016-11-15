@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>AHPUT高校论坛首页</title>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+    <link type="text/css" rel="stylesheet" th:href="@{/css/base.css}"/>
+    <link type="text/css" rel="stylesheet" th:href="@{/css/blogs.css}"/>
+    <link type="text/css" rel="stylesheet" th:href="@{/css/paging.css}"/>
+    <link type="text/css" rel="stylesheet" th:href="@{/css/topic.css}"/>
+    <style>
+	    body {
+			padding: 0px;
+			margin: 0px;
+			background: #F0F0F0;
+			font-family: "微软雅黑";
+			font-size: 12px;
+		}
+    </style>
+  </head>
+  <body>
+ 	<!-- header部分开始 -->
+	<div id="header">
+		<div id="logo">
+			<a th:href="@{/blogs/index}"><img th:src="@{/images/logo.png}"/></a>
+		</div>
+		<div id="navigation">
+			<ul>
+				<li id="user" th:if="${session.loginUser != null}">
+					<input id="user_id" type="hidden" th:attr="data-id = ${session.loginUser.id}"/>
+					<a class="nickname" th:text="${session.loginUser.nickname}"></a>
+					<ul id="user_list">
+						<li>
+							<a th:href="${#mvc.url('UC#show').arg(3, session.loginUser.id).build()}" target="_blank">个人中心</a></li>
+						<li>
+							<a th:href="${#mvc.url('UC#logout').arg(0, session.loginUser.id).build()}">退出</a></li>
+					</ul>
+				</li>
+				<li th:if="${session.loginUser == null}">
+					<a class="table" th:href="@{/users/login}">登录</a>
+				</li>
+				<li th:if="${session.loginUser != null}"><a class="table" th:href="${#mvc.url('UC#careUsers').arg(3, session.loginUser.id).build()}">关注的人</a></li>
+				<li th:if="${session.loginUser != null}"><a class="table" th:href="${#mvc.url('UC#collects').arg(3, session.loginUser.id).build()}">我的收藏</a></li>
+				<li th:if="${session.loginUser != null}"><a class="table" th:href="${#mvc.url('UC#blogs').arg(3, session.loginUser.id).build()}">我的发帖</a></li>
+				<li><a class="table" th:href="@{/blogs/index}">首页</a></li>
+				<li style="clear:both;"></li>
+			</ul>
+		</div>
+	</div>
+	<!-- header部分结束 -->
+	
+	<form id="search" th:action="@{/blogs/search}" method="get">
+		<input type="text" name="title" th:value="${search}" id="search_input" placeholder="请输入搜索内容"/>
+		<input type="submit" id="search_icon" th:attr="style='background:url('+@{/images/search.png}+') no-repeat'" value=""></input>
+	</form>
+	
+	<!-- body部分开始 -->
+	<div id="body">
+		<div id="main_container">
+			<div id="blog_container">
+				<ul id="blogs">
+					<li class="blog" th:each="blog : ${blogSearchPage}">
+						<div class="blog_header">
+							<a th:href="${#mvc.url('BC#show').arg(0, blog.id).build()}" style='color:#F2934A'>
+								【<span class="blog_topic" th:text="${blog.getTopicTypeByKey()}">话题</span>】
+								<span class="blog_title" style="color:#222" th:utext="${blog.title.length() > 35 ? blog.title.substring(0, 35) : blog.title}">标题</span></a>&nbsp;
+						</div>
+						<div class="blog_body" th:utext="${blog.content}">内容</div>
+						<div class="blog_footer">
+							<!-- 作者 -->
+							<i th:attr="style='background:url('+@{/images/blog_author.png}+') no-repeat'"></i>
+							<a class="blog_author" target="_blank" th:href="${#mvc.url('UC#show').arg(3, blog.authorId).build()}" th:utext="${blog.author}">作者</a>&nbsp;&nbsp;
+							<!-- 时间 -->
+							<i th:attr="style='background:url('+@{/images/blog_time.png}+') no-repeat'"></i>
+							<span class="blog_time" th:text="${blog.publishTime}">发表时间</span>&nbsp;&nbsp;
+							<!-- 浏览次数 -->
+							<i th:attr="style='background:url('+@{/images/blog_view_times.png}+') no-repeat'"></i>
+							<span th:text="${blog.viewedTimes}">浏览次数</span>&nbsp;&nbsp;
+							<!-- 删除 -->
+							<a th:if="${session.loginUser != null and session.loginUser.id == blog.authorId}" 
+								th:attr="data-id=${blog.id}" onclick="deleteBlog(this)" th:text="删除">删除</a>
+						</div>
+					</li>
+				</ul>
+			</div>
+			
+			<!-- 分页 -->
+			<div id="paging" th:if="${totalPages >= 2}">
+				<a th:href="${#mvc.url('PSC#search').arg(0, 0).arg(2, 0).build()}">首页</a>
+				<a th:if="${curPage - 1 >= 0}" th:href="${#mvc.url('PSC#search').arg(0, firstPage).arg(1, curPage).arg(2, curPage - 1).arg(3, search).build()}">上一页</a>
+				<a class="no_hover" th:if="${curPage - 1 lt 0}">上一页</a>
+				<a th:if="${firstPage le totalPages - 1}" th:attr="class = ${curPage == firstPage ? 'clicked' : ''}"
+					th:href="${#mvc.url('PSC#search').arg(0, firstPage).arg(1, curPage).arg(2, firstPage).arg(3, search).build()}" th:text="${firstPage + 1}">1</a>
+				<a th:if="${firstPage + 1 le totalPages - 1}" th:attr="class = ${curPage == firstPage + 1 ? 'clicked' : ''}"
+					th:href="${#mvc.url('PSC#search').arg(0, firstPage).arg(1, curPage).arg(2, firstPage + 1).arg(3, search).build()}" th:text="${firstPage + 2}">2</a>
+				<a th:if="${firstPage + 2 le totalPages - 1}" th:attr="class = ${curPage == firstPage + 2 ? 'clicked' : ''}"
+					th:href="${#mvc.url('PSC#search').arg(0, firstPage).arg(1, curPage).arg(2, firstPage + 2).arg(3, search).build()}" th:text="${firstPage + 3}">3</a>
+				<a th:if="${firstPage + 3 le totalPages - 1}" th:attr="class = ${curPage == firstPage + 3  ? 'clicked' : ''}"
+					th:href="${#mvc.url('PSC#search').arg(0, firstPage).arg(1, curPage).arg(2, firstPage + 3).arg(3, search).build()}" th:text="${firstPage + 4}">4</a>
+				<a th:if="${firstPage + 4 le totalPages - 1}" th:attr="class = ${curPage == firstPage + 4  ? 'clicked' : ''}"
+					th:href="${#mvc.url('PSC#search').arg(0, firstPage).arg(1, curPage).arg(2, firstPage + 4).arg(3, search).build()}" th:text="${firstPage + 5}">5</a>
+				<a th:if="${curPage + 2 le totalPages}" th:href="${#mvc.url('PSC#search').arg(0, firstPage).arg(1, curPage).arg(2, curPage + 1).arg(3, search).build()}">下一页</a>
+				<a class="no_hover" th:if="${curPage + 2 > totalPages}">下一页</a>
+				<a th:href="${#mvc.url('PSC#search').arg(0, totalPages - 6).arg(2, totalPages - 1).arg(3, search).build()}">尾页</a>
+				<a class="no_hover">共<span th:text="${totalPages}"></span>页</a>
+			</div>
+		</div>
+		
+		<!-- sidebar部分开始 -->
+		<div id="side_container">
+			<!-- 话题分类部分开始 -->
+			<div id="topics_container" class="sidebar_module">
+				<h2 class="sidebar_module_theme">话题分类 </h2>
+				<ul id="topics">
+					<li th:each="topicType : ${topicTypes}" th:if="${topicType != null}">
+						<a class="topic" th:href="${#mvc.url('BC#topic').arg(3, topicType.key).build()}" th:text="${topicType.value}"></a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<!-- body部分结束-->
+	
+	<!-- footer部分开始 -->
+	<div id="footer">
+		<p>Copyright &copy; 2016 by wuchao</p>
+	</div>
+	<!-- footer部分结束 -->
+		
+	<script type="text/javascript" th:src="@{/js/jquery-1.11.1.min.js}"></script>
+	<script type="text/javascript" th:src="@{/js/blog.js}"></script>
+ 	<script type="text/javascript">
+	/*<![CDATA[*/
+		$("#user").mouseover(function(){
+			$("#user_list").show();
+		}).mouseleave(function(){
+			$("#user_list").hide();
+		});
+		
+		/*帖子搜索*/
+		
+   		/*初始化内容列表*/
+		$("#blogs").find(".blog").each(function(){
+			var blog_div = $(this).find(".blog_nr");
+			var content_text = $(blog_div).text();
+			var imgs = $(blog_div).find("img");
+			var len = imgs.length;
+			if(len >= 1){
+				var count = 0;
+				var img_div = document.createElement("div");
+				img_div.className = "map_div";
+				for(var i=0; i<len && count<3; i++, count++){
+					var imgDom = imgs[i];
+					var imgSrc = imgDom.src;
+					if(isEmpty(imgSrc)){
+						imgSrc = $(imgDom).attr("src");
+					}
+					var realWidth = imgDom.width;
+					var realHeight = imgDom.height;
+					if(realWidth >= 150 || realHeight >= 105){
+						var img = document.createElement("img");
+						img.src = imgSrc;
+						img.height = 105;
+						img.width = 150;
+						img.className = "map";
+						img_div.appendChild(img);
+					}
+				}
+				content_text = content_text.substr(0, 180);
+				blog_div.text(content_text);
+				if($(img_div).find("img").length >= 1){
+					blog_div.append(img_div);
+				}
+			}else{
+				blog_div.text(content_text);
+			}
+		});
+
+		/*删帖*/
+		function deleteBlog(obj) {
+			var blogId = $(obj).prev(".blog_id").data("id");
+			$.ajax({
+				type:"get",
+				url:"/wuspace/blogs/"+blogId+"/delete",
+				success:function(data){
+					if(data.msg.trim() == "success"){
+						$(obj).parents("li").slideUp(1000, function(){});
+					}else{
+						alert("删除失败");
+					}
+				}
+			});
+		}
+
+		//判断字符串是否为空
+	 	function isEmpty(str){
+			if (str == '' || str == null || str == undefined) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+		
+		function getLocalTime(time) {     
+			var date = new Date(time);
+			Y = date.getFullYear() + '-';
+			M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
+			D = date.getDate() < 10 ? '0'+date.getDate()+' ' : date.getDate() + ' ';
+			h = date.getHours() < 10 ? '0'+date.getHours()+':' : date.getHours() + ':';
+			m = date.getMinutes() < 10 ? '0'+date.getMinutes()+':' : date.getMinutes() + ':';
+			s = date.getSeconds() < 10 ? '0'+date.getSeconds() : date.getSeconds(); 
+			return(Y+M+D+h+m+s); 
+  		}
+		
+	/*]]>*/
+ 	</script>
+  </body>
+</html>
