@@ -1,4 +1,4 @@
-package com.wuspace.model;
+package com.wuspace.domain;
 
 import javax.transaction.Transactional;
 

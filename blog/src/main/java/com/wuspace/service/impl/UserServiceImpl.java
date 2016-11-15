@@ -13,8 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.wuspace.common.Const;
-import com.wuspace.model.User;
-import com.wuspace.model.UserRepository;
+import com.wuspace.domain.User;
+import com.wuspace.domain.UserRepository;
 import com.wuspace.service.UserService;
 import com.wuspace.util.StringUtils;
 

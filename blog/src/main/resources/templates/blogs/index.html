@@ -4,10 +4,10 @@
   <head>
     <title>blog首页</title>
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
-    <link type="text/css" rel="stylesheet" th:href="@{/resources/css/base.css}"/>
-    <link type="text/css" rel="stylesheet" th:href="@{/resources/css/blogs.css}"/>
-    <link type="text/css" rel="stylesheet" th:href="@{/resources/css/paging.css}"/>
-    <link type="text/css" rel="stylesheet" th:href="@{/resources/css/topic.css}"/>
+    <link type="text/css" rel="stylesheet" href="css/base.css" th:src="@{/css/base.css}">
+    <link type="text/css" rel="stylesheet" href="css/blogs.css" />
+    <link type="text/css" rel="stylesheet" href="css/paging.css"/>
+    <link type="text/css" rel="stylesheet" href="css/topic.css"/>
     <style>
 		#module_notice {
 			margin: 0px;
@@ -35,7 +35,7 @@
 	<div id="header">
 		<div id="header_center">
 			<a id="logo" th:href="${#mvc.url('BC#index').build()}" class="floatl">
-				<img th:src="@{/resources/images/logo.png}"/></a>
+				<img th:src="@{/images/logo.png}"/></a>
 			<div id="navigation" class="floatl">
 				<ul>
 					<li><a href="#">新闻</a></li>
@@ -49,7 +49,7 @@
 			<div id="user" th:if="${session.loginUser != null}" class="floatr">
 				<input id="user_id" type="hidden" th:attr="data-id = ${session.loginUser.id}"/>
 				<i></i>
-				<img id="avatar" th:src="'/blog/resources/images/avatars/'+${session.loginUser.avatar}" style="width:30px;height:30px;"/>
+				<img id="avatar" th:src="'/images/avatars/'+${session.loginUser.avatar}" style="width:30px;height:30px;"/>
 				<a class="nickname" style="display:none;" id="user_name" th:text="${session.loginUser.nickname}"></a>
 				<ul id="user_list">
 					<li>
@@ -166,9 +166,9 @@
 	</div>
 	<!-- footer部分结束 -->
 	
-	<script type="text/javascript" th:src="@{/resources/js/jquery-1.11.1.min.js}"></script>
-	<script type="text/javascript" th:src="@{/resources/js/scrolltotop.js}"></script>
-	<script type="text/javascript" th:src="@{/resources/js/blog.js}"></script>
+	<script type="text/javascript" th:src="@{/js/jquery-1.11.1.min.js}"></script>
+	<script type="text/javascript" th:src="@{/js/scrolltotop.js}"></script>
+	<script type="text/javascript" th:src="@{/js/blog.js}"></script>
  	<script type="text/javascript">
 	/*<![CDATA[*/
 		$("#user").mouseover(function(){

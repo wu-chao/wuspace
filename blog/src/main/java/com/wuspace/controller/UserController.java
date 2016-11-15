@@ -28,11 +28,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.wuspace.common.Const;
-import com.wuspace.model.Blog;
-import com.wuspace.model.BlogRepository;
-import com.wuspace.model.TopicType;
-import com.wuspace.model.User;
-import com.wuspace.model.UserRepository;
+import com.wuspace.domain.Blog;
+import com.wuspace.domain.BlogRepository;
+import com.wuspace.domain.TopicType;
+import com.wuspace.domain.User;
+import com.wuspace.domain.UserRepository;
 import com.wuspace.service.UploadService;
 import com.wuspace.service.UserService;
 import com.wuspace.util.StringUtils;
