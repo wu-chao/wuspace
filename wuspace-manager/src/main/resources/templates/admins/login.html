@@ -1,0 +1,17 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<title>管理员登录</title>
+	    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+	</head>
+	<body>
+		<h1>系统管理员登录</h1>
+		<div>
+			<form method="post" th:action="@{/admins/adminLogin}">
+				<p>邮箱： <input type="text" id="email" name="email"/></p>
+				<p>密码： <input type="password" id="password" name="password"/></p>
+				<input type="submit" value="管理员登录"/>
+			</form>
+		</div>
+	</body>
+</html>      
