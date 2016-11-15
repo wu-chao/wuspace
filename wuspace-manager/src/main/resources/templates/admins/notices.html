@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>AHPUT高校论坛首页</title>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+    <link type="text/css" rel="stylesheet" th:href="@{/css/base.css}"/>
+    <link type="text/css" rel="stylesheet" th:href="@{/css/posts.css}"/>
+    <link type="text/css" rel="stylesheet" th:href="@{/css/paging.css}"/>
+    <link type="text/css" rel="stylesheet" th:href="@{/css/editor.css}"/>
+    <link type="text/css" rel="stylesheet" th:href="@{/js/weditor/css/wangEditor.min.css}"/>
+    <style>
+	    body {
+			padding: 0px;
+			margin: 0px;
+			background: #F0F0F0;
+			font-family: "微软雅黑";
+			font-size: 12px;
+		}
+    </style>
+  </head>
+  <body>
+ 	<!-- header部分开始 -->
+	<div id="header">
+		<div id="logo">
+			<a th:href="${#mvc.url('BC#adminPosts').build()}"><img th:src="@{/images/logo.png}"/></a>
+		</div>
+		<div id="navigation">
+			<ul>
+				<li id="user">
+					<a class="nickname" id="user_id" th:attr="data-id = ${session.loginAdmin.id}" th:text="${session.loginAdmin.nickname}"></a>
+					<ul id="user_list">
+						<li>
+							<a th:href="${#mvc.url('UC#show').arg(0, session.loginAdmin.id).build()}" target="_blank">个人中心</a></li>
+						<li>
+							<a th:href="${#mvc.url('UC#logout').arg(0, session.loginAdmin.id).build()}">退出</a></li>
+					</ul>
+				</li>
+				<li><a class="table" th:href="${#mvc.url('UC#adminUsers').build()}">用户</a></li>
+				<li><a class="table" th:href="${#mvc.url('BC#adminPosts').build()}">帖子</a></li>
+				<li><a class="table" th:href="${#mvc.url('NC#notices').arg(3, session.loginAdmin.id).build()}">公告</a></li>
+			</ul>
+		</div>
+	</div>
+	<!-- header部分结束 -->
+	
+	<!-- body部分开始 -->
+	<div id="body" style="background:#fff">
+		<div id="content_wrap">
+			<div id="post_container">
+				<ul id="posts">
+					<li class="post" th:each="notice : ${noticePage}">
+						<div class="post_header">
+							<a th:utext="${notice.title}" th:href="${#mvc.url('NC#adminShow').arg(0, notice.id).build()}">标题</a>&nbsp;
+						</div>
+						<div class="post_body" th:utext="${notice.content}">内容</div>
+						<div class="post_footer">
+							<!-- 作者 -->
+							<!-- <i th:attr="style='background:url('+@{/images/post_author.png}+') no-repeat'"></i>
+							<a class="post_author" th:utext="${notice.publishBy.nickname}">作者</a>&nbsp;&nbsp; -->
+							<!-- 时间 -->
+							<i th:attr="style='background:url('+@{/images/post_time.png}+') no-repeat'"></i>
+							<span class="post_time" th:text="${#dates.format(notice.createTime,'yyyy-MM-dd HH:mm')}">发表时间</span>&nbsp;&nbsp;
+							<!-- 删除 -->
+							<span class="post_delete">
+								<a th:text="删除" th:attr="data-id = ${notice.id}" onclick="deleteNotice(this)">删除</a>
+							</span>
+						</div>
+					</li>
+				</ul>
+			</div>
+				
+			<!-- 分页 -->
+			<div id="paging" th:if="${totalPages >= 2}">
+				<a th:href="${#mvc.url('NC#notices').arg(0, 0).arg(2, 0).build()}">首页</a>
+				<a th:if="${curPage - 1 >= 0}" th:href="${#mvc.url('NC#notices').arg(0, firstPage).arg(1, curPage).arg(2, curPage - 1).build()}">上一页</a>
+				<a class="no_hover" th:if="${curPage - 1 lt 0}">上一页</a>
+				<a th:if="${firstPage le totalPages - 1}" th:attr="class = ${curPage == firstPage ? 'clicked' : ''}"
+					th:href="${#mvc.url('NC#notices').arg(0, firstPage).arg(1, curPage).arg(2, firstPage).build()}" th:text="${firstPage + 1}">1</a>
+				<a th:if="${firstPage + 1 le totalPages - 1}" th:attr="class = ${curPage == firstPage + 1 ? 'clicked' : ''}"
+					th:href="${#mvc.url('NC#notices').arg(0, firstPage).arg(1, curPage).arg(2, firstPage + 1).build()}" th:text="${firstPage + 2}">2</a>
+				<a th:if="${firstPage + 2 le totalPages - 1}" th:attr="class = ${curPage == firstPage + 2 ? 'clicked' : ''}"
+					th:href="${#mvc.url('NC#notices').arg(0, firstPage).arg(1, curPage).arg(2, firstPage + 2).build()}" th:text="${firstPage + 3}">3</a>
+				<a th:if="${firstPage + 3 le totalPages - 1}" th:attr="class = ${curPage == firstPage + 3  ? 'clicked' : ''}"
+					th:href="${#mvc.url('NC#notices').arg(0, firstPage).arg(1, curPage).arg(2, firstPage + 3).build()}" th:text="${firstPage + 4}">4</a>
+				<a th:if="${firstPage + 4 le totalPages - 1}" th:attr="class = ${curPage == firstPage + 4  ? 'clicked' : ''}"
+					th:href="${#mvc.url('NC#notices').arg(0, firstPage).arg(1, curPage).arg(2, firstPage + 4).build()}" th:text="${firstPage + 5}">5</a>
+				<a th:if="${curPage + 2 le totalPages}" th:href="${#mvc.url('NC#notices').arg(0, firstPage).arg(1, curPage).arg(2, curPage + 1).build()}">下一页</a>
+				<a class="no_hover" th:if="${curPage + 2 > totalPages}">下一页</a>
+				<a th:href="${#mvc.url('NC#notices').arg(0, totalPages - 6).arg(2, totalPages - 1).build()}">尾页</a>
+				<a class="no_hover">共<span th:text="${totalPages}"></span>页</a>
+			</div>
+			
+			<!-- 发帖输入框 -->
+			<div id="editor_container">
+				<input type="text" style="width:624px;left:0px;" id="editor_title" placeholder="请输入标题"/>
+				<div id="editor"></div>
+				<div id="status_bar">
+					<input type="button" id="editor_btn" onclick="publishNotice(this)" value="发布公告"/>
+				</div>
+			</div>
+		</div>
+		<div id="sidebar" style="background:#fff"></div><div style="clear:both"></div>
+	</div>
+	<!-- body部分结束-->
+		
+	<!-- footer部分开始 -->
+	<div id="footer">
+		<p>Copyright &copy; 2016 by wuchao</p>
+	</div>
+	<!-- footer部分结束 -->
+		
+	<script type="text/javascript" th:src="@{/js/jquery-1.11.1.min.js}"></script>
+	<script type="text/javascript" th:src="@{/js/weditor/js/wangEditor.min.js}"></script>
+	<script type="text/javascript" th:src="@{/js/notice.js}"></script>
+ 	<script type="text/javascript">
+	/*<![CDATA[*/
+		$("#user").mouseover(function(){
+			$("#user_list").show();
+		}).mouseleave(function(){
+			$("#user_list").hide();
+		});
+		
+   		/*初始化内容格式*/
+   		initPosts();
+   		
+		/*初始化输入框*/
+   		var Editor = new wangEditor('editor');
+   		
+   		/*默认配置在wangEditor.js中*/
+    	// 菜单配置
+	    Editor.config.menus = [
+	        'source',
+	        'link',
+	        'emotion',
+	        'img',
+	        'video',
+	        'location',
+	        'insertcode',
+	        'fullscreen'
+	    ];
+		
+		// 配置自定义表情，在 create() 之前配置
+		Editor.config.emotions = {
+		    // 支持多组表情
+		
+		    // 第一组，id叫做 'default' 
+		    'default': {
+		        title: '默认',  // 组名称
+		        data: 'http://localhost:8080/cblog/resources/js/weditor/static/emotions/default/default.data'  // data 可以是一个url地址，访问该地址要能返回表情包的json文件
+		    },
+		    // 第二组，id叫做'weibo'
+		    'weibo': {
+		        title: '微博表情',  // 组名称
+		        data: [  // data 还可以直接赋值为一个表情包数组
+		            // 第一个表情
+		            {
+		                'icon': 'http://img.t.sinajs.cn/t35/style/images/common/face/ext/normal/7a/shenshou_thumb.gif',
+		                'value': '[草泥马]'
+		            },
+		            // 第二个表情
+		            {
+		                'icon': 'http://img.t.sinajs.cn/t35/style/images/common/face/ext/normal/60/horse2_thumb.gif',
+		                'value': '[神马]'
+		            }
+		            // 下面还可以继续，第三个、第四个、第N个表情。。。
+		        ]
+		    }
+		    // 下面还可以继续，第三组、第四组、、、
+		};
+		
+    	Editor.config.uploadImgUrl = '/cblog/upload/uploadImage';	// 上传图片
+		Editor.config.pasteFilter = false,	// 粘贴文字时不过滤样式和属性
+    	Editor.create();  //创建编辑器
+    	
+    	
+		/*初始化内容格式*/
+		function initPosts(){
+			$("#posts").find(".post").each(function(){
+				var post_div = $(this).find(".post_nr");
+				var content_text = $(post_div).text();
+				var imgs = $(post_div).find("img");
+				var len = imgs.length;
+				if(len >= 1){
+					var count = 0;
+					var img_div = document.createElement("div");
+					img_div.className = "map_div";
+					for(var i=0; i<len && count<3; i++, count++){
+						var imgDom = imgs[i];
+						var imgSrc = imgDom.src;
+						if(isEmpty(imgSrc)){
+							imgSrc = $(imgDom).attr("src");
+						}
+						var realWidth = imgDom.width;
+						var realHeight = imgDom.height;
+						if(realWidth >= 150 || realHeight >= 105){
+							var img = document.createElement("img");
+							img.src = imgSrc;
+							img.height = 105;
+							img.width = 150;
+							img.className = "map";
+							img_div.appendChild(img);
+						}
+					}
+					content_text = content_text.substr(0, 180);
+					post_div.text(content_text);
+					if($(img_div).find("img").length >= 1){
+						post_div.append(img_div);
+					}
+				}else{
+					post_div.text(content_text.substr(0, 180));
+				}
+			});
+		}
+    	
+		//判断字符串是否为空
+	 	function isEmpty(str){
+			if (str == '' || str == null || str == undefined) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+		
+		function getLocalTime(time) {     
+			var date = new Date(time);
+			Y = date.getFullYear() + '-';
+			M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
+			D = date.getDate() < 10 ? '0'+date.getDate()+' ' : date.getDate() + ' ';
+			h = date.getHours() < 10 ? '0'+date.getHours()+':' : date.getHours() + ':';
+			m = date.getMinutes() < 10 ? '0'+date.getMinutes()+':' : date.getMinutes();
+			return(Y+M+D+h+m); 
+  		}
+		
+	/*]]>*/
+ 	</script>
+  </body>
+</html>
