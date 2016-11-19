@@ -1,24 +1,14 @@
 package com.wuspace.controller;
 
+import com.wuspace.domain.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-import com.wuspace.domain.Blog;
-import com.wuspace.domain.BlogRepository;
-import com.wuspace.domain.Comment;
-import com.wuspace.domain.CommentRepository;
-import com.wuspace.domain.User;
-import com.wuspace.domain.UserRepository;
 
 @Controller
 public class CommentController {
@@ -49,7 +39,7 @@ public class CommentController {
 		Comment comment = commentRepository.save(new Comment(user, blog, content, new Timestamp(new Date().getTime())));
 		map.put("id", comment.getId());
 		map.put("avatar", user.getAvatar());
-		map.put("createTime", comment.getCreateTime());
+		map.put("createTime", comment.getCreatedAt());
 		map.put("msg", "success");
 
 		return map;

@@ -1,24 +1,12 @@
 package com.wuspace.controller;
 
-import java.sql.Timestamp;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-
+import com.wuspace.domain.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
-import com.wuspace.domain.Comment;
-import com.wuspace.domain.CommentRepository;
-import com.wuspace.domain.Reply;
-import com.wuspace.domain.ReplyRepository;
-import com.wuspace.domain.User;
-import com.wuspace.domain.UserRepository;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 public class ReplyController {
@@ -34,26 +22,9 @@ public class ReplyController {
 
 	@RequestMapping(value = "/replies/publish")
 	@ResponseBody
-	public Map<String, Object> publish(@RequestParam("commentId") Integer commentId,
-			@RequestParam("userId") Integer userId,
-			@RequestParam("replyToId") Integer replyToId,
-			@RequestParam("recHtml") String recHtml) {
+	public Map<String, Object> publish() {
 
-		Comment comment = commentRepository.findById(commentId);
-		User user = userRepository.findOne(userId);
-		User replyTo = userRepository.findOne(replyToId);
-		if (comment == null || user == null || replyTo == null) {
-			
-		}
-		
-		Map<String, Object> map = new HashMap<String, Object>();
-		Reply reply = replyRepository.save(new Reply(user, replyTo, comment, recHtml, new Timestamp(new Date().getTime())));
-		map.put("id", reply.getId());
-		map.put("avatar", user.getAvatar());
-		map.put("createTime", reply.getCreateTime());
-		map.put("msg", "success");
-		
-		return map;
+		return null;
 	}
 
 	@RequestMapping(value = "/replies/{replyId}/delete", method = RequestMethod.GET)

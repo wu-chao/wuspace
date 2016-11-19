@@ -2,6 +2,7 @@ package com.wuspace.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
@@ -12,23 +13,31 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+
+
+    @Override
+    public void configure(WebSecurity webSecurity) throws Exception {
+        webSecurity
+                .ignoring()
+                .antMatchers("/templates/**")
+                .antMatchers("/resources/**")
+                .antMatchers("/images/**")
+                .antMatchers("/js/**")
+                .antMatchers("/css/**")
+                .antMatchers("/fonts/**")
+                .antMatchers("/libs/**");
+    }
+
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http
             .authorizeRequests()
-                .antMatchers("/").permitAll()
-//                .antMatchers("/menu").permitAll()
-//                .antMatchers("/error").permitAll()
-                .antMatchers("/resources/**").permitAll()
-//                .antMatchers("/css/**").permitAll()
-//                .antMatchers("/js/**").permitAll()
-//                .antMatchers("/fonts/**").permitAll()
-//                .antMatchers("/libs/**").permitAll()
-//                .anyRequest().authenticated()
+                .anyRequest().authenticated()
                 .and()
             .formLogin()
                 .loginPage("/users/login")
                 .permitAll();
 
     }
+
 }
