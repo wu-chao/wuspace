@@ -1,22 +1,20 @@
 package com.wuspace.service.impl;
 
-import java.sql.Timestamp;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.wuspace.common.Const;
 import com.wuspace.domain.User;
 import com.wuspace.domain.UserRepository;
 import com.wuspace.service.UserService;
 import com.wuspace.util.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.sql.Timestamp;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -39,7 +37,7 @@ public class UserServiceImpl implements UserService {
 
 				Integer avatarIndex = (int) (Math.random() * 29) + 1;
 				user.setAvatar("avatar_" + avatarIndex + ".jpg");
-				user.setCreateTime(new Timestamp(new Date().getTime()));
+				user.setCreatedAt(new Timestamp(new Date().getTime()));
 				userRepository.save(user);
 				msg = "success";
 			} else {

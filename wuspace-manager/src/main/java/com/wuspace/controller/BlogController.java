@@ -309,16 +309,8 @@ public class BlogController {
 	}
 
 	@RequestMapping(value = "/blogs/publish", method = RequestMethod.POST)
-	public String publish(@RequestParam("userId") Integer userId,
-			@RequestParam("title") String title,
-			@RequestParam("content") String content) throws Exception {
-		
-		User user = userRepository.findOne(userId);
+	public String publish() {
 
-		if (user != null) {
-			blogRepository.save(new Blog(user, title,
-					content, "", new Timestamp(new Date().getTime())));
-		}
 
 		return "redirect:/blogs";
 	}

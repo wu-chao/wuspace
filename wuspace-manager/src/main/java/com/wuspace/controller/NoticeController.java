@@ -72,7 +72,7 @@ public class NoticeController {
 				content, new Timestamp(new Date().getTime())));
 
 		map.put("id", post.getId());
-		map.put("createTime", post.getCreateTime());
+		map.put("createTime", post.getCreatedAt());
 		map.put("msg", "success");
 		return map;
 	}
