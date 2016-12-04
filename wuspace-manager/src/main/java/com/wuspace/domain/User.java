@@ -1,35 +1,21 @@
 package com.wuspace.domain;
 
-import static javax.persistence.GenerationType.IDENTITY;
-
-import java.sql.Timestamp;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-import javax.persistence.OrderBy;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
 import lombok.Getter;
 import lombok.Setter;
-
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
+import javax.persistence.*;
+import java.sql.Timestamp;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import static javax.persistence.GenerationType.IDENTITY;
+
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 @Setter
 @Getter
 public class User implements java.io.Serializable {
@@ -39,7 +25,16 @@ public class User implements java.io.Serializable {
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "id", unique = true, nullable = false)
-	private Integer id;
+	private Long id;
+
+	@Column(name = "username")
+	private String username;
+
+	@Column(name = "password")
+	private String password;
+
+	@Column(name = "enabled")
+	private boolean enabled;
 
 	@Column(name = "address", length = 30)
 	private String address;
@@ -69,9 +64,6 @@ public class User implements java.io.Serializable {
 	@Column(name = "nickname", length = 20)
 	private String nickname;
 
-	@Column(name = "password", length = 16)
-	private String password;
-
 	@Column(name = "phone")
 	private String phone;
 
@@ -80,9 +72,6 @@ public class User implements java.io.Serializable {
 
 	@Column(name = "update_time", length = 19)
 	private Timestamp updateTime;
-
-	@Column(name = "username", length = 10)
-	private String username;
 
 	@Column(name = "description", length = 255)
 	private String description;
