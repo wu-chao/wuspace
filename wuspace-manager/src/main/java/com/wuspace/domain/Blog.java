@@ -11,7 +11,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "blog")
+@Table(name = "blogs")
 @Getter
 @Setter
 public class Blog extends BaseEntity {
@@ -42,13 +42,16 @@ public class Blog extends BaseEntity {
 
 	@ManyToMany
 	@Fetch(value = FetchMode.SUBSELECT)
-	@JoinTable(name = "blog_zan", joinColumns = @JoinColumn(name = "blog_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
+	@JoinTable(name = "blog_zan", joinColumns = @JoinColumn(name = "blog_id")
+			, inverseJoinColumns = @JoinColumn(name = "user_id"))
 	private Set<User> zanUsers = new HashSet<User>(0);
 
 	@ManyToMany(cascade = CascadeType.ALL)
 	@Fetch(value = FetchMode.SUBSELECT)
-	@JoinTable(name = "blog_collect", joinColumns = @JoinColumn(name = "blog_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
+	@JoinTable(name = "blog_collect", joinColumns = @JoinColumn(name = "blog_id")
+			, inverseJoinColumns = @JoinColumn(name = "user_id"))
 	private Set<User> collectUsers = new HashSet<User>(0);
+
 
 	public Blog() {}
 

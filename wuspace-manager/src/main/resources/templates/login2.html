@@ -12,12 +12,12 @@
 		<div id="login-head">
 			<h1>WUSPACE登录</h1>
 		</div>
-		<form action="login" method="post" th:action="@{/users/login}">
+		<form action="login" method="post">
 			<p id="message" style="font-family:'微软雅黑';font-size:14px;color:red;"></p>
 			<ul>
 				<li>
 					<i class="icon user"></i>
-					<input type="text" name="username" id="account" autocomplete="off"  placeholder="请输入用户名或邮箱账号" class="text"/>
+					<input type="text" name="account" id="account" autocomplete="off"  placeholder="请输入用户名或邮箱账号" class="text"/>
 				</li>
 				<li>
 					<i class="icon lock"></i>
@@ -28,7 +28,7 @@
 			<div id="login_operations">
 				<label><input type="checkbox" id="cookie" name="cookieMark"/>七天免登陆</label>
 				<a id="forget_psw" href="javascript:void(0);">忘记密码 ?</a>
-				<input type="submit" value="登 陆"/>
+				<input type="button" onclick="login()" value="登 陆"/>
 				<a id="login_register" th:href="@{/users/register}">无账号？点此注册</a>
 			</div>
 		</form>

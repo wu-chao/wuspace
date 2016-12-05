@@ -1,5 +1,6 @@
 package com.wuspace.domain;
 
+import com.wuspace.domain.shared.BaseEntity;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,24 +14,20 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "groups")
-public class Group {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Group extends BaseEntity {
 
     @Column(name = "group_name")
     private String name;
 
     @ManyToMany
     @JoinTable(name = "group_authorities"
-            ,joinColumns = {@JoinColumn(name = "group_id")}
+            ,joinColumns = {@JoinColumn(name = "group_id", referencedColumnName = "id")}
             ,inverseJoinColumns = {@JoinColumn(name = "authority_id")})
-    private List<authority> authorities;
+    private List<Authority> authorities;
 
     @ManyToMany
     @JoinTable(name = "group_members"
-            ,joinColumns = {@JoinColumn(name = "group_id")}
-            ,inverseJoinColumns = {@JoinColumn(name = "username")})
+            ,joinColumns = {@JoinColumn(name = "group_id", referencedColumnName = "id")}
+            ,inverseJoinColumns = {@JoinColumn(name = "username", referencedColumnName = "username")})
     private List<User> users;
 }

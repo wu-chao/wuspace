@@ -10,15 +10,6 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import static javax.persistence.GenerationType.IDENTITY;
-
-import javax.persistence.*;
-import java.sql.Timestamp;
-import java.util.Date;
-import java.util.HashSet;
 import java.util.Set;
 
 @Entity

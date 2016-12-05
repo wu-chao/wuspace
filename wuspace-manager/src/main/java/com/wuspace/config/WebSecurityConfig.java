@@ -2,6 +2,7 @@ package com.wuspace.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
@@ -15,14 +16,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity webSecurity) {
         webSecurity
-                .ignoring()
-                .antMatchers("/resources/**")
-                .antMatchers("/css/**")
-                .antMatchers("/js/**")
-                .antMatchers("/img/**")
-                .antMatchers("/images/**")
-                .antMatchers("/fonts/**")
-                .antMatchers("/libs/**");
+            .ignoring()
+            .antMatchers("/resources/**")
+            .antMatchers("/css/**")
+            .antMatchers("/js/**")
+            .antMatchers("/img/**")
+            .antMatchers("/images/**")
+            .antMatchers("/fonts/**")
+            .antMatchers("/libs/**");
     }
 
     @Override
@@ -30,11 +31,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
             .authorizeRequests()
                 .antMatchers("/").permitAll()
-//                .antMatchers("/resources/**").permitAll()
-//                .antMatchers("/css/**").permitAll()
-//                .antMatchers("/js/**").permitAll()
-//                .antMatchers("/fonts/**").permitAll()
-//                .antMatchers("/libs/**").permitAll()
+                .antMatchers("/resources/**").permitAll()
+                .antMatchers("/css/**").permitAll()
+                .antMatchers("/js/**").permitAll()
+                .antMatchers("/fonts/**").permitAll()
+                .antMatchers("/libs/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
             .formLogin()

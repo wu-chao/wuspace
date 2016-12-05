@@ -1,5 +1,6 @@
 package com.wuspace.domain;
 
+import com.wuspace.domain.shared.BaseEntity;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,7 +15,7 @@ import javax.persistence.Table;
 @Setter
 @Entity
 @Table(name = "authorities")
-public class authority {
+public class Authority extends BaseEntity {
 
     @Column(name = "username")
     private String username;

@@ -39,12 +39,12 @@ public class UserController {
 	
 	@RequestMapping(value = "/users/login", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> login(@RequestParam("account") String account, 
+	public Map<String, Object> login(@RequestParam("username") String username,
 			@RequestParam("password") String password, 
 			@RequestParam("cookieMark") Integer cookieMark, 
 			HttpServletRequest request, HttpServletResponse response) {
 
-		return userServiceImpl.login(account, password, cookieMark, request, response);
+		return userServiceImpl.login(username, password, cookieMark, request, response);
 	}
 	
 	/**

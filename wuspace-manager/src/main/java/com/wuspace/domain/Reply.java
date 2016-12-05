@@ -11,7 +11,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
-@Table(name = "reply")
+@Table(name = "replies")
 public class Reply extends BaseEntity {
 
 	@ManyToOne
