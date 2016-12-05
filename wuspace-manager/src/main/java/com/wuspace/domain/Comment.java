@@ -10,10 +10,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-@Entity
-@Table(name = "comment")
-@Setter
 @Getter
+@Setter
+@Entity
+@Table(name = "comments")
 public class Comment extends BaseEntity {
 
 	@ManyToOne
@@ -24,7 +24,7 @@ public class Comment extends BaseEntity {
 	@JoinColumn(name = "blog_id", nullable = false)
 	private Blog blog;
 
-	@Column(name = "content", length = 65535, nullable = false)
+	@Column(name = "content", length = 512, nullable = false)
 	private String content;
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "comment")
@@ -32,11 +32,11 @@ public class Comment extends BaseEntity {
 	private List<Reply> replies;
 	
 	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "comment_zan", joinColumns = @JoinColumn(name = "comment_id"), inverseJoinColumns = @JoinColumn(name = "zan_user_id"))
+	@JoinTable(name = "comment_zan", joinColumns = @JoinColumn(name = "comment_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
 	private Set<User> zanUsers = new HashSet<User>();
 	
 	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "comment_cai", joinColumns = @JoinColumn(name = "comment_id"), inverseJoinColumns = @JoinColumn(name = "cai_user_id"))
+	@JoinTable(name = "comment_cai", joinColumns = @JoinColumn(name = "comment_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
 	private Set<User> caiUsers = new HashSet<User>();
 
 	protected Comment() {
