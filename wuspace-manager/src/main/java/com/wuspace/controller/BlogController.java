@@ -42,130 +42,8 @@ public class BlogController {
 	@Autowired
 	private BlogRepository blogRepository;
 
-	@Autowired
-	private CommentRepository commentRepository;
-
-	@Autowired
-	private ReplyRepository replyRepository;
-
 	@PersistenceContext
 	private EntityManager entityManager;
-
-	@RequestMapping(value = "/admins/book")
-	public String book(){
-		return "/WEB-INF/pages/admins/blogs/bookreader.jsp";
-	}
-	
-	/* 管理员操作 */
-	@RequestMapping(value = "/admins/adminblogs", method = RequestMethod.GET)
-	public String adminblogs(
-			@RequestParam(value = "firstPage", defaultValue = "0") Integer firstPage,
-			@RequestParam(value = "curPage", defaultValue = "0") Integer curPage,
-			@RequestParam(value = "page", defaultValue = "0") Integer page,
-			Model model, HttpServletRequest request) {
-
-		if (request.getSession().getAttribute(Const.LOGIN_ADMIN) == null) {
-			return "redirect:/blogs";
-		}
-
-		int totalPages = 0;
-		curPage = page;
-		Pageable pageRequest = new PageRequest(page, 10, new Sort(
-				Direction.DESC, "createTime"));
-		Page<Blog> blogPage = blogRepository.findAll(pageRequest);
-		totalPages = blogPage.getTotalPages();
-		model.addAttribute("blogPage", blogPage);
-		model.addAttribute("totalPages", totalPages);
-
-		if (page - firstPage >= 5 && page <= totalPages - 1) {
-			firstPage++;
-		}
-		if (curPage < firstPage && firstPage > 0) {
-			firstPage--;
-		}
-
-		model.addAttribute("firstPage", firstPage);
-		model.addAttribute("curPage", curPage);
-		model.addAttribute("topicTypes", TopicType.getTopicTypes());
-		return "admins/blogs";
-	}
-	
-	@RequestMapping(value = "/admins/topics/{topicType}", method = RequestMethod.GET)
-	public String adminTopic(
-			@RequestParam(value = "firstPage", defaultValue = "0") Integer firstPage,
-			@RequestParam(value = "curPage", defaultValue = "0") Integer curPage,
-			@RequestParam(value = "page", defaultValue = "0") Integer page,
-			@PathVariable("topicType") Integer topicType, Model model) {
-
-		int totalPages = 0;
-		curPage = page;
-		// ？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？
-		// Pageable pageRequest = new PageRequest(page, 10, new
-		// Sort(Direction.DESC, "createTime"));
-		// Page<Blog> blogPage = blogRepository.findAllByTopicType(topicType,
-		// pageRequest);
-		
-		
-		//http://www.oschina.net/translate/getting-started-with-spring-data-jpa?cmp
-		Query query = entityManager.createQuery(
-				"select p from Blog p where p.topicType = ?").setParameter(1, topicType);
-		List<Blog> blogPageList = query.getResultList();
-
-		int blogPageSize = blogPageList.size();
-		totalPages = blogPageSize / 10;
-		if (blogPageSize % 10 != 0) {
-			totalPages++;
-		}
-
-		// 选择10个元素
-		List<Blog> blogPage = new ArrayList<Blog>(10);
-		for (int i = page * 10; i < page * 10 + 10 && i < blogPageSize; i++) {
-			Blog blog = blogPageList.get(i);
-			if (blog != null) {
-				blogPage.add(blog);
-			}
-		}
-
-		model.addAttribute("blogPage", blogPage);
-		model.addAttribute("totalPages", totalPages);
-		model.addAttribute("topicTypes", TopicType.getTopicTypes());
-
-		if (firstPage <= 0) {
-			firstPage = 0;
-		}
-		if (page - firstPage >= 5 && page <= totalPages - 1) {
-			firstPage++;
-		}
-		if (curPage < firstPage && firstPage > 0) {
-			firstPage--;
-		}
-		model.addAttribute("firstPage", firstPage);
-		model.addAttribute("curPage", curPage);
-		model.addAttribute("topicType", topicType);
-
-		return "admins/topic";
-	}
-	
-	@RequestMapping(value = "/admins/{blogId}", method = RequestMethod.GET)
-	public String adminShow(@PathVariable("blogId") Integer blogId,
-			Model model, HttpServletRequest request) {
-
-		/* 要不要判断?????? */
-		if (request.getSession().getAttribute(Const.LOGIN_ADMIN) == null) {
-			return "redirect:/blogs";
-		}
-
-		Blog blog = blogRepository.findBlogWithAllById(blogId);
-		if (blog == null) {
-			System.out.println("blog is null ...........................................");
-		}
-		model.addAttribute("blog", blog);
-		model.addAttribute("comments", blog.getComments());
-
-		return "admins/blog";
-	}
-
-	/* 用户操作 */
 
 	/*
 	 * 分页（Page<T>形式）Controller
@@ -177,7 +55,7 @@ public class BlogController {
 			@RequestParam(value = "curPage", defaultValue = "0") Integer curPage,
 			Model model) {
 
-		Pageable pageRequest = new PageRequest(curPage, 10, new Sort(Direction.DESC, "createTime"));
+		Pageable pageRequest = new PageRequest(curPage, 10, new Sort(Direction.DESC, "createdAt"));
 		Page<Blog> blogPage = blogRepository.findAll(pageRequest);
 		List<Blog> blogs = blogRepository.findAll();
 		
@@ -293,7 +171,7 @@ public class BlogController {
 		}
 		
 		//侧边栏-最新发表
-		Query query = entityManager.createQuery("select p from Blog p order by p.createTime desc").setFirstResult(0).setMaxResults(5);
+		Query query = entityManager.createQuery("select p from Blog p order by p.createdAt desc").setFirstResult(0).setMaxResults(5);
 		List<Blog> newestBlogs = query.getResultList();
 		model.addAttribute("newestBlogs", newestBlogs);
 		model.addAttribute("topicTypes", TopicType.getTopicTypes());

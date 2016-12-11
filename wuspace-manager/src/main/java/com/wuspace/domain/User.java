@@ -7,9 +7,8 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
-import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -27,39 +26,26 @@ public class User extends BaseEntity {
 	@Column(name = "enabled")
 	private boolean enabled;
 
-	@Column(name = "address", length = 30)
-	private String address;
-
-	@Column(name = "age")
-	private Integer age;
-
-	@Temporal(TemporalType.DATE)
-	@Column(name = "birthday", length = 10)
-	private Date birthday;
+	@ManyToMany
+	@JoinTable(name = "group_members"
+			,joinColumns = {@JoinColumn(name = "group_id", referencedColumnName = "id")}
+			,inverseJoinColumns = {@JoinColumn(name = "username", referencedColumnName = "username")})
+	private List<User> users;
 
 	@Column(name = "email", length = 50)
 	private String email;
 
+	@Column(name = "phone")
+	private String phone;
+
 	@Column(name = "avatar", length = 200)
 	private String avatar;
-
-	@Column(name = "is_admin")
-	private Integer isAdmin = 0;
-
-	@Column(name = "is_delete")
-	private Integer isDelete = 0;
 
 	@Column(name = "nickname", length = 20)
 	private String nickname;
 
-	@Column(name = "phone")
-	private String phone;
-
 	@Column(name = "sex")
 	private Integer sex;
-
-	@Column(name = "update_time", length = 19)
-	private Timestamp updateTime;
 
 	@Column(name = "description", length = 255)
 	private String description;

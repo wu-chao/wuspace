@@ -33,8 +33,10 @@ public class BaseEntity extends BaseIdEntity implements java.io.Serializable {
     @Column(name = "deleted_at")
     private Timestamp deletedAt;
 
+/*
     @Column(name = "is_deleted")
     private Integer isDeleted = 0;
+*/
 
     @PrePersist
     public void prePersist() {
