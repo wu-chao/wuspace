@@ -17,10 +17,10 @@ import javax.persistence.Table;
 @Table(name = "authorities")
 public class Authority extends BaseEntity {
 
-    @Column(name = "username")
-    private String username;
-
     @Column(name = "authority")
     private String authority;
+
+    @Column(name = "description")
+    private String description;
 
 }

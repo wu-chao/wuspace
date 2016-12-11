@@ -1,6 +1,6 @@
 
-INSERT INTO groups(id,name) VALUES (1,'super_admins');
-INSERT INTO groups(id,name) VALUES (2,'admins');
+INSERT INTO groups(id,role_name,group_name) VALUES (1,'super_admins','超级管理员');
+INSERT INTO groups(id,role_name,group_name) VALUES (2,'admins','普通管理员');
 
 INSERT INTO authorities(id,authority,description) VALUES (1,'super_admin','超级管理员权限');
 INSERT INTO authorities(id,authority,description) VALUES (2,'admin','管理员权限');
