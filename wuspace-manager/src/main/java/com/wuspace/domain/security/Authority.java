@@ -1,4 +1,4 @@
-package com.wuspace.domain;
+package com.wuspace.domain.security;
 
 import com.wuspace.domain.shared.BaseEntity;
 import lombok.Getter;

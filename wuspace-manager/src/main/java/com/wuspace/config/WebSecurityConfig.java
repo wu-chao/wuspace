@@ -34,10 +34,16 @@ import java.io.IOException;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+    /**
+     * @EnableAutoConfiguration作用：
+     * Spring Boot 会自动根据你 jar 包的依赖来自动配置项目。例如当你项目下面有HSQLDB的依赖时，
+     * Spring Boot 会创建默认的内存数据库的数据源DataSource，如果你自己创建了DataSource，
+     * Spring Boot 就不会创建默认的DataSource。
+     */
     @Autowired
     private DataSource dataSource;
 
-    private CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler = new CustomAuthenticationSuccessHandler();
+    //private CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler = new CustomAuthenticationSuccessHandler();
 
     private CustomUserDetailsService customUserDetailsService = new CustomUserDetailsService();
 
@@ -60,7 +66,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin()
                 .loginPage("/login")
                 //.failureUrl("/")
-                .successHandler(customAuthenticationSuccessHandler)
+                //.successHandler(customAuthenticationSuccessHandler)
                 .permitAll()
                 .and()
                 .logout()
@@ -85,8 +91,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth
-                //.inMemoryAuthentication().withUser("chao").password("password").roles("USER")
-                .userDetailsService(customUserDetailsService).passwordEncoder(passwordEncoder());
+                /*.inMemoryAuthentication().withUser("chao").password("password").roles("USER")*/
+                /**
+                 * http://www.mkyong.com/spring-security/spring-security-form-login-using-database/
+                 */
+                .jdbcAuthentication().dataSource(dataSource)
+                .usersByUsernameQuery(
+                        "select username, password, enabled from users where username = ?")
+                .authoritiesByUsernameQuery(
+                        "select username, role from user_roles where username = ?");
+                //.userDetailsService(customUserDetailsService).passwordEncoder(passwordEncoder());
+                //添加组权限
     }
 
     /**
@@ -97,13 +112,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 
-        private String targetUrl;
-
-        public CustomAuthenticationSuccessHandler() {}
-
-        public CustomAuthenticationSuccessHandler(String targetUrl) {
-            this.targetUrl = targetUrl;
-        }
+        private String targetUrl = "localhost:8080/blogs";
 
         @Override
         protected void handle(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {

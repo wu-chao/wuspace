@@ -1,8 +1,8 @@
 package com.wuspace.service.impl;
 
 import com.wuspace.common.Const;
-import com.wuspace.domain.User;
-import com.wuspace.domain.UserRepository;
+import com.wuspace.domain.security.User;
+import com.wuspace.domain.security.UserRepository;
 import com.wuspace.service.UserService;
 import com.wuspace.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;

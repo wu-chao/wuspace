@@ -1,4 +1,4 @@
-package com.wuspace.domain;
+package com.wuspace.domain.security;
 
 import com.wuspace.domain.shared.BaseEntity;
 import lombok.Getter;
@@ -8,29 +8,17 @@ import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
-@Entity
-@Table(name = "users")
 @Setter
 @Getter
+@Entity
+@Table(name = "users")
 public class User extends BaseEntity {
 
+	@Id
 	@Column(name = "username")
 	private String username;
-
-	@Column(name = "password")
-	private String password;
-
-	@Column(name = "enabled")
-	private boolean enabled;
-
-	@ManyToMany
-	@JoinTable(name = "group_members"
-			,joinColumns = {@JoinColumn(name = "group_id", referencedColumnName = "id")}
-			,inverseJoinColumns = {@JoinColumn(name = "username", referencedColumnName = "username")})
-	private List<User> users;
 
 	@Column(name = "email", length = 50)
 	private String email;
@@ -38,34 +26,23 @@ public class User extends BaseEntity {
 	@Column(name = "phone")
 	private String phone;
 
+	@Column(name = "password")
+	private String password;
+
 	@Column(name = "avatar", length = 200)
 	private String avatar;
 
 	@Column(name = "nickname", length = 20)
 	private String nickname;
 
-	@Column(name = "sex")
-	private Integer sex;
-
 	@Column(name = "description", length = 255)
 	private String description;
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
-	@OrderBy("createTime desc")
-	private Set<Blog> blogs;
+	@Column(name = "enabled")
+	private boolean enabled;
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
-	@OrderBy("createTime desc")
-	private Set<Comment> comments;
-
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "replyTo")
-	private Set<Reply> repliesOfReplyTo;
-
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
-	private Set<Reply> repliesOfUser;
-
-	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "collectUsers")
-	private Set<Blog> collectBlogs = new HashSet<Blog>();
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+	private Set<UserRole> userRoles = new HashSet<>();
 
 	@ManyToMany
 	@Fetch(FetchMode.SUBSELECT)
