@@ -74,11 +74,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .and()
                 .csrf()
-                .and()
-                .rememberMe()
-                .tokenRepository(persistentTokenRepository())
+                //.and()
+                //.rememberMe()
+                //.tokenRepository(persistentTokenRepository())
                 /*token-validity-seconds：The expire date of “remember-me” cookie, in seconds*/
-                .tokenValiditySeconds(7*24*60*60);
+                //.tokenValiditySeconds(7*24*60*60)
+                ;
 
     }
 
@@ -96,10 +97,36 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                  * http://www.mkyong.com/spring-security/spring-security-form-login-using-database/
                  */
                 .jdbcAuthentication().dataSource(dataSource)
+                /*DaoAuthenticationProvider:
+                    createUserSql = "insert into users (username, password, enabled) values (?,?,?)"
+                    deleteUserSql = "delete from users where username = ?"
+                    updateUserSql = "update users set password = ?, enabled = ? where username = ?"
+                    createAuthoritySql = "insert into authorities (username, authority) values (?,?)"
+                    deleteUserAuthoritiesSql = "delete from authorities where username = ?"
+                    userExistsSql = "select username from users where username = ?"
+                    changePasswordSql = "update users set password = ? where username = ?"
+                    findAllGroupsSql = "select group_name from groups"
+                    findUsersInGroupSql = "select username from group_members gm, groups g where gm.group_id = g.id and g.group_name = ?"
+                    insertGroupSql = "insert into groups (group_name) values (?)"
+                    findGroupIdSql = "select id from groups where group_name = ?"
+                    insertGroupAuthoritySql = "insert into group_authorities (group_id, authority) values (?,?)"
+                    deleteGroupSql = "delete from groups where id = ?"
+                    deleteGroupAuthoritiesSql = "delete from group_authorities where group_id = ?"
+                    deleteGroupMembersSql = "delete from group_members where group_id = ?"
+                    renameGroupSql = "update groups set group_name = ? where group_name = ?"
+                    insertGroupMemberSql = "insert into group_members (group_id, username) values (?,?)"
+                    deleteGroupMemberSql = "delete from group_members where group_id = ? and username = ?"
+                    groupAuthoritiesSql = "select g.id, g.group_name, ga.authority from groups g, group_authorities ga where g.group_name = ? and g.id = ga.group_id "
+                    deleteGroupAuthoritySql = "delete from group_authorities where group_id = ? and authority = ?"
+
+                    authoritiesByUsernameQuery = "select username, authority from authorities where username = ?"
+                    groupAuthoritiesByUsernameQuery = "select g.id, g.group_name, ga.authority from groups g, group_members gm, group_authorities ga where gm.username = ? and g.id = ga.group_id and g.id = gm.group_id"
+                    usersByUsernameQuery = "select username, password, enabled from users where username = ?"
+                */
                 .usersByUsernameQuery(
                         "select username, password, enabled from users where username = ?")
                 .authoritiesByUsernameQuery(
-                        "select username, role from user_roles where username = ?");
+                        "select username, authority from authorities where username = ?");
                 //.userDetailsService(customUserDetailsService).passwordEncoder(passwordEncoder());
                 //添加组权限
     }
