@@ -17,15 +17,17 @@ import java.util.List;
 public class Group extends BaseEntity {
 
     @Column(name = "group_name")
-    private String groupName;
-
-    @Column(name = "role_name", unique = true)
-    private String roleName;
+    private String name;
 
     @ManyToMany
     @JoinTable(name = "group_authorities"
             ,joinColumns = {@JoinColumn(name = "group_id", referencedColumnName = "id")}
-            ,inverseJoinColumns = {@JoinColumn(name = "authority", referencedColumnName = "authority")})
+            ,inverseJoinColumns = {@JoinColumn(name = "authority_id")})
     private List<Authority> authorities;
 
+    @ManyToMany
+    @JoinTable(name = "group_members"
+            ,joinColumns = {@JoinColumn(name = "group_id", referencedColumnName = "id")}
+            ,inverseJoinColumns = {@JoinColumn(name = "username", referencedColumnName = "username")})
+    private List<User> users;
 }

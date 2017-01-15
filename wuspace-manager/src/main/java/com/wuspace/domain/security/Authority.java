@@ -4,23 +4,28 @@ import com.wuspace.domain.shared.BaseEntity;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
- * Created by WUCHAO on 2016/12/4.
+ * Created by WUCHAO on 2017/1/9.
  */
 @Getter
 @Setter
 @Entity
-@Table(name = "authorities")
+@Table(name = "authorities", uniqueConstraints = @UniqueConstraint(columnNames = {"authority", "username"}))
 public class Authority extends BaseEntity {
 
-    @Column(name = "authority")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "username", nullable = false)
+    private User user;
+
+    @Column(name = "authority", nullable = false, length = 45)
     private String authority;
 
-    @Column(name = "description")
-    private String description;
+    public Authority() {}
 
+    public Authority(User user, String authority) {
+        this.user = user;
+        this.authority = authority;
+    }
 }
