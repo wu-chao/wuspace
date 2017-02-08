@@ -70,6 +70,12 @@ public class User extends BaseEntity {
 
 	public User() {}
 
+	public User(String username, String password, boolean enabled) {
+		this.username = username;
+		this.password = password;
+		this.enabled = enabled;
+	}
+
 	public boolean validatePassword(String password) {
 		if (this.password.equals(password)) {
 			return true;
