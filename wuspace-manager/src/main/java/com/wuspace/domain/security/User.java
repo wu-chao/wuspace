@@ -22,20 +22,20 @@ public class User extends BaseEntity {
 	@Column(name = "username", unique = true, nullable = false)
 	private String username;
 
-	@Column(name = "email", length = 50)
+	@Column(name = "email", length = 128)
 	private String email;
 
 	@Column(name = "phone")
 	private String phone;
 
-	@Column(name = "password")
+	@Column(name = "password", length = 16)
 	private String password;
+
+	@Column(name = "nickname", length = 100)
+	private String nickname;
 
 	@Column(name = "avatar", length = 200)
 	private String avatar;
-
-	@Column(name = "nickname", length = 20)
-	private String nickname;
 
 	@Column(name = "description", length = 255)
 	private String description;

@@ -1,0 +1,77 @@
+databaseChangeLog:
+  - changeSet:
+    id: 1
+    author: wuchao
+    changes:
+      - createTable:
+        tableName: users
+        columns:
+          - column:
+            name: id
+            type: bigint
+            autoIncrement: true
+            constraints:
+              primaryKey: true
+              nullable: false
+          - column:
+            name: created_at
+            type: timestamp
+          - column:
+            name: updated_at
+            type: timestamp
+          - column:
+            name: deleted_at
+            type: timestamp
+          - column:
+            name: username
+            type: varchar(50)
+          - column:
+            name: email
+            type: varchar(128)
+          - clumn:
+            name: phone
+            type: varchar(20)
+          - column:
+            name: password
+            type: varchar(16)
+          - column:
+            name: nickname
+            type: varchar(100)
+          - column:
+            name: avatar
+            type: varchar(200)
+          - column:
+            name: description
+            type: varchar(255)
+          - column:
+            name: enabled
+            type: boolean
+  - changeSet:
+    id: 2
+    author: wuchao
+    changes:
+      - createTable:
+        tableName: authorities
+        columns:
+          - column:
+            name: id
+            type: bigint
+            autoIncrement: true
+            constraints:
+              primaryKey: true
+              nullable: false
+          - column:
+            name: created_at
+            type: timestamp
+          - column:
+            name: updated_at
+            type: timestamp
+          - column:
+            name: deleted_at
+            type: timestamp
+          - column:
+            name: username
+            type: varchar(100)
+          - column:
+            name: authority
+            type: varchar(45)
