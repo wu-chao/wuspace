@@ -5,8 +5,8 @@ INSERT INTO groups(id,role_name,group_name) VALUES (2,'admins','普通管理员'
 INSERT INTO authorities(id,authority,description) VALUES (1,'ROLE_superadmin','超级管理员权限');
 INSERT INTO authorities(id,authority,description) VALUES (2,'ROLE_admin','管理员权限');*/
 
-INSERT INTO users(username,nickname,password,enabled) VALUES ('admin','管理员','password',TRUE );
-INSERT INTO users(username,nickname,password,enabled) VALUES ('chao','chao','password',TRUE );
+INSERT INTO users(id,username,nickname,password,enabled) VALUES (1,'admin','管理员','password',TRUE );
+INSERT INTO users(id,username,nickname,password,enabled) VALUES (2,'chao','chao','password',TRUE );
 
 INSERT INTO authorities(id, username, authority) VALUES (1,'admin','ROLE_ADMIN');
 INSERT INTO authorities(id, username, authority) VALUES (2,'chao','ROLE_USER');

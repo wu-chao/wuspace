@@ -12,7 +12,8 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Entity
-@Table(name = "authorities", uniqueConstraints = @UniqueConstraint(columnNames = {"authority", "username"}))
+//@Table(name = "authorities", uniqueConstraints = @UniqueConstraint(columnNames = {"authority", "username"}))
+@Table(name = "authorities")
 public class Authority extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
