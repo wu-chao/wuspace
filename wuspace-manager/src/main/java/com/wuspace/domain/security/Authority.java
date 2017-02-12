@@ -12,21 +12,19 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Entity
-//@Table(name = "authorities", uniqueConstraints = @UniqueConstraint(columnNames = {"authority", "username"}))
-@Table(name = "authorities")
+@Table(name = "authorities", uniqueConstraints = @UniqueConstraint(columnNames = {"authority", "username"}))
 public class Authority extends BaseEntity {
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "username", nullable = false)
-    private User user;
+    @Column(name = "username", nullable = false)
+    private String username;
 
     @Column(name = "authority", nullable = false, length = 45)
     private String authority;
 
     public Authority() {}
 
-    public Authority(User user, String authority) {
-        this.user = user;
+    public Authority(String username, String authority) {
+        this.username = username;
         this.authority = authority;
     }
 }

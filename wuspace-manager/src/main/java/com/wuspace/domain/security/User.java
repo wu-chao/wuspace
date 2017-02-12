@@ -43,9 +43,6 @@ public class User extends BaseEntity {
 	@Column(name = "enabled")
 	private boolean enabled;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
-	private Set<Authority> authorities = new HashSet<>();
-
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
 	@OrderBy("createTime desc")
 	private Set<Blog> blogs;
