@@ -24,11 +24,11 @@ databaseChangeLog:
             type: timestamp
           - column:
             name: username
-            type: varchar(50)
+            type: varchar(100)
           - column:
             name: email
             type: varchar(128)
-          - clumn:
+          - column:
             name: phone
             type: varchar(20)
           - column:
