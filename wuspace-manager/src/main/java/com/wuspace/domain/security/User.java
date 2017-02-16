@@ -43,6 +43,9 @@ public class User extends BaseEntity {
 	@Column(name = "enabled")
 	private boolean enabled;
 
+	@Column(name = "xxx")
+	private String xxx;
+
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
 	@OrderBy("createTime desc")
 	private Set<Blog> blogs;
