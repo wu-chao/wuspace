@@ -88,3 +88,38 @@ databaseChangeLog:
             column:
               name: xxx
               type: varchar(20)
+  - changeSet:
+      id: 4
+      author: wuchao
+      change:
+        - dropColumn:
+            tableName: users
+            column:
+              name: xxx
+              type: varchar(20)
+  - changeSet:
+      id: 5
+      author: wuchao
+      changes:
+        - createTable:
+            tableName: blogs
+            columns:
+              - column:
+                 name: id
+                 type: bigint
+                 autoIncrement: true
+                 constraints:
+                   primaryKey: true
+                   nullable: false
+              - column:
+                 name: created_at
+                 type: timestamp
+              - column:
+                 name: updated_at
+                 type: timestamp
+              - column:
+                 name: deleted_at
+                 type: timestamp
+#              - column:
+#                 name: title
+#                 type: varchar(500)
