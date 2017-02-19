@@ -1,6 +1,7 @@
 package com.wuspace;
 
 import com.wuspace.domain.security.UserRepository;
+import com.wuspace.service.scheduler.MainScheduler;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -17,6 +18,9 @@ public class WuspaceManagerApplication {
         ConfigurableApplicationContext context = SpringApplication.run(WuspaceManagerApplication.class, args);
         UserRepository userRepository = context.getBean(UserRepository.class);
         long count = userRepository.count();
-        System.out.println("---------------"+count+"--------------");
+        System.out.println("---------------" + count + "--------------");
+
+        MainScheduler mainScheduler = context.getBean(MainScheduler.class);
+        mainScheduler.execute();
     }
 }
