@@ -136,7 +136,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                  */
                 .userDetailsService(customUserDetailsService)
                 .passwordEncoder(passwordEncoder());
-                //添加组权限
+                //添加组权限:
+                //1.使用 jdbc-user-service:
+
+                //2.
     }
 
     /**
