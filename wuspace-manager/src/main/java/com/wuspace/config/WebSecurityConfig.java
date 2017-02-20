@@ -133,6 +133,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 //3.使用自定义的 UserDetailsService:
                 /**
                  * http://www.mkyong.com/spring-security/spring-security-hibernate-annotation-example/
+                 * http://blog.csdn.net/qq245671051/article/details/47259287
                  */
                 .userDetailsService(customUserDetailsService)
                 .passwordEncoder(passwordEncoder());
