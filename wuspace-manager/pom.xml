@@ -17,6 +17,6 @@
   </parent>
 
   <build>
-    <finalName>blog</finalName>
+    <finalName>wuspace-manager</finalName>
   </build>
 </project>
