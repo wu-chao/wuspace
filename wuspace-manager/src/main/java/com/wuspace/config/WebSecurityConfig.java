@@ -20,6 +20,7 @@ import org.springframework.security.web.authentication.SimpleUrlAuthenticationSu
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -43,9 +44,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private DataSource dataSource;
 
-    //private CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler = new CustomAuthenticationSuccessHandler();
-
-    private CustomUserDetailsService customUserDetailsService = new CustomUserDetailsService();
+    @Autowired
+    private CustomUserDetailsService customUserDetailsService;
 
     @Override
     public void configure(WebSecurity webSecurity) {
@@ -92,43 +92,55 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth
+                //1.使用
                 /*.inMemoryAuthentication().withUser("chao").password("password").roles("USER")*/
                 /**
                  * http://www.mkyong.com/spring-security/spring-security-form-login-using-database/
                  */
-                .jdbcAuthentication().dataSource(dataSource)
-                /*DaoAuthenticationProvider:
-                    createUserSql = "insert into users (username, password, enabled) values (?,?,?)"
-                    deleteUserSql = "delete from users where username = ?"
-                    updateUserSql = "update users set password = ?, enabled = ? where username = ?"
-                    createAuthoritySql = "insert into authorities (username, authority) values (?,?)"
-                    deleteUserAuthoritiesSql = "delete from authorities where username = ?"
-                    userExistsSql = "select username from users where username = ?"
-                    changePasswordSql = "update users set password = ? where username = ?"
-                    findAllGroupsSql = "select group_name from groups"
-                    findUsersInGroupSql = "select username from group_members gm, groups g where gm.group_id = g.id and g.group_name = ?"
-                    insertGroupSql = "insert into groups (group_name) values (?)"
-                    findGroupIdSql = "select id from groups where group_name = ?"
-                    insertGroupAuthoritySql = "insert into group_authorities (group_id, authority) values (?,?)"
-                    deleteGroupSql = "delete from groups where id = ?"
-                    deleteGroupAuthoritiesSql = "delete from group_authorities where group_id = ?"
-                    deleteGroupMembersSql = "delete from group_members where group_id = ?"
-                    renameGroupSql = "update groups set group_name = ? where group_name = ?"
-                    insertGroupMemberSql = "insert into group_members (group_id, username) values (?,?)"
-                    deleteGroupMemberSql = "delete from group_members where group_id = ? and username = ?"
-                    groupAuthoritiesSql = "select g.id, g.group_name, ga.authority from groups g, group_authorities ga where g.group_name = ? and g.id = ga.group_id "
-                    deleteGroupAuthoritySql = "delete from group_authorities where group_id = ? and authority = ?"
+                //2.使用 jdbc-user-service（XML中的名称）:
+//              .jdbcAuthentication().dataSource(dataSource)
+                        /*DaoAuthenticationProvider:
+                            createUserSql = "insert into users (username, password, enabled) values (?,?,?)"
+                            deleteUserSql = "delete from users where username = ?"
+                            updateUserSql = "update users set password = ?, enabled = ? where username = ?"
+                            createAuthoritySql = "insert into authorities (username, authority) values (?,?)"
+                            deleteUserAuthoritiesSql = "delete from authorities where username = ?"
+                            userExistsSql = "select username from users where username = ?"
+                            changePasswordSql = "update users set password = ? where username = ?"
+                            findAllGroupsSql = "select group_name from groups"
+                            findUsersInGroupSql = "select username from group_members gm, groups g where gm.group_id = g.id and g.group_name = ?"
+                            insertGroupSql = "insert into groups (group_name) values (?)"
+                            findGroupIdSql = "select id from groups where group_name = ?"
+                            insertGroupAuthoritySql = "insert into group_authorities (group_id, authority) values (?,?)"
+                            deleteGroupSql = "delete from groups where id = ?"
+                            deleteGroupAuthoritiesSql = "delete from group_authorities where group_id = ?"
+                            deleteGroupMembersSql = "delete from group_members where group_id = ?"
+                            renameGroupSql = "update groups set group_name = ? where group_name = ?"
+                            insertGroupMemberSql = "insert into group_members (group_id, username) values (?,?)"
+                            deleteGroupMemberSql = "delete from group_members where group_id = ? and username = ?"
+                            groupAuthoritiesSql = "select g.id, g.group_name, ga.authority from groups g, group_authorities ga where g.group_name = ? and g.id = ga.group_id "
+                            deleteGroupAuthoritySql = "delete from group_authorities where group_id = ? and authority = ?"
 
-                    authoritiesByUsernameQuery = "select username, authority from authorities where username = ?"
-                    groupAuthoritiesByUsernameQuery = "select g.id, g.group_name, ga.authority from groups g, group_members gm, group_authorities ga where gm.username = ? and g.id = ga.group_id and g.id = gm.group_id"
-                    usersByUsernameQuery = "select username, password, enabled from users where username = ?"
-                */
-                .usersByUsernameQuery(
-                        "select username, password, enabled from users where username = ?")
-                .authoritiesByUsernameQuery(
-                        "select username, authority from authorities where username = ?");
-                //.userDetailsService(customUserDetailsService).passwordEncoder(passwordEncoder());
-                //添加组权限
+                            authoritiesByUsernameQuery = "select username, authority from authorities where username = ?"
+                            groupAuthoritiesByUsernameQuery = "select g.id, g.group_name, ga.authority from groups g, group_members gm, group_authorities ga where gm.username = ? and g.id = ga.group_id and g.id = gm.group_id"
+                            usersByUsernameQuery = "select username, password, enabled from users where username = ?"
+                        */
+//                .usersByUsernameQuery(
+//                        "select username, password, enabled from users where username = ?")
+//                .authoritiesByUsernameQuery(
+//                        "select username, authority from authorities where username = ?");
+
+                //3.使用自定义的 UserDetailsService:
+                /**
+                 * http://www.mkyong.com/spring-security/spring-security-hibernate-annotation-example/
+                 * http://blog.csdn.net/qq245671051/article/details/47259287
+                 */
+                .userDetailsService(customUserDetailsService)
+                .passwordEncoder(passwordEncoder());
+                //添加组权限:
+                //1.使用 jdbc-user-service:
+
+                //2.
     }
 
     /**
@@ -158,17 +170,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         }
     }
 
-    @Bean
-    public PersistentTokenRepository persistentTokenRepository() {
-        JdbcTokenRepositoryImpl tokenRepository = new JdbcTokenRepositoryImpl();
-        /*If this is specified, “Persistent Token Approach” will be used. Defaults to “Simple Hash-Based Token Approach”*/
-        tokenRepository.setDataSource(dataSource);
-        return tokenRepository;
-    }
-
     @Component
     public class CustomUserDetailsService implements UserDetailsService {
 
+        @Transactional(readOnly = true)
         @Override
         public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
             return null;
@@ -179,5 +184,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public PasswordEncoder passwordEncoder() {
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         return passwordEncoder;
+    }
+
+    @Bean
+    public PersistentTokenRepository persistentTokenRepository() {
+        JdbcTokenRepositoryImpl tokenRepository = new JdbcTokenRepositoryImpl();
+        /*If this is specified, “Persistent Token Approach” will be used. Defaults to “Simple Hash-Based Token Approach”*/
+        tokenRepository.setDataSource(dataSource);
+        return tokenRepository;
     }
 }
