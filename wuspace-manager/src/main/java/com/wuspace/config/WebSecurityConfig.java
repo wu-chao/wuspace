@@ -44,8 +44,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private DataSource dataSource;
 
-    @Autowired
-    private CustomUserDetailsService customUserDetailsService;
+//    @Autowired
+//    private CustomUserDetailsService customUserDetailsService;
 
     @Override
     public void configure(WebSecurity webSecurity) {
@@ -93,7 +93,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth
                 //1.使用
-                /*.inMemoryAuthentication().withUser("chao").password("password").roles("USER")*/
+                .inMemoryAuthentication()
+                .withUser("chao")
+                .password("password")
+                .roles("USER")
+                .authorities("/xxx/**");
                 /**
                  * http://www.mkyong.com/spring-security/spring-security-form-login-using-database/
                  */
@@ -135,11 +139,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                  * http://www.mkyong.com/spring-security/spring-security-hibernate-annotation-example/
                  * http://blog.csdn.net/qq245671051/article/details/47259287
                  */
-                .userDetailsService(customUserDetailsService)
-                .passwordEncoder(passwordEncoder());
+//                .userDetailsService(customUserDetailsService)
+//                .passwordEncoder(passwordEncoder());
                 //添加组权限:
                 //1.使用 jdbc-user-service:
-
+//                .jdbcAuthentication()
+//                .authoritiesByUsernameQuery("")
+//                .groupAuthoritiesByUsername("");
                 //2.
     }
 
