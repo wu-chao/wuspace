@@ -110,7 +110,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //                        "select username, authority from authorities where username = ?");
                 //添加组权限:
 //                .groupAuthoritiesByUsername("");
-
                         /*DaoAuthenticationProvider:
                             createUserSql = "insert into users (username, password, enabled) values (?,?,?)"
                             deleteUserSql = "delete from users where username = ?"
