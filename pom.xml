@@ -11,7 +11,7 @@
     <modules>
         <module>blog</module>
         <module>wuspace-manager</module>
-        <module>quartz</module>
+        <module>quartz-scheduler</module>
     </modules>
 
     <!-- Inherit defaults from Spring Boot -->
