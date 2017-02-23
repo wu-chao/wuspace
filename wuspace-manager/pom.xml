@@ -16,6 +16,14 @@
     <relativePath>../pom.xml</relativePath>
   </parent>
 
+  <dependencies>
+    <!-- https://mvnrepository.com/artifact/org.liquibase/liquibase-core -->
+    <dependency>
+      <groupId>org.liquibase</groupId>
+      <artifactId>liquibase-core</artifactId>
+    </dependency>
+  </dependencies>
+
   <build>
     <finalName>wuspace-manager</finalName>
   </build>
