@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.authentication.configurers.provisioning.InMemoryUserDetailsManagerConfigurer;
+import org.springframework.security.config.annotation.authentication.configurers.provisioning.JdbcUserDetailsManagerConfigurer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -44,8 +46,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private DataSource dataSource;
 
-    @Autowired
-    private CustomUserDetailsService customUserDetailsService;
+//    @Autowired
+//    private CustomUserDetailsService customUserDetailsService;
 
     @Override
     public void configure(WebSecurity webSecurity) {
@@ -91,14 +93,23 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth
-                //1.使用
-                /*.inMemoryAuthentication().withUser("chao").password("password").roles("USER")*/
-                /**
-                 * http://www.mkyong.com/spring-security/spring-security-form-login-using-database/
-                 */
-                //2.使用 jdbc-user-service（XML中的名称）:
-//              .jdbcAuthentication().dataSource(dataSource)
+        //1.使用内存用户
+//        InMemoryUserDetailsManagerConfigurer<AuthenticationManagerBuilder> configurer = auth.inMemoryAuthentication();
+//        configurer.withUser("chao").password("123456").roles("USER").authorities("/xxx/**");
+
+        //2.使用Jdbc
+        /**
+         * http://www.mkyong.com/spring-security/spring-security-form-login-using-database/
+         */
+//        JdbcUserDetailsManagerConfigurer<AuthenticationManagerBuilder> configurer = auth.jdbcAuthentication();
+//        configurer
+//                .dataSource(dataSource)
+//                .usersByUsernameQuery(
+//                        "select username, password, enabled from users where username = ?")
+//                .authoritiesByUsernameQuery(
+//                        "select username, authority from authorities where username = ?");
+                //添加组权限:
+//                .groupAuthoritiesByUsername("");
                         /*DaoAuthenticationProvider:
                             createUserSql = "insert into users (username, password, enabled) values (?,?,?)"
                             deleteUserSql = "delete from users where username = ?"
@@ -125,22 +136,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                             groupAuthoritiesByUsernameQuery = "select g.id, g.group_name, ga.authority from groups g, group_members gm, group_authorities ga where gm.username = ? and g.id = ga.group_id and g.id = gm.group_id"
                             usersByUsernameQuery = "select username, password, enabled from users where username = ?"
                         */
-//                .usersByUsernameQuery(
-//                        "select username, password, enabled from users where username = ?")
-//                .authoritiesByUsernameQuery(
-//                        "select username, authority from authorities where username = ?");
-
-                //3.使用自定义的 UserDetailsService:
-                /**
-                 * http://www.mkyong.com/spring-security/spring-security-hibernate-annotation-example/
-                 * http://blog.csdn.net/qq245671051/article/details/47259287
-                 */
-                .userDetailsService(customUserDetailsService)
-                .passwordEncoder(passwordEncoder());
-                //添加组权限:
-                //1.使用 jdbc-user-service:
-
-                //2.
+        //3.使用自定义的 UserDetailsService:
+        /**
+         * http://www.mkyong.com/spring-security/spring-security-hibernate-annotation-example/
+         * http://blog.csdn.net/qq245671051/article/details/47259287
+         */
+//        auth
+//                .userDetailsService(customUserDetailsService)
+//                .passwordEncoder(passwordEncoder());
     }
 
     /**

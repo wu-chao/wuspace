@@ -21,6 +21,7 @@ public class Authority extends BaseEntity {
     @Column(name = "authority", nullable = false, length = 45)
     private String authority;
 
+
     public Authority() {}
 
     public Authority(String username, String authority) {
