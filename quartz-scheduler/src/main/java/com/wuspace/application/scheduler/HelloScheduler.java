@@ -40,14 +40,22 @@ public class HelloScheduler {
     }
 
     public void execCronHelloJob() {
+        JobDataMap dataMap = new JobDataMap();
+        dataMap.put("jobNameKey", "11111111111111");
+        dataMap.put("JobGroupNameKey", "22222222222222");
         try {
             Scheduler scheduler = new QuartzConfig().scheduler();
             JobDetail jobDetail = JobBuilder.newJob(HelloJob.class)
                     .withIdentity("hello2", "helloJobGroup")
+                    .usingJobData("jobName", "helloJob2222")
+                    .usingJobData("jobGroupName", "helloJobGroup2222")
+                    .usingJobData(dataMap)
                     .build();
             ScheduleBuilder builder = CronScheduleBuilder.cronSchedule("0 0/1 * * * ?");
             Trigger trigger = TriggerBuilder.newTrigger()
                     .withIdentity("hello2", "helloTriggerGroup")
+                    .usingJobData("triggerName", "helloTrigger2222")
+                    .usingJobData("trggerGroupName", "helloTriggerGroup2222")
                     .withSchedule(builder)
                     .startNow()
                     .forJob(jobDetail)
