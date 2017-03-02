@@ -17,7 +17,9 @@ public class MyClassPathXmlApplicationContext {
 
     /**
      *
-     1. 利用传入的参数获取 xml 文件的流, 并且利用 dom4j 解析成 Document 对象
+    参考：https://www.cnblogs.com/hlhdidi/p/6029839.html
+
+    1. 利用传入的参数获取 xml 文件的流, 并且利用 dom4j 解析成 Document 对象
 
  　　2. 对于 Document 对象获取根元素对象 <beans> 后对下面的 < bean > 标签进行遍历, 判断是否有符合的 id.
 
