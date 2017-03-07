@@ -1,0 +1,281 @@
+> http://wenku.baidu.com/link?url=ggiylDIpc9cSx5ygIMLCAIrXwdlu5-xMBFjmzvrjWsAikIQSMBononSzqIoaJH6yN2hQ332621Zs713U5-YkL3sUjCu1bR-41X7caiIBS_C  
+
+
+
+> 分布式 quartz 的配置与使用。
+
+
+
+#### quartz.properties
+
+```
+#============================================================================
+# Configure Main Scheduler Properties
+#============================================================================
+
+org.quartz.scheduler.instanceName: Quartz_Scheduler
+org.quartz.scheduler.instanceId: AUTO
+
+org.quartz.scheduler.skipUpdateCheck: true
+
+#============================================================================
+# Configure ThreadPool
+#============================================================================
+
+org.quartz.threadPool.class: org.quartz.simpl.SimpleThreadPool
+org.quartz.threadPool.threadCount: 5
+org.quartz.threadPool.threadPriority: 5
+
+#============================================================================
+# Configure JobStore
+#============================================================================
+
+org.quartz.jobStore.misfireThreshold: 60000
+
+org.quartz.jobStore.class=org.quartz.impl.jdbcjobstore.JobStoreTX
+org.quartz.jobStore.driverDelegateClass=org.quartz.impl.jdbcjobstore.StdJDBCDelegate
+org.quartz.jobStore.useProperties=false
+org.quartz.jobStore.dataSource=myDS
+org.quartz.jobStore.tablePrefix=QRTZ_
+org.quartz.jobStore.isClustered=true
+
+#============================================================================
+# Other Example Delegates
+#============================================================================
+#org.quartz.jobStore.driverDelegateClass=org.quartz.impl.jdbcjobstore.DB2v6Delegate
+#org.quartz.jobStore.driverDelegateClass=org.quartz.impl.jdbcjobstore.DB2v7Delegate
+#org.quartz.jobStore.driverDelegateClass=org.quartz.impl.jdbcjobstore.DriverDelegate
+#org.quartz.jobStore.driverDelegateClass=org.quartz.impl.jdbcjobstore.HSQLDBDelegate
+#org.quartz.jobStore.driverDelegateClass=org.quartz.impl.jdbcjobstore.MSSQLDelegate
+#org.quartz.jobStore.driverDelegateClass=org.quartz.impl.jdbcjobstore.PointbaseDelegate
+#org.quartz.jobStore.driverDelegateClass=org.quartz.impl.jdbcjobstore.PostgreSQLDelegate
+#org.quartz.jobStore.driverDelegateClass=org.quartz.impl.jdbcjobstore.StdJDBCDelegate
+#org.quartz.jobStore.driverDelegateClass=org.quartz.impl.jdbcjobstore.WebLogicDelegate
+#org.quartz.jobStore.driverDelegateClass=org.quartz.impl.jdbcjobstore.oracle.OracleDelegate
+#org.quartz.jobStore.driverDelegateClass=org.quartz.impl.jdbcjobstore.oracle.WebLogicOracleDelegate
+
+#============================================================================
+# Configure Datasources
+#============================================================================
+
+org.quartz.dataSource.myDS.driver: com.mysql.jdbc.Driver
+org.quartz.dataSource.myDS.URL: jdbc:mysql://localhost:3306/quartz_scheduler
+org.quartz.dataSource.myDS.user: root
+org.quartz.dataSource.myDS.password:
+org.quartz.dataSource.myDS.maxConnections: 5
+org.quartz.dataSource.myDS.validationQuery: select 0
+
+#============================================================================
+# Configure Plugins
+#============================================================================
+
+#org.quartz.plugin.shutdownHook.class: org.quartz.plugins.management.ShutdownHookPlugin
+#org.quartz.plugin.shutdownHook.cleanShutdown: true
+
+
+#org.quartz.plugin.triggHistory.class: org.quartz.plugins.history.LoggingJobHistoryPlugin
+```
+
+
+
+#### 创建数据库表（先创建好数据库）
+
+mysql.sql
+
+```
+#
+# Quartz seems to work best with the driver mm.mysql-2.0.7-bin.jar
+#
+# PLEASE consider using mysql with innodb tables to avoid locking issues
+#
+# In your Quartz properties file, you'll need to set 
+# org.quartz.jobStore.driverDelegateClass = org.quartz.impl.jdbcjobstore.StdJDBCDelegate
+#
+
+DROP TABLE IF EXISTS QRTZ_FIRED_TRIGGERS;
+DROP TABLE IF EXISTS QRTZ_PAUSED_TRIGGER_GRPS;
+DROP TABLE IF EXISTS QRTZ_SCHEDULER_STATE;
+DROP TABLE IF EXISTS QRTZ_LOCKS;
+DROP TABLE IF EXISTS QRTZ_SIMPLE_TRIGGERS;
+DROP TABLE IF EXISTS QRTZ_SIMPROP_TRIGGERS;
+DROP TABLE IF EXISTS QRTZ_CRON_TRIGGERS;
+DROP TABLE IF EXISTS QRTZ_BLOB_TRIGGERS;
+DROP TABLE IF EXISTS QRTZ_TRIGGERS;
+DROP TABLE IF EXISTS QRTZ_JOB_DETAILS;
+DROP TABLE IF EXISTS QRTZ_CALENDARS;
+
+
+CREATE TABLE QRTZ_JOB_DETAILS
+  (
+    SCHED_NAME VARCHAR(120) NOT NULL,
+    JOB_NAME  VARCHAR(200) NOT NULL,
+    JOB_GROUP VARCHAR(200) NOT NULL,
+    DESCRIPTION VARCHAR(250) NULL,
+    JOB_CLASS_NAME   VARCHAR(250) NOT NULL,
+    IS_DURABLE VARCHAR(1) NOT NULL,
+    IS_NONCONCURRENT VARCHAR(1) NOT NULL,
+    IS_UPDATE_DATA VARCHAR(1) NOT NULL,
+    REQUESTS_RECOVERY VARCHAR(1) NOT NULL,
+    JOB_DATA BLOB NULL,
+    PRIMARY KEY (SCHED_NAME,JOB_NAME,JOB_GROUP)
+);
+
+CREATE TABLE QRTZ_TRIGGERS
+  (
+    SCHED_NAME VARCHAR(120) NOT NULL,
+    TRIGGER_NAME VARCHAR(200) NOT NULL,
+    TRIGGER_GROUP VARCHAR(200) NOT NULL,
+    JOB_NAME  VARCHAR(200) NOT NULL,
+    JOB_GROUP VARCHAR(200) NOT NULL,
+    DESCRIPTION VARCHAR(250) NULL,
+    NEXT_FIRE_TIME BIGINT(13) NULL,
+    PREV_FIRE_TIME BIGINT(13) NULL,
+    PRIORITY INTEGER NULL,
+    TRIGGER_STATE VARCHAR(16) NOT NULL,
+    TRIGGER_TYPE VARCHAR(8) NOT NULL,
+    START_TIME BIGINT(13) NOT NULL,
+    END_TIME BIGINT(13) NULL,
+    CALENDAR_NAME VARCHAR(200) NULL,
+    MISFIRE_INSTR SMALLINT(2) NULL,
+    JOB_DATA BLOB NULL,
+    PRIMARY KEY (SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP),
+    FOREIGN KEY (SCHED_NAME,JOB_NAME,JOB_GROUP)
+        REFERENCES QRTZ_JOB_DETAILS(SCHED_NAME,JOB_NAME,JOB_GROUP)
+);
+
+CREATE TABLE QRTZ_SIMPLE_TRIGGERS
+  (
+    SCHED_NAME VARCHAR(120) NOT NULL,
+    TRIGGER_NAME VARCHAR(200) NOT NULL,
+    TRIGGER_GROUP VARCHAR(200) NOT NULL,
+    REPEAT_COUNT BIGINT(7) NOT NULL,
+    REPEAT_INTERVAL BIGINT(12) NOT NULL,
+    TIMES_TRIGGERED BIGINT(10) NOT NULL,
+    PRIMARY KEY (SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP),
+    FOREIGN KEY (SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP)
+        REFERENCES QRTZ_TRIGGERS(SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP)
+);
+
+CREATE TABLE QRTZ_CRON_TRIGGERS
+  (
+    SCHED_NAME VARCHAR(120) NOT NULL,
+    TRIGGER_NAME VARCHAR(200) NOT NULL,
+    TRIGGER_GROUP VARCHAR(200) NOT NULL,
+    CRON_EXPRESSION VARCHAR(200) NOT NULL,
+    TIME_ZONE_ID VARCHAR(80),
+    PRIMARY KEY (SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP),
+    FOREIGN KEY (SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP)
+        REFERENCES QRTZ_TRIGGERS(SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP)
+);
+
+CREATE TABLE QRTZ_SIMPROP_TRIGGERS
+  (          
+    SCHED_NAME VARCHAR(120) NOT NULL,
+    TRIGGER_NAME VARCHAR(200) NOT NULL,
+    TRIGGER_GROUP VARCHAR(200) NOT NULL,
+    STR_PROP_1 VARCHAR(512) NULL,
+    STR_PROP_2 VARCHAR(512) NULL,
+    STR_PROP_3 VARCHAR(512) NULL,
+    INT_PROP_1 INT NULL,
+    INT_PROP_2 INT NULL,
+    LONG_PROP_1 BIGINT NULL,
+    LONG_PROP_2 BIGINT NULL,
+    DEC_PROP_1 NUMERIC(13,4) NULL,
+    DEC_PROP_2 NUMERIC(13,4) NULL,
+    BOOL_PROP_1 VARCHAR(1) NULL,
+    BOOL_PROP_2 VARCHAR(1) NULL,
+    PRIMARY KEY (SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP),
+    FOREIGN KEY (SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP) 
+    REFERENCES QRTZ_TRIGGERS(SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP)
+);
+
+CREATE TABLE QRTZ_BLOB_TRIGGERS
+  (
+    SCHED_NAME VARCHAR(120) NOT NULL,
+    TRIGGER_NAME VARCHAR(200) NOT NULL,
+    TRIGGER_GROUP VARCHAR(200) NOT NULL,
+    BLOB_DATA BLOB NULL,
+    PRIMARY KEY (SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP),
+    FOREIGN KEY (SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP)
+        REFERENCES QRTZ_TRIGGERS(SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP)
+);
+
+CREATE TABLE QRTZ_CALENDARS
+  (
+    SCHED_NAME VARCHAR(120) NOT NULL,
+    CALENDAR_NAME  VARCHAR(200) NOT NULL,
+    CALENDAR BLOB NOT NULL,
+    PRIMARY KEY (SCHED_NAME,CALENDAR_NAME)
+);
+
+CREATE TABLE QRTZ_PAUSED_TRIGGER_GRPS
+  (
+    SCHED_NAME VARCHAR(120) NOT NULL,
+    TRIGGER_GROUP  VARCHAR(200) NOT NULL, 
+    PRIMARY KEY (SCHED_NAME,TRIGGER_GROUP)
+);
+
+CREATE TABLE QRTZ_FIRED_TRIGGERS
+  (
+    SCHED_NAME VARCHAR(120) NOT NULL,
+    ENTRY_ID VARCHAR(95) NOT NULL,
+    TRIGGER_NAME VARCHAR(200) NOT NULL,
+    TRIGGER_GROUP VARCHAR(200) NOT NULL,
+    INSTANCE_NAME VARCHAR(200) NOT NULL,
+    FIRED_TIME BIGINT(13) NOT NULL,
+    SCHED_TIME BIGINT(13) NOT NULL,
+    PRIORITY INTEGER NOT NULL,
+    STATE VARCHAR(16) NOT NULL,
+    JOB_NAME VARCHAR(200) NULL,
+    JOB_GROUP VARCHAR(200) NULL,
+    IS_NONCONCURRENT VARCHAR(1) NULL,
+    REQUESTS_RECOVERY VARCHAR(1) NULL,
+    PRIMARY KEY (SCHED_NAME,ENTRY_ID)
+);
+
+CREATE TABLE QRTZ_SCHEDULER_STATE
+  (
+    SCHED_NAME VARCHAR(120) NOT NULL,
+    INSTANCE_NAME VARCHAR(200) NOT NULL,
+    LAST_CHECKIN_TIME BIGINT(13) NOT NULL,
+    CHECKIN_INTERVAL BIGINT(13) NOT NULL,
+    PRIMARY KEY (SCHED_NAME,INSTANCE_NAME)
+);
+
+CREATE TABLE QRTZ_LOCKS
+  (
+    SCHED_NAME VARCHAR(120) NOT NULL,
+    LOCK_NAME  VARCHAR(40) NOT NULL, 
+    PRIMARY KEY (SCHED_NAME,LOCK_NAME)
+);
+
+
+commit;
+```
+
+
+
+#### Job
+
+```
+public abstract class ScheduleJob implements Job {
+  
+}
+```
+
+#### JobDetail
+
+
+
+#### Trigger
+
+
+
+#### Scheduler
+
+
+
+#### 对Job实例的操作
+
+
+

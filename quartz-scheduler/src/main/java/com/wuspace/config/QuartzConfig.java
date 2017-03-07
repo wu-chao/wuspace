@@ -1,8 +1,14 @@
 package com.wuspace.config;
 
+import org.quartz.Job;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 import org.quartz.impl.StdSchedulerFactory;
+import org.quartz.simpl.PropertySettingJobFactory;
+import org.quartz.spi.JobFactory;
+import org.quartz.spi.TriggerFiredBundle;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -12,30 +18,34 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class QuartzConfig {
 
-    /**
-     * 创建Scheduler对象并启动
-     *
-     * @return
-     */
     @Bean
     public Scheduler scheduler() {
-        Scheduler scheduler = null;
         try {
-            scheduler = StdSchedulerFactory.getDefaultScheduler();
+            Scheduler scheduler = new StdSchedulerFactory().getScheduler();
+            scheduler.setJobFactory(jobFactory());
             scheduler.start();
             return scheduler;
         } catch (SchedulerException e) {
             e.printStackTrace();
-            //关闭scheduler
-            try {
-                if (!scheduler.isShutdown()) {
-                    scheduler.shutdown();
-                }
-            } catch (SchedulerException e1) {
-                e1.printStackTrace();
-                return null;
-            }
             return null;
+        }
+    }
+
+    @Bean
+    public JobFactory jobFactory() {
+        return new QuartzJobFactory();
+    }
+
+    protected class QuartzJobFactory extends PropertySettingJobFactory {
+
+        @Autowired
+        private AutowireCapableBeanFactory autowireCapableBeanFactory;
+
+        @Override
+        public Job newJob(TriggerFiredBundle bundle, Scheduler scheduler) throws SchedulerException {
+            Job job = super.newJob(bundle, scheduler);
+            autowireCapableBeanFactory.autowireBean(job);
+            return job;
         }
     }
 }
