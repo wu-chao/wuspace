@@ -1,4 +1,4 @@
-package com.wuspace.util;
+package com.wuspace.server.util;
 
 public class StringUtils {
 	public static boolean isEmpty(String str) {

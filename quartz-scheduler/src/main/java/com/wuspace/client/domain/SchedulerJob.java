@@ -1,9 +1,12 @@
-package com.wuspace.application.job;
+package com.wuspace.client.domain;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.quartz.Job;
+import org.quartz.JobDataMap;
 
-import java.util.Map;
-
+@Getter
+@Setter
 public abstract class SchedulerJob implements Job {
 
     String identify;
@@ -14,6 +17,6 @@ public abstract class SchedulerJob implements Job {
 
     String cron;
 
-    Map<String, String> jobDataMap;
+    JobDataMap jobDataMap;
 
 }

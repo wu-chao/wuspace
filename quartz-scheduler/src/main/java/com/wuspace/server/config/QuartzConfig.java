@@ -1,4 +1,4 @@
-package com.wuspace.config;
+package com.wuspace.server.config;
 
 import org.quartz.Job;
 import org.quartz.Scheduler;
@@ -12,9 +12,6 @@ import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-/**
- * Created by WUCHAO on 2017/2/20.
- */
 @Configuration
 public class QuartzConfig {
 

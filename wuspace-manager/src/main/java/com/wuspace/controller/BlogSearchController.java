@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.wuspace.util.StringUtils;
+import com.wuspace.server.util.StringUtils;
 
 @Controller
 public class BlogSearchController {
