@@ -1,0 +1,81 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: wuchao
+      changes:
+        - createTable:
+            tableName: users
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: username
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: timestamp
+              - column:
+                  name: updated_at
+                  type: timestamp
+              - column:
+                  name: deleted_at
+                  type: timestamp
+              - column:
+                  name: email
+                  type: varchar(128)
+              - column:
+                  name: phone
+                  type: varchar(20)
+              - column:
+                  name: nickname
+                  type: varchar(100)
+              - column:
+                  name: avatar
+                  type: varchar(20)
+              - column:
+                  name: description
+                  type: varchar(255)
+              - column:
+                  name: password
+                  type: varchar(16)
+              - column:
+                  name: enabled
+                  type: boolean
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: 2
+      author: wuchao
+      changes:
+        - createTable:
+            tableName: authorities
+            columns:
+              - column:
+                 name: id
+                 type: bigint
+                 autoIncrement: true
+                 constraints:
+                   primaryKey: true
+                   nullable: false
+              - column:
+                 name: created_at
+                 type: timestamp
+              - column:
+                 name: updated_at
+                 type: timestamp
+              - column:
+                 name: deleted_at
+                 type: timestamp
+              - column:
+                 name: username
+                 type: varchar(100)
+              - column:
+                 name: authority
+                 type: varchar(45)

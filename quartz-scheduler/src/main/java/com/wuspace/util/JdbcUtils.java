@@ -1,4 +1,4 @@
-package com.wuspace.server.util;
+package com.wuspace.util;
 
 import lombok.Getter;
 import lombok.Setter;

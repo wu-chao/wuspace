@@ -8,7 +8,7 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>rabbit-mq</artifactId>
     <packaging>war</packaging>
-    <name>rabbit-mq Maven Webapp</name>
+    <name>rabbit-mq</name>
     <url>http://maven.apache.org</url>
     <dependencies>
         <dependency>

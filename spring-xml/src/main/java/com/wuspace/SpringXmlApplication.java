@@ -1,7 +1,7 @@
 package com.wuspace;
 
 import com.wuspace.domain.Student;
-import com.wuspace.server.util.MyClassPathXmlApplicationContext;
+import com.wuspace.util.MyClassPathXmlApplicationContext;
 
 /**
  * Created by WUCHAO on 2017/3/2.

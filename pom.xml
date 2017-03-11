@@ -14,6 +14,7 @@
         <module>quartz-scheduler</module>
         <module>rabbit-mq</module>
         <module>spring-xml</module>
+        <module>websphere-monitor</module>
     </modules>
 
     <!-- Inherit defaults from Spring Boot -->

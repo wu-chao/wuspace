@@ -1,4 +1,4 @@
-package com.wuspace.server.util;
+package com.wuspace.util;
 
 import org.dom4j.Document;
 import org.dom4j.DocumentException;

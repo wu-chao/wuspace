@@ -1,0 +1,83 @@
+<!--This XML file does not appear to have any style information associated with it. The document tree is shown below.-->
+<PerformanceMonitor responseStatus="success" version="">
+    <Node name="websphereNode01">
+        <Server name="server1">
+            <Stat name="server">
+                <!--<Stat name="ExtensionRegistryStats.name"/>-->
+                <Stat name="Security Authentication">
+                    <CountStatistic ID="1" count="1614" lastSampleTime="1489126174709" name="WebAuthenticationCount" startTime="1488942300406" unit="None"/>
+                    <CountStatistic ID="3" count="0" lastSampleTime="1488942300406" name="IdentityAssertionCount" startTime="1488942300406" unit="None"/>
+                    <CountStatistic ID="4" count="0" lastSampleTime="1488942300406" name="BasicAuthenticationCount" startTime="1488942300406" unit="None"/>
+                    <CountStatistic ID="5" count="0" lastSampleTime="1488942300406" name="TokenAuthenticationCount" startTime="1488942300406" unit="None"/>
+                    <CountStatistic ID="6" count="0" lastSampleTime="1488942300406" name="JAASIdentityAssertionCount" startTime="1488942300406" unit="None"/>
+                    <CountStatistic ID="7" count="0" lastSampleTime="1488942300406" name="JAASBasicAuthenticationCount" startTime="1488942300406" unit="None"/>
+                    <CountStatistic ID="8" count="0" lastSampleTime="1488942300406" name="JAASTokenAuthenticationCount" startTime="1488942300406" unit="None"/>
+                    <CountStatistic ID="9" count="0" lastSampleTime="1488942300406" name="RMIAuthenticationCount" startTime="1488942300406" unit="None"/>
+                    <TimeStatistic ID="10" lastSampleTime="1489126174709" max="33" min="0" name="WebAuthenticationTime" startTime="1488942300407" totalTime="789" unit="Milliseconds"/>
+                    <TimeStatistic ID="12" lastSampleTime="1488942300407" max="0" min="0" name="IdentityAssertionTime" startTime="1488942300407" totalTime="0" unit="Milliseconds"/>
+                    <TimeStatistic ID="13" lastSampleTime="1488942300407" max="0" min="0" name="BasicAuthenticationTime" startTime="1488942300407" totalTime="0" unit="Milliseconds"/>
+                    <TimeStatistic ID="14" lastSampleTime="1488942300407" max="0" min="0" name="TokenAuthenticationTime" startTime="1488942300407" totalTime="0" unit="Milliseconds"/>
+                    <TimeStatistic ID="15" lastSampleTime="1488942300407" max="0" min="0" name="JAASIdentityAssertionTime" startTime="1488942300407" totalTime="0" unit="Milliseconds"/>
+                    <TimeStatistic ID="16" lastSampleTime="1488942300407" max="0" min="0" name="JAASBasicAuthenticationTime" startTime="1488942300407" totalTime="0" unit="Milliseconds"/>
+                    <TimeStatistic ID="17" lastSampleTime="1488942300407" max="0" min="0" name="JAASTokenAuthenticationTime" startTime="1488942300407" totalTime="0" unit="Milliseconds"/>
+                    <TimeStatistic ID="18" lastSampleTime="1488942300407" max="0" min="0" name="RMIAuthenticationTime" startTime="1488942300407" totalTime="0" unit="Milliseconds"/>
+                </Stat>
+                <Stat name="Security Authorization">
+                    <TimeStatistic ID="1" lastSampleTime="1489126174709" max="4" min="0" name="WebAuthorizationTime" startTime="1488942302028" totalTime="608" unit="Milliseconds"/>
+                    <TimeStatistic ID="2" lastSampleTime="1488942302028" max="0" min="0" name="EJBAuthorizationTime" startTime="1488942302028" totalTime="0" unit="Milliseconds"/>
+                    <TimeStatistic ID="3" lastSampleTime="1489137722725" max="14" min="0" name="AdminAuthorizationTime" startTime="1488942302028" totalTime="795" unit="Milliseconds"/>
+                </Stat>
+                <Stat name="JDBC Connection Pools">
+                    <Stat name="Derby JDBC Provider">
+                        <Stat name="DefaultDatasource">
+                            <CountStatistic ID="1" count="0" lastSampleTime="1488942302453" name="CreateCount" startTime="1488942302453" unit="N/A"/>
+                            <CountStatistic ID="2" count="0" lastSampleTime="1488942302453" name="CloseCount" startTime="1488942302453" unit="N/A"/>
+                            <BoundedRangeStatistic ID="5" highWaterMark="0" integral="0.0" lastSampleTime="1489137722726" lowWaterMark="0" lowerBound="0" mean="0.0" name="PoolSize" startTime="1488942302453" unit="N/A" upperBound="0" value="0"/>
+                            <BoundedRangeStatistic ID="6" highWaterMark="0" integral="0.0" lastSampleTime="1489137722726" lowWaterMark="0" lowerBound="0" mean="0.0" name="FreePoolSize" startTime="1488942302453" unit="N/A" upperBound="0" value="0"/>
+                            <RangeStatistic ID="7" highWaterMark="0" integral="0.0" lastSampleTime="1489137722726" lowWaterMark="0" mean="0.0" name="WaitingThreadCount" startTime="1488942302453" unit="N/A" value="0"/>
+                            <RangeStatistic ID="9" highWaterMark="0" integral="0.0" lastSampleTime="1489137722726" lowWaterMark="0" mean="0.0" name="PercentUsed" startTime="1488942302453" unit="N/A" value="0"/>
+                            <TimeStatistic ID="12" lastSampleTime="1488942302453" max="0" min="0" name="UseTime" startTime="1488942302453" totalTime="0" unit="MILLISECOND"/>
+                            <TimeStatistic ID="13" lastSampleTime="1488942302453" max="0" min="0" name="WaitTime" startTime="1488942302453" totalTime="0" unit="MILLISECOND"/>
+                        </Stat>
+                        <CountStatistic ID="1" count="0" lastSampleTime="1488942302453" name="CreateCount" startTime="1488942302453" unit="N/A"/>
+                        <CountStatistic ID="2" count="0" lastSampleTime="1488942302453" name="CloseCount" startTime="1488942302453" unit="N/A"/>
+                        <BoundedRangeStatistic ID="5" highWaterMark="0" integral="0.0" lastSampleTime="1489137722726" lowWaterMark="0" lowerBound="0" mean="0.0" name="PoolSize" startTime="1488942302453" unit="N/A" upperBound="0" value="0"/>
+                        <BoundedRangeStatistic ID="6" highWaterMark="0" integral="0.0" lastSampleTime="1489137722726" lowWaterMark="0" lowerBound="0" mean="0.0" name="FreePoolSize" startTime="1488942302453" unit="N/A" upperBound="0" value="0"/>
+                        <RangeStatistic ID="7" highWaterMark="0" integral="0.0" lastSampleTime="1489137722726" lowWaterMark="0" mean="0.0" name="WaitingThreadCount" startTime="1488942302453" unit="N/A" value="0"/>
+                        <RangeStatistic ID="9" highWaterMark="0" integral="0.0" lastSampleTime="1489137722726" lowWaterMark="0" mean="0.0" name="PercentUsed" startTime="1488942302453" unit="N/A" value="0"/>
+                        <TimeStatistic ID="12" lastSampleTime="1488942302453" max="0" min="0" name="UseTime" startTime="1488942302453" totalTime="0" unit="MILLISECOND"/>
+                        <TimeStatistic ID="13" lastSampleTime="1488942302453" max="0" min="0" name="WaitTime" startTime="1488942302453" totalTime="0" unit="MILLISECOND"/>
+                    </Stat>
+                    <Stat name="Derby JDBC Provider (XA)">
+                        <Stat name="jdbc/DefaultEJBTimerDataSource">
+                            <CountStatistic ID="1" count="1" lastSampleTime="1488951567716" name="CreateCount" startTime="1488942302439" unit="N/A"/>
+                            <CountStatistic ID="2" count="0" lastSampleTime="1488942302439" name="CloseCount" startTime="1488942302439" unit="N/A"/>
+                            <BoundedRangeStatistic ID="5" highWaterMark="1" integral="1.8615501E8" lastSampleTime="1489137722726" lowWaterMark="0" lowerBound="0" mean="0.9525879470231255" name="PoolSize" startTime="1488942302439" unit="N/A" upperBound="30" value="1"/>
+                            <BoundedRangeStatistic ID="6" highWaterMark="1" integral="1.86144383E8" lastSampleTime="1489137722726" lowWaterMark="0" lowerBound="0" mean="0.9525335667939122" name="FreePoolSize" startTime="1488942302439" unit="N/A" upperBound="30" value="1"/>
+                            <RangeStatistic ID="7" highWaterMark="0" integral="0.0" lastSampleTime="1489137722726" lowWaterMark="0" mean="0.0" name="WaitingThreadCount" startTime="1488942302439" unit="N/A" value="0"/>
+                            <RangeStatistic ID="9" highWaterMark="100" integral="35423.0" lastSampleTime="1489137722726" lowWaterMark="96" mean="1.8126572498586085E-4" name="PercentUsed" startTime="1488942302439" unit="N/A" value="0"/>
+                            <TimeStatistic ID="12" lastSampleTime="1489137700410" max="271" min="0" name="UseTime" startTime="1488942302439" totalTime="10582" unit="MILLISECOND"/>
+                            <TimeStatistic ID="13" lastSampleTime="1488942302439" max="0" min="0" name="WaitTime" startTime="1488942302439" totalTime="0" unit="MILLISECOND"/>
+                        </Stat>
+                        <CountStatistic ID="1" count="1" lastSampleTime="1488951567716" name="CreateCount" startTime="1488942302439" unit="N/A"/>
+                        <CountStatistic ID="2" count="0" lastSampleTime="1488942302439" name="CloseCount" startTime="1488942302439" unit="N/A"/>
+                        <BoundedRangeStatistic ID="5" highWaterMark="1" integral="1.8615501E8" lastSampleTime="1489137722726" lowWaterMark="0" lowerBound="0" mean="0.9525879470231255" name="PoolSize" startTime="1488942302439" unit="N/A" upperBound="0" value="1"/>
+                        <BoundedRangeStatistic ID="6" highWaterMark="1" integral="1.86144383E8" lastSampleTime="1489137722726" lowWaterMark="0" lowerBound="0" mean="0.9525335667939122" name="FreePoolSize" startTime="1488942302439" unit="N/A" upperBound="0" value="1"/>
+                        <RangeStatistic ID="7" highWaterMark="0" integral="0.0" lastSampleTime="1489137722726" lowWaterMark="0" mean="0.0" name="WaitingThreadCount" startTime="1488942302439" unit="N/A" value="0"/>
+                        <RangeStatistic ID="9" highWaterMark="100" integral="34766.0" lastSampleTime="1489137722726" lowWaterMark="0" mean="1.7790374036243228E-4" name="PercentUsed" startTime="1488942302439" unit="N/A" value="0"/>
+                        <TimeStatistic ID="12" lastSampleTime="1489137700410" max="271" min="0" name="UseTime" startTime="1488942302439" totalTime="10582" unit="MILLISECOND"/>
+                        <TimeStatistic ID="13" lastSampleTime="1488942302439" max="0" min="0" name="WaitTime" startTime="1488942302439" totalTime="0" unit="MILLISECOND"/>
+                    </Stat>
+                    <CountStatistic ID="1" count="1" lastSampleTime="1488951567716" name="CreateCount" startTime="1488942302438" unit="N/A"/>
+                    <CountStatistic ID="2" count="0" lastSampleTime="1488942302453" name="CloseCount" startTime="1488942302439" unit="N/A"/>
+                    <BoundedRangeStatistic ID="5" highWaterMark="1" integral="1.8615501E8" lastSampleTime="1489137722726" lowWaterMark="0" lowerBound="0" mean="0.9525879470231255" name="PoolSize" startTime="1488942302439" unit="N/A" upperBound="0" value="1"/>
+                    <BoundedRangeStatistic ID="6" highWaterMark="1" integral="1.86144383E8" lastSampleTime="1489137722726" lowWaterMark="0" lowerBound="0" mean="0.9525335667939122" name="FreePoolSize" startTime="1488942302439" unit="N/A" upperBound="0" value="1"/>
+                    <RangeStatistic ID="7" highWaterMark="0" integral="0.0" lastSampleTime="1489137722726" lowWaterMark="0" mean="0.0" name="WaitingThreadCount" startTime="1488942302439" unit="N/A" value="0"/>
+                    <RangeStatistic ID="9" highWaterMark="100" integral="34766.0" lastSampleTime="1489137722726" lowWaterMark="0" mean="1.7790374036243228E-4" name="PercentUsed" startTime="1488942302439" unit="N/A" value="0"/>
+                    <TimeStatistic ID="12" lastSampleTime="1489137700410" max="271" min="0" name="UseTime" startTime="1488942302439" totalTime="10582" unit="MILLISECOND"/>
+                    <TimeStatistic ID="13" lastSampleTime="1488942302453" max="0" min="0" name="WaitTime" startTime="1488942302439" totalTime="0" unit="MILLISECOND"/>
+                </Stat>
+            </Stat>
+        </Server>
+    </Node>
+</PerformanceMonitor>

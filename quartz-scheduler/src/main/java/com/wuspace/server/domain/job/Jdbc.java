@@ -1,6 +1,6 @@
 package com.wuspace.application.job;
 
-import com.wuspace.server.util.JdbcUtils;
+import com.wuspace.util.JdbcUtils;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 

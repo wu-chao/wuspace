@@ -4,7 +4,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 	<title>WUSPACE登录</title>
-	<link th:href="@{/resources/css/login.css}" rel="stylesheet" type="text/css"/>
+	<link th:href="@{/css/login.css}" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="all">
@@ -12,23 +12,24 @@
 		<div id="login-head">
 			<h1>WUSPACE登录</h1>
 		</div>
-		<form action="login" method="post">
-			<p id="message" style="font-family:'微软雅黑';font-size:14px;color:red;"></p>
+		<form method="post" action="/login">
+			<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+			<p id="message" style="font-family:'微软雅黑';font-size:14px;color:red;" th:text="${sessionScope != null and sessionScope.SPRING_SECURITY_LAST_EXCEPTION.message} "></p>
 			<ul>
 				<li>
 					<i class="icon user"></i>
-					<input type="text" name="account" id="account" autocomplete="off"  placeholder="请输入用户名或邮箱账号" class="text"/>
+					<input type="text" name="username" id="account" autocomplete="off"  placeholder="请输入用户名或邮箱账号" class="text"/>
 				</li>
 				<li>
 					<i class="icon lock"></i>
-					<input type="password" name="password" id="password" autocomplete="off" maxlength="16" placeholder="请输入用户密码"/> 
+					<input type="password" name="password" id="password" autocomplete="off" maxlength="16" placeholder="请输入用户密码"/>
 				</li>
 			</ul>
 			<div class="clear"></div>
 			<div id="login_operations">
 				<label><input type="checkbox" id="cookie" name="cookieMark"/>七天免登陆</label>
 				<a id="forget_psw" href="javascript:void(0);">忘记密码 ?</a>
-				<input type="button" onclick="login()" value="登 陆"/>
+				<input type="submit" value="登 陆"/>
 				<a id="login_register" th:href="@{/users/register}">无账号？点此注册</a>
 			</div>
 		</form>
@@ -37,10 +38,10 @@
 		<p>Copyright &copy; 2016 by wuchao</p>
 	</div>
 </div>
-<script type="text/javascript" th:src="@{/resources/js/jquery-1.11.1.min.js}"></script>
-<script type="text/javascript" th:src="@{/resources/js/cookie.js}"></script>
-<script type="text/javascript" th:src="@{/resources/js/utils.js}"></script>
-<script type="text/javascript">
+<script type="text/javascript" src="/jquery-1.11.1.min.js" th:src="@{/js/jquery-1.11.1.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/cookie.js}"></script>
+<script type="text/javascript" th:src="@{/js/utils.js}"></script>
+<script th:inline="javascript">
 	/*<![CDATA[*/
 	var user_id = 0;
 	
@@ -74,7 +75,7 @@
 		
 		$.ajax({
 			type:"post",
-			url:"/blog/users/login",
+			url:"/users/login",
 			data:{"account" : account,"password":password,"cookieMark":cookieMark},
 			beforeSend:function(){
 			},
@@ -91,8 +92,8 @@
 				}
 				else{
 					var url = document.referrer;//获取页面的来访页面
-					if(isEmpty(url) || url == "http://localhost:8080/blog/users/register"){
-						window.location.href = "/blog/blogss/index";
+					if(isEmpty(url) || url == "http://localhost:8080/users/register"){
+						window.location.href = "/blogs/index";
 					}
 					else{
 						window.location.href = url;	
@@ -109,7 +110,7 @@
 		}
 		$.ajax({
 			type:"get",
-			url:"/blog/users/validate",
+			url:"/users/validate",
 			data:{"account":account},
 			success:function(data){
 				user_id = parseInt(data);
