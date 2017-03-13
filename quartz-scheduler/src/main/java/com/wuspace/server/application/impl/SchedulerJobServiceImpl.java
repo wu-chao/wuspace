@@ -1,11 +1,11 @@
-package com.wuspace.application.impl;
+package com.wuspace.server.application.impl;
 
-import com.wuspace.application.SchedulerService;
-import com.wuspace.application.job.SchedulerJob;
+import com.wuspace.server.application.SchedulerJobService;
+import com.wuspace.server.domain.job.SchedulerJob;
 import org.quartz.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
-public class SchedulerServiceImpl implements SchedulerService {
+public class SchedulerJobServiceImpl implements SchedulerJobService {
 
     @Autowired
     private Scheduler scheduler;
@@ -19,6 +19,7 @@ public class SchedulerServiceImpl implements SchedulerService {
         Trigger trigger = TriggerBuilder.newTrigger()
                 .withIdentity(job.getIdentify(), job.getGroup())
                 .withDescription(job.getDescription())
+                .withSchedule(CronScheduleBuilder.cronSchedule(job.getCron()))
                 .forJob(jobDetail)
                 .build();
         try {

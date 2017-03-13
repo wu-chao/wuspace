@@ -2,12 +2,11 @@ package com.wuspace.client.domain;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.quartz.Job;
 import org.quartz.JobDataMap;
 
 @Getter
 @Setter
-public abstract class SchedulerJob implements Job {
+public abstract class SchedulerJob {
 
     String identify;
 

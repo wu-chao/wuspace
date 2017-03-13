@@ -1,11 +1,15 @@
-package com.wuspace.application.job;
+package com.wuspace.server.domain.job;
 
 import com.wuspace.util.JdbcUtils;
+import lombok.Getter;
+import lombok.Setter;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
 import java.util.Map;
 
+@Getter
+@Setter
 public class Jdbc extends SchedulerJob {
 
     public String url;
