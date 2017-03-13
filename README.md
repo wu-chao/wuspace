@@ -1,2 +1,2 @@
 # wuspace
-Test code for learning.
+Demo for learning.
