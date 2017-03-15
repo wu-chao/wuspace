@@ -3,8 +3,13 @@ package com.wuspace.server.application.impl;
 import com.wuspace.server.application.SchedulerJobService;
 import com.wuspace.server.domain.job.SchedulerJob;
 import org.quartz.*;
+import org.quartz.impl.matchers.GroupMatcher;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import java.util.Set;
+
+@Service
 public class SchedulerJobServiceImpl implements SchedulerJobService {
 
     @Autowired
@@ -27,5 +32,16 @@ public class SchedulerJobServiceImpl implements SchedulerJobService {
         } catch (SchedulerException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public Set<JobKey> allJobs(String matcher) {
+        Set<JobKey> jobKeys = null;
+        try {
+            jobKeys = scheduler.getJobKeys(GroupMatcher.jobGroupContains(matcher));
+        } catch (SchedulerException e) {
+            e.printStackTrace();
+        }
+        return jobKeys;
     }
 }
