@@ -1,8 +1,10 @@
 package com.wuspace.client.web;
 
+import com.wuspace.client.application.RemoteSchedulerJobService;
 import com.wuspace.client.domain.Jdbc;
 import com.wuspace.client.domain.SchedulerJob;
 import org.quartz.JobDataMap;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 public class SchedulerCreateController {
+
+    @Autowired
+    private RemoteSchedulerJobService remoteSchedulerJobService;
 
     @RequestMapping(value = "/addJob")
     public ResponseEntity addJob() {
@@ -27,6 +32,7 @@ public class SchedulerCreateController {
         jobDataMap.put("driverClassName", "com.mysql.jdbc.Driver");
         jobDataMap.put("sql", "select u from user");
         jdbcJob.setJobDataMap(jobDataMap);
+        remoteSchedulerJobService.addJob(jdbcJob);
         return ResponseEntity.ok().build();
     }
 }

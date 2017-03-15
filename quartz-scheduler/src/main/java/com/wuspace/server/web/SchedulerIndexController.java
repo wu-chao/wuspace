@@ -3,6 +3,7 @@ package com.wuspace.server.web;
 import com.wuspace.server.application.SchedulerJobService;
 import org.quartz.JobKey;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,7 +21,7 @@ public class SchedulerIndexController {
     private SchedulerJobService schedulerJobService;
 
     @RequestMapping(value = "/show")
-    public Model index(@RequestParam(defaultValue = "") String matcher, Model model) {
+    public ResponseEntity index(@RequestParam(defaultValue = "") String matcher, Model model) {
         Set<JobKey> jobKeys = schedulerJobService.allJobs(matcher);
         model.addAttribute("jobs", jobKeys);
 
@@ -29,6 +30,6 @@ public class SchedulerIndexController {
             System.out.println("======" + jobKey.getName() + jobKey.getGroup());
         }
 
-        return model;
+        return ResponseEntity.ok().build();
     }
 }

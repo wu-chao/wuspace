@@ -7,6 +7,7 @@ import org.quartz.impl.matchers.GroupMatcher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Service
@@ -36,7 +37,7 @@ public class SchedulerJobServiceImpl implements SchedulerJobService {
 
     @Override
     public Set<JobKey> allJobs(String matcher) {
-        Set<JobKey> jobKeys = null;
+        Set<JobKey> jobKeys = new HashSet<>();
         try {
             jobKeys = scheduler.getJobKeys(GroupMatcher.jobGroupContains(matcher));
         } catch (SchedulerException e) {
