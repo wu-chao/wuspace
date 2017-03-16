@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.Random;
 import java.util.Set;
 
 /**
@@ -27,7 +28,7 @@ public class SchedulerIndexController {
 
         //打印所有Job的信息
         for (JobKey jobKey : jobKeys) {
-            System.out.println("======" + jobKey.getName() + jobKey.getGroup());
+            System.out.println(new Random().nextInt(100) + "======" + jobKey.getName() + "======" + jobKey.getGroup());
         }
 
         return ResponseEntity.ok().build();
