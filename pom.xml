@@ -11,7 +11,8 @@
     <modules>
         <module>blog</module>
         <module>wuspace-manager</module>
-        <module>quartz-scheduler</module>
+        <module>quartz-client</module>
+        <module>quartz-server</module>
         <module>rabbit-mq</module>
         <module>spring-xml</module>
         <module>websphere-monitor</module>
