@@ -1,7 +1,7 @@
-package com.wuspace.server.application.impl;
+package com.wuspace.application.impl;
 
-import com.wuspace.server.application.SchedulerJobService;
-import com.wuspace.server.domain.job.SchedulerJob;
+import com.wuspace.application.SchedulerJobService;
+import com.wuspace.domain.SchedulerJob;
 import org.quartz.*;
 import org.quartz.impl.matchers.GroupMatcher;
 import org.springframework.beans.factory.annotation.Autowired;

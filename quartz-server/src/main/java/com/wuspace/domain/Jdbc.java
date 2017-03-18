@@ -1,4 +1,4 @@
-package com.wuspace.server.domain.job;
+package com.wuspace.domain;
 
 import com.wuspace.util.JdbcUtils;
 import lombok.Getter;
@@ -27,7 +27,7 @@ public class Jdbc extends SchedulerJob {
         JdbcUtils jdbcUtils = new JdbcUtils(url, username, password, driverClassName);
         Map<String, Object> results = jdbcUtils.getJdbcTemplate().queryForMap(sql);
         for (Map.Entry e : results.entrySet()) {
-            System.out.println("--------------" + e.getKey() + " : " + e.getValue() + "--------------");
+            System.out.println("quartz -------------- " + e.getKey() + " : " + e.getValue() + "--------------");
         }
         jdbcUtils.close();
     }

@@ -1,7 +1,7 @@
-package com.wuspace.server.web;
+package com.wuspace.web;
 
-import com.wuspace.server.application.SchedulerJobService;
-import com.wuspace.server.domain.job.SchedulerJob;
+import com.wuspace.domain.SchedulerJob;
+import com.wuspace.application.SchedulerJobService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * Created by WUCHAO on 2017/3/8.
  */
 @Controller
-public class JdbcSchedulerController {
+public class SchedulerCreateController {
 
     @Autowired
     private SchedulerJobService schedulerJobService;

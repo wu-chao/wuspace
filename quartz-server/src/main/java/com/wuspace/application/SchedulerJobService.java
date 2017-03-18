@@ -1,6 +1,6 @@
-package com.wuspace.server.application;
+package com.wuspace.application;
 
-import com.wuspace.server.domain.job.SchedulerJob;
+import com.wuspace.domain.SchedulerJob;
 import org.quartz.JobKey;
 
 import java.util.Set;

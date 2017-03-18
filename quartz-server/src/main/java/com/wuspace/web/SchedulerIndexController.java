@@ -1,6 +1,6 @@
-package com.wuspace.server.web;
+package com.wuspace.web;
 
-import com.wuspace.server.application.SchedulerJobService;
+import com.wuspace.application.SchedulerJobService;
 import org.quartz.JobKey;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

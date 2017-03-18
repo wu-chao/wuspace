@@ -1,4 +1,4 @@
-package com.wuspace.server.domain.job;
+package com.wuspace.domain;
 
 import lombok.Getter;
 import lombok.Setter;
