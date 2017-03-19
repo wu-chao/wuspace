@@ -13,7 +13,7 @@
         <module>wuspace-manager</module>
         <module>quartz-client</module>
         <module>quartz-server</module>
-        <module>rabbit-mq</module>
+        <module>rabbitmq-server</module>
         <module>spring-xml</module>
         <module>websphere-monitor</module>
     </modules>
