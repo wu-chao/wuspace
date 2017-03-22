@@ -1,5 +1,7 @@
 package com.wuspace.domain;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.stereotype.Component;
 
 import java.util.concurrent.CountDownLatch;
@@ -7,6 +9,8 @@ import java.util.concurrent.CountDownLatch;
 /**
  * Created by WUCHAO on 2017/3/19.
  */
+@Getter
+@Setter
 @Component
 public class Receiver {
 
@@ -21,7 +25,4 @@ public class Receiver {
         countDownLatch.countDown();
     }
 
-    public CountDownLatch getCountDownLatch() {
-        return countDownLatch;
-    }
 }

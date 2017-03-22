@@ -30,14 +30,14 @@ public class RabbitMQServerApplication {
 
     // 创建一个 topic 交换器
     @Bean
-    protected Exchange exchange() {
+    protected TopicExchange exchange() {
         return new TopicExchange("spring-boot-topic-exchange");
     }
 
     // 绑定队列和交换器
     @Bean
-    protected Binding binding(Queue queue, TopicExchange topicExchange) {
-        return BindingBuilder.bind(queue).to(topicExchange).with(QUEUENAME);
+    protected Binding binding(Queue queue, TopicExchange exchange) {
+        return BindingBuilder.bind(queue).to(exchange).with(QUEUENAME);
     }
 
     // 注册消息监听器
@@ -58,6 +58,6 @@ public class RabbitMQServerApplication {
     }
 
     public static void main(String[] args) {
-        SpringApplication.run(RabbitMQServerApplication.class);
+        SpringApplication.run(RabbitMQServerApplication.class, args);
     }
 }
