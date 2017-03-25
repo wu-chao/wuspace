@@ -16,6 +16,7 @@
         <module>rabbitmq-server</module>
         <module>spring-xml</module>
         <module>websphere-monitor</module>
+        <module>spring-rabbit-demo</module>
     </modules>
 
     <!-- Inherit defaults from Spring Boot -->
