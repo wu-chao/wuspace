@@ -1,15 +1,18 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-    <parent>
-        <artifactId>wuspace</artifactId>
-        <groupId>com.wuspace</groupId>
-        <version>1.0-SNAPSHOT</version>
-    </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>spring-rabbit-demo</artifactId>
     <packaging>war</packaging>
-    <name>spring-rabbit-demo Maven Webapp</name>
+    <name>spring-rabbit-demo</name>
     <url>http://maven.apache.org</url>
+
+    <parent>
+        <groupId>com.wuspace</groupId>
+        <artifactId>wuspace</artifactId>
+        <version>1.0-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
