@@ -3,8 +3,6 @@ package com.wuspace.domain;
 import com.wuspace.util.JdbcUtils;
 import lombok.Getter;
 import lombok.Setter;
-import org.quartz.JobExecutionContext;
-import org.quartz.JobExecutionException;
 
 import java.util.Map;
 
@@ -23,11 +21,11 @@ public class Jdbc extends SchedulerJob {
     public String sql;
 
     @Override
-    public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
+    public void log() {
         JdbcUtils jdbcUtils = new JdbcUtils(url, username, password, driverClassName);
         Map<String, Object> results = jdbcUtils.getJdbcTemplate().queryForMap(sql);
         for (Map.Entry e : results.entrySet()) {
-            System.out.println("quartz -------------- " + e.getKey() + " : " + e.getValue() + "--------------");
+            System.out.println(e.getKey() + " -------------- : " + e.getValue());
         }
         jdbcUtils.close();
     }

@@ -21,7 +21,7 @@ public class SchedulerIndexController {
     @Autowired
     private SchedulerJobService schedulerJobService;
 
-    @RequestMapping(value = "/show")
+    @RequestMapping(value = "/jobs/show")
     public ResponseEntity index(@RequestParam(defaultValue = "") String matcher, Model model) {
         Set<JobKey> jobKeys = schedulerJobService.allJobs(matcher);
         model.addAttribute("jobs", jobKeys);

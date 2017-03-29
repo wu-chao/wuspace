@@ -21,8 +21,13 @@ public class SchedulerJob implements Job {
 
     JobDataMap jobDataMap;
 
+    public void log() {
+
+    }
+
     @Override
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
-
+        System.out.println(this.identify + "--------" + this.group);
+        log();
     }
 }
