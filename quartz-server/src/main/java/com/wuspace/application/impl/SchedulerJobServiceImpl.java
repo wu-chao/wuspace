@@ -26,7 +26,6 @@ public class SchedulerJobServiceImpl implements SchedulerJobService {
                 .withIdentity(job.getIdentify(), job.getGroup())
                 .withDescription(job.getDescription())
                 .withSchedule(CronScheduleBuilder.cronSchedule(job.getCron()))
-                .forJob(jobDetail)
                 .build();
         try {
             scheduler.scheduleJob(jobDetail, trigger);

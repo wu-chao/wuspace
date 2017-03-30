@@ -41,9 +41,9 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 
         @Override
         public Job newJob(TriggerFiredBundle bundle, Scheduler scheduler) throws SchedulerException {
-            Job job = super.newJob(bundle, scheduler);
-            autowireCapableBeanFactory.autowireBean(job);
-            return job;
+            Job jobInstance = super.newJob(bundle, scheduler);
+            autowireCapableBeanFactory.autowireBean(jobInstance);
+            return jobInstance;
         }
     }
 
