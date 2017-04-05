@@ -20,7 +20,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     public Scheduler scheduler() {
         try {
             Scheduler scheduler = new StdSchedulerFactory().getScheduler();
-            //scheduler.setJobFactory(jobFactory());
+            scheduler.setJobFactory(jobFactory());
             scheduler.start();
             return scheduler;
         } catch (SchedulerException e) {

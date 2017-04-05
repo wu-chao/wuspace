@@ -9,7 +9,7 @@ import org.springframework.scheduling.quartz.QuartzJobBean;
 
 @Getter
 @Setter
-public class SchedulerJob extends QuartzJobBean {
+public abstract class SchedulerJob extends QuartzJobBean implements java.io.Serializable {
 
     String identify;
 
@@ -21,9 +21,7 @@ public class SchedulerJob extends QuartzJobBean {
 
     JobDataMap jobDataMap;
 
-    public void log() {
-
-    }
+    public abstract void log();
 
     @Override
     protected void executeInternal(JobExecutionContext jobExecutionContext) throws JobExecutionException {

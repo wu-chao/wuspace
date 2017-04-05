@@ -1,7 +1,7 @@
 package com.wuspace.web;
 
-import com.wuspace.domain.SchedulerJob;
 import com.wuspace.application.SchedulerJobService;
+import com.wuspace.domain.Jdbc;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -19,7 +19,7 @@ public class SchedulerCreateController {
     private SchedulerJobService schedulerJobService;
 
     @RequestMapping(value = "/jdbc", method = RequestMethod.POST)
-    public ResponseEntity jdbc(@RequestBody SchedulerJob job) {
+    public ResponseEntity jdbc(@RequestBody Jdbc job) {
         schedulerJobService.addJob(job);
         return ResponseEntity.ok().build();
     }
