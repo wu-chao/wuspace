@@ -2,14 +2,14 @@ package com.wuspace.domain;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.quartz.Job;
 import org.quartz.JobDataMap;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
+import org.springframework.scheduling.quartz.QuartzJobBean;
 
 @Getter
 @Setter
-public class SchedulerJob implements Job {
+public abstract class SchedulerJob extends QuartzJobBean implements java.io.Serializable {
 
     String identify;
 
@@ -21,8 +21,11 @@ public class SchedulerJob implements Job {
 
     JobDataMap jobDataMap;
 
-    @Override
-    public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
+    public abstract void log();
 
+    @Override
+    protected void executeInternal(JobExecutionContext jobExecutionContext) throws JobExecutionException {
+        System.out.println(this.identify + "--------" + this.group);
+        log();
     }
 }

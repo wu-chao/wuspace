@@ -13,9 +13,10 @@
         <module>wuspace-manager</module>
         <module>quartz-client</module>
         <module>quartz-server</module>
-        <module>rabbit-mq</module>
+        <module>rabbitmq-server</module>
         <module>spring-xml</module>
         <module>websphere-monitor</module>
+        <module>spring-rabbit-demo</module>
     </modules>
 
     <!-- Inherit defaults from Spring Boot -->
@@ -33,6 +34,10 @@
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context-support</artifactId>
+        </dependency>
         <!-- Spring Boot Starters-->
         <dependency>
             <groupId>org.springframework.boot</groupId>

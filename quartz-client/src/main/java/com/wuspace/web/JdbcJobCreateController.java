@@ -26,13 +26,13 @@ public class JdbcJobCreateController {
         jdbcJob.setIdentify("jdbc" + new Random().nextInt());
         jdbcJob.setGroup("jdbcs");
         jdbcJob.setDescription("j...d...b...c");
-        jdbcJob.setCron("0 */1 * * * ?");
+        jdbcJob.setCron("0 */1 * * * ? *");
         JobDataMap jobDataMap = new JobDataMap();
         jobDataMap.put("url", "jdbc:mysql://localhost:3306/quartz_scheduler");
         jobDataMap.put("username", "root");
         jobDataMap.put("password", "");
         jobDataMap.put("driverClassName", "com.mysql.jdbc.Driver");
-        jobDataMap.put("sql", "select u from user");
+        jobDataMap.put("sql", "select job_name, job_group, description from qrtz_job_details limit 1");
         jdbcJob.setJobDataMap(jobDataMap);
         remoteSchedulerJobService.addJob(jdbcJob);
         return ResponseEntity.ok().build();
