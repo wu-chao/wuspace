@@ -14,9 +14,11 @@
         <module>quartz-client</module>
         <module>quartz-server</module>
         <module>rabbitmq-server</module>
-        <module>spring-xml</module>
+        <module>spring-xml-demo</module>
         <module>websphere-monitor</module>
         <module>spring-rabbit-demo</module>
+        <module>spring-xml</module>
+        <module>spring-annotation</module>
     </modules>
 
     <!-- Inherit defaults from Spring Boot -->

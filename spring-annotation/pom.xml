@@ -3,10 +3,10 @@
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.wuspace</groupId>
-    <artifactId>spring-xml</artifactId>
+    <artifactId>spring-annotation</artifactId>
     <packaging>war</packaging>
     <version>1.0-SNAPSHOT</version>
-    <name>spring-xml</name>
+    <name>spring-annotation</name>
     <url>http://maven.apache.org</url>
 
     <dependencies>
@@ -18,6 +18,6 @@
         </dependency>
     </dependencies>
     <build>
-        <finalName>spring-xml</finalName>
+        <finalName>spring-annotation</finalName>
     </build>
 </project>

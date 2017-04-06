@@ -1,14 +1,17 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-
+    <parent>
+        <artifactId>wuspace</artifactId>
+        <groupId>com.wuspace</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.wuspace</groupId>
-    <artifactId>spring-xml</artifactId>
+    <artifactId>spring-xml-demo</artifactId>
     <packaging>war</packaging>
     <version>1.0-SNAPSHOT</version>
-    <name>spring-xml</name>
+    <name>spring-xml-demo</name>
     <url>http://maven.apache.org</url>
-
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
@@ -16,8 +19,14 @@
             <version>3.8.1</version>
             <scope>test</scope>
         </dependency>
+
+        <!--解析xml文件-->
+        <dependency>
+            <groupId>dom4j</groupId>
+            <artifactId>dom4j</artifactId>
+        </dependency>
     </dependencies>
     <build>
-        <finalName>spring-xml</finalName>
+        <finalName>xml-parse</finalName>
     </build>
 </project>
