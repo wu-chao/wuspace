@@ -2,10 +2,11 @@ package com.wuspace.domain;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.quartz.JobDataMap;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.springframework.scheduling.quartz.QuartzJobBean;
+
+import java.util.Map;
 
 @Getter
 @Setter
@@ -19,7 +20,7 @@ public abstract class SchedulerJob extends QuartzJobBean implements java.io.Seri
 
     String cron;
 
-    JobDataMap jobDataMap;
+    Map jobDataMap;
 
     public abstract void log();
 

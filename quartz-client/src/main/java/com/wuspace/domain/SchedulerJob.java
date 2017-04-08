@@ -1,21 +1,26 @@
 package com.wuspace.domain;
 
-import lombok.Getter;
-import lombok.Setter;
-import org.quartz.JobDataMap;
+import lombok.Data;
 
-@Getter
-@Setter
-public abstract class SchedulerJob {
+import java.util.HashMap;
+import java.util.Map;
 
-    String identify;
+@Data
+public class SchedulerJob implements ValueObject<SchedulerJob> {
 
-    String group;
+    protected String identify;
 
-    String description;
+    protected String group;
 
-    String cron;
+    protected String corn;
 
-    JobDataMap jobDataMap;
+    protected String description;
+
+    protected Map<String, Object> jobData = new HashMap<>();
+
+    @Override
+    public boolean sameValueAs(final SchedulerJob other) {
+        return this.equals(other);
+    }
 
 }

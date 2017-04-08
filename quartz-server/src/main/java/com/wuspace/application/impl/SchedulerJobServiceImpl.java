@@ -20,7 +20,7 @@ public class SchedulerJobServiceImpl implements SchedulerJobService {
     public void addJob(SchedulerJob job) {
         JobDetail jobDetail = JobBuilder.newJob(job.getClass())
                 .withIdentity(job.getIdentify(), job.getGroup())
-                .usingJobData(job.getJobDataMap())
+                .usingJobData(new JobDataMap(job.getJobDataMap()))
                 .build();
         Trigger trigger = TriggerBuilder.newTrigger()
                 .withIdentity(job.getIdentify(), job.getGroup())

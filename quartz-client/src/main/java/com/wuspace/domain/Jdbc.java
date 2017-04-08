@@ -2,10 +2,11 @@ package com.wuspace.domain;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.quartz.Scheduler;
 
 @Getter
 @Setter
-public class Jdbc extends SchedulerJob {
+public class Jdbc implements Jobable {
 
     public String url;
 
@@ -17,4 +18,8 @@ public class Jdbc extends SchedulerJob {
 
     public String sql;
 
+    @Override
+    public Scheduler convertToScheduler() {
+        return null;
+    }
 }
