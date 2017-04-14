@@ -19,6 +19,7 @@
         <module>spring-rabbit-demo</module>
         <module>spring-xml</module>
         <module>spring-annotation</module>
+        <module>java-demo</module>
     </modules>
 
     <!-- Inherit defaults from Spring Boot -->
