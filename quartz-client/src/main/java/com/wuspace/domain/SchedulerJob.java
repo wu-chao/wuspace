@@ -12,15 +12,14 @@ public class SchedulerJob implements ValueObject<SchedulerJob> {
 
     protected String group;
 
-    protected String corn;
+    protected String cron;
 
     protected String description;
 
-    protected Map<String, Object> jobData = new HashMap<>();
+    protected Map<String, String> jobDataMap = new HashMap<>();
 
     @Override
     public boolean sameValueAs(final SchedulerJob other) {
         return this.equals(other);
     }
-
 }
