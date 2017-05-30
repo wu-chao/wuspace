@@ -10,12 +10,10 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>blog</module>
-        <module>wuspace-manager</module>
         <module>quartz-client</module>
         <module>quartz-server</module>
         <module>rabbitmq-server</module>
         <module>spring-xml-demo</module>
-        <module>websphere-monitor</module>
         <module>spring-rabbit-demo</module>
         <module>spring-xml</module>
         <module>spring-annotation</module>

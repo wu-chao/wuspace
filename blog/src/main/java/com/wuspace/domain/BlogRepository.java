@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 public interface BlogRepository extends JpaRepository<Blog, Integer>{
+
+	Page<Blog> findAllByOrderByCreatedAtDesc(Pageable pageable);
 	
 	Blog findBlogByUser(User user);
 	

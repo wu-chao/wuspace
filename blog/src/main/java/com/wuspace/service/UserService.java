@@ -10,8 +10,8 @@ public interface UserService {
 	void logout(HttpServletRequest request, HttpServletResponse response);
 
 	Map<String, Object> login(String account, String password,
-                              Integer cookieMark, HttpServletRequest request,
-                              HttpServletResponse response);
+							  Integer cookieMark, HttpServletRequest request,
+							  HttpServletResponse response);
 
 	Map<String, Object> register(String account, String password);
 
