@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by WUCHAO on 2017/3/15.
