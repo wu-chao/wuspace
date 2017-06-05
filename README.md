@@ -1,2 +1,2 @@
 # wuspace
-Demo for learning.
+Demo for Learning.
