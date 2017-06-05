@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html  xmlns="http://www.w3.org/1999/xhtml"
+	   xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8">
+	<title>Blog Detail</title>
+
+	<meta name="author" content="天才宝宝">
+
+	<!-- Enable responsive viewport -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+	<!--[if lt IE 9]>
+	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+
+	<!-- Le styles -->
+	<link href="/assets/themes/twitter/bootstrap/css/bootstrap.2.2.2.min.css" rel="stylesheet">
+	<link href="/assets/themes/twitter/css/style.css?body=1" rel="stylesheet" type="text/css" media="all">
+	<link href="/assets/themes/twitter/css/prettify.css" rel="stylesheet" type="text/css">
+	<script src="/assets/themes/twitter/js/prettify.js"></script>
+	<!-- Le fav and touch icons -->
+
+	<!-- atom & rss feed -->
+	<link href="/atom.xml" type="application/atom+xml" rel="alternate" title="Sitewide ATOM Feed">
+	<link href="/rss.xml" type="application/rss+xml" rel="alternate" title="Sitewide RSS Feed">
+
+	<!--    font-awesome-->
+	<link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+
+</head>
+
+<body>
+<div class="navbar">
+	<div class="navbar-inner">
+		<div class="nav-narrow">
+			<a class="brand" href="/"><span class="fa fa-mortar-board (alias)">天才宝宝</span></a>
+			<ul class="nav">
+				<li><a href="/archive">文章</a></li>
+				<li><a href="/categories">分类</a></li>
+				<li><a href="/pages">页面</a></li>
+				<li><a href="/tags">标签</a></li>
+			</ul>
+		</div>
+	</div>
+</div>
+
+<div class="container-narrow">
+
+	<div class="content">
+		<div class="row-fluid post-full">
+			<div class="span12 ">
+				<div class="content card">
+					<div class="date_label">
+						<div class="day_month">
+							04/18
+						</div>
+						<div class="year">
+							2017
+						</div>
+					</div>
+					<h4>启动远程服务器 jar 包</h4>
+
+					<pre><code>[root@centos6 agent2]# nohup java -Xdebug -Xrunjdwp:server=y,transport=dt_socket,address=8000,suspend=n -Djava.library.path=runtime/ -jar nxms-collector.agent-1.0-SNAPSHOT.jar &amp;
+</code></pre>
+
+					<h4>查看</h4>
+
+					<pre><code>[root@centos6 agent2]# tail -f nohup.out
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::        (v1.4.1.RELEASE)
+
+过滤器初始化
+Listening for transport dt_socket at address: 8000
+</code></pre>
+
+					<h4>启动远程调试</h4>
+
+					<ol>
+						<li>Edit Configurations  —> Add New Configuration —> Remote</li>
+						<li>Host 填写的是远程服务器的 IP 地址，远程调试端口8000（可更改）。</li>
+						<li>在源码上打断点。</li>
+						<li>debug模式启动项目。</li>
+					</ol>
+				</div>
+
+
+				<!--
+
+                    -->
+
+				<div class="pagination clearfix">
+					<ul class = "pull-right">
+
+						<li class="prev"><a class="fa fa-arrow-circle-left" href="/2017/04/16/%E5%BE%AA%E7%8E%AF%E8%B0%83%E7%94%A8ajax%E8%AF%B7%E6%B1%82" title="循环发送 AJAX 请求"> 前一篇</a></li>
+
+						<li><a class="fa fa-th" href="/archive.html"> 所有日志</a></li>
+
+						<li class="next disabled"><a >后一篇 <span class="fa fa-arrow-circle-right">  </span></a>
+
+					</ul>
+				</div>
+
+
+				<div id="disqus_thread"></div>
+				<script type="text/javascript">
+
+                    var disqus_shortname = 'jekyllbootstrap'; // required: replace example with your forum shortname
+
+					/* * * DON'T EDIT BELOW THIS LINE * * */
+                    (function() {
+                        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+                        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                    })();
+				</script>
+				<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+				<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+			</div>
+		</div>
+	</div>
+
+	<footer class="card clearfix">
+		<span style="font-size:30px;"class="fa fa-github pull-left"></span><a href="https://github.com/enml/blog" style="display:inline-block;padding-right:80px;border-right:1px solid #bbb">fork me on GitHub</a>
+		<p class="pull-right">&copy; 2011 天才宝宝
+			with help from <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework">Jekyll Bootstrap</a>
+			and <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
+		</p>
+	</footer>
+</div>
+
+
+<script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-50637568-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+</script>
+</body>
+</html>
