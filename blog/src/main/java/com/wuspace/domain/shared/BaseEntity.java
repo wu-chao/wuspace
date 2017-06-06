@@ -11,11 +11,9 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import java.sql.Timestamp;
+import java.time.ZonedDateTime;
 import java.util.Date;
 
-/**
- * Created by WUCHAO on 2016/11/20.
- */
 @Getter
 @Setter
 @MappedSuperclass
@@ -23,23 +21,23 @@ import java.util.Date;
 public class BaseEntity extends BaseIdEntity {
 
     @Column(name = "created_at")
-    private Timestamp createdAt;
+    private ZonedDateTime createdAt;
 
     @LastModifiedDate
     @Column(name = "updated_at")
-    private Timestamp updatedAt;
+    private ZonedDateTime updatedAt;
 
     @JsonIgnore
     @Column(name = "deleted_at")
-    private Timestamp deletedAt;
+    private ZonedDateTime deletedAt;
 
     @PrePersist
     public void prePersist() {
-        this.createdAt = this.updatedAt = new Timestamp(new Date().getTime());
+        this.createdAt = this.updatedAt = ZonedDateTime.now();
     }
 
     @PreUpdate
     public void preUpdate() {
-        this.updatedAt = new Timestamp(new Date().getTime());
+        this.updatedAt = ZonedDateTime.now();
     }
 }

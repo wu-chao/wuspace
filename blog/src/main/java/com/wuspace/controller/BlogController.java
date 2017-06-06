@@ -1,9 +1,7 @@
 package com.wuspace.controller;
 
 import com.wuspace.domain.Blog;
-import com.wuspace.domain.BlogRepository;
 import com.wuspace.domain.TopicType;
-import com.wuspace.domain.security.User;
 import com.wuspace.domain.security.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -15,11 +13,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller

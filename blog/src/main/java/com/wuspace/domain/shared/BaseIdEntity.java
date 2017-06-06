@@ -5,9 +5,6 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
-/**
- * Created by WUCHAO on 2016/11/20.
- */
 @Getter
 @Setter
 @MappedSuperclass
