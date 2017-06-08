@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <classPathEntry location="/home/chao/IdeaProjects/wuspace/blog/src/main/resources/mysql-connector-java-6.0.5.jar"/>
+
+    <context id="MysqlTables" targetRuntime="MyBatis3">
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://localhost:3306/wuspace"
+                        userId="root"
+                        password="root">
+        </jdbcConnection>
+
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+
+        <javaModelGenerator targetPackage="com.wuspace.domain" targetProject="/home/chao/IdeaProjects/wuspace/blog/src/main/java">
+            <property name="enableSubPackages" value="false"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+
+        <sqlMapGenerator targetPackage="com.wuspace.mapper.xml" targetProject="/home/chao/IdeaProjects/wuspace/blog/src/main/java">
+            <property name="enableSubPackages" value="false"/>
+        </sqlMapGenerator>
+
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.wuspace.mapper.dao" targetProject="/home/chao/IdeaProjects/wuspace/blog/src/main/java">
+            <property name="enableSubPackages" value="false"/>
+        </javaClientGenerator>
+
+        <table schema="wuspace" tableName="authorities" domainObjectName="Authority">
+            <property name="useActualColumnNames" value="false"/>
+        </table>
+        <table schema="wuspace" tableName="groups" domainObjectName="Group">
+            <property name="useActualColumnNames" value="false"/>
+        </table>
+        <table schema="wuspace" tableName="user" domainObjectName="User">
+            <property name="useActualColumnNames" value="false"/>
+            <generatedKey column="ID" sqlStatement="mysql" identity="true"/>
+        </table>
+        <table schema="wuspace" tableName="blog" domainObjectName="Blog">
+            <property name="useActualColumnNames" value="false"/>
+            <generatedKey column="ID" sqlStatement="mysql" identity="true"/>
+        </table>
+        <table schema="wuspace" tableName="comment" domainObjectName="Comment">
+            <property name="useActualColumnNames" value="false"/>
+            <generatedKey column="ID" sqlStatement="mysql" identity="true"/>
+        </table>
+        <table schema="wuspace" tableName="reply" domainObjectName="Reply">
+            <property name="useActualColumnNames" value="false"/>
+            <generatedKey column="ID" sqlStatement="mysql" identity="true"/>
+        </table>
+        <table schema="wuspace" tableName="topic_type" domainObjectName="TopicType">
+            <property name="useActualColumnNames" value="false"/>
+            <generatedKey column="ID" sqlStatement="mysql" identity="true"/>
+        </table>
+
+    </context>
+</generatorConfiguration>
