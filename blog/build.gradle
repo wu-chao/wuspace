@@ -65,10 +65,10 @@ ext {
 dependencies {
     compile "org.springframework:spring-context-support"
     compile "org.springframework.boot:spring-boot-devtools"
+
     compile "org.springframework.boot:spring-boot-starter-actuator"
     compile "org.springframework.boot:spring-boot-starter-security"
     compile "org.springframework.boot:spring-boot-starter-web"
-
     compile "org.springframework.boot:spring-boot-starter-thymeleaf"
     compile "org.thymeleaf:thymeleaf:${thymeleaf_version}"
     compile "org.thymeleaf:thymeleaf-spring4:${thymeleaf_version}"
