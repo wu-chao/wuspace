@@ -1,14 +1,7 @@
 package com.wuspace.util;
 
 public class StringUtils {
-	public static boolean isEmpty(String str) {
-		if (str != null && !"".equals(str)) {
-			return false;
-		} else {
-			return true;
-		}
-	}
-	
+
 	/**
 	 * 凯德加密
 	 * @param str
