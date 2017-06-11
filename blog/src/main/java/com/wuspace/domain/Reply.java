@@ -13,10 +13,16 @@ public class Reply extends BaseEntity {
 
     private User user;
 
+    private String content;
+
+    private Comment comment;
+
     private User toUser;
 
-    private Comment toComment;
+    private Reply toReply;
 
-    private String content;
+    private Set<User> zanUsers;
+
+    private Set<User> caiUsers;
 
 }

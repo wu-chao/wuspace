@@ -6,9 +6,9 @@ import lombok.Setter;
 import javax.persistence.Entity;
 import java.util.Set;
 
-@Entity
 @Getter
 @Setter
+@Entity
 public class Blog extends BaseEntity {
 
     private User user;
@@ -28,5 +28,7 @@ public class Blog extends BaseEntity {
     private Set<User> zanUsers;
 
     private Set<User> caiUsers;
+
+    private Set<Comment> comments;
 
 }
