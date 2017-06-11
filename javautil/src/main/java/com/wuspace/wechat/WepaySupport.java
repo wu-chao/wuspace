@@ -1,6 +1,6 @@
 package com.wuspace.wechat;
 
-import com.hithinksoft.entinfo.domain.Orders;
+import com.wuspace.domain.Order;
 import me.hao0.common.date.Dates;
 import me.hao0.wepay.core.Wepay;
 import me.hao0.wepay.core.WepayBuilder;
@@ -41,9 +41,9 @@ public class WepaySupport {
             // 加载证书文件
 //            byte[] certs = ByteStreams.toByteArray(in);
             wepay = WepayBuilder.newBuilder(appId, appKey, mchId)
-                .certPasswd(mchId)
+                    .certPasswd(mchId)
 //                .certs(certs)
-                .build();
+                    .build();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -55,13 +55,13 @@ public class WepaySupport {
      * @param order 订单号
      * @return 二维码链接
      */
-    public String qrPay(Orders order) {
+    public String qrPay(Order order) {
         QrPayRequest request = new QrPayRequest();
-        request.setBody(order.getServiceBase().getName());
+        request.setBody(order.getProductName());
         request.setClientId(order.getClientId());
-        request.setTotalFee((int)(order.getTotalPrice() * 100));
+        request.setTotalFee((int) (order.getTotalFee() * 100));
+        request.setOutTradeNo(order.getOrderNo());
         request.setNotifyUrl(payNotifyUrl);
-        request.setOutTradeNo(order.getOrderSequence());
         request.setTimeStart(Dates.now("yyyyMMddHHmmss"));
         return wepay.pay().qrPay(request, false).getCodeUrl();
     }

@@ -62,6 +62,12 @@ public class WepayController {
         }
     }
 
+    /**
+     * 传入从 WepaySupport.java 的 qrPay 方法获取的返回值生成支付二维码图片
+     *
+     * @param code
+     * @param response
+     */
     @GetMapping("/qrCode")
     public void qrCode(@RequestParam(value = "code") String code, HttpServletResponse response) {
         try {
