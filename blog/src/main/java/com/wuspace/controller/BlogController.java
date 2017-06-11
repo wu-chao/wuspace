@@ -11,7 +11,7 @@ public class BlogController {
 
     @RequestMapping(value = {"/", "/blogs"}, method = RequestMethod.GET)
     public String index(Model model) {
-
+//        http://www.yiibai.com/mybatis/mybatis-one2many.html
         return "blogs/index";
     }
 
