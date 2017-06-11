@@ -7,7 +7,7 @@ import javax.persistence.Entity;
 
 @Getter
 @Setter
-@Entity
+@Entity(name = "authorities")
 public class Authority extends BaseEntity {
 
     private String username;

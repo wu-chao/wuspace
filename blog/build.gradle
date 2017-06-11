@@ -76,7 +76,7 @@ dependencies {
     compile "io.github.jpenren:thymeleaf-spring-data-dialect:${thymeleaf_spring_data_dialect_version}"
 
 //    compile "org.mybatis.generator:mybatis-generator-core:${mybatis_generator_version}"
-//    compile "org.springframework.boot:spring-boot-starter-data-jpa"
+    compile "org.springframework.boot:spring-boot-starter-data-jpa"
     compile "org.mybatis.spring.boot:mybatis-spring-boot-starter:${mybatis_spring_boot_starter_version}"
 
     compile "org.liquibase:liquibase-core"
