@@ -1,4 +1,4 @@
-package com.wuspace.wechat;
+package com.wuspace.controller.wechat;
 
 import com.wuspace.domain.Order;
 import me.hao0.common.date.Dates;

@@ -1,4 +1,4 @@
-package com.wuspace.wechat;
+package com.wuspace.controller.wechat;
 
 import com.google.common.base.Throwables;
 import com.google.zxing.EncodeHintType;

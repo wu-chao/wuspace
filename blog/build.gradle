@@ -83,6 +83,12 @@ dependencies {
     runtime "com.h2database:h2"
     runtime "mysql:mysql-connector-java:${mysql_version}"
 
+    //  微信支付
+    compile "com.google.guava:guava:22.0"
+    compile "me.hao0:wepay-core:1.2.5"
+    compile "me.hao0:common:1.1.2"
+    compile 'net.glxn.qrgen:javase:2.0'
+
     compile "org.projectlombok:lombok:${lombok_version}"
     compile "org.apache.commons:commons-io:${apache_commons_io_version}"
     compile "commons-fileupload:commons-fileupload:${apache_commons_fileupload_version}"

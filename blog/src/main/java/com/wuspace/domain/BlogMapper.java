@@ -9,6 +9,6 @@ import java.util.Set;
 @Mapper
 public interface BlogMapper {
 
-    @Select("select distinct b from blog b order by b.created_at desc")
+    @Select("select distinct b.id, b.created_at from blogs as b order by b.created_at desc")
     Set<Blog> findAllByOrderByCreatedAtDesc();
 }

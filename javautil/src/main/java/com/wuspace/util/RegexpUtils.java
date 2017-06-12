@@ -1,7 +1,5 @@
 package com.wuspace.util;
 
-import org.apache.oro.text.regex.*;
-
 public class RegexpUtils {
 
     /**
@@ -48,15 +46,16 @@ public class RegexpUtils {
 
     public static boolean isMatched(String source, String regexp) {
         // 依赖：https://mvnrepository.com/artifact/org.apache.oro/com.springsource.org.apache.oro
-        PatternCompiler patternCompiler = new Perl5Compiler();
-        PatternMatcher patternMatcher = new Perl5Matcher();
-        try {
-            Pattern pattern = patternCompiler.compile(regexp);
-            return patternMatcher.contains(source, pattern);
-        } catch (MalformedPatternException e) {
-            e.printStackTrace();
-            return false;
-        }
+//        PatternCompiler patternCompiler = new Perl5Compiler();
+//        PatternMatcher patternMatcher = new Perl5Matcher();
+//        try {
+//            Pattern pattern = patternCompiler.compile(regexp);
+//            return patternMatcher.contains(source, pattern);
+//        } catch (MalformedPatternException e) {
+//            e.printStackTrace();
+//            return false;
+//        }
+        return false;
     }
 
 }
