@@ -13,20 +13,42 @@
     <title>Main</title>
 
     <!-- Bootstrap -->
-    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
-<div >
+<div layout:fragment="header">
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">
+                    <img src="/images/logo.png"/>
+                </a>
+            </div>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#"><span class="glyphicon glyphicon-user"></span> 注册</a></li>
+                <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> 登录</a></li>
+            </ul>
+        </div>
+    </nav>
+            <!--<ul class="nav navbar-nav navbar-left">-->
+                <!--<li><a href="/archive">文章</a></li>-->
+                <!--<li><a href="/categories">分类</a></li>-->
+                <!--<li><a href="/pages">页面</a></li>-->
+                <!--<li><a href="/tags">标签</a></li>-->
+            <!--</ul>-->
+
 
 </div>
-<div class="containter">
-    <div layout:fragment="content">
 
-    </div>
+<div layout:fragment="content">
+
 </div>
-<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<script th:src="@{/jquery.js}"></script>
-<!-- Include all compiled plugins (below), or include individual files as needed -->
-<script th:src="@{/js/bootstrap.min.js}"></script>
+
+<div layout:fragment="footer">
+
+</div>
+
 </body>
 </html>
