@@ -1,13 +1,18 @@
-.idea/
 target/
+.idea/
+.out/
 *.iml
 *.ipr
 *.iws
 
+# Gradle
+.gradle
 
 # Optional npm cache directory
 .npm
+
 # Compiled binary addons (http://nodejs.org/api/addons.html)
 node_modules/
+
 # Bower dependency directory (https://bower.io/)
 bower_components
