@@ -1,6 +1,7 @@
-target/
-.idea/
-.out/
+.idea
+target
+out
+
 *.iml
 *.ipr
 *.iws
@@ -12,7 +13,7 @@ target/
 .npm
 
 # Compiled binary addons (http://nodejs.org/api/addons.html)
-node_modules/
+node_modules
 
 # Bower dependency directory (https://bower.io/)
 bower_components
