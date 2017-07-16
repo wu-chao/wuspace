@@ -4,11 +4,13 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import java.util.Set;
 
 @Setter
 @Getter
-@Entity
+@Entity(name = "users")
 public class User extends BaseEntity {
 
     private String username;
@@ -27,15 +29,20 @@ public class User extends BaseEntity {
 
     private boolean enabled;
 
+    @OneToMany(mappedBy = "user")
     private Set<Blog> blogs;
 
-    private Set<Comment> comments;
-
+    @ManyToMany(mappedBy = "user")
     private Set<Blog> favorites;
 
-    private Set<User> following;
+    @OneToMany(mappedBy = "user")
+    private Set<Comment> comments;
 
-    private Set<User> followers;
+//    @OneToMany(mappedBy = "user")
+//    private Set<User> following;
+//
+//    @OneToMany(mappedBy = "user")
+//    private Set<User> followers;
 
     public User() {
     }
