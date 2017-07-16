@@ -58,6 +58,7 @@ ext {
     mysql_version = '5.1.6'
 
     lombok_version = '1.16.16'
+    commons_logging_version = '1.2'
     apache_commons_io_version = '1.3.2'
     apache_commons_fileupload_version = '1.3.2'
 }
@@ -65,7 +66,7 @@ ext {
 dependencies {
     compile "org.springframework:spring-context-support"
     compile "org.springframework.boot:spring-boot-devtools"
-
+    compile "org.springframework.boot:spring-boot-starter-test"
     compile "org.springframework.boot:spring-boot-starter-actuator"
     compile "org.springframework.boot:spring-boot-starter-security"
     compile "org.springframework.boot:spring-boot-starter-web"
@@ -84,6 +85,7 @@ dependencies {
     runtime "mysql:mysql-connector-java:${mysql_version}"
 
     compile "org.projectlombok:lombok:${lombok_version}"
+    compile "commons-logging:commons-logging:${commons_logging_version}"
     compile "org.apache.commons:commons-io:${apache_commons_io_version}"
     compile "commons-fileupload:commons-fileupload:${apache_commons_fileupload_version}"
 }
