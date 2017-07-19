@@ -11,15 +11,8 @@ import java.util.Set;
 @Entity(name = "blogs")
 public class Blog extends BaseEntity {
 
-    @JoinColumn(name = "user_id")
-    private User user;
-
     private String category;
 
-    @ManyToMany
-    @JoinTable(joinColumns = @JoinColumn(name = "blog_id"),
-            inverseJoinColumns = @JoinColumn(name = "topic_type_id"))
-    private Set<TopicType> topicTypes;
 
     private String title;
 
@@ -28,6 +21,16 @@ public class Blog extends BaseEntity {
     private String tags;
 
     private Long viewedTimes;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @ManyToMany
+    @JoinTable(joinColumns = @JoinColumn(name = "blog_id"),
+            inverseJoinColumns = @JoinColumn(name = "topic_type_id"))
+    private Set<TopicType> topicTypes;
+
 
     @ManyToMany
     @JoinTable(joinColumns = @JoinColumn(name = "blog_id"),
