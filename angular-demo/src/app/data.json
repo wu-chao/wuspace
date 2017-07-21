@@ -1,0 +1,52 @@
+{
+  "todos": [
+    {
+      "id": "5894a12f-dae1-5ab0-5761-1371ba4f703e",
+      "desc": "have breakfast",
+      "completed": false,
+      "userId": 2
+    },
+    {
+      "id": "6e628423-be05-204f-f075-527cc1bb10d8",
+      "desc": "have lunch",
+      "completed": false,
+      "userId": 1
+    },
+    {
+      "id": "40ab7081-cab9-5900-4048-f4ea905afd2f",
+      "desc": "take a break",
+      "completed": false,
+      "userId": 1
+    },
+    {
+      "id": "6ae06293-23d4-c0ca-ee5b-880365dbd48b",
+      "desc": "having fun",
+      "completed": false,
+      "userId": 1
+    },
+    {
+      "id": "339bee66-995a-5fae-1fd5-217f1aaf11d5",
+      "desc": "新的服务器版本不错",
+      "completed": true,
+      "userId": 1
+    },
+    {
+      "id": "c5182748-10d0-4f7f-0dd0-d66bdfb87df7",
+      "desc": "使用Redux",
+      "completed": false,
+      "userId": 1
+    }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "username": "wang",
+      "password": "1234"
+    },
+    {
+      "id": 2,
+      "username": "peng",
+      "password": "5678"
+    }
+  ]
+}
