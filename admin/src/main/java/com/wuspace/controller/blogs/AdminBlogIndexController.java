@@ -1,8 +1,6 @@
-package com.wuspace.controller;
+package com.wuspace.controller.blogs;
 
-import com.wuspace.domain.BlogMapper;
-import com.wuspace.domain.Blog;
-import com.wuspace.exception.ResourceNotFoundException;
+import com.wuspace.domain.BlogRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,20 +8,19 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-public class BlogShowController {
+@RequestMapping("/admin")
+public class AdminBlogIndexController {
 
     @Autowired
-    private BlogMapper blogMapper;
+    private BlogRepository blogRepository;
+
+    @RequestMapping("/blogs")
+    public String index() {
+        return "blogs/index";
+    }
 
     @RequestMapping("/blogs/{blogId}")
     public String show(@PathVariable("blogId") Long blogId, Model model) {
-        Blog blog = blogMapper.findBlogById(blogId);
-        if (blog == null) {
-            throw new ResourceNotFoundException("blog 不存在");
-        }
-
-        model.addAttribute("blog", blog);
-
         return "blogs/show";
     }
 }

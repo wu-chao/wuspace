@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title></title>
+</head>
+<body>
+<!-- Left side column. contains the sidebar -->
+<aside class="main-sidebar" th:fragment="sidebar (active)">
+    <!-- sidebar: style can be found in sidebar.less -->
+    <section class="sidebar">
+        <!-- search form -->
+        <form action="#" method="get" class="sidebar-form">
+            <div class="input-group">
+                <input type="text" name="q" class="form-control" placeholder="Search..."/>
+                <span class="input-group-btn">
+                        <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i
+                                class="fa fa-search"></i>
+                        </button>
+                    </span>
+            </div>
+        </form>
+        <!-- /.search form -->
+        <!-- sidebar menu: : style can be found in sidebar.less -->
+        <ul class="sidebar-menu" data-widget="tree">
+            <li class="header">MAIN NAVIGATION</li>
+            <!-- Dashboard -->
+            <li class="treeview" th:classappend="${#strings.equals(active, '/admin')}?'active':''">
+                <a href="#">
+                    <i class="fa fa-dashboard"></i> <span>Dashboard</span>
+                    <span class="pull-right-container">
+                          <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="/admin/index"><i class="fa fa-circle-o"></i> Dashboard v1</a></li>
+                    <li><a href="/admin/index2"><i class="fa fa-circle-o"></i> Dashboard v2</a></li>
+                </ul>
+            </li>
+            <!-- Blog -->
+            <li class="treeview" th:classappend="${#strings.contains(active, '/admin/blogs')}?'active':''">
+                <a href="#">
+                    <i class="fa fa-file-text"></i> <span>Blogs</span>
+                    <span class="pull-right-container">
+                          <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li th:classappend="${#strings.equals(active, '/admin/blogs')}?'active':''"><a
+                            href="/admin/blogs"><i class="fa"></i>Blogs</a></li>
+                    <li><a href="/admin/blogs/drafts"><i class="fa"></i>Drafts</a></li>
+                    <li><a href="/admin/blogs/trash"><i class="fa"></i>Trash</a></li>
+                </ul>
+            </li>
+            <!-- Mailbox -->
+            <li>
+                <a href="/mailbox">
+                    <i class="fa fa-envelope"></i> <span>Mailbox</span>
+                    <span class="pull-right-container">
+                          <small class="label pull-right bg-yellow">12</small>
+                          <small class="label pull-right bg-green">16</small>
+                          <small class="label pull-right bg-red">5</small>
+                        </span>
+                </a>
+            </li>
+        </ul>
+    </section>
+    <!-- /.sidebar -->
+</aside>
+</body>
+</html>

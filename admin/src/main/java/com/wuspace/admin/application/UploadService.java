@@ -1,4 +1,4 @@
-package com.wuspace.application;
+package com.wuspace.admin.application;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

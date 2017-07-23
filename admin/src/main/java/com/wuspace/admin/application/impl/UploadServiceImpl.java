@@ -1,4 +1,4 @@
-package com.wuspace.application.impl;
+package com.wuspace.admin.application.impl;
 
 import java.io.File;
 import java.util.Iterator;
@@ -8,13 +8,12 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.wuspace.admin.application.UploadService;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileItemFactory;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.springframework.stereotype.Service;
-
-import com.wuspace.application.UploadService;
 
 @Service
 public class UploadServiceImpl implements UploadService {
