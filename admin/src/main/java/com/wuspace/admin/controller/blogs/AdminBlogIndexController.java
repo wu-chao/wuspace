@@ -1,4 +1,4 @@
-package com.wuspace.controller.blogs;
+package com.wuspace.admin.controller.blogs;
 
 import com.wuspace.domain.BlogRepository;
 import org.springframework.beans.factory.annotation.Autowired;
