@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/admin")
 public class AdminBlogIndexController {
 
-    @Autowired
-    private BlogRepository blogRepository;
+//    @Autowired
+//    private BlogRepository blogRepository;
 
     @RequestMapping("/blogs")
     public String index() {
@@ -22,5 +22,10 @@ public class AdminBlogIndexController {
     @RequestMapping("/blogs/{blogId}")
     public String show(@PathVariable("blogId") Long blogId, Model model) {
         return "blogs/show";
+    }
+
+    @RequestMapping("/blogs/compose")
+    public String compose() {
+        return "blogs/compose";
     }
 }
