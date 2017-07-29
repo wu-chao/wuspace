@@ -1,4 +1,4 @@
-package com.wuspace.admin.config;
+package com.wuspace.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
