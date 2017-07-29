@@ -1,4 +1,4 @@
-package com.wuspace.controller.mainbox;
+package com.wuspace.admin.controller.mainbox;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

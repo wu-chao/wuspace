@@ -1,4 +1,4 @@
-package com.wuspace.controller.blogs;
+package com.wuspace.admin.controller.blogs;
 
 import com.wuspace.domain.Blog;
 import com.wuspace.domain.BlogRepository;
@@ -29,16 +29,11 @@ public class AdminBlogIndexController {
 
         model.addAttribute("blogs", blogs);
 
-        return "blogs/index";
+        return "admin/blogs/index";
     }
 
     @RequestMapping("/blogs/{blogId}")
     public String show(@PathVariable("blogId") Long blogId, Model model) {
-        return "blogs/show";
-    }
-
-    @RequestMapping("/blogs/compose")
-    public String compose() {
-        return "blogs/compose";
+        return "admin/blogs/show";
     }
 }

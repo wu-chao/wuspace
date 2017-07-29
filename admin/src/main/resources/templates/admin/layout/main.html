@@ -423,5 +423,14 @@
 <script src="/js/AdminLTE/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="/js/AdminLTE/demo.js"></script>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var serverPath = /*[[@{/}]]*/ "/";
+    /*]]>*/
+</script>
+<script layout:fragment="scripts">
+    <!-- javascripts -->
+</script>
 </body>
 </html>

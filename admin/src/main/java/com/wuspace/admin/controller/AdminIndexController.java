@@ -1,4 +1,4 @@
-package com.wuspace;
+package com.wuspace.admin.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -8,22 +8,22 @@ public class AdminIndexController {
 
     @RequestMapping("/admin")
     public String home() {
-        return "home";
+        return "admin/home";
     }
 
     @RequestMapping("/admin/index")
     public String index() {
-        return "index";
+        return "admin/index";
     }
 
     @RequestMapping("/admin/index2")
     public String index2() {
-        return "index2";
+        return "admin/index2";
     }
 
     @RequestMapping("/calendar")
     public String calendar() {
-        return "calendar";
+        return "admin/calendar";
     }
 
 }

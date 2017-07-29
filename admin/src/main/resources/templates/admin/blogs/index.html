@@ -4,14 +4,14 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sd="http://www.w3.org/1999/xhtml"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorator="layout/main">
+      layout:decorator="admin/layout/main">
 <head>
     <title>Blog</title>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div layout:fragment="content">
     <!-- Left side column. contains the logo and sidebar -->
-    <aside class="main-sidebar" th:replace="layout/aside::sidebar('/admin/blogs')">
+    <aside class="main-sidebar" th:replace="admin/layout/aside::sidebar('/admin/blogs')">
     </aside>
 
     <!-- Content Wrapper. Contains page content -->

@@ -3,14 +3,14 @@
       xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorator="layout/main">
+      layout:decorator="admin/layout/main">
 <head>
     <title>Blog</title>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div layout:fragment="content">
     <!-- Left side column. contains the logo and sidebar -->
-    <aside class="main-sidebar" th:replace="layout/aside::sidebar('/admin/blogs')">
+    <aside class="main-sidebar" th:replace="admin/layout/aside::sidebar('/admin/blogs/compose')">
     </aside>
 
     <!-- Content Wrapper. Contains page content -->
@@ -61,9 +61,9 @@
                         <!-- /.box-header -->
                         <div class="box-body pad">
                             <form>
-                    <textarea id="editor1" name="editor1" rows="10" cols="80">
-                                            This is my textarea to be replaced with CKEditor.
-                    </textarea>
+                                <textarea name="ck-editor" rows="10" cols="80">
+                                    This is my textarea to be replaced with CKEditor.
+                                </textarea>
                             </form>
                         </div>
                     </div>
@@ -74,53 +74,10 @@
         <!-- /.content -->
     </div>
 </div>
+
 <!-- Page Script -->
-<script>
-    $(function () {
-        //Enable iCheck plugin for checkboxes
-        //iCheck for checkbox and radio inputs
-        $('.table-blogs input[type="checkbox"]').iCheck({
-            checkboxClass: 'icheckbox_flat-blue',
-            radioClass: 'iradio_flat-blue'
-        });
-
-        //Enable check and uncheck all functionality
-        $(".checkbox-toggle").click(function () {
-            var clicks = $(this).data('clicks');
-            if (clicks) {
-                //Uncheck all checkboxes
-                $(".table-blogs input[type='checkbox']").iCheck("uncheck");
-                $(".fa", this).removeClass("fa-check-square-o").addClass('fa-square-o');
-            } else {
-                //Check all checkboxes
-                $(".table-blogs input[type='checkbox']").iCheck("check");
-                $(".fa", this).removeClass("fa-square-o").addClass('fa-check-square-o');
-            }
-            $(this).data("clicks", !clicks);
-        });
-
-        //Handle starring for glyphicon and font awesome
-        $(".mailbox-star").click(function (e) {
-            e.preventDefault();
-            //detect type
-            var $this = $(this).find("a > i");
-            var glyph = $this.hasClass("glyphicon");
-            var fa = $this.hasClass("fa");
-
-            //Switch states
-            if (glyph) {
-                $this.toggleClass("glyphicon-star");
-                $this.toggleClass("glyphicon-star-empty");
-            }
-
-            if (fa) {
-                $this.toggleClass("fa-star");
-                $this.toggleClass("fa-star-o");
-            }
-        });
-    });
-</script>
-<!-- AdminLTE for demo purposes -->
-<script src="/js/AdminLTE/demo.js"></script>
+<div layout:fragment="scripts">
+    <script src="/js/blogs/compose.js"></script>
+</div>
 </body>
 </html>
