@@ -8,7 +8,7 @@ import javax.persistence.Entity;
 @Getter
 @Setter
 @Entity(name = "groups")
-public class Group extends BaseEntity {
+public class Group extends AbstractBaseEntity {
 
     private String name;
 

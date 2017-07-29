@@ -10,7 +10,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity(name = "topic_types")
-public class TopicType extends BaseEntity {
+public class TopicType extends AbstractBaseEntity {
 
     private String name;
 

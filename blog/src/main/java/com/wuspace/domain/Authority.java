@@ -8,7 +8,7 @@ import javax.persistence.Entity;
 @Getter
 @Setter
 @Entity(name = "authorities")
-public class Authority extends BaseEntity {
+public class Authority extends AbstractBaseEntity {
 
     private String username;
 

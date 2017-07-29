@@ -9,10 +9,14 @@ import java.sql.Timestamp;
 @Entity
 @Setter
 @Getter
-public class Notice extends BaseEntity {
+public class Notice extends AbstractBaseEntity {
 
+    @ManyToOne
+    @JoinColumn(name = "publish_by")
     private User publishBy;
 
+    @ManyToOne
+    @JoinColumn(name = "delete_by")
     private User deleteBy;
 
     private String title;

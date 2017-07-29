@@ -57,26 +57,26 @@
                             <thead>
                             <tr>
                                 <th><input type="checkbox"/></th>
-                                <th>订单号</th>
-                                <th>客户姓名</th>
-                                <th>联系方式</th>
-                                <th>服务项目</th>
-                                <th>服务费</th>
-                                <th>付款时间</th>
-                                <th>当前状态</th>
+                                <th>title</th>
+                                <th>content</th>
+                                <th>createdBy</th>
+                                <th>createdDate</th>
+                                <th>lastModifiedDate</th>
+                                <th>viewedTimes</th>
+                                <th>commentTimes</th>
+                                <th>status</th>
                             </tr>
                             </thead>
                             <tbody class="text-muted">
-                            <tr class="orderItem" orderid="17">
+                            <tr th:each="blog : ${blogs}">
                                 <td><input type="checkbox"/></td>
-                                <td> 2c9280825a1c9dce</td>
-                                <td> 骑着毛驴追宝马</td>
-                                <td> 15311111111</td>
-                                <td> 项目融资业务</td>
-                                <td>
-                                    <span class="text-red">￥<span>600.00</span></span>
-                                </td>
-                                <td>--</td>
+                                <td th:text="${blog.title}"></td>
+                                <td th:text="${blog.content}"></td>
+                                <td th:text="${blog.user.name}"></td>
+                                <td th:text="${#calendars.format(blog.createdDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                                <td th:text="${#calendars.format(blog.lastModifiedDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                                <td th:text="${blog.viewedTimes}"></td>
+                                <td th:text="${blog.commentTimes}"></td>
                                 <td>
                                     <span class="text-warning"> 待付款</span>
                                 </td>

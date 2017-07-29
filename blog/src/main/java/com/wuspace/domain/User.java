@@ -3,15 +3,13 @@ package com.wuspace.domain;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.Set;
 
 @Setter
 @Getter
 @Entity(name = "users")
-public class User extends BaseEntity {
+public class User extends AbstractBaseEntity {
 
     private String username;
 
@@ -38,13 +36,16 @@ public class User extends BaseEntity {
     @OneToMany(mappedBy = "user")
     private Set<Comment> comments;
 
-//    @OneToMany(mappedBy = "user")
-//    private Set<User> following;
-//
-//    @OneToMany(mappedBy = "user")
-//    private Set<User> followers;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @OneToMany(mappedBy = "user")
+    private Set<User> following;
+
+    @OneToMany(mappedBy = "user")
+    private Set<User> followers;
 
     public User() {
     }
-
 }
