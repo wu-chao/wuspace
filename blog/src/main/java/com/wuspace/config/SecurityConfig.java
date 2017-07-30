@@ -50,8 +50,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf()
                 .and()
                 .formLogin()
-                .loginPage("/login")
-                .defaultSuccessUrl("/")
                 .and()
                 .logout()
                 .and()
@@ -59,9 +57,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .tokenRepository(persistentTokenRepository())
                 .and()
                 .authorizeRequests()
-                .antMatchers("/**").permitAll()
-        ;
-
+                .antMatchers("/**").permitAll();
     }
 
     /**

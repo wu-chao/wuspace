@@ -7,7 +7,7 @@ import java.util.Set;
 @Mapper
 public interface BlogMapper {
 
-    @Select("select * from blogs as b order by b.created_at desc")
+    @Select("select * from blogs as b order by b.created_date desc")
     @Results({
             @Result(property = "user",
                     column = "user_id",

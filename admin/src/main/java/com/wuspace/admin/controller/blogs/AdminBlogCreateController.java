@@ -23,17 +23,17 @@ public class AdminBlogCreateController extends BaseController {
     @Autowired
     private BlogRepository blogRepository;
 
-    @RequestMapping("/blogs/compose")
-    public String compose() {
-        return "admin/blogs/compose";
+    @RequestMapping("/blogs/create")
+    public String create() {
+        return "admin/blogs/create";
     }
 
-    @RequestMapping(value = "/blogs/compose", method = RequestMethod.POST)
+    @RequestMapping(value = "/blogs/publish", method = RequestMethod.POST)
     public String publish(@Valid BlogCommmand blogCommmand, BindingResult bindingResult,
                           @ModelAttribute("user") Optional<User> user, Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("blogCommmand", blogCommmand);
-            return "admin/blogs/compose";
+            return "admin/blogs/create";
         }
 
         if (user == null || !user.isPresent()) {

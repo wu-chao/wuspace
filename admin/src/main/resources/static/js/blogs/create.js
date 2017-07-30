@@ -1,10 +1,10 @@
 +function ($) {
     'use strict';
 
-    replaceCkeditor($('textarea[name="ck-editor"]')[0]);
+    resetCKeditor('content');
 
     //初始化 CKEditor 富文本编辑器的图片上传功能
-    function replaceCkeditor(element) {
+    function resetCKeditor(element) {
         CKEDITOR.replace(element, {
             extraPlugins: 'uploadimage,image2',
             height: 300,

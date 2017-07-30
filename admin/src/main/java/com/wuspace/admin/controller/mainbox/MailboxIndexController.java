@@ -5,20 +5,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/admin")
-public class MainboxIndexController {
+public class MailboxIndexController {
 
     @RequestMapping("/mailbox")
     public String mailbox() {
-        return "mailbox/mailbox";
+        return "admin/mailbox/mailbox";
     }
 
     @RequestMapping("/mailbox/read")
     public String read() {
-        return "mailbox/read";
+        return "admin/mailbox/read-mail";
     }
 
     @RequestMapping("/mailbox/compose")
     public String compose() {
-        return "mailbox/compose";
+        return "admin/mailbox/compose";
     }
 }
