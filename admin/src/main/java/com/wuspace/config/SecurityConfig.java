@@ -47,18 +47,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf()
                 .and()
                 .formLogin()
-                .loginPage("/login")
-                .defaultSuccessUrl("/")
+                .loginPage("/admin/login")
+                .usernameParameter("username")
+                .passwordParameter("password")
+                .defaultSuccessUrl("/admin/blogs")
+                .permitAll()
                 .and()
                 .logout()
-//                .and()
-//                .rememberMe()
-//                .tokenRepository(persistentTokenRepository())
+                .permitAll()
+                .and()
+                .rememberMe()
+                .tokenRepository(persistentTokenRepository())
                 .and()
                 .authorizeRequests()
-                .antMatchers("/**").permitAll()
-                .antMatchers("/blogs/create").authenticated()
-        ;
+                .antMatchers("/admin/login").permitAll()
+                .anyRequest().authenticated();
 
     }
 
