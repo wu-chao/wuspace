@@ -17,8 +17,8 @@ public class BaseController {
     @Autowired
     private UserRepository userRepository;
 
-    @ModelAttribute
-    public void getCurrentUser(Model model) {
+    @ModelAttribute("currentUser")
+    public Optional<User> getCurrentUser() {
         String username;
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
@@ -29,6 +29,6 @@ public class BaseController {
         }
 
         Optional<User> user = userRepository.findOneByUsername(username);
-        model.addAttribute("user", user);
+        return user;
     }
 }

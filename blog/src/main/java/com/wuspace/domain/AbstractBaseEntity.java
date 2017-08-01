@@ -10,7 +10,7 @@ import javax.persistence.*;
 import java.time.ZonedDateTime;
 
 @MappedSuperclass
-public class AbstractBaseEntity {
+public class AbstractBaseEntity implements java.io.Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

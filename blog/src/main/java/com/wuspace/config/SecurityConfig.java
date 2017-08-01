@@ -24,11 +24,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 import java.io.IOException;
 
-/**
- * Created by WUCHAO on 2016/11/16.
- */
-@Configuration
-@EnableWebSecurity
+//@Configuration
+//@EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     /**
@@ -50,6 +47,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf()
                 .and()
                 .formLogin()
+                .usernameParameter("username")
+                .passwordParameter("password")
+                .defaultSuccessUrl("/admin/blogs")
                 .and()
                 .logout()
                 .and()

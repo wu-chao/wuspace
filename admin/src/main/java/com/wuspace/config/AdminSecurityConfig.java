@@ -26,7 +26,7 @@ import java.io.IOException;
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+public class AdminSecurityConfig extends WebSecurityConfigurerAdapter {
 
     /**
      * @EnableAutoConfiguration作用： Spring Boot 会自动根据你 jar 包的依赖来自动配置项目。例如当你项目下面有HSQLDB的依赖时，
@@ -41,6 +41,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         webSecurity.ignoring().antMatchers("/css/**", "/js/**", "/img/**", "/bower_components", "/bower_components/jquery/dist/**", "/bower_components/bootstrap/dist/**");
     }
 
+    @Autowired
+    private CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
+
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http
@@ -50,7 +53,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginPage("/admin/login")
                 .usernameParameter("username")
                 .passwordParameter("password")
-                .defaultSuccessUrl("/admin/blogs")
+                .successHandler(customAuthenticationSuccessHandler)
                 .permitAll()
                 .and()
                 .logout()
@@ -60,8 +63,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .tokenRepository(persistentTokenRepository())
                 .and()
                 .authorizeRequests()
+                .antMatchers("/admin/blogs/create").authenticated()
                 .antMatchers("/admin/login").permitAll()
+                .antMatchers("/**").permitAll()
                 .anyRequest().authenticated();
+
+        /*
+        * There was an unexpected error (type=Forbidden, status=403).
+Could not verify the provided CSRF token because your session was not found.
+
+
+admin  login的action要配成 /admin/login
+entinfo admin登录为 th:action="@{/authentication}"
+        * */
 
     }
 
@@ -73,16 +87,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-//        auth
-//                .jdbcAuthentication()
-//                .dataSource(dataSource)
-//                .usersByUsernameQuery(
-//                        "select username, password, enabled from users where username = ?")
-//                .authoritiesByUsernameQuery(
-//                        "select username, authority from authorities where username = ?")
+        auth
+                .jdbcAuthentication()
+                .dataSource(dataSource)
+                .usersByUsernameQuery(
+                        "select username, password, enabled from users where username = ?")
+                .authoritiesByUsernameQuery(
+                        "select username, authority from authorities where username = ?")
 //        //.passwordEncoder(passwordEncoder())
-//        ;
-        auth.inMemoryAuthentication().withUser("admin").password("admin").roles("ADMIN");
+        ;
     }
 
     /**
@@ -93,7 +106,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 
-        private String targetUrl = "localhost:8080/blogs";
+        private String targetUrl = "localhost:8081/admin/blogs";
 
         @Override
         protected void handle(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
