@@ -4,12 +4,21 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Set;
 
 @Getter
 @Setter
-@Entity(name = "comments")
-public class Comment extends AbstractBaseEntity {
+@Entity
+@Table(name = "comments")
+public class Comment extends AbstractBaseEntity implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", unique = true, nullable = false)
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -17,9 +26,9 @@ public class Comment extends AbstractBaseEntity {
 
     private String content;
 
-    @ManyToOne
-    @JoinColumn(name = "blog_id")
-    private Blog blog;
+//    @ManyToOne
+//    @JoinColumn(name = "blog_id")
+//    private Blog blog;
 
 //    @ManyToOne
 //    @JoinColumn(name = "comment_id")

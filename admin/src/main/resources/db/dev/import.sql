@@ -21,12 +21,3 @@ INSERT INTO blogs(id,created_by,created_date,last_modified_date,title,content,vi
 INSERT INTO blogs(id,created_by,created_date,last_modified_date,title,content,viewed_times,user_id) VALUES (4,'user','2016-11-20 13:50:00','2016-11-20 13:50:00','Spring Cloud 构建微服务架构：服务容错保护（Hystrix 断路器）【Dalston 版】','前言在前两篇《Spring Cloud 构建微服务架构：服务容错保护（Hystrix 服务降级）》和《Spring Cloud 构建微服务架构：服务容错保护（Hystrix 依赖隔离）》中，我们对 Hystrix 提供的服务降级和依赖隔离有了基本的认识。下面我们将继续说说 Hystrix 的另外一个重要元件：断路器。 断路器断路器模式源于 Martin Fowler 的 Circuit Breaker 一文。“断路...',0,2);
 INSERT INTO blogs(id,created_by,created_date,last_modified_date,title,content,viewed_times,user_id) VALUES (5,'user','2016-11-20 13:50:00','2016-11-20 13:50:00','Spring Cloud 构建微服务架构：服务容错保护（Hystrix 依赖隔离）【Dalston 版】','前言在上一篇《Spring Cloud 构建微服务架构：服务容错保护（Hystrix 服务降级）》中，我们已经体验了如何使用 @HystrixCommand 来为一个依赖资源定义服务降级逻辑。实现方式非常简单，同时对于降级逻辑还能实现一些更加复杂的级联降级等策略。之前对于使用 Hystrix 来实现服务容错保护时，除了服务降级之外，我们还提到过线程隔离、断路器等功能。那么在本篇中我们就来具体说说线程隔离...',0,2);
 
--- INSERT INTO blog_zan(id,blog_id,user_id) VALUES (1,1,2);
---
--- INSERT INTO blog_collect(id,blog_id,user_id) VALUES (1,1,2);
---
--- INSERT INTO comments(id,created_at,updated_at,content,user_id,blog_id) VALUES (1,'2016-11-20 13:50:00','2016-11-20 13:50:00','fwefwefa',1,1);
---
--- INSERT INTO comment_zan(id,comment_id,user_id) VALUES (1,1,2);
---
--- INSERT INTO comment_cai(id,comment_id,user_id) VALUES (1,1,3);

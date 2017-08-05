@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 import java.util.Optional;
@@ -18,7 +17,7 @@ public class BaseController {
     private UserRepository userRepository;
 
     @ModelAttribute("currentUser")
-    public Optional<User> getCurrentUser() {
+    public User getCurrentUser() {
         String username;
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
@@ -29,6 +28,7 @@ public class BaseController {
         }
 
         Optional<User> user = userRepository.findOneByUsername(username);
-        return user;
+
+        return user.isPresent() ? user.get() : null;
     }
 }

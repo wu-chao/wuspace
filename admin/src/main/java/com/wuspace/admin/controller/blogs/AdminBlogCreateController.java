@@ -42,7 +42,7 @@ public class AdminBlogCreateController extends BaseController {
 
         Blog blog = new Blog();
         blog = blogCommmand.setBlog(blog);
-        blog.setUser(user.get());
+//        blog.setUser(user.get());
 
         blogRepository.save(blog);
 

@@ -4,12 +4,21 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Set;
 
 @Setter
 @Getter
-@Entity(name = "users")
-public class User extends AbstractBaseEntity {
+@Entity
+@Table(name = "users")
+public class User extends AbstractBaseEntity implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", unique = true, nullable = false)
+    private Long id;
 
     private String username;
 
@@ -27,11 +36,8 @@ public class User extends AbstractBaseEntity {
 
     private boolean enabled;
 
-    @OneToMany(mappedBy = "user")
-    private Set<Blog> blogs;
-
-    @ManyToMany(mappedBy = "user")
-    private Set<Blog> favorites;
+//    @OneToMany(mappedBy = "user")
+//    private Set<Blog> blogs;
 
     @OneToMany(mappedBy = "user")
     private Set<Comment> comments;
@@ -39,6 +45,9 @@ public class User extends AbstractBaseEntity {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    @ManyToMany(mappedBy = "user")
+    private Set<Blog> favorites;
 
     @OneToMany(mappedBy = "user")
     private Set<User> following;

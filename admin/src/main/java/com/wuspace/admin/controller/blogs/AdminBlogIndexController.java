@@ -1,8 +1,6 @@
 package com.wuspace.admin.controller.blogs;
 
-import com.wuspace.domain.Blog;
-import com.wuspace.domain.BlogRepository;
-import com.wuspace.domain.BlogSpecification;
+import com.wuspace.domain.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,6 +18,13 @@ public class AdminBlogIndexController {
 
     @Autowired
     private BlogRepository blogRepository;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private GroupRepository groupRepository;
+
 
     @RequestMapping("/blogs")
     public String index(@PageableDefault Pageable pageable, Model model) {

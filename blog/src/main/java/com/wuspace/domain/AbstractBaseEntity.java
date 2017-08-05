@@ -6,16 +6,15 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.MappedSuperclass;
+import java.io.Serializable;
 import java.time.ZonedDateTime;
 
 @MappedSuperclass
-public class AbstractBaseEntity implements java.io.Serializable {
+public class AbstractBaseEntity implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", unique = true, nullable = false)
-    private Long id;
+    private static final long serialVersionUID = 1L;
 
     @CreatedBy
     @Column(name = "created_by", nullable = false, length = 50, updatable = false)
@@ -36,14 +35,6 @@ public class AbstractBaseEntity implements java.io.Serializable {
     @Column(name = "last_modified_date")
     @JsonIgnore
     private ZonedDateTime lastModifiedDate = ZonedDateTime.now();
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getCreatedBy() {
         return createdBy;
