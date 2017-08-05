@@ -13,6 +13,7 @@ public class Blog extends AbstractBaseEntity {
 
     private String title;
 
+    @Lob
     private String content;
 
     private String tags;

@@ -48,7 +48,7 @@ public class AdminSecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(HttpSecurity http) throws Exception {
         http
                 .csrf()
-                .and()
+                .disable()
                 .formLogin()
                 .loginPage("/admin/login")
                 .usernameParameter("username")
@@ -65,8 +65,7 @@ public class AdminSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/admin/blogs/create").authenticated()
                 .antMatchers("/admin/login").permitAll()
-                .antMatchers("/**").permitAll()
-                .anyRequest().authenticated();
+                .antMatchers("/**").permitAll();
 
         /*
         * There was an unexpected error (type=Forbidden, status=403).

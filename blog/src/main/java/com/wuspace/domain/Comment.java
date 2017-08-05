@@ -21,12 +21,12 @@ public class Comment extends AbstractBaseEntity {
     @JoinColumn(name = "blog_id")
     private Blog blog;
 
-    @ManyToOne
-    @JoinColumn(name = "comment_id")
-    private Comment comment;
-
-    @OneToMany(mappedBy = "comment")
-    private Set<Comment> replies;
+//    @ManyToOne
+//    @JoinColumn(name = "comment_id")
+//    private Comment comment;
+//
+//    @OneToMany(mappedBy = "comment")
+//    private Set<Comment> replies;
 
     @ManyToMany
     @JoinTable(joinColumns = @JoinColumn(name = "comment_id"),

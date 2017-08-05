@@ -17,7 +17,7 @@
     <div class="center-block" style="width: 360px;">
         <form method="post" th:action="@{/admin/login}">
             <h3 class="bg-">登录</h3>
-            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+            <!--<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>-->
             <p class="text-danger" th:if="${param.error != null}">
                 用户名或密码错误
             </p>
