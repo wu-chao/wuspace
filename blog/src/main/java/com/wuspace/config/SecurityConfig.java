@@ -24,8 +24,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 import java.io.IOException;
 
-//@Configuration
-//@EnableWebSecurity
+@Configuration
+@EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     /**
@@ -47,8 +47,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf()
                 .and()
                 .formLogin()
-                .usernameParameter("username")
-                .passwordParameter("password")
                 .defaultSuccessUrl("/admin/blogs")
                 .and()
                 .logout()
@@ -57,8 +55,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .tokenRepository(persistentTokenRepository())
                 .and()
                 .authorizeRequests()
-                .antMatchers("/**").permitAll()
-                .anyRequest().authenticated();
+                .antMatchers("/**").permitAll();
 
     }
 
@@ -77,7 +74,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "select username, password, enabled from users where username = ?")
                 .authoritiesByUsernameQuery(
                         "select username, authority from authorities where username = ?")
-        //.passwordEncoder(passwordEncoder())
         ;
     }
 

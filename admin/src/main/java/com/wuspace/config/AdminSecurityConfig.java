@@ -87,12 +87,14 @@ entinfo admin登录为 th:action="@{/authentication}"
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth
-                .jdbcAuthentication()
-                .dataSource(dataSource)
-                .usersByUsernameQuery(
-                        "select username, password, enabled from users where username = ?")
-                .authoritiesByUsernameQuery(
-                        "select username, authority from authorities where username = ?")
+//                .jdbcAuthentication()
+//                .dataSource(dataSource)
+//                .usersByUsernameQuery(
+//                        "select username, password, enabled from users where username = ?")
+//                .authoritiesByUsernameQuery(
+//                        "select username, authority from authorities where username = ?")
+        .inMemoryAuthentication()
+        .withUser("admin").password("admin").roles("ADMIN");
 //        //.passwordEncoder(passwordEncoder())
         ;
     }
