@@ -47,7 +47,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf()
                 .and()
                 .formLogin()
-                .defaultSuccessUrl("/admin/blogs")
                 .and()
                 .logout()
                 .and()
@@ -56,7 +55,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/**").permitAll();
-
     }
 
     /**

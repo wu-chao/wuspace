@@ -14,6 +14,11 @@ public class RegexpUtils {
     public static final String PRC_PHONE_REGEXP = "^((13[0-9])|(15[^4])|(18[0,2,3,5-9])|(17[0-8])|(147))\\d{8}$";
 
     /**
+     * 邮箱
+     */
+    public static final String EMAIL = "[a-zA-Z_]{1,}[0-9]{0,}@(([a-zA-z0-9]-*){1,}\\.){1,3}[a-zA-z\\-]{1,}";
+
+    /**
      * 1、微信号是微信的唯一凭证，只能设置 1 次；
      * 2、可使用 6-20 个字母、数字、下划线和减号；
      * 3、必须以字母开头（字母不区分大小写）；
@@ -43,6 +48,21 @@ public class RegexpUtils {
      */
     public static final String IP_REGEXP = "(25[0-5]|2[0-4]\\\\d|1\\\\d{2}|[1-9]?\\\\d)(\\\\.(25[0-5]|2[0-4]\\\\d|1\\\\d{2}|[1-9]?\\\\d)){3}";
 
+    /**
+     * 域名
+     * DNS (https://baike.baidu.com/item/dns/427444) 规定:
+     * 域名中的标号都由英文字母和数字组成，每一个标号不超过 63 个字符，也不区分大小写字母
+     * 标号中除连字符（-）外不能使用其他的标点符号。级别最低的域名写在最左边，而级别最高的域名写在最右边
+     * 由多个标号组成的完整域名总共不超过 255 个字符
+     */
+    public static final String DOMAIN = " ^(?=^.{3,255}$)[a-zA-Z0-9][-a-zA-Z0-9]{0,62}(\\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+$";
+
+    /**
+     * 网址
+     */
+    public static final String URL = "(http://|ftp://|https://|www){0,1}[^\u4e00-\u9fa5\\s]*?\\.(com|net|cn|me|tw|fr)[^\u4e00-\u9fa5\\s]*";
+
+    public static final String FAX = "/^((0\\d{2,3}-)?\\d{7,8})$/";
 
     public static boolean isMatched(String source, String regexp) {
         // 依赖：https://mvnrepository.com/artifact/org.apache.oro/com.springsource.org.apache.oro

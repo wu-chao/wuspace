@@ -47,6 +47,7 @@ dependencies {
     compile "org.springframework:spring-context-support"
     compile "org.springframework.boot:spring-boot-devtools"
     compile "org.springframework.boot:spring-boot-starter-test"
+    compile "org.springframework.boot:spring-boot-starter-web"
 
 //  正则表达式
     compile "org.apache.oro:com.springsource.org.apache.oro:2.0.8"
@@ -56,6 +57,11 @@ dependencies {
 //    compile "me.hao0:wepay-core:1.2.5"
 //    compile "me.hao0:common:1.1.2"
 //    compile "net.glxn.qrgen:javase:2.0"
+
+    // Excel 文件解析
+    compile "org.apache.poi:poi:3.8"
+    compile "org.apache.poi:poi-ooxml:3.8-beta3"
+    compile "org.apache.poi:poi-ooxml-schemas:3.8-beta4"
 
     compile "commons-logging:commons-logging:${commons_logging_version}"
     testCompile group: 'junit', name: 'junit', version: '4.12'
