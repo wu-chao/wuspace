@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 
 import java.util.Optional;
 
+import static javax.swing.text.StyleConstants.ModelAttribute;
+
 @Controller
 public class BaseController {
 

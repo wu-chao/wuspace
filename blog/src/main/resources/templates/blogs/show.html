@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.w3.org/1999/xhtml"
-      layout:decorate="~{layouts/main}">
+      layout:decorate="~{layout/main}">
 <head>
     <meta charset="utf-8">
     <title>天才宝宝</title>
@@ -18,7 +18,7 @@
                         <a style="display:block;color:#009688;font-size:24px;"
                            th:href="@{/blogs/{blogId}(blogId=${blog.id})}" th:text="${blog.title}"></a>
                         <p class="article-meta" style="padding:10px 0;">
-                            <span th:text="${#calendars.format(blog.createdAt, 'yyyy-MM-dd HH:mm:ss')}"></span>
+                            <span th:text="${#calendars.format(blog.createdDate, 'yyyy-MM-dd HH:mm:ss')}"></span>
                             <span th:if="${blog.user != null}" th:text="${blog.user.username}"></span>
                         </p>
                     </div>

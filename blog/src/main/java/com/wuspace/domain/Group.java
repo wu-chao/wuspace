@@ -10,7 +10,7 @@ import java.io.Serializable;
 @Setter
 @Entity
 @Table(name = "groups")
-public class Group extends AbstractBaseEntity implements Serializable {
+public class Group extends AbstractAuditingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

@@ -10,7 +10,7 @@ import java.io.Serializable;
 @Setter
 @Entity
 @Table(name = "authorities")
-public class Authority extends AbstractBaseEntity implements Serializable {
+public class Authority extends AbstractAuditingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

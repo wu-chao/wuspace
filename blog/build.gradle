@@ -87,10 +87,15 @@ dependencies {
     runtime "mysql:mysql-connector-java"
     compile "org.hibernate:hibernate-core"
     compile "org.hibernate:hibernate-validator"
+    compile "org.hibernate:hibernate-java8:5.1.2.Final"
     compile "org.hibernate:hibernate-jpamodelgen"
     compile("com.zaxxer:HikariCP:${hikaricp_version}") {
         exclude(module: 'tools')
     }
+    compile "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.6.0"
+    // http://nixmash.com/post/spring-jpa-auditing-with-zoneddatetime-and-mysql
+    //添加该依赖报错
+//    compile 'org.jadira.usertype:usertype.extended:3.2.0.GA'
 
     //  微信支付
     compile "com.google.guava:guava:22.0"

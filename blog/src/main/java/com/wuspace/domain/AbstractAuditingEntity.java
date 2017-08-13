@@ -12,28 +12,31 @@ import java.io.Serializable;
 import java.time.ZonedDateTime;
 
 @MappedSuperclass
-public class AbstractBaseEntity implements Serializable {
+//@EntityListeners({AuditingEntityListener.class})
+public class AbstractAuditingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @CreatedBy
-    @Column(name = "created_by", nullable = false, length = 50, updatable = false)
     @JsonIgnore
+    @Column(name = "created_by", nullable = false, length = 50, updatable = false)
+    @CreatedBy
     private String createdBy;
 
-    @CreatedDate
-    @Column(name = "created_date", nullable = false)
     @JsonIgnore
+    @Column(name = "created_date", nullable = false)
+//    @Type(type = "org.jadira.usertype.dateandtime.threeten.PersistentLocalDateTime")
+    @CreatedDate
     private ZonedDateTime createdDate = ZonedDateTime.now();
 
-    @LastModifiedBy
-    @Column(name = "last_modified_by", length = 50)
     @JsonIgnore
+    @Column(name = "last_modified_by", length = 50)
+    @LastModifiedBy
     private String lastModifiedBy;
 
-    @LastModifiedDate
-    @Column(name = "last_modified_date")
     @JsonIgnore
+    @Column(name = "last_modified_date")
+//    @Type(type = "org.jadira.usertype.dateandtime.threeten.PersistentLocalDateTime")
+    @LastModifiedDate
     private ZonedDateTime lastModifiedDate = ZonedDateTime.now();
 
     public String getCreatedBy() {

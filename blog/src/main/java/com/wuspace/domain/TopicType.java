@@ -10,7 +10,7 @@ import java.io.Serializable;
 @Setter
 @Entity
 @Table(name = "topic_types")
-public class TopicType extends AbstractBaseEntity implements Serializable {
+public class TopicType extends AbstractAuditingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

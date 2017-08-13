@@ -10,7 +10,7 @@ import java.sql.Timestamp;
 @Setter
 @Getter
 @Entity
-public class Notice extends AbstractBaseEntity implements Serializable {
+public class Notice extends AbstractAuditingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

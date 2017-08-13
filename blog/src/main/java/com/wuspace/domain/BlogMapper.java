@@ -2,7 +2,7 @@ package com.wuspace.domain;
 
 import org.apache.ibatis.annotations.*;
 
-import java.util.Set;
+import java.util.List;
 
 @Mapper
 public interface BlogMapper {
@@ -13,7 +13,7 @@ public interface BlogMapper {
                     column = "user_id",
                     one = @One(select = "com.wuspace.domain.UserMapper.findUserById"))
     })
-    Set<Blog> findAllByOrderByCreatedAtDesc();
+    List<Blog> findAllByOrderByCreatedAtDesc();
 
     @Select("select * from blogs as b where b.id = #{id}")
     @Results({
