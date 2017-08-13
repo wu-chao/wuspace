@@ -1,95 +1,62 @@
 package com.wuspace.domain;
 
-import com.wuspace.domain.security.User;
-import com.wuspace.domain.shared.BaseEntity;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import java.io.Serializable;
 
-@Entity
-@Table(name = "blogs")
 @Getter
 @Setter
-public class Blog extends BaseEntity {
+@Entity
+@Table(name = "blogs")
+public class Blog extends AbstractAuditingEntity implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@ManyToOne
-	@JoinColumn(name = "user_id", nullable = false)
-	private User user;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", unique = true, nullable = false)
+    private Long id;
 
-	@Column(name = "title", nullable = false, length = 500)
-	private String title;
+    private String category;
 
-	@Lob
-	@Basic(fetch = FetchType.LAZY)
-	@Column(name = "content", nullable = false)
-	private String content;
-	
-	@Column(name = "image", length = 200, nullable = true)
-	private String image;
+    private String title;
 
-	@Column(name = "viewed_times", nullable = false)
-	private Integer viewedTimes = 0;
+    @Lob
+    private String content;
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "blog")
-	@OrderBy("createTime desc")
-	private Set<Comment> comments;
+    private String tags;
 
-	@ManyToMany
-	@Fetch(value = FetchMode.SUBSELECT)
-	@JoinTable(name = "blog_zan", joinColumns = @JoinColumn(name = "blog_id")
-			, inverseJoinColumns = @JoinColumn(name = "user_id"))
-	private Set<User> zanUsers = new HashSet<User>(0);
+    private Long viewedTimes = 0L;
 
-	@ManyToMany(cascade = CascadeType.ALL)
-	@Fetch(value = FetchMode.SUBSELECT)
-	@JoinTable(name = "blog_collect", joinColumns = @JoinColumn(name = "blog_id")
-			, inverseJoinColumns = @JoinColumn(name = "user_id"))
-	private Set<User> collectUsers = new HashSet<User>(0);
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
+//    @ManyToMany
+//    @JoinTable(joinColumns = @JoinColumn(name = "blog_id"),
+//            inverseJoinColumns = @JoinColumn(name = "topic_type_id"))
+//    private Set<TopicType> topicTypes;
 
-	public Blog() {}
+//    @ManyToMany(fetch = FetchType.LAZY)
+//    @JoinTable(name = "blogs_zan_users",
+//            joinColumns = @JoinColumn(name = "blog_id"),
+//            inverseJoinColumns = @JoinColumn(name = "zan_user_id"))
+//    private Set<User> zanUsers;
 
-	public boolean existsZanUser(User user) {
-		if (this.zanUsers.contains(user)) {
-			return true;
-		} else {
-			return false;
-		}
-	}
+    private Long zanTimes = 0L;
 
-	public void addZanUser(User user) {
-		this.zanUsers.add(user);
-	}
+//    @ManyToMany(fetch = FetchType.LAZY)
+//    @JoinTable(name = "blogs_cai_users",
+//            joinColumns = @JoinColumn(name = "blog_id"),
+//            inverseJoinColumns = @JoinColumn(name = "cai_user_id"))
+//    private Set<User> caiUsers;
 
-	public boolean existsCollectUser(User user) {
-		if (this.collectUsers.contains(user)) {
-			return true;
-		} else {
-			return false;
-		}
-	}
+    private Long caiTimes = 0L;
 
-	public void addCollectUser(User user) {
-		this.collectUsers.add(user);
-	}
+//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "blog")
+//    private Set<Comment> comments;
 
-	public void removeCollectUser(User user) {
-		this.collectUsers.remove(user);
-	}
-
-	public void visited() {
-		this.viewedTimes++;
-	}
-
-	public void updateBlog(String title, String content) {
-		this.title = title;
-		this.content = content;
-	}
+    private Long commentTimes = 0L;
 }

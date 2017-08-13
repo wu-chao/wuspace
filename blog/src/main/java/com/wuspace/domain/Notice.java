@@ -1,39 +1,44 @@
 package com.wuspace.domain;
 
-import com.wuspace.domain.security.User;
-import com.wuspace.domain.shared.BaseEntity;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Timestamp;
 
-@Entity
-@Table(name = "notice")
 @Setter
 @Getter
-public class Notice extends BaseEntity {
+@Entity
+public class Notice extends AbstractAuditingEntity implements Serializable {
 
-	@ManyToOne
-	@JoinColumn(name = "publish_user_id", nullable = false)
-	private User publishBy;
-	
-	@ManyToOne
-	@JoinColumn(name = "delete_user_id")
-	private User deleteBy;
-	
-	@Column(name = "title", nullable = false, length = 500)
-	private String title;
+    private static final long serialVersionUID = 1L;
 
-	@Lob
-	@Basic(fetch = FetchType.LAZY)
-	@Column(name = "content", nullable = false)
-	private String content;
-	
-	public Notice() {};
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", unique = true, nullable = false)
+    private Long id;
 
-	public Notice(User admin, String title, String content, Timestamp timestamp) {
+    @ManyToOne
+    @JoinColumn(name = "publish_by")
+    private User publishBy;
 
-	}
+    @ManyToOne
+    @JoinColumn(name = "delete_by")
+    private User deleteBy;
+
+    private String title;
+
+    @Lob
+    @Basic(fetch = FetchType.LAZY)
+    @Column(name = "content", nullable = false)
+    private String content;
+
+    public Notice() {
+    }
+
+    public Notice(User admin, String title, String content, Timestamp timestamp) {
+
+    }
 
 }

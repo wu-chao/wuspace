@@ -21,7 +21,7 @@
 	
 	<!-- 扫描包 -->
 	<context:component-scan base-package="com.wuspace.domain"></context:component-scan>
-	<context:component-scan base-package="com.wuspace.service"></context:component-scan>
+	<context:component-scan base-package="com.wuspace.admin.application"></context:component-scan>
 	<context:component-scan base-package="com.wuspace.controller"></context:component-scan>
 
 	<!-- 引入数据库配置文件 -->

@@ -1,0 +1,111 @@
+group = 'wuspace'
+version = '1.0.0'
+description = 'blog'
+
+buildscript {
+    repositories {
+        mavenLocal()
+        maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
+        jcenter()
+        maven { url 'http://repo.spring.io/milestone' }
+        maven { url 'http://repo.spring.io/snapshot' }
+        maven { url 'https://repository.jboss.org/nexus/content/repositories/releases' }
+        maven { url 'https://oss.sonatype.org/content/repositories/releases' }
+        maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
+        maven { url 'http://repo.maven.apache.org/maven2' }
+    }
+    ext {
+        spring_boot_gradle_plugin_version = '1.5.3.RELEASE'
+    }
+    dependencies {
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:${spring_boot_gradle_plugin_version}"
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'checkstyle'
+apply plugin: 'spring-boot' //http://docs.spring.io/spring-boot/docs/current/reference/html/build-tool-plugins-gradle-plugin.html
+
+jar {
+    baseName = 'blog'
+    version = '0.0.1-SNAPSHOT'
+}
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+    mavenLocal()
+    maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
+    jcenter()
+    maven { url 'http://repo.spring.io/milestone' }
+    maven { url 'http://repo.spring.io/snapshot' }
+    maven { url 'https://repository.jboss.org/nexus/content/repositories/releases' }
+    maven { url 'https://oss.sonatype.org/content/repositories/releases' }
+    maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
+    maven { url 'http://repo.maven.apache.org/maven2' }
+}
+
+ext {
+    thymeleaf_version = '3.0.0.RELEASE'
+    thymeleaf_layout_dialect_version = '2.0.3'
+    thymeleaf_spring_data_dialect_version = '3.1.1'
+
+    mybatis_generator_version = '1.3.5'
+    mybatis_spring_boot_starter_version = '1.1.1'
+    mybatis_spring_version = '1.3.1'
+
+    hibernate_version = '5.2.8.Final'
+    hikaricp_version = '2.6.0'
+
+    lombok_version = '1.16.16'
+    commons_logging_version = '1.2'
+    apache_commons_io_version = '1.3.2'
+    apache_commons_fileupload_version = '1.3.2'
+}
+
+dependencies {
+    compile "org.springframework:spring-context-support"
+    compile "org.springframework.boot:spring-boot-devtools"
+    compile "org.springframework.boot:spring-boot-starter-test"
+    compile "org.springframework.boot:spring-boot-starter-actuator"
+    compile "org.springframework.boot:spring-boot-starter-security"
+    compile "org.springframework.boot:spring-boot-starter-web"
+    compile "org.springframework.boot:spring-boot-starter-thymeleaf"
+    compile "org.thymeleaf:thymeleaf:${thymeleaf_version}"
+    compile "org.thymeleaf:thymeleaf-spring4:${thymeleaf_version}"
+    compile "nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:${thymeleaf_layout_dialect_version}"
+    compile "io.github.jpenren:thymeleaf-spring-data-dialect:${thymeleaf_spring_data_dialect_version}"
+
+//    compile "org.mybatis.generator:mybatis-generator-core:${mybatis_generator_version}"
+    compile "org.springframework.boot:spring-boot-starter-data-jpa"
+    compile "org.mybatis.spring.boot:mybatis-spring-boot-starter:${mybatis_spring_boot_starter_version}"
+
+//    compile "org.liquibase:liquibase-core"
+    runtime "com.h2database:h2"
+    runtime "mysql:mysql-connector-java"
+    compile "org.hibernate:hibernate-core"
+    compile "org.hibernate:hibernate-validator"
+    compile "org.hibernate:hibernate-java8:5.1.2.Final"
+    compile "org.hibernate:hibernate-jpamodelgen"
+    compile("com.zaxxer:HikariCP:${hikaricp_version}") {
+        exclude(module: 'tools')
+    }
+    compile "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.6.0"
+    // http://nixmash.com/post/spring-jpa-auditing-with-zoneddatetime-and-mysql
+    //添加该依赖报错
+//    compile 'org.jadira.usertype:usertype.extended:3.2.0.GA'
+
+    //  微信支付
+    compile "com.google.guava:guava:22.0"
+    compile "me.hao0:wepay-core:1.2.5"
+    compile "me.hao0:common:1.1.2"
+    compile 'net.glxn.qrgen:javase:2.0'
+
+    compile "org.projectlombok:lombok:${lombok_version}"
+    compile "commons-logging:commons-logging:${commons_logging_version}"
+    compile "org.apache.commons:commons-io:${apache_commons_io_version}"
+    compile "commons-fileupload:commons-fileupload:${apache_commons_fileupload_version}"
+}
+

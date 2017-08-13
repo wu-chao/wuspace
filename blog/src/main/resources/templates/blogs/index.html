@@ -34,7 +34,7 @@
 	<!-- header部分开始 -->
 	<div id="header">
 		<div id="header_center">
-			<a id="logo" th:href="${#mvc.url('BC#index').build()}" class="floatl">
+			<a id="logo" th:href=@{/blogs}" class="floatl">
 				<img th:src="@{/images/logo.png}"/></a>
 			<div id="navigation" class="floatl">
 				<ul>
@@ -117,29 +117,7 @@
 				</ul>
 			</div>
 			
-			<!-- 分页 -->
-			<div id="pageContainer">
-				<div id="pages" th:if="${totalPages >= 2}">
-					<a th:href="${#mvc.url('BC#index').arg(0, 0).arg(2, 0).build()}">首页</a>
-					<a th:if="${prePage - 1 >= 0}" th:href="${#mvc.url('BC#index').arg(0, firstResult).arg(1, prePage).arg(2, prePage - 1).build()}">上一页</a>
-					<a class="arw_l no_hover" th:if="${prePage - 1 lt 0}">上一页</a>
-					<a th:if="${firstResult le totalPages - 1}" th:attr="class = ${prePage == firstResult ? 'clicked' : ''}"
-						th:href="${#mvc.url('BC#index').arg(0, firstResult).arg(1, prePage).arg(2, firstResult).build()}" th:text="${firstResult + 1}">1</a>
-					<a th:if="${firstResult + 1 le totalPages - 1}" th:attr="class = ${prePage == firstResult + 1 ? 'clicked' : ''}"
-						th:href="${#mvc.url('BC#index').arg(0, firstResult).arg(1, prePage).arg(2, firstResult + 1).build()}" th:text="${firstResult + 2}">2</a>
-					<a th:if="${firstResult + 2 le totalPages - 1}" th:attr="class = ${prePage == firstResult + 2 ? 'clicked' : ''}"
-						th:href="${#mvc.url('BC#index').arg(0, firstResult).arg(1, prePage).arg(2, firstResult + 2).build()}" th:text="${firstResult + 3}">3</a>
-					<a th:if="${firstResult + 3 le totalPages - 1}" th:attr="class = ${prePage == firstResult + 3  ? 'clicked' : ''}"
-						th:href="${#mvc.url('BC#index').arg(0, firstResult).arg(1, prePage).arg(2, firstResult + 3).build()}" th:text="${firstResult + 4}">4</a>
-					<a th:if="${firstResult + 4 le totalPages - 1}" th:attr="class = ${prePage == firstResult + 4  ? 'clicked' : ''}"
-						th:href="${#mvc.url('BC#index').arg(0, firstResult).arg(1, prePage).arg(2, firstResult + 4).build()}" th:text="${firstResult + 5}">5</a>
-					<a th:if="${prePage + 2 le totalPages}" th:href="${#mvc.url('BC#index').arg(0, firstResult).arg(1, prePage).arg(2, prePage + 1).build()}">下一页</a>
-					<a class="arw_r no_hover" th:if="${prePage + 2 > totalPages}">下一页</a>
-					<a th:href="${#mvc.url('BC#index').arg(0, totalPages - 6).arg(2, totalPages - 1).build()}">尾页</a>
-					<a class="no_hover">共<span th:text="${totalPages}"></span>页</a>
-					<div class="clearf"></div>
-				</div>
-			</div>
+
 		</div>
 		<!-- content_wrap部分结束 -->
 		
