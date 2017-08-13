@@ -6,6 +6,6 @@
     });
 
     function ajaxSuccessPagination() {
-        alert("pagination success");
+        console.log("pagination success");
     }
 }(jQuery);
