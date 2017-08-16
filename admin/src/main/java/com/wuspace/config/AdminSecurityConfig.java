@@ -3,6 +3,7 @@ package com.wuspace.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -26,6 +27,7 @@ import java.io.IOException;
 
 @Configuration
 @EnableWebSecurity
+@Order(value = 99)
 public class AdminSecurityConfig extends WebSecurityConfigurerAdapter {
 
     /**
@@ -48,53 +50,45 @@ public class AdminSecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(HttpSecurity http) throws Exception {
         http
                 .csrf()
-                .disable()
+                .and()
                 .formLogin()
-                .loginPage("/admin/login")
-                .usernameParameter("username")
-                .passwordParameter("password")
                 .successHandler(customAuthenticationSuccessHandler)
                 .permitAll()
                 .and()
                 .logout()
                 .permitAll()
-                .and()
-                .rememberMe()
-                .tokenRepository(persistentTokenRepository())
+//                .and()
+//                .rememberMe()
+//                .tokenRepository(persistentTokenRepository())
                 .and()
                 .authorizeRequests()
                 .antMatchers("/admin/blogs/create").authenticated()
                 .antMatchers("/admin/login").permitAll()
                 .antMatchers("/**").permitAll();
+    }
 
-        /*
-        * There was an unexpected error (type=Forbidden, status=403).
+    /*
+    * There was an unexpected error (type=Forbidden, status=403).
 Could not verify the provided CSRF token because your session was not found.
 
 
-admin  login的action要配成 /admin/login
-entinfo admin登录为 th:action="@{/authentication}"
-        * */
 
-    }
-
-    /**
-     * https://stackoverflow.com/questions/35218354/difference-between-registerglobal-configure-configureglobal-configureglo
-     *
-     * @param auth
-     * @throws Exception
-     */
+/**
+ * https://stackoverflow.com/questions/35218354/difference-between-registerglobal-configure-configureglobal-configureglo
+ *
+ * @param auth
+ * @throws Exception
+ */
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth
-//                .jdbcAuthentication()
-//                .dataSource(dataSource)
-//                .usersByUsernameQuery(
-//                        "select username, password, enabled from users where username = ?")
-//                .authoritiesByUsernameQuery(
-//                        "select username, authority from authorities where username = ?")
-        .inMemoryAuthentication()
-        .withUser("admin").password("admin").roles("ADMIN");
+                .jdbcAuthentication()
+                .dataSource(dataSource)
+                .usersByUsernameQuery(
+                        "select username, password, enabled from users where username = ?")
+                .authoritiesByUsernameQuery(
+                        "select username, authority from authorities where username = ?")
+
 //        //.passwordEncoder(passwordEncoder())
         ;
     }
