@@ -1,4 +1,4 @@
-package com.wuspace.controller;
+package com.wuspace.controller.blogs;
 
 import com.wuspace.domain.Blog;
 import com.wuspace.domain.BlogMapper;
@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import java.util.List;
 
 @Controller
+@RequestMapping("/blog")
 public class BlogIndexController {
 
     @Autowired

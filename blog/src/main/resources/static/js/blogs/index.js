@@ -2,7 +2,7 @@
     'use strict';
 
     $(function () {
-        ajaxPagination('/blogs', false, ajaxSuccessPagination);
+        ajaxPagination('/blog/blogs.json', false, ajaxSuccessPagination);
     });
 
     function ajaxSuccessPagination() {

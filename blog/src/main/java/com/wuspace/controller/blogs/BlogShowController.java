@@ -1,4 +1,4 @@
-package com.wuspace.controller;
+package com.wuspace.controller.blogs;
 
 import com.wuspace.domain.BlogMapper;
 import com.wuspace.domain.Blog;
