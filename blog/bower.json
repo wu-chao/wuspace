@@ -16,6 +16,8 @@
   ],
   "dependencies": {
     "bootstrap": "^3.3.7",
-    "ckeditor": "^4.7.1"
+    "ckeditor": "^4.7.1",
+    "font-awesome": "^4.7.0",
+    "Ionicons": "ionicons#^2.0.1"
   }
 }
