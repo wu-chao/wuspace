@@ -1,6 +1,8 @@
 package com.wuspace.util;
 
-public class RegexpUtils {
+import org.apache.oro.text.regex.*;
+
+public abstract class RegexpUtils {
 
     /**
      * 大陆手机号码 11 位数，匹配格式：前三位固定格式 + 后 8 位任意数
@@ -66,16 +68,15 @@ public class RegexpUtils {
 
     public static boolean isMatched(String source, String regexp) {
         // 依赖：https://mvnrepository.com/artifact/org.apache.oro/com.springsource.org.apache.oro
-//        PatternCompiler patternCompiler = new Perl5Compiler();
-//        PatternMatcher patternMatcher = new Perl5Matcher();
-//        try {
-//            Pattern pattern = patternCompiler.compile(regexp);
-//            return patternMatcher.contains(source, pattern);
-//        } catch (MalformedPatternException e) {
-//            e.printStackTrace();
-//            return false;
-//        }
-        return false;
+        PatternCompiler patternCompiler = new Perl5Compiler();
+        PatternMatcher patternMatcher = new Perl5Matcher();
+        try {
+            Pattern pattern = patternCompiler.compile(regexp);
+            return patternMatcher.contains(source, pattern);
+        } catch (MalformedPatternException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
 }

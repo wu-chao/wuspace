@@ -27,6 +27,9 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 repositories {
+    flatDir {
+        dirs 'lib'
+    }
     mavenLocal()
     maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
     jcenter()
@@ -44,6 +47,7 @@ ext {
 }
 
 dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
     compile "org.springframework:spring-context-support"
     compile "org.springframework.boot:spring-boot-devtools"
     compile "org.springframework.boot:spring-boot-starter-test"

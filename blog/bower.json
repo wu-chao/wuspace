@@ -1,11 +1,8 @@
 {
   "name": "blog",
   "homepage": "https://github.com/wuchao/wuspace",
-  "authors": [
-    "chao <chao@gmx.com>"
-  ],
   "description": "blog",
-  "main": "main.js",
+  "appPath": "src/main/resources/",
   "license": "MIT",
   "ignore": [
     "**/.*",
@@ -16,8 +13,19 @@
   ],
   "dependencies": {
     "bootstrap": "^3.3.7",
-    "ckeditor": "^4.7.1",
+    "bootstrap-sass": "^3.3.7",
     "font-awesome": "^4.7.0",
-    "Ionicons": "ionicons#^2.0.1"
+    "jquery": "3.1.0",
+    "toastr": "^2.1.3",
+    "jquery-validation": "1.13.1",
+    "ckeditor": "^4.7.1"
+  },
+  "resolutions": {
+    "jquery": "3.1.0"
+  },
+  "bootstrap-sass": {
+    "main": [
+      "assets/javascripts/bootstrap.js"
+    ]
   }
 }
