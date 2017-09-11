@@ -1,0 +1,55 @@
+#user_container {
+	width: 780px;
+	height: auto !important;
+	height: 100px;
+	min-height: 100px;
+	margin: 10px 20px;
+}
+
+#user_container #users {
+	padding: 0px;
+	margin-top: 15px;
+	width: 720px;
+}
+
+#users .user {
+	display: block;
+	padding: 2px 2px 26px 2px;
+	border-bottom: 1px solid #eaebec;
+	background: #fff;
+}
+
+#users .user .user_title {
+	margin: 0px 0px 0px 60px;
+	font-weight: 700;
+	font-size: 18px;
+	position: relative;
+}
+
+#users .user .user_title .cancel_care_btn {
+	font-size: 12px;
+	color: #6C7AB7;
+	position: absolute;
+	top: 4px;
+	right: 10px;
+}
+
+#users .user .user_title .cancel_care_btn:hover {
+	color: red;
+}
+
+#users .user .user_title .user_avatar {
+	display: block;
+	width: 40px;
+	height: 40px;
+	position: absolute;
+	top: 4px;
+	left: -48px;
+}
+
+#users .user .user_nr {
+	margin: 0px 0px 0px 60px;
+	padding: 2px 2px 2px 0px;
+	font-size: 14px;
+	color: #666;
+}
