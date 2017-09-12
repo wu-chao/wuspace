@@ -1,4 +1,4 @@
-package com.wuspace.util;
+package com.wuspace.commons.util;
 
 import org.apache.oro.text.regex.*;
 
@@ -70,6 +70,7 @@ public abstract class RegexpUtils {
         // 依赖：https://mvnrepository.com/artifact/org.apache.oro/com.springsource.org.apache.oro
         PatternCompiler patternCompiler = new Perl5Compiler();
         PatternMatcher patternMatcher = new Perl5Matcher();
+
         try {
             Pattern pattern = patternCompiler.compile(regexp);
             return patternMatcher.contains(source, pattern);

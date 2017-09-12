@@ -1,4 +1,4 @@
-package com.wuspace.util;
+package com.wuspace.commons.util;
 
 import java.net.InetAddress;
 

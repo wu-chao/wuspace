@@ -1,4 +1,6 @@
-version 'unspecified'
+group = 'wuspace'
+version = '1.0.0'
+description = '基于 Spring 框架的项目共用模块'
 
 buildscript {
     repositories {
@@ -27,9 +29,6 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 repositories {
-    flatDir {
-        dirs 'lib'
-    }
     mavenLocal()
     maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
     jcenter()
@@ -42,18 +41,37 @@ repositories {
 }
 
 ext {
-    commons_logging_version = '1.2'
-    lombok_version = '1.16.16'
+//    commons_logging_version = '1.2'
+//    apache_commons_io_version = '1.3.2'
+//    apache_commons_fileupload_version = '1.3.2'
+//
+//    lombok_version = '1.16.16'
 }
 
 dependencies {
+    // 手动在项目中引入 jar 包
     compile fileTree(dir: 'libs', include: ['*.jar'])
+
+    // Spring
     compile "org.springframework:spring-context-support"
     compile "org.springframework.boot:spring-boot-devtools"
     compile "org.springframework.boot:spring-boot-starter-test"
-    compile "org.springframework.boot:spring-boot-starter-web"
+    compile "org.springframework.boot:spring-boot-starter-actuator"
+    compile "org.springframework.boot:spring-boot-starter-logging"
+    compile "org.springframework.boot:spring-boot-starter-aop"
+    compile "org.springframework.boot:spring-boot-starter-security"
+    compile("org.springframework.boot:spring-boot-starter-web") {
+        exclude module: 'spring-boot-starter-tomcat'
+    }
 
-//  正则表达式
+    // Apache 通用组件
+//    compile "commons-logging:commons-logging:${commons_logging_version}"
+//    compile "org.apache.commons:commons-io:${apache_commons_io_version}"
+//    compile "commons-fileupload:commons-fileupload:${apache_commons_fileupload_version}"
+//
+//    compile "org.projectlombok:lombok:${lombok_version}"
+
+    // 正则表达式
     compile "org.apache.oro:com.springsource.org.apache.oro:2.0.8"
 
 //  微信支付
@@ -67,6 +85,5 @@ dependencies {
     compile "org.apache.poi:poi-ooxml:3.8-beta3"
     compile "org.apache.poi:poi-ooxml-schemas:3.8-beta4"
 
-    compile "commons-logging:commons-logging:${commons_logging_version}"
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
