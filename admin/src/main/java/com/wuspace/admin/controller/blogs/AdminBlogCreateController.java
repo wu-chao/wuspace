@@ -3,7 +3,6 @@ package com.wuspace.admin.controller.blogs;
 import com.wuspace.admin.controller.BaseController;
 import com.wuspace.domain.Blog;
 import com.wuspace.domain.BlogRepository;
-import com.wuspace.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.stereotype.Controller;

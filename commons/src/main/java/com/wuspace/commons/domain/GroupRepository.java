@@ -1,4 +1,4 @@
-package com.wuspace.domain;
+package com.wuspace.commons.domain;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
