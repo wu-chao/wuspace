@@ -3,12 +3,15 @@ package com.wuspace.commons.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.BatchSize;
 import org.hibernate.validator.constraints.Email;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -24,13 +27,13 @@ public class User extends AbstractAuditingEntity implements Serializable {
 
     @NotNull
     @Size(min = 4, max = 50)
-    @Column(name = "username", length = 50, unique = true, nullable = false)
+    @Column(name = "username", length = 50, unique = true)
     private String username;
 
     @JsonIgnore
     @NotNull
     @Size(min = 6, max = 16)
-    @Column(name = "password", length = 16, nullable = false)
+    @Column(name = "password", length = 16)
     private String password;
 
     @Column(name = "nickname", length = 50, unique = true)
@@ -50,8 +53,16 @@ public class User extends AbstractAuditingEntity implements Serializable {
     private String description;
 
     @NotNull
-    @Column(name = "activated", nullable = false)
-    private boolean activated;
+    @Column(name = "activated")
+    private Boolean activated;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "user_authority",
+            joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "authority", referencedColumnName = "authority")})
+    @BatchSize(size = 20)
+    private Set<Authority> authorities = new HashSet<>();
 
     public User() {
     }

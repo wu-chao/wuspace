@@ -1,5 +1,6 @@
-package com.wuspace.commons.domain;
+package com.wuspace.commons.repository;
 
+import com.wuspace.commons.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

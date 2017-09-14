@@ -3,7 +3,11 @@ package com.wuspace.commons.domain;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Getter
@@ -14,22 +18,20 @@ public class Authority extends AbstractAuditingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @NotNull
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "authority", unique = true)
+    private String authority;
 
-    @Column(name = "authority_name", nullable = false)
-    private String authorityName;
+    @NotNull
+    @Column(name = "path", unique = true)
+    private String path;
 
-    @Column(name = "username")
-    private String username;
+    @NotNull
+    @Column(name = "name", unique = true)
+    private String name;
 
     public Authority() {
-    }
-
-    public Authority(String username, String authorityName) {
-        this.username = username;
-        this.authorityName = authorityName;
     }
 
     @Override
@@ -37,18 +39,18 @@ public class Authority extends AbstractAuditingEntity implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Authority authority = (Authority) o;
+        Authority authority1 = (Authority) o;
 
-        if (!id.equals(authority.id)) return false;
-        if (!authorityName.equals(authority.authorityName)) return false;
-        return username.equals(authority.username);
+        if (!authority.equals(authority1.authority)) return false;
+        if (!path.equals(authority1.path)) return false;
+        return name.equals(authority1.name);
     }
 
     @Override
     public int hashCode() {
-        int result = id.hashCode();
-        result = 31 * result + authorityName.hashCode();
-        result = 31 * result + username.hashCode();
+        int result = authority.hashCode();
+        result = 31 * result + path.hashCode();
+        result = 31 * result + name.hashCode();
         return result;
     }
 }

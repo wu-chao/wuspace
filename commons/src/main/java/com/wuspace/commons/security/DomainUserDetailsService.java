@@ -1,7 +1,7 @@
 package com.wuspace.commons.security;
 
 import com.wuspace.commons.domain.User;
-import com.wuspace.commons.domain.UserMapper;
+import com.wuspace.commons.mapper.UserMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.GrantedAuthority;
