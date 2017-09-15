@@ -1,8 +1,7 @@
-package com.wuspace.commons.domain;
+package com.wuspace.commons.mapper;
 
+import com.wuspace.commons.domain.User;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Result;
-import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.Optional;
@@ -17,6 +16,5 @@ public interface UserMapper {
     Optional<User> findUserByUsername(String username);
 
     @Select("select u from users as u where u.username like #{username}")
-
     Optional<User> findOneWithAuthoritiesByUsername(String username);
 }

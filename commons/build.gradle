@@ -55,8 +55,8 @@ dependencies {
 
     // Spring
     compile "org.springframework:spring-context-support"
-    compile "org.springframework.boot:spring-boot-starter-aop"
     compile "org.springframework.boot:spring-boot-devtools"
+    compile "org.springframework.boot:spring-boot-starter-aop"
     compile "org.springframework.boot:spring-boot-starter-test"
     compile "org.springframework.boot:spring-boot-starter-actuator"
     compile "org.springframework.boot:spring-boot-starter-logging"

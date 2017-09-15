@@ -9,6 +9,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.core.env.Environment;
 
 import java.util.Arrays;
@@ -18,6 +19,7 @@ import java.util.Arrays;
  * <p>
  * By default, it only runs with the "dev" profile.
  */
+@EnableAspectJAutoProxy
 @Aspect
 public class LoggingAspect {
 
