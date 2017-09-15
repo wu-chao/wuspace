@@ -3,33 +3,35 @@ package com.wuspace.commons.domain;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Getter
 @Setter
 @Entity
 @Table(name = "authorities")
-public class Authority extends AbstractAuditingEntity implements Serializable {
+public class Authority implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @NotNull
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "name", unique = true)
+    private String name;
 
-    @Column(name = "authority_name", nullable = false)
-    private String authorityName;
+    @NotNull
+    @Column(name = "chn_name", unique = true)
+    private String chnName;
 
-    @Column(name = "username")
-    private String username;
+    @NotNull
+    @Column(name = "path", unique = true)
+    private String path;
 
     public Authority() {
-    }
-
-    public Authority(String username, String authorityName) {
-        this.username = username;
-        this.authorityName = authorityName;
     }
 
     @Override
@@ -39,16 +41,16 @@ public class Authority extends AbstractAuditingEntity implements Serializable {
 
         Authority authority = (Authority) o;
 
-        if (!id.equals(authority.id)) return false;
-        if (!authorityName.equals(authority.authorityName)) return false;
-        return username.equals(authority.username);
+        if (!name.equals(authority.name)) return false;
+        if (!chnName.equals(authority.chnName)) return false;
+        return path.equals(authority.path);
     }
 
     @Override
     public int hashCode() {
-        int result = id.hashCode();
-        result = 31 * result + authorityName.hashCode();
-        result = 31 * result + username.hashCode();
+        int result = name.hashCode();
+        result = 31 * result + chnName.hashCode();
+        result = 31 * result + path.hashCode();
         return result;
     }
 }
