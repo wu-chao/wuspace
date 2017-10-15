@@ -96,7 +96,6 @@ dependencies {
     compile "org.hibernate:hibernate-java8:5.1.2.Final"
 //    org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor
 //    compile "org.hibernate:hibernate-jpamodelgen:5.1.0.Final"
-    compile "org.hibernate:hibernate-jpamodelgen"
     compile("com.zaxxer:HikariCP:${hikaricp_version}") {
         exclude(module: 'tools')
     }

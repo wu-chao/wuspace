@@ -57,13 +57,6 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @Column(name = "activated", nullable = false)
     private Boolean activated;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "user_authority",
-            joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "authority", referencedColumnName = "authority")})
-    @org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    @BatchSize(size = 20)
     private Set<Authority> authorities = new HashSet<>();
 
     public User() {

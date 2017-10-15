@@ -19,11 +19,11 @@ public class BlogSpecs {
             List<Predicate> predicates = new ArrayList<>();
 
             if (!StringUtils.isEmpty(titleOrContent)) {
-                predicates.add(cb.like(root.get(Blog_.title), titleOrContent));
+                predicates.add(cb.like(root.get("title"), titleOrContent));
             }
 
             if (!StringUtils.isEmpty(titleOrContent)) {
-                predicates.add(cb.like(root.get(Blog_.content), titleOrContent));
+                predicates.add(cb.like(root.get("content"), titleOrContent));
             }
 
             return cb.and(predicates.toArray(new Predicate[0]));

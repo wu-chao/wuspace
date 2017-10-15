@@ -1,5 +1,6 @@
 package com.wuspace.controller.blogs;
 
+import com.wuspace.commons.domain.User;
 import com.wuspace.controller.command.BlogCreateCommand;
 import com.wuspace.domain.Blog;
 import com.wuspace.domain.BlogRepository;

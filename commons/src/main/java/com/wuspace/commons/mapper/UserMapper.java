@@ -15,6 +15,6 @@ public interface UserMapper {
     @Select("select u from users as u where u.username like #{username}")
     Optional<User> findUserByUsername(String username);
 
-    @Select("select u from users as u where u.username like #{username}")
+    @Select("select u.id, u.username, au.name from users as u, authorities as au where  u.username like #{username}")
     Optional<User> findOneWithAuthoritiesByUsername(String username);
 }

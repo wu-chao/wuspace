@@ -27,10 +27,6 @@ public class Authority implements Serializable {
     @Column(name = "chn_name", unique = true)
     private String chnName;
 
-    @NotNull
-    @Column(name = "path", unique = true)
-    private String path;
-
     public Authority() {
     }
 
@@ -42,15 +38,13 @@ public class Authority implements Serializable {
         Authority authority = (Authority) o;
 
         if (!name.equals(authority.name)) return false;
-        if (!chnName.equals(authority.chnName)) return false;
-        return path.equals(authority.path);
+        return chnName.equals(authority.chnName);
     }
 
     @Override
     public int hashCode() {
         int result = name.hashCode();
         result = 31 * result + chnName.hashCode();
-        result = 31 * result + path.hashCode();
         return result;
     }
 }
