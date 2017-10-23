@@ -2,11 +2,11 @@
 -- INSERT INTO groups(id,role_name,group_name) VALUES (1,'super_admins','超级管理员');
 -- INSERT INTO groups(id,role_name,group_name) VALUES (2,'admins','普通管理员');
 
-INSERT INTO authorities(name) VALUES ('ROLE_ADMIN');
-INSERT INTO authorities(name) VALUES ('ROLE_USER');
+INSERT INTO authorities(name, chn_name) VALUES ('ROLE_ADMIN', '管理员权限');
+INSERT INTO authorities(name, chn_name) VALUES ('ROLE_USER', '用户权限');
 
-INSERT INTO users(id,created_by,created_date,last_modified_date,username,nickname,password,enabled) VALUES (1,'admin','2016-11-20 13:50:00','2016-11-20 13:50:00','admin','管理员','admin',TRUE );
-INSERT INTO users(id,created_by,created_date,last_modified_date,username,nickname,password,enabled) VALUES (2,'admin','2016-11-20 13:50:00','2016-11-20 13:50:00','user','chao','user',TRUE );
+INSERT INTO users(id,created_by,created_date,last_modified_date,username,nickname,password,activated) VALUES (1,'admin','2016-11-20 13:50:00','2016-11-20 13:50:00','admin','管理员','admin',TRUE );
+INSERT INTO users(id,created_by,created_date,last_modified_date,username,nickname,password,activated) VALUES (2,'admin','2016-11-20 13:50:00','2016-11-20 13:50:00','user','chao','user',TRUE );
 
 
 

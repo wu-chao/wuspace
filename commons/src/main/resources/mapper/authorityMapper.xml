@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wuspace.domain.AuthorityMapper">
+    
+    <select id="findAuthoritesById" parameterType="long" resultType="com.wuspace.commons.domain.Authority">
+        select ua.name from user_authority ua where ua.id = #{id}
+    </select>
+</mapper>

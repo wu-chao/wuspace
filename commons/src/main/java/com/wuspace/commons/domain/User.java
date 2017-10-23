@@ -3,8 +3,6 @@ package com.wuspace.commons.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.BatchSize;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.validator.constraints.Email;
 
 import javax.persistence.*;
@@ -57,6 +55,11 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @Column(name = "activated", nullable = false)
     private Boolean activated;
 
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "user_authority",
+            joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "authority", referencedColumnName = "name")})
     private Set<Authority> authorities = new HashSet<>();
 
     public User() {

@@ -14,11 +14,11 @@ public final class SecurityUtils {
     }
 
     /**
-     * Get the login of the current user.
+     * Get the username of the current user.
      *
-     * @return the login of the current user
+     * @return the username of the current user
      */
-    public static String getCurrentUserLogin() {
+    public static String getCurrentUsername() {
         SecurityContext securityContext = SecurityContextHolder.getContext();
         Authentication authentication = securityContext.getAuthentication();
         String userName = null;
@@ -43,14 +43,14 @@ public final class SecurityUtils {
         Authentication authentication = securityContext.getAuthentication();
         if (authentication != null) {
             return authentication.getAuthorities().stream()
-                .noneMatch(grantedAuthority -> grantedAuthority.getAuthority().equals(AuthoritiesConstants.ANONYMOUS));
+                    .noneMatch(grantedAuthority -> grantedAuthority.getAuthority().equals(AuthoritiesConstants.ANONYMOUS));
         }
         return false;
     }
 
     /**
      * If the current user has a specific authority (security role).
-     *
+     * <p>
      * <p>The name of this method comes from the isUserInRole() method in the Servlet API</p>
      *
      * @param authority the authority to check
@@ -61,7 +61,7 @@ public final class SecurityUtils {
         Authentication authentication = securityContext.getAuthentication();
         if (authentication != null) {
             return authentication.getAuthorities().stream()
-                .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals(authority));
+                    .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals(authority));
         }
         return false;
     }

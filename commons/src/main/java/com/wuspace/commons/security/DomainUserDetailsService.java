@@ -4,6 +4,7 @@ import com.wuspace.commons.domain.User;
 import com.wuspace.commons.mapper.UserMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -27,6 +28,7 @@ public class DomainUserDetailsService implements UserDetailsService {
 
     private final UserMapper userMapper;
 
+    @Autowired
     public DomainUserDetailsService(UserMapper userMapper) {
         this.userMapper = userMapper;
     }

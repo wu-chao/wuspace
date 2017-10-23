@@ -16,7 +16,6 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 
     @Override
     public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
-        // Simple strategy: only path extension is taken into method of Controller that return @ResponseBody
         configurer.favorPathExtension(true).
                 ignoreAcceptHeader(true).
                 useJaf(false).
