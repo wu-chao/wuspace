@@ -2,7 +2,6 @@ package com.wuspace.controller;
 
 import com.wuspace.commons.domain.User;
 import com.wuspace.commons.repository.UserRepository;
-import com.wuspace.controller.blogs.BlogCreateController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,7 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 
 import java.util.Optional;
 
-@ControllerAdvice(basePackageClasses = {BlogCreateController.class})
+@ControllerAdvice
 public class BaseController {
 
     @Autowired

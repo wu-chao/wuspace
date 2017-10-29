@@ -1,6 +1,5 @@
 package com.wuspace.admin.controller.blogs;
 
-import com.wuspace.admin.controller.BaseController;
 import com.wuspace.commons.domain.User;
 import com.wuspace.domain.Blog;
 import com.wuspace.domain.BlogRepository;
@@ -18,7 +17,7 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping("/admin")
-public class AdminBlogCreateController extends BaseController {
+public class AdminBlogCreateController {
 
     @Autowired
     private BlogRepository blogRepository;

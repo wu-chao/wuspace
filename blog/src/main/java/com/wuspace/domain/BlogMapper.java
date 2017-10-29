@@ -9,9 +9,10 @@ public interface BlogMapper {
 
     @Select("select * from blogs b order by b.created_date desc")
     @Results({
-            @Result(property = "user",
-                    column = "user_id",
-                    one = @One(select = "com.wuspace.domain.UserMapper.findUserById"))
+            @Result(column = "id", property = "id"),
+            @Result(column = "title", property = "title"),
+            @Result(column = "user_id", property = "user",
+                    one = @One(select = "com.wuspace.commons.mapper.UserMapper.findUserById"))
     })
     List<Blog> findAllByOrderByCreatedAtDesc();
 
@@ -19,7 +20,7 @@ public interface BlogMapper {
     @Results({
             @Result(property = "user",
                     column = "user_id",
-                    one = @One(select = "com.wuspace.domain.UserMapper.findUserById"))
+                    one = @One(select = "com.wuspace.commons.mapper.UserMapper.findUserById"))
     })
     Blog findBlogById(Long id);
 }

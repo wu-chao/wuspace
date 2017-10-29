@@ -31,8 +31,7 @@ public class User extends AbstractAuditingEntity implements Serializable {
 
     @JsonIgnore
     @NotNull
-    @Size(min = 6, max = 16)
-    @Column(name = "password", length = 16, nullable = false)
+    @Column(name = "password", length = 60, nullable = false)
     private String password;
 
     @Column(name = "nickname", length = 50, unique = true)

@@ -5,18 +5,12 @@
 INSERT INTO authorities(name, chn_name) VALUES ('ROLE_ADMIN', '管理员权限');
 INSERT INTO authorities(name, chn_name) VALUES ('ROLE_USER', '用户权限');
 
-INSERT INTO users(id,created_by,created_date,last_modified_date,username,nickname,password,activated) VALUES (1,'admin','2016-11-20 13:50:00','2016-11-20 13:50:00','admin','管理员','admin',TRUE );
-INSERT INTO users(id,created_by,created_date,last_modified_date,username,nickname,password,activated) VALUES (2,'admin','2016-11-20 13:50:00','2016-11-20 13:50:00','user','chao','user',TRUE );
+INSERT INTO users(id,created_by,created_date,last_modified_date,username,nickname,password,activated) VALUES (1,'admin','2016-11-20 13:50:00','2016-11-20 13:50:00','admin','管理员','$2a$10$lHS0hHR1XjVhhtvGrr9Ujuty2fWA2Ig6xdvLmq17jymhQJ4BeckGm',TRUE );
+INSERT INTO users(id,created_by,created_date,last_modified_date,username,nickname,password,activated) VALUES (2,'admin','2016-11-20 13:50:00','2016-11-20 13:50:00','user','chao','$2a$10$EJW771uabpcviSBZ6EBiVOGIo05h3YCPkq1ZvZmwJGy7TCsHa1Me6',TRUE );
 
+INSERT INTO user_authority(authority,user_id) VALUES ('ROLE_ADMIN',1);
+INSERT INTO user_authority(authority,user_id) VALUES ('ROLE_USER',2);
 
-
--- INSERT INTO group_members(id,username,group_id) VALUES (1,'admin',1);
--- INSERT INTO group_members(id,username,group_id) VALUES (2,'chao',1);
--- INSERT INTO group_members(id,username,group_id) VALUES (3,'xin',2);
--- INSERT INTO group_members(id,username,group_id) VALUES (4,'qian',2);
---
--- INSERT INTO group_authorities(id,group_id,authority) VALUES (1,1,'super_admin');
--- INSERT INTO group_authorities(id,group_id,authority) VALUES (2,2,'admin');
 
 INSERT INTO blogs(id,created_by,created_date,last_modified_date,title,content,viewed_times,user_id) VALUES (1,'user','2016-11-20 13:50:00','2016-11-20 13:50:00','Spring Cloud 构建微服务架构：Hystrix 监控面板【Dalston 版】','在上一篇《服务容错保护（hystrix 断路器）》的介绍中，我们提到断路器是根据一段时间窗内的请求情况来判断并操作断路器的打开和关闭状态的。而这些请求情况的指标信息都是 HystrixCommand 和 HystrixObservableCommand 实例在执行过程中记录的重要度量信息，它们除了 Hystrix 断路器实现中使用之外，对于系统运维也有非常大的帮助。这些指标信息会以 “滚动时间窗” 与 “桶” 结合的方式进行汇总，并在内存中驻留一段时间，以供内部或外部进行查询使用，Hystrix Dashboard 就是这些指标内容的消费者之一。',0,2);
 INSERT INTO blogs(id,created_by,created_date,last_modified_date,title,content,viewed_times,user_id) VALUES (2,'user','2016-11-20 13:50:00','2016-11-20 13:50:00','Java 微服务实践 - Spring Boot 系列讲座','这里推荐一个不错的 Spring Boot 系列讲座，讲师简介如下： 小马哥，阿里巴巴技术专家，从事十余年 Java EE 开发，国内微服务技术讲师。目前主要负责微服务技术推广、架构设计、基础设施、迁移等。重点关注云计算、微服务以及软件架构等领域。获得过 SUN Java（SCJP、SCWCD、SCBCD）以及 Oracle OCA 等的认证。 讲座大纲 Java 微服务实践 - Sprin...',0,2);

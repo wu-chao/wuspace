@@ -9,8 +9,8 @@ import java.util.Optional;
 @Mapper
 public interface UserMapper {
 
-    @Select("select u from users u where u.id = #{id}")
-    Optional<User> findUserById(Long id);
+    @Select("select * from users u where u.id = #{id}")
+    User findUserById(Long id);
 
     @Select("select u from users as u where u.username like #{username}")
     Optional<User> findUserByUsername(String username);
@@ -20,7 +20,7 @@ public interface UserMapper {
             @Result(column = "id", property = "id", javaType = Long.class),
             @Result(column = "username", property = "username"),
             @Result(column = "activated", property = "activated"),
-            @Result(column = "id", property = "authorities", many = @Many(select = "com.wuspace.domain.AuthorityMapper.findAuthoritesById", fetchType = FetchType.LAZY))
+            @Result(column = "name", property = "authorities", many = @Many(select = "com.wuspace.domain.AuthorityMapper.findAuthoritesByUsername", fetchType = FetchType.LAZY))
     })
     User findOneWithAuthoritiesByUsername(String username);
 }
