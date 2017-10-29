@@ -36,7 +36,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private AuthenticationManagerBuilder authenticationManagerBuilder;
 
-    private UserDetailsService userDetailsService;
+    private UserDetailsService blogUserDetailsService;
 
     /**
      * @EnableAutoConfiguration作用： Spring Boot 会自动根据你 jar 包的依赖来自动配置项目。例如当你项目下面有HSQLDB的依赖时，
@@ -48,17 +48,17 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public SecurityConfiguration(AuthenticationManagerBuilder authenticationManagerBuilder,
-                                 UserDetailsService userDetailsService) {
+                                 UserDetailsService blogUserDetailsService) {
 
         this.authenticationManagerBuilder = authenticationManagerBuilder;
-        this.userDetailsService = userDetailsService;
+        this.blogUserDetailsService = blogUserDetailsService;
     }
 
     @PostConstruct
     public void init() {
         try {
             authenticationManagerBuilder
-                    .userDetailsService(userDetailsService)
+                    .userDetailsService(blogUserDetailsService)
                     .passwordEncoder(passwordEncoder());
         } catch (Exception e) {
             throw new BeanInitializationException("Security configuration failed", e);
@@ -97,17 +97,17 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
      * @param auth
      * @throws Exception
      */
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth
-                .jdbcAuthentication()
-                .dataSource(dataSource)
-                .usersByUsernameQuery(
-                        "select username, password, enabled from users where username = ?")
-                .authoritiesByUsernameQuery(
-                        "select username, authority from authorities where username = ?")
-        ;
-    }
+//    @Autowired
+//    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+//        auth
+//                .jdbcAuthentication()
+//                .dataSource(dataSource)
+//                .usersByUsernameQuery(
+//                        "select username, password, activated from users where username = ?")
+//                .authoritiesByUsernameQuery(
+//                        "select u.username, ua.authority from users as u, user_authority as ua where u.username = ? and u.id = ua.user_id")
+//        ;
+//    }
 
     /**
      * http://blog.csdn.net/w605283073/article/details/51322771

@@ -6,4 +6,17 @@
     <select id="findBlogById" parameterType="long" resultType="Blog">
         select * from blogs where id = #{id}
     </select>
+
+    <resultMap id="blogWithAllResultMap" type="com.wuspace.domain.Blog">
+        <result column="id" property="id" javaType="Long"></result>
+        <result column="title" property="title" javaType="String"></result>
+        <association column="user_id" property="user" javaType="com.wuspace.commons.domain.User">
+            <result column="id" property="id" javaType="Long"></result>
+            <result column="username" property="username" javaType="String"></result>
+        </association>
+    </resultMap>
+
+    <select id="findAllByOrderByCreatedAtDesc" resultMap="">
+      select * from blogs b order by b.created_date desc
+    </select>
 </mapper>

@@ -87,7 +87,7 @@ Could not verify the provided CSRF token because your session was not found.
                 .usersByUsernameQuery(
                         "select username, password, enabled from users where username = ?")
                 .authoritiesByUsernameQuery(
-                        "select username, authority from authorities where username = ?")
+                        "select u.username, ua.authority from users as u, user_authority as ua where u.username = ? and u.id = ua.user_id")
 
 //        //.passwordEncoder(passwordEncoder())
         ;

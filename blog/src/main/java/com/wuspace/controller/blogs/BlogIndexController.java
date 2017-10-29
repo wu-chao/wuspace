@@ -28,7 +28,7 @@ public class BlogIndexController {
     public String indexWithView(@PageableDefault Pageable pageable, Model model) {
         Page<Blog> blogs = listWithMarshalling(pageable);
 
-        model.addAttribute("blogs", blogs);
+        model.addAttribute("articles", blogs);
 
         return "blogs/blogs";
     }
