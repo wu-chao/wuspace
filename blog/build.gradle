@@ -18,7 +18,8 @@ buildscript {
         spring_boot_gradle_plugin_version = '1.5.3.RELEASE'
     }
     dependencies {
-        classpath "org.springframework.boot:spring-boot-gradle-plugin:${spring_boot_gradle_plugin_version}"
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:$spring_boot_gradle_plugin_version"
+//        classpath "io.spring.gradle:dependency-management-plugin:0.5.6.RELEASE"
     }
 }
 
@@ -27,6 +28,7 @@ apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'checkstyle'
 apply plugin: 'spring-boot' //http://docs.spring.io/spring-boot/docs/current/reference/html/build-tool-plugins-gradle-plugin.html
+//apply plugin: "io.spring.dependency-management"
 
 jar {
     baseName = 'blog'
@@ -50,6 +52,12 @@ repositories {
     maven { url 'http://repo.maven.apache.org/maven2' }
 }
 
+dependencyManagement {
+    imports {
+        mavenBom 'org.springframework.cloud:spring-cloud-dependencies:Dalston.SR2'
+    }
+}
+
 ext {
     thymeleaf_version = '3.0.0.RELEASE'
     thymeleaf_layout_dialect_version = '2.0.3'
@@ -63,16 +71,30 @@ ext {
     hibernate_search_version = '5.7.1.Final'
     hikaricp_version = '2.6.0'
 
-    commons_logging_version = '1.2'
-    apache_commons_io_version = '1.3.2'
-    apache_commons_fileupload_version = '1.3.2'
-
     lombok_version = '1.16.16'
 }
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(':commons')
+
+    // Spring
+    compile "org.springframework:spring-context-support"
+
+    // Spring Boot
+    compile "org.springframework.boot:spring-boot-devtools"
+    compile "org.springframework.boot:spring-boot-starter-aop"
+    compile "org.springframework.boot:spring-boot-starter-test"
+    compile "org.springframework.boot:spring-boot-starter-actuator"
+    compile "org.springframework.boot:spring-boot-starter-logging"
+    compile "org.springframework.boot:spring-boot-starter-security"
+    compile "org.springframework.boot:spring-boot-starter-data-jpa"
+    compile "org.mybatis.spring.boot:mybatis-spring-boot-starter:${mybatis_spring_boot_starter_version}"
+    compile "org.springframework.boot:spring-boot-starter-web"
+    compile "org.springframework.boot:spring-boot-starter-tomcat"
+
+    // Spring Cloud
+    compile 'org.springframework.cloud:spring-cloud-starter-eureka'
 
     // Thymeleaf 模板
     compile "org.springframework.boot:spring-boot-starter-thymeleaf"
@@ -99,22 +121,7 @@ dependencies {
     compile("com.zaxxer:HikariCP:${hikaricp_version}") {
         exclude(module: 'tools')
     }
-    compile "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.6.0"
-    // http://nixmash.com/post/spring-jpa-auditing-with-zoneddatetime-and-mysql
-    //添加该依赖报错
-//    compile 'org.jadira.usertype:usertype.extended:3.2.0.GA'
-
-    // Apache 通用组件
-    compile "commons-logging:commons-logging:${commons_logging_version}"
-    compile "org.apache.commons:commons-io:${apache_commons_io_version}"
-    compile "commons-fileupload:commons-fileupload:${apache_commons_fileupload_version}"
 
     compile "org.projectlombok:lombok:${lombok_version}"
-
-    //  微信支付
-    compile "com.google.guava:guava:22.0"
-    compile "me.hao0:wepay-core:1.2.5"
-    compile "me.hao0:common:1.1.2"
-    compile 'net.glxn.qrgen:javase:2.0'
 }
 

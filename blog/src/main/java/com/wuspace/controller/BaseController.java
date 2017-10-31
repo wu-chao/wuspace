@@ -1,7 +1,7 @@
 package com.wuspace.controller;
 
-import com.wuspace.commons.domain.User;
-import com.wuspace.commons.repository.UserRepository;
+import com.wuspace.domain.User;
+import com.wuspace.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;

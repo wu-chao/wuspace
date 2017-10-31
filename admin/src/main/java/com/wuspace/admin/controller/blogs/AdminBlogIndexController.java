@@ -1,7 +1,5 @@
 package com.wuspace.admin.controller.blogs;
 
-import com.wuspace.commons.repository.GroupRepository;
-import com.wuspace.commons.repository.UserRepository;
 import com.wuspace.domain.Blog;
 import com.wuspace.domain.BlogRepository;
 import com.wuspace.domain.BlogSpecs;
@@ -22,13 +20,6 @@ public class AdminBlogIndexController {
 
     @Autowired
     private BlogRepository blogRepository;
-
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private GroupRepository groupRepository;
-
 
     @RequestMapping("/blogs")
     public String index(@RequestParam("keyword") String titleOrContent,

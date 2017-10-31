@@ -1,9 +1,9 @@
 package com.wuspace.controller.blogs;
 
-import com.wuspace.commons.domain.User;
 import com.wuspace.controller.command.BlogCreateCommand;
 import com.wuspace.domain.Blog;
 import com.wuspace.domain.BlogRepository;
+import com.wuspace.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

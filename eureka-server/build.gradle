@@ -1,6 +1,6 @@
 group = 'wuspace'
 version = '1.0.0'
-description = '基于 Spring 框架的项目共用模块'
+description = 'eureka-server'
 
 buildscript {
     repositories {
@@ -18,12 +18,15 @@ buildscript {
         spring_boot_gradle_plugin_version = '1.5.3.RELEASE'
     }
     dependencies {
-        classpath "org.springframework.boot:spring-boot-gradle-plugin:${spring_boot_gradle_plugin_version}"
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:$spring_boot_gradle_plugin_version"
     }
 }
 
 apply plugin: 'java'
-apply plugin: 'spring-boot'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'checkstyle'
+apply plugin: 'spring-boot' //http://docs.spring.io/spring-boot/docs/current/reference/html/build-tool-plugins-gradle-plugin.html
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -40,20 +43,32 @@ repositories {
     maven { url 'http://repo.maven.apache.org/maven2' }
 }
 
+dependencyManagement {
+    imports {
+        //Caused by: java.lang.ClassNotFoundException: org.springframework.boot.context.embedded.FilterRegistrationBean
+        //参考: http://www.jianshu.com/p/bc1382be79a4
+        mavenBom 'org.springframework.cloud:spring-cloud-dependencies:Dalston.SR2'
+    }
+}
+
 ext {
-    commons_logging_version = '1.2'
-    apache_commons_io_version = '1.3.2'
-    apache_commons_fileupload_version = '1.3.2'
+
 }
 
 dependencies {
-    // 正则表达式
-    compile "org.apache.oro:com.springsource.org.apache.oro:2.0.8"
+    // Spring
+    compile "org.springframework:spring-context-support"
 
-    // Apache 通用组件
-    compile "commons-logging:commons-logging:${commons_logging_version}"
-    compile "org.apache.commons:commons-io:${apache_commons_io_version}"
-    compile "commons-fileupload:commons-fileupload:${apache_commons_fileupload_version}"
+    // Spring Boot
+    compile "org.springframework.boot:spring-boot-devtools"
+    compile "org.springframework.boot:spring-boot-starter-aop"
+    compile "org.springframework.boot:spring-boot-starter-test"
+    compile "org.springframework.boot:spring-boot-starter-actuator"
+    compile "org.springframework.boot:spring-boot-starter-logging"
+    compile "org.springframework.boot:spring-boot-starter-web"
+    compile "org.springframework.boot:spring-boot-starter-tomcat"
 
-    testCompile group: 'junit', name: 'junit', version: '4.12'
+    // Spring Cloud
+    compile 'org.springframework.cloud:spring-cloud-starter-eureka-server'
 }
+
