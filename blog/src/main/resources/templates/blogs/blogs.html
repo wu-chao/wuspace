@@ -17,22 +17,29 @@
 
 <body>
 <div id="container">
-    <div layout:fragment="content">
-        <div class="container" style="border:1px solid red;">
-            <div id="articleList">
-                <div class="article" th:each="article : ${articles}">
-                    <div class="article-head">
-                        <h4 class="article-title"><a th:utext="${article.title}"></a></h4>
-                        <p article-label></p>
+    <div layout:fragment="content" style="background: url(/images/blog/body_bg.png) repeat">
+        <div class="container clearfix" style="border:1px solid red;">
+            <div class="pull-left" id="main">
+                <div class="article" th:each="article : ${articles}" style=" border: 1px solid red;">
+                    <div class="article-header">
+                        <h4 class="article-title"><a th:href="@{/blogs/{id}(id=${article.id})}" th:utext="${article.title}"></a></h4>
+                        <p class="article-label" style="border:1px solid red">
+                            <span class="" style="width:30px;" th:text="${#calendars.format(article.createdDate, 'yyyy-MM-dd')}">时间</span>
+                            <span class="" style="width:30px;" th:utext="${article.user.nickname}">作者</span>
+                            <span class="" style="width:30px;" th:text="${article.viewedTimes}">查看次数</span>
+                        </p>
                     </div>
                     <div class="article-body">
-                        <p class="article-text" th:utext="${article.content}"></p>
+                        <p class="article-text" th:utext="${#strings.abbreviate(article.content, 280)}"></p>
                     </div>
-                    <div>
-                        <a href="#" class="card-link">Card link</a>
-                        <a href="#" class="card-link">Another link</a>
+                    <div class="article-footer">
+                        <a href="#" class="fa fa-link">Card link</a>
                     </div>
                 </div>
+            </div>
+
+            <div class="pull-right " id="sidebar" style="border: 1px solid red">
+                aside
             </div>
         </div>
     </div>

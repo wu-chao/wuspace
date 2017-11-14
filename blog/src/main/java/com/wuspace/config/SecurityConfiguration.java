@@ -1,4 +1,4 @@
-package com.wuspace.commons.config;
+package com.wuspace.config;
 
 import org.springframework.beans.factory.BeanInitializationException;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;

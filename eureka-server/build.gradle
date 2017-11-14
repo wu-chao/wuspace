@@ -69,6 +69,7 @@ dependencies {
     compile "org.springframework.boot:spring-boot-starter-tomcat"
 
     // Spring Cloud
+    // 服务注册与发现
     compile 'org.springframework.cloud:spring-cloud-starter-eureka-server'
 }
 

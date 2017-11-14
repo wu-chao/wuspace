@@ -24,8 +24,8 @@ public class BlogIndexController {
     @Autowired
     private BlogMapper blogMapper;
 
-    @GetMapping(value = {"/", "/blogs"})
-    public String indexWithView(@PageableDefault Pageable pageable, Model model) {
+    @GetMapping(value = {"", "/blogs"})
+    public String index(@PageableDefault Pageable pageable, Model model) {
         Page<Blog> blogs = listWithMarshalling(pageable);
 
         model.addAttribute("articles", blogs);

@@ -1,4 +1,12 @@
-#articleList .article {
-    padding: 10px 0 0 0;
-    border: 1px solid red;
+#main {
+    width: 800px;
+}
+
+#main .article {
+    margin: 0 0 60px 0;
+    background-color: #fff;
+}
+
+#sidebar {
+    width: 320px;
 }
