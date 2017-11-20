@@ -22,7 +22,7 @@ public class BlogShowController {
             throw new ResourceNotFoundException("blog 不存在");
         }
 
-        model.addAttribute("blog", blog);
+        model.addAttribute("article", blog);
 
         return "blogs/show";
     }

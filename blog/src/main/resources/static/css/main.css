@@ -6,6 +6,10 @@
     max-width: 1200px;
 }
 
+.pull-left {
+    float: left !important;
+}
+
 a {
     color: #D45255;
     text-decoration: none;

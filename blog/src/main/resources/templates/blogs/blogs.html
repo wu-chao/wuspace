@@ -17,10 +17,10 @@
 
 <body>
 <div id="container">
-    <div layout:fragment="content" style="background: url(/images/blog/body_bg.png) repeat">
+    <div layout:fragment="content">
         <div class="container clearfix" style="border:1px solid red;">
             <div class="pull-left" id="main">
-                <div class="article" th:each="article : ${articles}" style=" border: 1px solid red;">
+                <div class="article" th:each="article : ${articles}">
                     <div class="article-header">
                         <h4 class="article-title"><a th:href="@{/blogs/{id}(id=${article.id})}" th:utext="${article.title}"></a></h4>
                         <p class="article-label" style="border:1px solid red">
