@@ -1,18 +1,68 @@
 package com.wuspace.application;
 
-import java.util.Map;
+import com.wuspace.domain.Authority;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Pageable;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import java.time.LocalDate;
+import java.time.ZonedDateTime;
+import java.util.*;
 
-public interface UserService {
+/**
+ * Service class for managing users.
+ */
+@Service
+@Transactional
+public class UserService {
 
-	void logout(HttpServletRequest request, HttpServletResponse response);
+    private final Logger log = LoggerFactory.getLogger(UserService.class);
 
-	Map<String, Object> login(String account, String password,
-							  Integer cookieMark, HttpServletRequest request,
-							  HttpServletResponse response);
+    private final PasswordEncoder passwordEncoder;
 
-	Map<String, Object> register(String account, String password);
+    private AuthenticationManager authenticationManager;
 
+    public UserService(PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager) {
+        this.passwordEncoder = passwordEncoder;
+        this.authenticationManager = authenticationManager;
+    }
+
+    public void login(String username, String password, Collection<Authority> authorities) {
+        Collection<GrantedAuthority> grantedAuthorities = new ArrayList<>();
+        for (Authority authority : authorities) {
+            grantedAuthorities.add(new GrantedAuthority() {
+                @Override
+                public String getAuthority() {
+                    return authority.getName();
+                }
+            });
+        }
+        Authentication auth = new UsernamePasswordAuthenticationToken(username.trim(), password.trim(), grantedAuthorities);
+        auth = authenticationManager.authenticate(auth);
+        SecurityContextHolder.getContext().setAuthentication(auth);
+    }
+
+    public static void updateAuthentication(String username, Collection<Authority> authorities) {
+        Collection<GrantedAuthority> grantedAuthorities = new ArrayList<>();
+        for (Authority authority : authorities) {
+            grantedAuthorities.add(new GrantedAuthority() {
+                @Override
+                public String getAuthority() {
+                    return authority.getName();
+                }
+            });
+        }
+        org.springframework.security.core.userdetails.User user = new org.springframework.security.core.userdetails.User(username.trim(), "", grantedAuthorities);
+        Authentication auth = new UsernamePasswordAuthenticationToken(user, null, grantedAuthorities);
+        SecurityContextHolder.getContext().setAuthentication(auth);
+    }
 }

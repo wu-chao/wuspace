@@ -62,7 +62,9 @@ public final class RegexpUtil {
     /**
      * 网址
      */
-    public static final String URL = "(http://|ftp://|https://|www){0,1}[^\u4e00-\u9fa5\\s]*?\\.(com|net|cn|me|tw|fr)[^\u4e00-\u9fa5\\s]*";
+    public static final String URL_PREFIX = "(http://|ftp://|https://|www){0,1}[^\u4e00-\u9fa5\\s]*?\\.(com|net|cn|me|tw|fr)[^\u4e00-\u9fa5\\s]*";
+
+    public static final String URL = "[^//]*?\\.(com|cn|net|org|biz|info|cc|tv)";
 
     public static final String FAX = "/^((0\\d{2,3}-)?\\d{7,8})$/";
 
