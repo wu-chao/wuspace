@@ -1,5 +1,6 @@
 package com.wuspace.config;
 
+import com.wuspace.admin.filter.VerificationCodeAuthenticationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,7 +15,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.RedirectStrategy;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.stereotype.Component;
@@ -65,6 +68,9 @@ public class AdminSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/admin/blogs/create").authenticated()
                 .antMatchers("/admin/login").permitAll()
                 .antMatchers("/**").permitAll();
+
+        //添加自定义的Filter，用于登录校验验证码
+        http.addFilterBefore(new VerificationCodeAuthenticationFilter("/admin/authentication", new SimpleUrlAuthenticationFailureHandler("/admin?error")), UsernamePasswordAuthenticationFilter.class);
     }
 
     /*
