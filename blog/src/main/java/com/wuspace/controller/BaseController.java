@@ -36,4 +36,9 @@ public class BaseController {
             return null;
         }
     }
+
+    @ModelAttribute("fileAccessPrefix")
+    public String fileAccessPrefix() {
+        return "/";
+    }
 }

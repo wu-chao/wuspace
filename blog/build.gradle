@@ -27,7 +27,7 @@ apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'checkstyle'
-apply plugin: 'spring-boot' //http://docs.spring.io/spring-boot/docs/current/reference/html/build-tool-plugins-gradle-plugin.html
+apply plugin: 'org.springframework.boot' //http://docs.spring.io/spring-boot/docs/current/reference/html/build-tool-plugins-gradle-plugin.html
 //apply plugin: "io.spring.dependency-management"
 
 jar {
@@ -52,11 +52,11 @@ repositories {
     maven { url 'http://repo.maven.apache.org/maven2' }
 }
 
-dependencyManagement {
-    imports {
-        mavenBom 'org.springframework.cloud:spring-cloud-dependencies:Dalston.SR2'
-    }
-}
+//dependencyManagement {
+//    imports {
+//        mavenBom 'org.springframework.cloud:spring-cloud-dependencies:Dalston.SR2'
+//    }
+//}
 
 ext {
     thymeleaf_version = '3.0.0.RELEASE'
@@ -72,6 +72,16 @@ ext {
     hikaricp_version = '2.6.0'
 
     lombok_version = '1.16.16'
+
+    poi_version = '3.9'
+    poi_ooxml_version = '3.9'
+    //poi_ooxml_schemas_version = '3.17'
+
+    itextpdf_version = '5.5.12'
+    itext_asian_version = '5.2.0'
+
+    pdfbox_version = '2.0.8'
+    icepdf_core_version = '6.2.2'
 }
 
 dependencies {
@@ -94,7 +104,7 @@ dependencies {
     compile "org.springframework.boot:spring-boot-starter-tomcat"
 
     // Spring Cloud
-    compile 'org.springframework.cloud:spring-cloud-starter-eureka'
+    //compile 'org.springframework.cloud:spring-cloud-starter-eureka'
 
     // Thymeleaf 模板
     compile "org.springframework.boot:spring-boot-starter-thymeleaf"
@@ -123,5 +133,14 @@ dependencies {
     }
 
     compile "org.projectlombok:lombok:${lombok_version}"
+
+    // Office
+    compile "org.apache.poi:poi:${poi_version}"
+    compile "org.apache.poi:poi-ooxml:${poi_ooxml_version}"
+//    compile "org.apache.poi:poi-ooxml-schemas:${poi_ooxml_schemas_version}"
+
+    compile "com.itextpdf:itextpdf:${itextpdf_version}"
+    compile "com.itextpdf:itext-asian:${itext_asian_version}"
+    compile "org.icepdf.os:icepdf-core:${icepdf_core_version}"
 }
 
