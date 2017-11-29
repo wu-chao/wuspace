@@ -82,6 +82,7 @@ ext {
 
     pdfbox_version = '2.0.8'
     icepdf_core_version = '6.2.2'
+    icepdf_viewer_version = '6.2.2'
 }
 
 dependencies {
@@ -141,6 +142,8 @@ dependencies {
 
     compile "com.itextpdf:itextpdf:${itextpdf_version}"
     compile "com.itextpdf:itext-asian:${itext_asian_version}"
+
     compile "org.icepdf.os:icepdf-core:${icepdf_core_version}"
+    compile "org.icepdf.os:icepdf-viewer:${icepdf_viewer_version}"
 }
 

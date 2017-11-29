@@ -35,8 +35,6 @@
 
     var canvasDiv = document.getElementById('canvasDiv');
     var canvas = document.createElement('canvas');
-    var canvasWidth = 1191;
-    var canvasHeight = 670;
 
     document.addEventListener('touchmove', onDocumentTouchMove, false);
 
@@ -44,23 +42,29 @@
 
     point.notFirst = false;
 
-    canvas.setAttribute('width', canvasWidth);
-    canvas.setAttribute('height', canvasHeight);
-    canvas.setAttribute('id', 'canvas');
-    canvasDiv.appendChild(canvas);
-
     if (typeof G_vmlCanvasManager != 'undefined') {
         canvas = G_vmlCanvasManager.initElement(canvas);
     }
 
-    var context = canvas.getContext("2d");
+    var context;
 
     var img = new Image();
     img.src = $('#pdfToImage').val();
 
     img.onload = function () {
+        $('#width').val(this.width);
+        $('#height').val(this.height);
+
+        canvas.setAttribute('width', this.width);
+        canvas.setAttribute('height', this.height);
+        canvas.setAttribute('id', 'canvas');
+        canvasDiv.appendChild(canvas);
+
+        context = canvas.getContext("2d");
+
         var ptrn = context.createPattern(img, 'no-repeat');
         context.fillStyle = ptrn;
+
         context.fillRect(0, 0, canvas.width, canvas.height);
     };
 

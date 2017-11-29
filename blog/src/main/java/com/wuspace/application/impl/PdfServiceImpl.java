@@ -8,6 +8,8 @@ import org.icepdf.core.exceptions.PDFException;
 import org.icepdf.core.exceptions.PDFSecurityException;
 import org.icepdf.core.pobjects.Page;
 import org.icepdf.core.util.GraphicsRenderingHints;
+import org.icepdf.ri.util.FontPropertiesManager;
+import org.icepdf.ri.util.PropertiesManager;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PropertiesLoaderUtils;
@@ -20,6 +22,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Properties;
+import java.util.ResourceBundle;
 
 @Service
 public class PdfServiceImpl {
@@ -90,7 +93,7 @@ public class PdfServiceImpl {
     }
 
     /**
-     * 向给定的PDF文档中每页的中间加上图片水印
+     * 向给定的PDF文档中每页的右下方加上图片水印
      *
      * @param src                PDF文档路径
      * @param dest               加水印后的PDF文档路径（可以不存在）
@@ -131,28 +134,47 @@ public class PdfServiceImpl {
     }
 
     /**
-     * 将指定pdf文件的每一页都转成图片
+     * icepdf 将指定pdf文件的每一页都转成图片
+     * 参考： http://zhuyufufu.iteye.com/blog/2015028
+     *
+     * @param filepath
+     * @param imageDirection
+     */
+    public static void executorServicePdf2Images(String imageDirection, String filepath) {
+        // read/store the font cache
+        ResourceBundle messageBundle = ResourceBundle.getBundle(
+                PropertiesManager.DEFAULT_MESSAGE_BUNDLE);
+        PropertiesManager properties = new PropertiesManager(System.getProperties(),
+                ResourceBundle.getBundle(PropertiesManager.DEFAULT_MESSAGE_BUNDLE));
+        new FontPropertiesManager(properties, System.getProperties(), messageBundle);
+
+        // start the capture
+        PageCapture pageCapture = new PageCapture();
+        pageCapture.capturePages(imageDirection, filepath);
+    }
+
+    /**
+     * icepdf 将指定pdf文件的每一页都转成图片
      * <p>
      * 参考： https://www.cnblogs.com/101key/p/5455505.html
+     * http://www.jb51.net/article/99745.htm
      *
      * @param filepath       原文件路径
      * @param imageDirection 图片生成目录
      */
-    public static String[] pdf2Image(String filepath, String imageDirection) {
+    public static void pdf2Images(String imageDirection, String filepath) {
 
         org.icepdf.core.pobjects.Document document = new org.icepdf.core.pobjects.Document();
         String imageNamePrefix = new StringBuilder().append(imageDirection).append(PDF_TO_IMAGE_PREFIX).toString();
-        String imageName;
-        String[] imageNames = new String[document.getNumberOfPages()];
 
         try {
 
             document.setFile(filepath);
 
             float rotation = 0f;
-            float scale = 2f;
+            float scale = 1f;
 
-            for (int i = 0; i < document.getNumberOfPages(); i++) {
+            for (int i = 0, n = document.getNumberOfPages(); i < n; i++) {
 
                 BufferedImage image = (BufferedImage) document.getPageImage(i, GraphicsRenderingHints.SCREEN,
                         Page.BOUNDARY_CROPBOX, rotation, scale);
@@ -163,55 +185,59 @@ public class PdfServiceImpl {
                         log.info("capturing page " + i);
                     }
 
-                    imageName = new StringBuilder().append(imageNamePrefix).append(i).append(".png").toString();
+                    String imageName = new StringBuilder().append(imageNamePrefix).append(i).append(".png").toString();
                     File file = new File(imageName);
                     ImageIO.write(rendImage, FILE_TYPE_PNG, file);
 
-                    imageNames[i] = imageName;
                 } catch (IOException e) {
                     e.printStackTrace();
-                } finally {
-                    image.flush();
-                    return imageNames;
                 }
+
+                image.flush();
             }
+
         } catch (PDFSecurityException e) {
+            e.printStackTrace();
         } catch (IOException e) {
+            e.printStackTrace();
         } catch (PDFException e) {
+            e.printStackTrace();
         } catch (InterruptedException e) {
+            e.printStackTrace();
         } finally {
             document.dispose();
-            return imageNames;
         }
     }
 
     /**
-     * 将指定pdf文件的第一页转成图片
+     * icepdf 将指定pdf文件的第一页转成图片
      *
-     * @param filepath
+     * @param fileName
      * @return
      */
-    public static String convertOnePage2Image(String filepath) {
+    public static String convertOnePage2Image(String fileName) {
 
         org.icepdf.core.pobjects.Document document = new org.icepdf.core.pobjects.Document();
         String imageName = "";
 
+        float rotation = 0f;
+        float scale = 1f;
+
         try {
-
-            document.setFile(filepath);
-
-            BufferedImage image = (BufferedImage) document.getPageImage(0, GraphicsRenderingHints.SCREEN,
-                    Page.BOUNDARY_CROPBOX, 0f, 2f);
-            RenderedImage rendImage = image;
-
             Resource resource = new ClassPathResource("config/application-dev.properties");
             Properties props = PropertiesLoaderUtils.loadProperties(resource);
-            String imageTmpDirection = props.getProperty("web.tmp.path");
+            String imgUploadPath = props.getProperty("web.tmp.path");
 
-            imageName = new StringBuilder().append(PDF_TO_IMAGE_PREFIX).append(0).append(".png").toString();
+            document.setFile(imgUploadPath + fileName);
+
+            BufferedImage image = (BufferedImage) document.getPageImage(0, GraphicsRenderingHints.SCREEN,
+                    Page.BOUNDARY_CROPBOX, rotation, scale);
+            RenderedImage rendImage = image;
+
+            imageName = fileName.substring(0, fileName.lastIndexOf('.')) + ".png";
 
             try {
-                File file = new File(imageTmpDirection + imageName);
+                File file = new File(imgUploadPath + imageName);
                 ImageIO.write(rendImage, "png", file);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -237,7 +263,7 @@ public class PdfServiceImpl {
      * @param pdfFilePath
      * @return
      */
-    public static boolean image2Pdf(String imgFilePath, String pdfFilePath) {
+    public static boolean image2Pdf(String imgFilePath, String pdfFilePath, float urx, float ury) {
         File file = new File(imgFilePath);
 
         if (file.exists()) {
@@ -248,12 +274,13 @@ public class PdfServiceImpl {
                 fos = new FileOutputStream(pdfFilePath);
                 PdfWriter.getInstance(document, fos);
 
-//                添加PDF文档的某些信息，比如作者，主题等等
+                // 添加PDF文档的某些信息，比如作者，主题等等
 //                document.addAuthor("arui");
 //                document.addSubject("test pdf.");
 
                 // 设置文档的大小
-                document.setPageSize(PageSize.A4);
+//                document.setPageSize(PageSize.A4);
+                document.setPageSize(new RectangleReadOnly(urx, ury));
 
                 // 打开文档
                 document.open();
@@ -263,24 +290,28 @@ public class PdfServiceImpl {
 
                 // 读取一个图片
                 Image image = Image.getInstance(imgFilePath);
-                float imageHeight = image.getScaledHeight();
-                float imageWidth = image.getScaledWidth();
+                image.scalePercent(100);
 
-                int i = 0;
+//                float imageHeight = image.getScaledHeight();
+//                float imageWidth = image.getScaledWidth();
+//
+//                int i = 0;
+//
+//                while (imageHeight > 500 || imageWidth > 500) {
+//                    image.scalePercent(100 - i);
+//                    i++;
+//                    imageHeight = image.getScaledHeight();
+//                    imageWidth = image.getScaledWidth();
+//                    System.out.println("imageHeight->" + imageHeight);
+//                    System.out.println("imageWidth->" + imageWidth);
+//                }
 
-                while (imageHeight > 500 || imageWidth > 500) {
-                    image.scalePercent(100 - i);
-                    i++;
-                    imageHeight = image.getScaledHeight();
-                    imageWidth = image.getScaledWidth();
-                    System.out.println("imageHeight->" + imageHeight);
-                    System.out.println("imageWidth->" + imageWidth);
-                }
+                image.setAlignment(Image.ALIGN_JUSTIFIED_ALL);
 
-                image.setAlignment(Image.ALIGN_CENTER);
-                // 设置图片的绝对位置
-                // image.setAbsolutePosition(0, 0);
-                // image.scaleAbsolute(500, 400);
+                // 设置图片的绝对位置（不设置每次pdf都会变小）
+                image.setAbsolutePosition(0, 0);
+                image.scaleAbsolute(image.getWidth(), image.getScaledHeight());
+
                 // 插入一个图片
                 document.add(image);
             } catch (DocumentException e) {

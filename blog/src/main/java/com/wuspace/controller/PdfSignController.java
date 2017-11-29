@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.awt.image.BufferedImage;
+
 @Controller
 public class PdfSignController {
 
@@ -19,22 +21,35 @@ public class PdfSignController {
     @Value("${web.tmp.path}")
     private String imageUploadPath;
 
-    @GetMapping("/signature/{pdfPath:.+}")
-    public String signature(@PathVariable("pdfPath") String pdfPath, Model model) {
+    @GetMapping("/signature/{fileName:.+}")
+    public String signature(@PathVariable("fileName") String fileName, Model model) {
         // /home/wu-chao/下载/springboot.pdf
-        String pdfToImageName = PdfServiceImpl.convertOnePage2Image(imageUploadPath + pdfPath);
+
+        String pdfToImageName = PdfServiceImpl.convertOnePage2Image(fileName);
 
         model.addAttribute("pdfToImageName", pdfToImageName);
-        model.addAttribute("pdfPath", pdfPath);
+        model.addAttribute("fileName", fileName);
 
         return "signature";
     }
 
-    @PostMapping("/signature/{pdfPath:.+}")
-    public String sign(@PathVariable("pdfPath") String pdfPath, @RequestParam("imageData") String imageData) {
+    @GetMapping("/jsignature/{fileName:.+}")
+    public String jsignature(@PathVariable("fileName") String fileName, Model model) {
+        // /home/wu-chao/下载/springboot.pdf
 
-        ImageUtil.base64ToImage(imageData, imageUploadPath + pdfPath.substring(0, pdfPath.lastIndexOf('.')) + PNG_FILE_EXT);
-        PdfServiceImpl.image2Pdf(pdfPath + PNG_FILE_EXT, imageUploadPath + pdfPath);
-        return "redirect:/signature/" + pdfPath;
+        String pdfToImageName = PdfServiceImpl.convertOnePage2Image(fileName);
+
+        model.addAttribute("pdfToImageName", pdfToImageName);
+        model.addAttribute("fileName", fileName);
+
+        return "jsignature";
+    }
+
+    @PostMapping("/signature/{fileName:.+}")
+    public String sign(@PathVariable("fileName") String fileName, @RequestParam("imageData") String imageData, @RequestParam("height") float height, @RequestParam("width") float width) {
+        String absolutePathWithoutExt = imageUploadPath + fileName.substring(0, fileName.lastIndexOf('.'));
+        ImageUtil.base64ToImage(imageData, absolutePathWithoutExt + PNG_FILE_EXT);
+        PdfServiceImpl.image2Pdf(absolutePathWithoutExt + PNG_FILE_EXT, absolutePathWithoutExt + ".pdf", width, height);
+        return "redirect:/signature/" + fileName;
     }
 }

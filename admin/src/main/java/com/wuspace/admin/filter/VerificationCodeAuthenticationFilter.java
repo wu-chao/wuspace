@@ -1,10 +1,10 @@
 package com.wuspace.admin.filter;
 
 import com.wuspace.common.Const;
-import com.wuspace.commons.util.StringUtils;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 import org.springframework.web.filter.GenericFilterBean;
 
 import javax.servlet.FilterChain;
