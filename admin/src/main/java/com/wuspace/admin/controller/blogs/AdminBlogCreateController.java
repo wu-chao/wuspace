@@ -1,8 +1,8 @@
 package com.wuspace.admin.controller.blogs;
 
-import com.wuspace.admin.controller.BaseController;
 import com.wuspace.domain.Blog;
 import com.wuspace.domain.BlogRepository;
+import com.wuspace.domain.Order;
 import com.wuspace.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -18,7 +18,7 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping("/admin")
-public class AdminBlogCreateController extends BaseController {
+public class AdminBlogCreateController {
 
     @Autowired
     private BlogRepository blogRepository;

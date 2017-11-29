@@ -7,19 +7,19 @@ import java.util.List;
 @Mapper
 public interface BlogMapper {
 
-    @Select("select * from blogs as b order by b.created_date desc")
+    @Select("select * from blogs b order by b.created_date desc")
     @Results({
-            @Result(property = "user",
-                    column = "user_id",
-                    one = @One(select = "com.wuspace.domain.UserMapper.findUserById"))
+            @Result(id = true, property = "id", column = "id"),
+            @Result(property = "title", column = "title"),
+            @Result(property = "user", column = "user_id",
+                    one = @One(select = "com.wuspace.mapper.UserMapper.findUserById"))
     })
     List<Blog> findAllByOrderByCreatedAtDesc();
 
-    @Select("select * from blogs as b where b.id = #{id}")
+    @Select("select * from blogs b where b.id = #{id}")
     @Results({
-            @Result(property = "user",
-                    column = "user_id",
-                    one = @One(select = "com.wuspace.domain.UserMapper.findUserById"))
+            @Result(property = "user", column = "user_id",
+                    one = @One(select = "com.wuspace.mapper.UserMapper.findUserById"))
     })
     Blog findBlogById(Long id);
 }

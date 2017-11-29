@@ -1,0 +1,87 @@
+#blogPageWrapper .article {
+    border: 1px solid red;
+    width: 1000px;
+}
+
+.ibox {
+    clear: both;
+    margin-bottom: 25px;
+    margin-top: 0;
+    padding: 0;
+}
+
+.ibox .ibox-content {
+    clear: both;
+    padding: 40px;
+    background-color: #fff;
+    color: inherit;
+    padding: 15px 20px 20px 20px;
+    border-color: #e7eaec;
+    border-image: none;
+    border-style: solid solid none;
+    border-width: 1px 0;
+}
+
+.tags a {
+    padding: 3px 6px;
+    margin: 2px;
+    background: rgb(222, 106, 115);
+    color: #fff;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: color 0.7s ease-out;
+}
+
+.tags a:hover {
+    background-color: #e5e5e5;
+    color: rgb(222, 106, 115);
+}
+
+.article .social-feed-box {
+    margin-bottom: 0;
+    padding: 15px;
+    border: 1px solid #e7eaec;
+    background: #fff;
+}
+
+.social-avatar {
+    padding: 15px 15px 0 15px;
+}
+
+.social-avatar a {
+    cursor: pointer;
+    color: #337ab7;
+    text-decoration: none;
+}
+
+.social-avatar a.pull-left:hover {
+
+}
+
+.social-avatar img {
+    height: 40px;
+    width: 40px;
+    border: 0;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+
+.social-avatar .media-body {
+    overflow: hidden;
+    width: 926px;
+    overflow: hidden;
+    zoom: 1;
+}
+
+.media-body a {
+    font-size: 14px;
+    display: block;
+}
+
+.media-body small {
+    font-size: 85%;
+}
+
+.social-body {
+    padding: 15px 15px 0 45px
+}

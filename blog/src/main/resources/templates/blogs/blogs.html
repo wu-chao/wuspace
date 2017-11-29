@@ -1,70 +1,49 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.w3.org/1999/xhtml"
-      layout:decorate="~{layout/main}">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layouts/main">
 <head>
-    <meta charset="utf-8"/>
-    <title>天才宝宝</title>
+    <meta charset="utf-8">
+
+    <title>wuspace | 博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+    <meta name="description" content="blog"/>
+    <meta name="keywords" content="Java, Spring"/>
+
+    <!--template css-->
+    <link rel="stylesheet" href="/css/articles/articles.css">
 </head>
 
-<body style="color:#565a5f;font-size: 16px;font-family: 'Open Sans', 'Helvetica Neue', 'Microsoft Yahei'">
-<!--<div class="navbar">-->
-<!--<div class="navbar-inner">-->
-<!--<div class="nav-narrow">-->
-<!--<a class="brand" href="/"><span class="fa fa-mortar-board (alias)">天才宝宝</span></a>-->
-<!--<ul class="nav">-->
-<!--<li><a href="/archive">文章</a></li>-->
-<!--<li><a href="/categories">分类</a></li>-->
-<!--<li><a href="/pages">页面</a></li>-->
-<!--<li><a href="/tags">标签</a></li>-->
-<!--</ul>-->
-<!--</div>-->
-<!--</div>-->
-<!--</div>-->
-
-<div layout:fragment="content">
-    <div class="container">
-        <div style="margin:20px auto;">
-            <div class="content" style="width:740px;padding:0px 20px;margin:0px 20px;">
-                <div style="width:700px;max-height:400px;padding:20px;margin:20px 0;background-color: #fff;box-shadow: 1px 1px 1px 1px #999"
-                     th:each="blog : ${blogs}">
-                    <div class="article-header" style="padding:10px 0;">
-                        <a style="display:block;color:#009688;font-size:24px;"
-                           th:href="@{/blogs/{blogId}(blogId=${blog.id})}" th:text="${blog.title}"></a>
-                        <p class="article-meta" style="padding:10px 0;">
-                            <span th:text="${#calendars.format(blog.createdDate, 'yyyy-MM-dd HH:mm:ss')}"></span>
-                            <span th:if="${blog.user != null}" th:text="${blog.user.username}"></span>
+<body>
+<div id="container">
+    <div layout:fragment="content">
+        <div class="container clearfix" style="border:1px solid red;">
+            <div class="pull-left" id="main">
+                <div class="article" th:each="article : ${articles}">
+                    <div class="article-header">
+                        <h4 class="article-title"><a th:href="@{/blogs/{id}(id=${article.id})}" th:utext="${article.title}"></a></h4>
+                        <p class="article-label" style="border:1px solid red">
+                            <span class="" style="width:30px;" th:text="${#calendars.format(article.createdDate, 'yyyy-MM-dd')}">时间</span>
+                            <span class="" style="width:30px;" th:utext="${article.user.nickname}">作者</span>
+                            <span class="" style="width:30px;" th:text="${article.viewedTimes}">查看次数</span>
                         </p>
                     </div>
-                    <div class="article-body" th:text="${blog.content}"></div>
-                    <div class="article-footer"></div>
-                </div>
-
-                <!--分页-->
-                <div class="clearfix">
-                    <div class="pull-right">
-                        <ul id="pagination"
-                            th:attr="data-totalelements=${blogs.getTotalElements()}"></ul>
-                        </ul>
+                    <div class="article-body">
+                        <p class="article-text" th:utext="${#strings.abbreviate(article.content, 280)}"></p>
+                    </div>
+                    <div class="article-footer">
+                        <a href="#" class="fa fa-link">Card link</a>
                     </div>
                 </div>
+            </div>
 
+            <div class="pull-right " id="sidebar" style="border: 1px solid red">
+                aside
             </div>
         </div>
-
-        <footer class="card clearfix">
-            <span style="font-size:30px;" class="fa fa-github pull-left"></span><a href="https://github.com"
-                                                                                   style="display:inline-block;padding-right:80px;border-right:1px solid #bbb">GitHub</a>
-            <p class="pull-right">&copy; 2011 天才宝宝</p>
-        </footer>
-
     </div>
 </div>
 
-<div layout:fragment="scripts">
-    <script src="/js/blogs/index.js"></script>
-</div>
 </body>
 </html>
-

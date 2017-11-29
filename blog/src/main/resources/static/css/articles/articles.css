@@ -1,0 +1,13 @@
+#main {
+    width: 1000px;
+}
+
+#main .article {
+    margin: 0 0 60px 0;
+    background-color: #fff;
+    border:1px solid red;
+}
+
+#sidebar {
+    width: 320px;
+}

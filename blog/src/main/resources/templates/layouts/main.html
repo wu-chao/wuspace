@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="zh-CN"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <title>Main</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="/css/font-awesome.css">
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/bower_components/toastr/toastr.css">
+</head>
+<body>
+<div layout:fragment="header">
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">
+                    <img src="/images/logo.png"/>
+                </a>
+            </div>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#"><span class="glyphicon glyphicon-user"></span> 注册</a></li>
+                <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> 登录</a></li>
+            </ul>
+        </div>
+    </nav>
+    <!--<ul class="nav navbar-nav navbar-left">-->
+    <!--<li><a href="/archive">文章</a></li>-->
+    <!--<li><a href="/categories">分类</a></li>-->
+    <!--<li><a href="/pages">页面</a></li>-->
+    <!--<li><a href="/tags">标签</a></li>-->
+    <!--</ul>-->
+
+
+</div>
+
+<div layout:fragment="content" style="background: url(/images/blog/body_bg.png) repeat">
+
+</div>
+
+<div layout:fragment="footer">
+
+</div>
+
+<script src="/js/bower_components/jquery/dist/jquery.js"></script>
+<script src="/js/bower_components/bootstrap-sass/assets/javascripts/bootstrap.js"></script>
+<script src="js//bower_components/jquery-validation/dist/jquery.validate.js"></script>
+<script src="/js/bower_components/toastr/toastr.js"></script>
+<script src="/js/bootstrap-paginator.js"></script>
+<script src="/js/main.js"></script>
+
+<script layout:fragment="scripts">
+    <!-- javascripts -->
+</script>
+</body>
+</html>

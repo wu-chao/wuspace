@@ -209,4 +209,20 @@ $().ready(function () {
         }
     };
 
+    // CKEditor
+    resetCKeditor('content');
+
+    //初始化 CKEditor 富文本编辑器的图片上传功能
+    function resetCKeditor(element) {
+        CKEDITOR.replace(element, {
+            extraPlugins: 'uploadimage,image2',
+            height: 300,
+
+            image_previewText: '',
+            filebrowserUploadUrl: '/ckeditor/upload/image',
+            filebrowserImageUploadUrl: '/ckeditor/upload/image'
+
+        });
+    }
+
 });

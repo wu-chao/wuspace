@@ -59,4 +59,5 @@ public class Blog extends AbstractAuditingEntity implements Serializable {
 //    private Set<Comment> comments;
 
     private Long commentTimes = 0L;
+
 }

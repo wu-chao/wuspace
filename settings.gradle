@@ -1,4 +1,6 @@
 rootProject.name = 'wuspace'
 
-include 'blog', 'admin', 'javautil'
-
+include 'admin'
+include 'blog'
+include 'commons'
+include 'eureka-server'
