@@ -1,4 +1,4 @@
-rootProject.name = 'wuspace'
+rootProject.name = 'web-project'
 
 include 'admin'
 include 'blog'
