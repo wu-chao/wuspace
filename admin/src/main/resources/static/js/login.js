@@ -22,13 +22,4 @@
         changeImg();
     });
 
-    $("#adminLoginBtn").unbind('click').click(function () {
-        var IsBy = $.idcode.validateCode();
-        if (IsBy) {
-            $("#adminLoginForm").submit();
-        } else {
-            toastr.error("验证码错误！")
-        }
-    });
-
 }(jQuery);
