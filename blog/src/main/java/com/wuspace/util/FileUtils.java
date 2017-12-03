@@ -18,7 +18,7 @@ public class FileUtils {
      */
     public static String uploadFile(String fileUploadPath, MultipartFile uploadFile) {
         String savedFilePath;
-        String savedFileName = "";
+        String savedFileName;
         try {
             File savePath = new File(fileUploadPath);
             if (!savePath.exists()) {
@@ -89,5 +89,10 @@ public class FileUtils {
                 e.printStackTrace();
             }
         }
+    }
+
+
+    public String ext(String fileName) {
+        return fileName.substring(fileName.lastIndexOf(".") + 1);
     }
 }

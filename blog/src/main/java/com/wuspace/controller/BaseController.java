@@ -16,24 +16,29 @@ public class BaseController {
     @Autowired
     private UserRepository userRepository;
 
-    @ModelAttribute("currentUser")
-    public User getCurrentUser() {
-        String username;
-        try {
-            Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//    @ModelAttribute("currentUser")
+//    public User getCurrentUser() {
+//        String username;
+//        try {
+//            Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//
+//            if (principal instanceof UserDetails) {
+//                username = ((UserDetails) principal).getUsername();
+//            } else {
+//                username = principal.toString();
+//            }
+//
+//            Optional<User> user = userRepository.findOneByUsername(username);
+//
+//            return user.isPresent() ? user.get() : null;
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return null;
+//        }
+//    }
 
-            if (principal instanceof UserDetails) {
-                username = ((UserDetails) principal).getUsername();
-            } else {
-                username = principal.toString();
-            }
-
-            Optional<User> user = userRepository.findOneByUsername(username);
-
-            return user.isPresent() ? user.get() : null;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
+    @ModelAttribute("fileAccessPrefix")
+    public String fileAccessPrefix() {
+        return "/";
     }
 }

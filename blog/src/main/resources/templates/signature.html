@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layouts/main">
+<head>
+    <meta charset="utf-8">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <title>wuspace | 博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+    <meta name="description" content="blog"/>
+    <meta name="keywords" content="Java, Spring"/>
+
+    <!--template css-->
+    <link rel="stylesheet" href="/css/articles/articles.css">
+</head>
+
+<body>
+<div id="container">
+    <div layout:fragment="content">
+        <div class="container clearfix" style="border:1px solid red;">
+            <div class="pull-left" id="main">
+                <div id="canvasDiv" ></div>
+                <br><br><br>
+                <button id="btn_clear">清除</button>
+                <button id="btn_submit">提交</button>
+                <img id="qmimg" />
+                <input class="hidden" id="pdfToImage" th:value="${fileAccessPrefix + pdfToImageName}">
+
+                <form id="signatureForm" th:action="@{/signature/{fileName}(fileName=${fileName})}" th:method="post">
+                    <input type="hidden" id="imageData" name="imageData">
+                    <input type="hidden" id="height" name="height">
+                    <input type="hidden" id="width" name="width">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

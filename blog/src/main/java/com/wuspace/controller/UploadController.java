@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class UploadController {
 	
 	@Autowired
-	private UploadService uploadServiceImpl;
+	private UploadService uploadService;
 	
 	/**
 	 * 
@@ -24,7 +24,7 @@ public class UploadController {
 	@RequestMapping(value = "/upload/uploadImage")
 	@ResponseBody
 	public String uploadImage(HttpServletRequest request, HttpServletResponse response) {
-		return uploadServiceImpl.upload(request, response);
+		return uploadService.upload(request, response);
 	}
 	
 	//转至UserConstroller
