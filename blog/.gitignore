@@ -14,6 +14,7 @@ npm-debug.log.*
 # Intellij
 ######################
 .idea/
+out/
 *.iml
 *.iws
 *.ipr
@@ -73,3 +74,9 @@ npm-debug.log.*
 # ESLint
 ######################
 .eslintcache
+
+######################
+# Querydsl
+######################
+generated/
+generated_tests/

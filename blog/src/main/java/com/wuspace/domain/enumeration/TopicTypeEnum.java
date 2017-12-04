@@ -1,4 +1,4 @@
-package com.wuspace.domain;
+package com.wuspace.domain.enumeration;
 
 import java.util.ArrayList;
 import java.util.List;
