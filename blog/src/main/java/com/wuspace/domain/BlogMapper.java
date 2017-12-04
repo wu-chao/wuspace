@@ -1,5 +1,6 @@
 package com.wuspace.domain;
 
+import com.wuspace.domain.Blog;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;

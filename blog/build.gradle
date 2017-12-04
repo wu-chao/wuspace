@@ -25,10 +25,17 @@ buildscript {
 
 apply plugin: 'java'
 apply plugin: 'eclipse'
-apply plugin: 'idea'
 apply plugin: 'checkstyle'
 apply plugin: 'org.springframework.boot' //http://docs.spring.io/spring-boot/docs/current/reference/html/build-tool-plugins-gradle-plugin.html
 //apply plugin: "io.spring.dependency-management"
+//apply plugin: 'jetty'
+apply plugin: 'idea'
+idea {
+    module {
+        sourceDirs += file('generated/')
+        generatedSourceDirs += file('generated/')
+    }
+}
 
 jar {
     baseName = 'blog'
@@ -129,6 +136,13 @@ dependencies {
     compile "org.hibernate:hibernate-java8:5.1.2.Final"
 //    org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor
 //    compile "org.hibernate:hibernate-jpamodelgen:5.1.0.Final"
+
+    //Querydsl
+    //compile "org.hibernate.javax.persistence:hibernate-jpa-2.1-api"
+    compile "com.querydsl:querydsl-jpa:4.1.4"
+    //apply plugin: 'jetty'  ->   providedCompile
+    compile "com.querydsl:querydsl-apt:4.1.4:jpa"
+
     compile("com.zaxxer:HikariCP:${hikaricp_version}") {
         exclude(module: 'tools')
     }

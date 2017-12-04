@@ -1,7 +1,12 @@
 package com.wuspace.controller.blogs;
 
+import com.querydsl.core.types.Predicate;
+import com.querydsl.jpa.impl.JPAQuery;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.wuspace.domain.Blog;
 import com.wuspace.domain.BlogMapper;
+import com.wuspace.domain.QBlog;
+import com.wuspace.repository.BlogRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -24,6 +29,12 @@ public class BlogIndexController {
     @Autowired
     private BlogMapper blogMapper;
 
+    @Autowired
+    private BlogRepository blogRepository;
+
+    @Autowired
+    private JPAQueryFactory jpaQueryFactory;
+
     @GetMapping(value = {"", "/blogs"})
     public String index(@PageableDefault Pageable pageable, Model model) {
         Page<Blog> blogs = listWithMarshalling(pageable);
@@ -41,6 +52,29 @@ public class BlogIndexController {
         Page<Blog> blogs = new PageImpl<Blog>(blogList, pageable, blogList.size());
 
         return blogs;
+    }
+
+
+    @GetMapping(value = {"/dsl-blogs"})
+    public String dslBlogs(@PageableDefault Pageable pageable, Model model) {
+        QBlog qBlog = QBlog.blog;
+
+        //分页1
+        Predicate predicate = qBlog.id.gt(2);
+        Page<Blog> blogs = blogRepository.findAll(predicate, pageable);
+
+        // 分页2
+//        JPAQuery<?> query = jpaQueryFactory.from(qBlog)
+//                .offset(pageable.getOffset())
+//                .limit(pageable.getPageSize())
+//                .orderBy(qBlog.createdDate.desc());
+//        Page<Blog> blogs = new PageImpl<>((List<Blog>) query.fetch(), pageable, query.fetchCount());
+
+
+
+        model.addAttribute("articles", blogs);
+
+        return "blogs/blogs";
     }
 
 }
