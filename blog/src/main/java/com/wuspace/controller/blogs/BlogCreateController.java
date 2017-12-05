@@ -2,9 +2,9 @@ package com.wuspace.controller.blogs;
 
 import com.wuspace.controller.command.BlogCreateCommand;
 import com.wuspace.domain.Blog;
-import com.wuspace.domain.BlogRepository;
 import com.wuspace.domain.FormToken;
 import com.wuspace.domain.User;
+import com.wuspace.repository.BlogRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -36,6 +36,10 @@ public class BlogCreateController {
             model.addAttribute("blogCreateCommand", blogCreateCommand);
             return "blogs/create";
         }
+
+        String a = "hello";
+        String b = "hello";
+        System.out.println(a == b + "----------------");
 
         Blog blog = new Blog();
         blog = blogCreateCommand.toBlog(blog);
