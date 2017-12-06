@@ -1,6 +1,7 @@
 package com.wuspace.controller.blogs;
 
 import com.querydsl.core.types.Predicate;
+import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.wuspace.domain.Blog;
@@ -60,7 +61,7 @@ public class BlogIndexController {
         QBlog qBlog = QBlog.blog;
 
         //分页1
-        Predicate predicate = qBlog.id.gt(2);
+        Predicate predicate = qBlog.id.gt(JPAExpressions.select(qBlog.id).from(qBlog).where(qBlog.id.eq(Long.valueOf(2))));
         Page<Blog> blogs = blogRepository.findAll(predicate, pageable);
 
         // 分页2
