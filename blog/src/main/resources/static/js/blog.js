@@ -73,18 +73,18 @@ function publishBlog(){
 
 				$("#blist").prepend("<li class='blog'>"+
 					"<div class='blog_header'>"+
-					"	<a href='/blog/blogs/"+data.id+"'>"+title+"</a>"+
+					"	<a href="+data.id+"'/blog2/blogs/'>"+title+"</a>"+
 					"</div>"+
 					"<div class='blog_body'>"+blogText+"</div>"+
 					"<div class='blog_footer'>"+
-					"	<i style='background:url(/blog/resources/images/blog_author.png) no-repeat'></i>"+
-					"	<a style='color:#999' class='blog_author' target='_blank' href='/blog/users/"+$("#user_id").data("id")+"'>"+$("#user_id").next().html()+"</a>&nbsp;&nbsp;"+
-					"	<i style='background:url(/blog/resources/images/blog_time.png) no-repeat'></i>"+
+					"	<i style='background:url(/blog2/resources/images/blog_author.png) no-repeat'></i>"+
+					"	<a style='color:#999' class='blog_author' target='_blank' href="+$("#user_id").data("id")+"'/blog2/users/'>"+$("#user_id").next().html()+"</a>&nbsp;&nbsp;"+
+					"	<i style='background:url(/blog2/resources/images/blog_time.png) no-repeat'></i>"+
 					"	<span class='blog_time'>"+getLocalTime(data.createTime)+"</span>&nbsp;&nbsp;"+
-					"	<i style='background:url(/blog/resources/images/blog_view_times.png) no-repeat'></i>"+
+					"	<i style='background:url(/blog2/resources/images/blog_view_times.png) no-repeat'></i>"+
 					"	<span>0</span>&nbsp;&nbsp;"+
 					"	<a data-id='"+data.id+"' onclick='deleteBlog(this)'>删除</a>"+
-					"   <a href='/blog/blogs/"+ data.id +"/update'>编辑</a>"+
+					"   <a href="+ data.id +"'/blog2/blogs//update'>编辑</a>"+
 					"</div>"+
 				"</li>");
 				
@@ -318,10 +318,10 @@ function publishComment(obj){
 					//评论
 					var chtml = 
 						"	<li class='citem' data-id = '"+ data.id +"'>"+
-						"		<img class='cavatar' src='/blog/resources/images/avatars/"+ data.avatar +"'/>"+
+						"		<img class='cavatar' src="+ data.avatar +"'/blog2/resources/images/avatars/'/>"+
 						"		<div class='cbody'>"+
 						"			<div class='cuser'>"+
-						"				<a class='cuser_name' data-id='"+ user_id +"' target='_blank' href='/blog/users/"+ user_id +"'>"+ user_name +"</a> &nbsp;"+
+						"				<a class='cuser_name' data-id='"+ user_id +"' target='_blank' href="+ user_id +"'/blog2/users/'>"+ user_name +"</a> &nbsp;"+
 						"				<a onclick='deleteComment(this)'>删除</a>"+
 						"			</div>"+
 						"			<div class='ctxt'>"+ commentHtml +"</div>"+
@@ -410,11 +410,11 @@ function ajax_pc($reclist, commentId, user_id, replyToId, replyTo, recHtml){
 				}
 				$reclist.append(
 					"<li class='recitem' data-id='"+ data.id +"'>"+
-					"	<img class='cavatar' src='/blog/resources/images/avatars/"+ data.avatar +"'/>"+
+					"	<img class='cavatar' src="+ data.avatar +"'/blog2/resources/images/avatars/'/>"+
 					"	<div class='cbody'>"+
 					"		<div class='cuser'>"+
-					"			<a class='cuser_name' target='_blank' href='/blog/users/"+ user_id +"' data-id = '"+ user_id +"'>"+ user_name +"</a>&nbsp;"+
-					"			<a style='color:#337ab7' target='_blank' href='/blog/users/"+ replyToId +"'>"+
+					"			<a class='cuser_name' target='_blank' href="+ user_id +"'/blog2/users/' data-id = '"+ user_id +"'>"+ user_name +"</a>&nbsp;"+
+					"			<a style='color:#337ab7' target='_blank' href="+ replyToId +"'/blog2/users/'>"+
 					"				@<span style='color:#337ab7' th:utext='${reply.replyTo.nickname}'>"+ replyTo +"</span></a>&nbsp;"+
 					"			<a onclick='deleteReComment(this)'>删除</a>"+
 					"		</div>"+

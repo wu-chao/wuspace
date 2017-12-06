@@ -1,9 +1,10 @@
 package com.wuspace.repository;
 
-import com.querydsl.core.types.EntityPath;
-import com.querydsl.jpa.JPAExpressions;
 import com.wuspace.domain.Blog;
 import com.wuspace.domain.QBlog;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.querydsl.QueryDslPredicateExecutor;
 import org.springframework.data.querydsl.binding.QuerydslBinderCustomizer;
@@ -18,4 +19,6 @@ public interface BlogRepository extends JpaRepository<Blog, Long>, QueryDslPredi
 
         }
     }
+
+    Page<Blog> findAll(Specification<Blog> specification, Pageable pageable);
 }

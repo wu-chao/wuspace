@@ -32,8 +32,8 @@ apply plugin: 'org.springframework.boot' //http://docs.spring.io/spring-boot/doc
 apply plugin: 'idea'
 idea {
     module {
-        sourceDirs += file('generated/')
-        generatedSourceDirs += file('generated/')
+        sourceDirs += file('src/main/generated/')
+        generatedSourceDirs += file('src/main/generated/')
     }
 }
 
@@ -49,7 +49,7 @@ repositories {
         dirs 'libs'
     }
     mavenLocal()
-    maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
+//    maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
     jcenter()
     maven { url 'http://repo.spring.io/milestone' }
     maven { url 'http://repo.spring.io/snapshot' }
@@ -88,8 +88,8 @@ ext {
     itext_asian_version = '5.2.0'
 
     pdfbox_version = '2.0.8'
-    icepdf_core_version = '6.2.2'
-    icepdf_viewer_version = '6.2.2'
+    icepdf_core_version = '6.1.2'
+    icepdf_viewer_version = '6.1.2'
 }
 
 dependencies {
@@ -125,7 +125,7 @@ dependencies {
     compile "org.springframework.boot:spring-boot-starter-data-jpa"
     compile "org.mybatis.spring.boot:mybatis-spring-boot-starter:${mybatis_spring_boot_starter_version}"
 
-    // 数据库持久化
+// 数据库持久化
 //    compile "org.liquibase:liquibase-core"
     runtime "com.h2database:h2"
     runtime "mysql:mysql-connector-java"
@@ -157,7 +157,9 @@ dependencies {
     compile "com.itextpdf:itextpdf:${itextpdf_version}"
     compile "com.itextpdf:itext-asian:${itext_asian_version}"
 
+    //maven { url "http://maven.aliyun.com/nexus/content/groups/public/" } module 会错误
     compile "org.icepdf.os:icepdf-core:${icepdf_core_version}"
     compile "org.icepdf.os:icepdf-viewer:${icepdf_viewer_version}"
-}
 
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}

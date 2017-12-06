@@ -202,8 +202,6 @@ public class PdfServiceImpl {
             e.printStackTrace();
         } catch (PDFException e) {
             e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
         } finally {
             document.dispose();
         }
@@ -247,7 +245,6 @@ public class PdfServiceImpl {
         } catch (PDFSecurityException e) {
         } catch (IOException e) {
         } catch (PDFException e) {
-        } catch (InterruptedException e) {
         } finally {
             document.dispose();
             return imageName;
