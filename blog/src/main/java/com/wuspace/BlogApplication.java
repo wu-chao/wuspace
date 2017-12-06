@@ -3,13 +3,13 @@ package com.wuspace;
 import com.wuspace.application.impl.PdfServiceImpl;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.liquibase.LiquibaseAutoConfiguration;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
-@ComponentScan
-@Configuration
+@SpringBootApplication
 @EnableAutoConfiguration(exclude = LiquibaseAutoConfiguration.class)
 //@EnableDiscoveryClient
 public class BlogApplication {

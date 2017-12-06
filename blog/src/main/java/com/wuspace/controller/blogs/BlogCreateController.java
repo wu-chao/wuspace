@@ -37,6 +37,10 @@ public class BlogCreateController {
             return "blogs/create";
         }
 
+        String a = "hello";
+        String b = "hello";
+        System.out.println(a == b + "----------------");
+
         Blog blog = new Blog();
         blog = blogCreateCommand.toBlog(blog);
         blog.setUser(user);
