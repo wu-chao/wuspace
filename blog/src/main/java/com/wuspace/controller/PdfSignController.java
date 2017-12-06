@@ -18,7 +18,7 @@ public class PdfSignController {
     private final static String FILE_TYPE_PNG = "png";
     private final static String PNG_FILE_EXT = "." + FILE_TYPE_PNG;
 
-    @Value("${web.tmp.path}")
+//    @Value("${web.tmp.path}")
     private String imageUploadPath;
 
     @GetMapping("/signature/{fileName:.+}")

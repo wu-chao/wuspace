@@ -36,7 +36,7 @@ public class BlogIndexController {
     @Autowired
     private JPAQueryFactory jpaQueryFactory;
 
-    @GetMapping(value = {"", "/blogs"})
+    @GetMapping(value = {"", "/", "/blogs"})
     public String index(@PageableDefault Pageable pageable, Model model) {
         Page<Blog> blogs = listWithMarshalling(pageable);
 

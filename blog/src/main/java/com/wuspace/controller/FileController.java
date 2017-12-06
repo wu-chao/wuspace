@@ -18,10 +18,10 @@ import java.util.UUID;
 @Controller
 public class FileController {
 
-    @Value("${web.file.upload-path}")
+//    @Value("${web.file.upload-path}")
     String fileUploadPath;
 
-    @Value("${web.image.upload-path}")
+//    @Value("${web.image.upload-path}")
     String imgUploadPath;
 
     /**
