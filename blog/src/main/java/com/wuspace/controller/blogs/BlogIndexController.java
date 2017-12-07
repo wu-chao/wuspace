@@ -4,7 +4,6 @@ import com.querydsl.core.types.Predicate;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.wuspace.domain.Blog;
 import com.wuspace.domain.BlogMapper;
-import com.wuspace.domain.QBlog;
 import com.wuspace.repository.BlogRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -27,7 +26,7 @@ public class BlogIndexController {
     private BlogRepository blogRepository;
 
     @Autowired
-    private JPAQueryFactory jpaQueryFactory;
+    private JPAQueryFactory queryFactory;
 
 //    @GetMapping(value = {"", "/", "/blogs"})
 //    public String index(@PageableDefault Pageable pageable, Model model) {
@@ -52,46 +51,59 @@ public class BlogIndexController {
     /////////////////////////////////////// Querydsl ///////////////////////////////////////
 
 
-    /**
-
-
-
-
-     //        QBlog qBlog = QBlog.blog;
-
-     //分页1
-     //        Predicate predicate = qBlog.id.gt(JPAExpressions.select(qBlog.id).from(qBlog).where(qBlog.id.eq(Long.valueOf(2))));
-     //        Page<Blog> blogs = blogRepository.findAll(predicate, pageable);
-
-     // 分页2
-     //        JPAQuery<?> query = jpaQueryFactory.from(qBlog)
-     //                .offset(pageable.getOffset())
-     //                .limit(pageable.getPageSize())
-     //                .orderBy(qBlog.createdDate.desc());
-     //        Page<Blog> blogs = new PageImpl<>((List<Blog>) query.fetch(), pageable, query.fetchCount());
-
-
-
-
-     */
-
-
-//    @GetMapping(value = {"", "/", "home", "/index", "/index.html"})
-//    public String index(@QuerydslPredicate(root = Blog.class) Predicate predicate,
-//                        @PageableDefault Pageable pageable, Model model) {
-//        Page<Blog> blogs = blogRepository.findAll(predicate, pageable);
-//        model.addAttribute("articles", blogs);
-//        return "blogs/index";
-//    }
-
     @GetMapping(value = {"", "/", "home", "/index", "/index.html"})
-    public String index(@PageableDefault Pageable pageable, Model model) {
-        QBlog qBlog = QBlog.blog;
-        Predicate predicate = qBlog.id.gt(2);
-        predicate = qBlog.title.containsIgnoreCase("spring").and(predicate);
+    public String index(@QuerydslPredicate(root = Blog.class) Predicate predicate,
+                        @PageableDefault Pageable pageable, Model model) {
         Page<Blog> blogs = blogRepository.findAll(predicate, pageable);
         model.addAttribute("articles", blogs);
         return "blogs/index";
     }
 
+//    @GetMapping(value = {"", "/", "home", "/index", "/index.html"})
+//    public String index(@PageableDefault Pageable pageable, Model model) {
+//        QBlog qBlog = QBlog.blog;
+//        Predicate predicate = qBlog.id.gt(2);
+//        predicate = qBlog.title.containsIgnoreCase("spring").and(predicate);
+//        Page<Blog> blogs = blogRepository.findAll(predicate, pageable);
+//        model.addAttribute("articles", blogs);
+//        return "blogs/index";
+//    }
+
+//    @GetMapping(value = {"", "/", "home", "/index", "/index.html"})
+//    public String index(@PageableDefault Pageable pageable, Model model) {
+//        QBlog qBlog = QBlog.blog;
+//
+//        List<Blog> blogList = queryFactory.selectFrom(qBlog)
+//                .where(qBlog.title.containsIgnoreCase("spring"))
+//                .offset(pageable.getOffset())
+//                .limit(pageable.getPageSize())
+//                .orderBy(qBlog.createdDate.desc())
+//                .fetch();
+//        Long totalElements = queryFactory.selectFrom(qBlog).where(qBlog.title.containsIgnoreCase("spring")).fetchCount();
+//        Page<Blog> blogs = new PageImpl<Blog>(blogList, pageable, totalElements);
+//
+//        model.addAttribute("articles", blogs);
+//
+//        return "blogs/index";
+//    }
+
+//    @GetMapping(value = {"", "/", "home", "/index", "/index.html"})
+//    public String index(@QuerydslPredicate(root = Blog.class) Predicate predicate,
+//                        @PageableDefault Pageable pageable, Model model) {
+//        QBlog qBlog = QBlog.blog;
+//
+//        List<Blog> blogList = queryFactory.selectFrom(qBlog)
+//                .where(predicate)
+//                .offset(pageable.getOffset())
+//                .limit(pageable.getPageSize())
+//                .orderBy(qBlog.createdDate.desc())
+//                .fetch();
+//
+//        Long totalElements = queryFactory.selectFrom(qBlog).where(predicate).fetchCount();
+//        Page<Blog> blogs = new PageImpl<Blog>(blogList, pageable, totalElements);
+//
+//        model.addAttribute("articles", blogs);
+//
+//        return "blogs/index";
+//    }
 }

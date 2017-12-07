@@ -15,7 +15,7 @@ public interface BlogRepository extends JpaRepository<Blog, Long>, QueryDslPredi
 
     default void customize(QuerydslBindings bindings, QBlog root) {
         bindings.bind(root.id).first((path, value) -> path.gt(value));
-        bindings.bind(root.title).first((StringPath path, String value) -> path.contains(value));
+        bindings.bind(root.title).first((StringPath path, String value) -> path.containsIgnoreCase(value));
     }
 
     Page<Blog> findAll(Specification<Blog> specification, Pageable pageable);
