@@ -2,7 +2,7 @@ package com.wuspace.controller.blogs;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.wuspace.domain.Blog;
-import com.wuspace.domain.BlogMapper;
+import com.wuspace.mapper.BlogMapper;
 import com.wuspace.repository.BlogRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

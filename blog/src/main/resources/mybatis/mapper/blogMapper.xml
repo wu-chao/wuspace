@@ -2,21 +2,27 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.wuspace.domain.BlogMapper">
-    <select id="findBlogById" parameterType="long" resultType="Blog">
+<mapper namespace="com.wuspace.mapper.BlogMapper">
+    <resultMap id="blogMap" type="blog">
+        <id column="id" property="id" javaType="Long"></id>
+        <result column="title" property="title" javaType="String"></result>
+        <association column="user_id" property="user" javaType="User">
+            <result column="id" property="id" javaType="Long"></result>
+            <result column="nickname" property="nickname" javaType="String"></result>
+        </association>
+    </resultMap>
+
+    <select id="findBlogById" parameterType="long" resultType="com.wuspace.domain.Blog">
         select * from blogs where id = #{id}
     </select>
 
     <resultMap id="blogWithAllResultMap" type="com.wuspace.domain.Blog">
         <result column="id" property="id" javaType="Long"></result>
         <result column="title" property="title" javaType="String"></result>
-        <association column="user_id" property="user" javaType="com.wuspace.commons.domain.User">
+        <association column="user_id" property="user" javaType="com.wuspace.domain.User">
             <result column="id" property="id" javaType="Long"></result>
             <result column="username" property="username" javaType="String"></result>
         </association>
     </resultMap>
 
-    <select id="findAllByOrderByCreatedAtDesc" resultMap="">
-      select * from blogs b order by b.created_date desc
-    </select>
 </mapper>

@@ -1,6 +1,8 @@
 package com.wuspace.config;
 
+import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,7 +11,6 @@ import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.core.io.support.ResourcePatternResolver;
 
 import javax.sql.DataSource;
-import java.io.IOException;
 
 @Configuration
 public class MybatisConfig {
@@ -34,7 +35,7 @@ public class MybatisConfig {
      * @return
      */
 //    @Bean
-//    public SqlSessionFactoryBean sqlSessionFactoryBean() throws IOException {
+//    public SqlSessionFactory sqlSessionFactory() throws Exception {
 //        SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
 //
 //        // 设置 mybatis configuration 扫描路径
@@ -51,6 +52,6 @@ public class MybatisConfig {
 //        // 设置 typeAlias 包扫描路径
 //        sqlSessionFactoryBean.setTypeAliasesPackage(TYPE_ALIAS_PACKAGE);
 //
-//        return sqlSessionFactoryBean;
+//        return sqlSessionFactoryBean.getObject();
 //    }
 }
