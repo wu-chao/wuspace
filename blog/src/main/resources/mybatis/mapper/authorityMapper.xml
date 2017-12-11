@@ -4,7 +4,7 @@
 
 <mapper namespace="com.wuspace.domain.AuthorityMapper">
     
-    <select id="findAuthoritesByUsername" parameterType="long" resultType="com.wuspace.commons.domain.Authority">
+    <select id="findAuthoritesByUsername" resultType="com.wuspace.commons.domain.Authority">
         select ua.name from user_authority ua where ua.username = #{username}
     </select>
 </mapper>

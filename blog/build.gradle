@@ -84,6 +84,7 @@ ext {
     mybatis_generator_version = '1.3.5'
     mybatis_spring_boot_starter_version = '1.1.1'
     mybatis_spring_version = '1.3.1'
+    mybatis_pagehelper_version = '4.1.6'
 
     hibernate_version = '5.2.8.Final'
     hibernate_search_version = '5.7.1.Final'
@@ -118,7 +119,6 @@ dependencies {
     compile "org.springframework.boot:spring-boot-starter-logging"
     compile "org.springframework.boot:spring-boot-starter-security"
     compile "org.springframework.boot:spring-boot-starter-data-jpa"
-    compile "org.mybatis.spring.boot:mybatis-spring-boot-starter:${mybatis_spring_boot_starter_version}"
     compile "org.springframework.boot:spring-boot-starter-web"
     compile "org.springframework.boot:spring-boot-starter-tomcat"
 
@@ -132,14 +132,16 @@ dependencies {
     compile "nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:${thymeleaf_layout_dialect_version}"
     compile "io.github.jpenren:thymeleaf-spring-data-dialect:${thymeleaf_spring_data_dialect_version}"
 
-//    compile "org.mybatis.generator:mybatis-generator-core:${mybatis_generator_version}"
-    compile "org.springframework.boot:spring-boot-starter-data-jpa"
-    compile "org.mybatis.spring.boot:mybatis-spring-boot-starter:${mybatis_spring_boot_starter_version}"
-
     // 数据库持久化
 //    compile "org.liquibase:liquibase-core"
     runtime "com.h2database:h2"
     runtime "mysql:mysql-connector-java"
+
+    // Mybatis
+//    compile "org.mybatis.generator:mybatis-generator-core:${mybatis_generator_version}"
+    compile "org.mybatis.spring.boot:mybatis-spring-boot-starter:${mybatis_spring_boot_starter_version}"
+    // Mybatis 分页插件
+    compile "com.github.pagehelper:pagehelper:${mybatis_pagehelper_version}"
 
     // spring-boot-starter-data-jpa, hibernate-jcache, hibernate-java8 依赖中包含了该依赖
 //    compile "org.hibernate:hibernate-core:${hibernate_version}"
