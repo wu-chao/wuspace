@@ -166,7 +166,7 @@ a.brand:hover {
 
 .card {
     max-width: 900px;
-    background: #fff;
+    background: #333;
     padding: 20px 40px;
     margin-top: 50px; /*border-radius: 7px; box-shadow: 1px 1px 5px #eee;*/
     position: relative;
@@ -211,13 +211,24 @@ a.brand:hover {
     margin-top: 20px;
 }
 
-.article-info .tags {
+.card .article-content {
+    color: #999;
+}
 
+a.tag {
+    border: 1px solid #fff;
+    color: #39739d;
+    background-color: #DFE9F1;
+    text-decoration: none;
+    padding: 5px 8px;
+}
+
+a.tag:hover {
+    background-color: #C3DFED;
 }
 
 .read_more {
     padding: 10px 20px;
-    background-color: #fff;
 }
 
 @media (min-width: 768px) and (max-width: 979px) {

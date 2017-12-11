@@ -2,16 +2,18 @@
 
 body {
     background: url('../images/body_bg.png') repeat #161616;
+    color: #fff;
 }
 
 a {
     text-decoration: none;
-    color: #006f9a;
+    color: #999;
+    cursor: pointer;
 }
 
 a:hover {
     color: #dc6e23;
-
+    text-decoration: none;
 }
 
 p, li p {
@@ -144,11 +146,20 @@ tr:first-child th:last-child {
     margin-right: 10px;
 }
 
+.text-orange {
+    color: #dc6e23;
+}
+
+.headline h2, .headline h3, .headline h4 {
+    border-bottom: 2px solid #e67e22;
+}
+
 /** Main Template Layout **/
-.wrap {
+.wrapper {
     position: relative;
     margin: 0 auto;
-    width: 90%;
+    /*width: 90%;*/
+    background-color: #252525;
 }
 
 .roof {
@@ -158,7 +169,6 @@ tr:first-child th:last-child {
 
 .container {
     position: relative;
-    margin: 100px auto 25px;
 }
 
 .main {
@@ -482,18 +492,83 @@ tr:first-child th:last-child {
 /*color: #000;*/
 /*}*/
 
+/** About Us **/
+.about-us {
+    width: 100%;
+    height: auto;
+    padding: 50px 0;
+    position: relative;
+    background: url(../images/about_us_bg.jpg) repeat fixed;
+    background-size: cover;
+}
+
+.about-us .headline-center {
+    text-align: center;
+    position: relative;
+}
+
+.about-us p {
+    color: #eee;
+}
+
 /** Footer **/
 
-footer .tagline {
-    font-size: 11px;
-    color: #0391C8;
+.footer {
+    background-color: #1c1c1c;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}
+
+.footer footer {
+    padding: 40px 0;
+}
+
+.footer .copyright {
+    background: #222;
+    border-top: none;
+    padding: 10px 0 5px;
+}
+
+.copyright p {
+    color: #eee;
+    margin-top: 14px;
+}
+
+.footer .footer-socials {
+    margin-top: 12px;
     text-align: right;
 }
 
-footer .tagline a {
-    color: #0391C8;
-    font-weight: 700;
-    text-decoration: none;
+/**Back To Top**/
+
+#topcontrol {
+    color: #fff;
+    z-index: 99;
+    width: 30px;
+    height: 30px;
+    font-size: 20px;
+    background: #222;
+    position: relative;
+    right: 14px !important;
+    bottom: 11px !important;
+    border-radius: 3px !important;
+}
+
+#topcontrol:after {
+    top: -2px;
+    left: 8.5px;
+    content: "\f106";
+    position: absolute;
+    text-align: center;
+    font-family: FontAwesome;
+}
+
+#topcontrol:hover {
+    color: #fff;
+    background: #72c02c;
+    transition: all 0.3s ease-in-out;
 }
 
 /** Sidebar **/
@@ -2800,7 +2875,7 @@ body.dash-home .admin-content {
             padding: 15px;
         }
 
-        .wrap {
+        .wrapper {
             width: 100%;
         }
 
