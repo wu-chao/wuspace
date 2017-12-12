@@ -20,6 +20,8 @@
     <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css">
     <link rel="stylesheet" href="/bower_components/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="/css/layout.css">
+    <link rel="stylesheet" href="/css/prettify.css">
+    <link rel="stylesheet" href="/css/style.css" media="all">
 
     <script src="/bower_components/jquery/dist/jquery.js"></script>
     <script src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap.js"></script>
@@ -31,7 +33,7 @@
     <link href="/site/rss.xml" type="application/rss+xml" rel="alternate" title="Sitewide RSS Feed">
 </head>
 
-<body style="background-position: 0px 0px;">
+<body class="dark" style="background-position: 0px 0px;">
 <!-- Navbar -->
 <div layout:fragment="header" class="navbar">
     <div class="navbar-inner">
@@ -344,7 +346,7 @@
 <!-- End Wrapper -->
 
 <!-- Add-on -->
-<div layout:fragment="add-on" style="background-position: 50% 43px;">
+<div layout:fragment="add-on" id="add-on" style="background-position: 50% 43px;">
 </div>
 <!-- End Add-on-->
 

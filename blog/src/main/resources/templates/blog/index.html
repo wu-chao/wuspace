@@ -5,9 +5,6 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorator="layouts/main">
 <head>
-    <link rel="stylesheet" href="/css/prettify.css">
-    <link rel="stylesheet" href="/css/style.css" media="all">
-
     <script src="/js/prettify.js" async="true"></script>
 </head>
 
@@ -317,5 +314,15 @@
     <!-- End About Us -->
 </div>
 <!-- End Add-on -->
+
+<!-- JavaScript -->
+<script layout:fragment="scripts">
+    $(function () {
+        var limit = 6;
+        var random = parseInt(Math.random() * limit + 1);
+        $('.about-us').css('background', 'url(/images/about_us_bg_' + random + '.jpg) repeat fixed').css('background-size', 'cover');
+    });
+</script>
+<!-- End JavaScript -->
 </body>
 </html>

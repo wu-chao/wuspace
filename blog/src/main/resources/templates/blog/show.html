@@ -4,9 +4,6 @@
       xmlns:layout="http://www.w3.org/1999/xhtml"
       layout:decorate="~{layouts/main}">
 <head>
-    <meta charset="utf-8">
-    <title>天才宝宝</title>
-    <link rel="stylesheet" href="/css/style.css">
 </head>
 
 <body>
@@ -19,241 +16,382 @@
             <div class="card-detail">
                 <div class="content">
                     <h3 th:utext="${blog.title}"></h3>
+                    <div class="article-info">
+                        <i><img class="mini-avatar inline" src="/images/avatars/avatar_1.jpg"></i>&nbsp;
+                        <a href="/" th:utext="${blog?.user.nickname}"></a>
+
+                        &nbsp;&nbsp;时间： <span
+                            th:text="${#calendars.format(blog.lastModifiedDate, 'yyyy-MM-dd HH:mm')}"></span>
+
+                        &nbsp;&nbsp;看过：<span th:text="${blog.viewedTimes}">0</span>
+
+                        &nbsp;&nbsp;评论：<span>0</span>
+                    </div>
                     <div class="article-content" th:utext="${blog.content}"></div>
                 </div>
             </div>
+
+            <hr><h2 class="margin-bottom-20">评论</h2>
+            <!-- Comments -->
+            <div class="row blog-comments margin-bottom-30">
+                <div class="col-sm-2 sm-margin-bottom-40">
+                    <img class="rounded-x" src="https://o8t0bd96n.qnssl.com/avatar/default_avatar_6.png" alt="">
+                </div>
+                <div class="col-sm-10">
+                    <div class="comments-itself" id="comment-81327">
+                        <h4>
+                            <strong>加尔007(6271701)</strong>
+                            <span>
+                                        2017-12-12 17:13:12 | ￥112924.08/BTC | <a href="javascript:;" onclick="showReply('81327', '回复')">回复</a>
+                                                                            </span>
+                        </h4>
+                        <p style="color:#999">把比特币全送去日本，用比特币玩他们女人，买他们别墅，美滋滋</p>
+                    </div>
+                </div>
+            </div>
+            <!-- End Comments -->
+
+            <!-- SubComments -->
+            <div class="row blog-comments blog-comments-reply margin-bottom-30">
+                <div class="col-sm-2 sm-margin-bottom-40">
+                    <img class="rounded-x" src="https://o8t0bd96n.qnssl.com/avatar/default_avatar_6.png" alt="">
+                </div>
+                <div class="col-sm-10">
+                    <div class="comments-itself" id="comment-81328">
+                        <h4>
+                            <strong>加尔007(6271701)</strong>
+                            回复&nbsp;<strong>加尔007(6271701)</strong>
+                            <span>
+                                            2017-12-12 17:13:49 | ￥112924.08/BTC | <a href="javascript:;" onclick="showReply('81328', '回复')">回复</a>
+                                                                                    </span>
+                        </h4>
+                        <p style="color:#999">不过有美国爹在，棒子不敢禁</p>
+                    </div>
+                </div>
+            </div>
+            <!-- End SubComments -->
+
+            <!-- Comments -->
+            <div class="row blog-comments margin-bottom-30">
+                <div class="col-sm-2 sm-margin-bottom-40">
+                    <img class="rounded-x" src="https://m.bitkan.com/public/uploads/2017/06/02/avatar_5832618_medium_150133_0858656274.png" alt="">
+                </div>
+                <div class="col-sm-10">
+                    <div class="comments-itself" id="comment-81331">
+                        <h4>
+                            <strong>chenjian(5832618)</strong>
+                            <span>
+                                        2017-12-12 17:27:55 | ￥113340.90/BTC | <a href="javascript:;" onclick="showReply('81331', '回复')">回复</a>
+                                                                            </span>
+                        </h4>
+                        <p style="color:#999">发现比特比价格规律：禁-跌-反弹－创新高-再禁&hellip;&hellip;，然后再来一圈。</p>
+                    </div>
+                </div>
+            </div>
+            <!-- End Comments -->
+
+            <!-- Comments -->
+            <div class="row blog-comments margin-bottom-30">
+                <div class="col-sm-2 sm-margin-bottom-40">
+                    <img class="rounded-x" src="https://o8t0bd96n.qnssl.com/avatar/default_avatar_6.png" alt="">
+                </div>
+                <div class="col-sm-10">
+                    <div class="comments-itself" id="comment-81333">
+                        <h4>
+                            <strong>wds(5840409)</strong>
+                            <span>
+                                        2017-12-12 17:33:39 | ￥112852.21/BTC | <a href="javascript:;" onclick="showReply('81333', '回复')">回复</a>
+                                                                            </span>
+                        </h4>
+                        <p style="color:#999">有人要做空了！小心！嘘！</p>
+                    </div>
+                </div>
+            </div>
+            <!-- End Comments -->
+
+            <!-- Comments -->
+            <div class="row blog-comments margin-bottom-30">
+                <div class="col-sm-2 sm-margin-bottom-40">
+                    <img class="rounded-x" src="https://o8t0bd96n.qnssl.com/avatar/default_avatar_6.png" alt="">
+                </div>
+                <div class="col-sm-10">
+                    <div class="comments-itself" id="comment-81341">
+                        <h4>
+                            <strong>大书(6307868)</strong>
+                            <span>
+                                        2017-12-12 18:14:33 | ￥112293.09/BTC | <a href="javascript:;" onclick="showReply('81341', '回复')">回复</a>
+                                                                            </span>
+                        </h4>
+                        <p style="color:#999">能用禁止的办法打压比特币的话，比特币早已经死了。</p>
+                    </div>
+                </div>
+            </div>
+            <!-- End Comments -->
+
+            <!-- Comments -->
+            <div class="row blog-comments margin-bottom-30">
+                <div class="col-sm-2 sm-margin-bottom-40">
+                    <img class="rounded-x" src="https://o8t0bd96n.qnssl.com/avatar/default_avatar_6.png" alt="">
+                </div>
+                <div class="col-sm-10">
+                    <div class="comments-itself" id="comment-81351">
+                        <h4>
+                            <strong>ayseek(6269174)</strong>
+                            <span>
+                                        2017-12-12 18:51:24 | ￥112026.64/BTC | <a href="javascript:;" onclick="showReply('81351', '回复')">回复</a>
+                                                                            </span>
+                        </h4>
+                        <p style="color:#999">大利好。</p>
+                    </div>
+                </div>
+            </div>
+            <!-- End Comments -->
+
+            <hr>
+            <h2 class="margin-bottom-20">发表评论</h2>
+            <!-- Form -->
+            <div>
+            </div>
+            <form id="sky-form3" class="comment-style" role="form" method="post" accept-charset="utf-8">
+                <div class="sky-space-30 margin-bottom-15">
+                    <input type="hidden" name="comment_id" value="0" />
+                    <textarea class="form-control" rows="4" name="comment" placeholder="在此输入评论内容" ></textarea>
+                </div>
+                <button type="submit" name="submit" class="btn-u" value="提交">提交</button>
+            </form>
+            <!-- End Form -->
         </div>
         <!-- End Main -->
 
         <!-- Sidebar -->
         <div layout:fragment="sidebar" class="sidebar">
-            <!--<div class="top-featured media-player-cont">-->
-            <!--<div class="media-player-holder" id="jp_jplayer_0" style="width: 0px; height: 0px;"><img-->
-            <!--id="jp_poster_0" style="width: 0px; height: 0px; display: none;">-->
-            <!--<audio id="jp_audio_0" preload="none"-->
-            <!--src="https://api.soundcloud.com/tracks/367797902/stream?client_id=7801c7a5dcce2c1f33d66c82d867f1d6"></audio>-->
-            <!--</div>-->
-            <!--<div class="featured-wrap">-->
-            <!--<div class="current-featured media-player">-->
-            <!--<div class="featured-player">-->
-            <!--<div class="player-overlay">-->
-            <!--<div class="player-controls">-->
-            <!--<span class="backward prev" title="Previous"><i class="fa fa-backward"></i></span>-->
-            <!--<span class="play-pause pause jp-pause" style="display: none;" title="Pause"><i-->
-            <!--class="fa fa-pause"></i></span>-->
-            <!--<span class="play-pause play jp-play" title="Play"><i class="fa fa-play"></i></span>-->
-            <!--<span class="forward next" title="Next"><i class="fa fa-forward"></i></span>-->
-            <!--<div class="player-pop">-->
-            <!--<span title="Pop out media player" class="pop-out"><i-->
-            <!--class="fa fa-caret-square-o-up"></i></span>-->
-            <!--</div>-->
-            <!--</div>-->
-            <!--</div>&lt;!&ndash; player-overlay &ndash;&gt;-->
-            <!--<div class="featured-image">-->
-            <!--<img src="https://letstalkbitcoin.com/files/blogs/2392-278acb75d014c753d500b540101abc17cedd7f9d53093a603ade578e91536204.jpg"-->
-            <!--alt=""></div>&lt;!&ndash; featured-image &ndash;&gt;-->
-            <!--</div>&lt;!&ndash; featured-player &ndash;&gt;-->
-            <!--<div class="featured-content">-->
-            <!--<h2>On Today's Show</h2>-->
-            <!--<div class="featured-title track-title">-->
-            <!--<p class="track">-->
-            <!--<a href="https://letstalkbitcoin.com/blog/post/the-third-web-micro-economies-2-spankchain"-->
-            <!--title="The Third Web Micro - Economies #2 - SpankChain" target="_blank">The Third-->
-            <!--Web Micro - Economies #2 - SpankChain</a></p>-->
-            <!--</div>&lt;!&ndash; featured-title &ndash;&gt;-->
-            <!--<div class="featured-date">-->
-            <!--<a href="#" class="pop-out-player" title="Pop out audio player"></a>-->
-            <!--<span>-->
-            <!--10TH DECEMBER 2017										</span>-->
-            <!--</div>&lt;!&ndash; featured-date &ndash;&gt;-->
-            <!--</div>&lt;!&ndash; featured-content &ndash;&gt;-->
-            <!--</div>&lt;!&ndash; current-featured &ndash;&gt;-->
-            <!--</div>&lt;!&ndash; featured-wrap &ndash;&gt;-->
-            <!--</div>&lt;!&ndash; top-featured &ndash;&gt;-->
-            <!--<div class="featured-menu-cont">-->
-            <!--<ul class="featured-menu">-->
-            <!--<li><a href="https://feeds.feedburner.com/TheDailyBitcoinShow"-->
-            <!--title="Subscribe to the LTBN RSS Feed" target="_blank">Subscribe <i-->
-            <!--class="fa fa-rss"></i></a></li>-->
-            <!--<li><a href="/blog/category/ltb-network-shows" title="Listen to the latest podcast episodes">Episodes-->
-            <!--<i class="fa fa-volume-up"></i></a></li>-->
-            <!--</ul>-->
-            <!--</div>&lt;!&ndash; featured-menu-cont &ndash;&gt;-->
-            <!--<div class="sidebar-content">-->
-            <!--<div class="sidebar-inner-content">-->
-            <!--<div style="margin-bottom: 20px;">-->
+            <div class="top-featured media-player-cont">
+                <div class="media-player-holder" id="jp_jplayer_0" style="width: 0px; height: 0px;"><img
+                        id="jp_poster_0" style="width: 0px; height: 0px; display: none;">
+                    <audio id="jp_audio_0" preload="none"
+                           src="https://api.soundcloud.com/tracks/367797902/stream?client_id=7801c7a5dcce2c1f33d66c82d867f1d6"></audio>
+                </div>
+                <div class="featured-wrap">
+                    <div class="current-featured media-player">
+                        <div class="featured-player">
+                            <div class="player-overlay">
+                                <div class="player-controls">
+                                    <span class="backward prev" title="Previous"><i class="fa fa-backward"></i></span>
+                                    <span class="play-pause pause jp-pause" style="display: none;" title="Pause"><i
+                                            class="fa fa-pause"></i></span>
+                                    <span class="play-pause play jp-play" title="Play"><i class="fa fa-play"></i></span>
+                                    <span class="forward next" title="Next"><i class="fa fa-forward"></i></span>
+                                    <div class="player-pop">
+                                        <span title="Pop out media player" class="pop-out"><i
+                                                class="fa fa-caret-square-o-up"></i></span>
+                                    </div>
+                                </div>
+                            </div><!-- player-overlay -->
+                            <div class="featured-image">
+                                <img src="https://letstalkbitcoin.com/files/blogs/2392-278acb75d014c753d500b540101abc17cedd7f9d53093a603ade578e91536204.jpg"
+                                     alt=""></div><!-- featured-image -->
+                        </div><!-- featured-player -->
+                        <div class="featured-content">
+                            <h2>On Today's Show</h2>
+                            <div class="featured-title track-title">
+                                <p class="track">
+                                    <a href="https://letstalkbitcoin.com/blog/post/the-third-web-micro-economies-2-spankchain"
+                                       title="The Third Web Micro - Economies #2 - SpankChain" target="_blank">The Third
+                                        Web Micro - Economies #2 - SpankChain</a></p>
+                            </div><!-- featured-title -->
+                            <div class="featured-date">
+                                <a href="#" class="pop-out-player" title="Pop out audio player"></a>
+                                <span>
+											10TH DECEMBER 2017										</span>
+                            </div><!-- featured-date -->
+                        </div><!-- featured-content -->
+                    </div><!-- current-featured -->
+                </div><!-- featured-wrap -->
+            </div><!-- top-featured -->
+            <div class="featured-menu-cont">
+                <ul class="featured-menu">
+                    <li><a href="https://feeds.feedburner.com/TheDailyBitcoinShow"
+                           title="Subscribe to the LTBN RSS Feed" target="_blank">Subscribe <i
+                            class="fa fa-rss"></i></a></li>
+                    <li><a href="/blog/category/ltb-network-shows" title="Listen to the latest podcast episodes">Episodes
+                        <i class="fa fa-volume-up"></i></a></li>
+                </ul>
+            </div><!-- featured-menu-cont -->
+            <div class="sidebar-content">
+                <div class="sidebar-inner-content">
+                    <div style="margin-bottom: 20px;">
 
-            <!--<div style="margin-bottom: 20px;">-->
-            <!--</div>-->
-            <!--</div>-->
-            <!--<div class="search-cont pull-right">-->
-            <!--<a href="#" class="search-icon" title="Search website"><i class="fa fa-search"></i></a>-->
-            <!--</div>&lt;!&ndash; search-cont &ndash;&gt;-->
-            <!--<h2>LTB Community <span>Recent Posts</span></h2>-->
-            <!--<div class="clear"></div>-->
-            <!--<ul class="recent-posts">-->
-            <!--<li>-->
-            <!--<div class="post-title">-->
-            <!--<span class="post-date" title="December 10th, 2017 at 18:01 pm">7h</span>-->
-            <!--<a href="https://letstalkbitcoin.com/profile/user/mmanvil74" class="user-link"><span-->
-            <!--class="mini-avatar"><img-->
-            <!--src="https://disqus.com/api/users/avatars/letstalkbitcoin-68d30a9594728bc39aa24be94b319d21.jpg"-->
-            <!--alt=""></span><span class="user-name">mmanvil74</span></a>-->
-            <!--</div>-->
-            <!--<div class="post-content">-->
-            <!--<p>-->
-            <!--While we may have overestimated the potential for public blockchains to run (at-->
-            <!--scale) dapps in the short term, we may have underestimated the potential for-->
-            <!--cryptocurrency to replace centralized fiat money in the long term. If better money-->
-            <!--is the onl... </p>-->
-            <!--<div class="post-thread-title">-->
-            <!--<a href="https://letstalkbitcoin.com/blog/post/lets-talk-bitcoin-349-a-little-diversion#comment-3656400302"-->
-            <!--title="A Little Diversion" class="view-post">-->
-            <!--<span class="pull-right text-right">View Thread <i-->
-            <!--class="fa fa-mail-forward"></i></span>-->
-            <!--</a>-->
-            <!--<strong>A Little Diversion</strong>-->
-            <!--<div class="clear"></div>-->
-            <!--</div>-->
-            <!--</div>-->
+                        <div style="margin-bottom: 20px;">
+                        </div>
+                    </div>
+                    <div class="search-cont pull-right">
+                        <a href="#" class="search-icon" title="Search website"><i class="fa fa-search"></i></a>
+                    </div><!-- search-cont -->
+                    <h2>LTB Community <span>Recent Posts</span></h2>
+                    <div class="clear"></div>
+                    <ul class="recent-posts">
+                        <li>
+                            <div class="post-title">
+                                <span class="post-date" title="December 10th, 2017 at 18:01 pm">7h</span>
+                                <a href="https://letstalkbitcoin.com/profile/user/mmanvil74" class="user-link"><span
+                                        class="mini-avatar"><img
+                                        src="https://disqus.com/api/users/avatars/letstalkbitcoin-68d30a9594728bc39aa24be94b319d21.jpg"
+                                        alt=""></span><span class="user-name">mmanvil74</span></a>
+                            </div>
+                            <div class="post-content">
+                                <p>
+                                    While we may have overestimated the potential for public blockchains to run (at
+                                    scale) dapps in the short term, we may have underestimated the potential for
+                                    cryptocurrency to replace centralized fiat money in the long term. If better money
+                                    is the onl... </p>
+                                <div class="post-thread-title">
+                                    <a href="https://letstalkbitcoin.com/blog/post/lets-talk-bitcoin-349-a-little-diversion#comment-3656400302"
+                                       title="A Little Diversion" class="view-post">
+                                        <span class="pull-right text-right">View Thread <i
+                                                class="fa fa-mail-forward"></i></span>
+                                    </a>
+                                    <strong>A Little Diversion</strong>
+                                    <div class="clear"></div>
+                                </div>
+                            </div>
 
-            <!--</li>-->
-            <!--<li>-->
-            <!--<div class="post-title">-->
-            <!--<span class="post-date" title="December 9th, 2017 at 02:11 am">1d</span>-->
-            <!--<a href="https://disqus.com/by/matthewchowhk/" class="user-link"><span-->
-            <!--class="mini-avatar"><img-->
-            <!--src="https://disqus.com/api/users/avatars/matthewchowhk.jpg" alt=""></span><span-->
-            <!--class="user-name">Matthew Chow Hk</span></a>-->
-            <!--</div>-->
-            <!--<div class="post-content">-->
-            <!--<p>-->
-            <!--A real eye opener. This is an interesting future Stan. Thanks for the share. Do you-->
-            <!--have a regular blog? </p>-->
-            <!--<div class="post-thread-title">-->
-            <!--<a href="http://letstalkbitcoin.com/bitcoin-and-the-three-laws-of-robotics#comment-3653969786"-->
-            <!--title="Bitcoin and the Three Laws of Robotics" class="view-post">-->
-            <!--<span class="pull-right text-right">View Thread <i-->
-            <!--class="fa fa-mail-forward"></i></span>-->
-            <!--</a>-->
-            <!--<strong>Bitcoin and the Three Laws of Robotics</strong>-->
-            <!--<div class="clear"></div>-->
-            <!--</div>-->
-            <!--</div>-->
+                        </li>
+                        <li>
+                            <div class="post-title">
+                                <span class="post-date" title="December 9th, 2017 at 02:11 am">1d</span>
+                                <a href="https://disqus.com/by/matthewchowhk/" class="user-link"><span
+                                        class="mini-avatar"><img
+                                        src="https://disqus.com/api/users/avatars/matthewchowhk.jpg" alt=""></span><span
+                                        class="user-name">Matthew Chow Hk</span></a>
+                            </div>
+                            <div class="post-content">
+                                <p>
+                                    A real eye opener. This is an interesting future Stan. Thanks for the share. Do you
+                                    have a regular blog? </p>
+                                <div class="post-thread-title">
+                                    <a href="http://letstalkbitcoin.com/bitcoin-and-the-three-laws-of-robotics#comment-3653969786"
+                                       title="Bitcoin and the Three Laws of Robotics" class="view-post">
+                                        <span class="pull-right text-right">View Thread <i
+                                                class="fa fa-mail-forward"></i></span>
+                                    </a>
+                                    <strong>Bitcoin and the Three Laws of Robotics</strong>
+                                    <div class="clear"></div>
+                                </div>
+                            </div>
 
-            <!--</li>-->
-            <!--<li>-->
-            <!--<div class="post-title">-->
-            <!--<span class="post-date" title="December 8th, 2017 at 22:58 pm">2d</span>-->
-            <!--<a href="" class="user-link"><span class="mini-avatar"><img-->
-            <!--src="//a.disquscdn.com/1510956940/images/noavatar92.png" alt=""></span><span-->
-            <!--class="user-name">ancap</span></a>-->
-            <!--</div>-->
-            <!--<div class="post-content">-->
-            <!--<p>-->
-            <!--It's misleading to say "the Bitcoin space" and then get have non-Bitcoin topics in-->
-            <!--there. I don't mind to get triggered by an occasional alt, but having interviews-->
-            <!--about off-topic stuff is too much. Either put it in the summary so that we c... </p>-->
-            <!--<div class="post-thread-title">-->
-            <!--<a href="https://letstalkbitcoin.com/blog/post/the-crypto-show-labitconf-brock-pierce-griff-green-givethio-alex-casas-shelpincom-and-anthony-conrad-holaluka#comment-3653870563"-->
-            <!--title="The Crypto Show: LaBitConf Brock Pierce, Griff Green Giveth.io, Alex Casas Shelpin.com And Anthony Conrad HolaLuka"-->
-            <!--class="view-post">-->
-            <!--<span class="pull-right text-right">View Thread <i-->
-            <!--class="fa fa-mail-forward"></i></span>-->
-            <!--</a>-->
-            <!--<strong>The Crypto Show: LaBitConf Brock Pierce, Griff Green Giveth.io, Alex Casas-->
-            <!--Shelpin.com And Anthony Conrad HolaLuka</strong>-->
-            <!--<div class="clear"></div>-->
-            <!--</div>-->
-            <!--</div>-->
+                        </li>
+                        <li>
+                            <div class="post-title">
+                                <span class="post-date" title="December 8th, 2017 at 22:58 pm">2d</span>
+                                <a href="" class="user-link"><span class="mini-avatar"><img
+                                        src="//a.disquscdn.com/1510956940/images/noavatar92.png" alt=""></span><span
+                                        class="user-name">ancap</span></a>
+                            </div>
+                            <div class="post-content">
+                                <p>
+                                    It's misleading to say "the Bitcoin space" and then get have non-Bitcoin topics in
+                                    there. I don't mind to get triggered by an occasional alt, but having interviews
+                                    about off-topic stuff is too much. Either put it in the summary so that we c... </p>
+                                <div class="post-thread-title">
+                                    <a href="https://letstalkbitcoin.com/blog/post/the-crypto-show-labitconf-brock-pierce-griff-green-givethio-alex-casas-shelpincom-and-anthony-conrad-holaluka#comment-3653870563"
+                                       title="The Crypto Show: LaBitConf Brock Pierce, Griff Green Giveth.io, Alex Casas Shelpin.com And Anthony Conrad HolaLuka"
+                                       class="view-post">
+                                        <span class="pull-right text-right">View Thread <i
+                                                class="fa fa-mail-forward"></i></span>
+                                    </a>
+                                    <strong>The Crypto Show: LaBitConf Brock Pierce, Griff Green Giveth.io, Alex Casas
+                                        Shelpin.com And Anthony Conrad HolaLuka</strong>
+                                    <div class="clear"></div>
+                                </div>
+                            </div>
 
-            <!--</li>-->
-            <!--<li>-->
-            <!--<div class="post-title">-->
-            <!--<span class="post-date" title="December 8th, 2017 at 12:55 pm">2d</span>-->
-            <!--<a href="https://letstalkbitcoin.com/profile/user/andref" class="user-link"><span-->
-            <!--class="mini-avatar"><img-->
-            <!--src="https://letstalkbitcoin.com/files/avatars/0197027406a2eba3c1e28581cb845a2d.jpg"-->
-            <!--alt=""></span><span class="user-name">andref</span></a>-->
-            <!--</div>-->
-            <!--<div class="post-content">-->
-            <!--<p>-->
-            <!--Altcoins are getting sold aggressively for BTC. Since last Thursday BTC/USD gained-->
-            <!--over 60 percent while ETH/BTC dropped by close to 45 percent. Now both ETH and Dash-->
-            <!--are in a bear market versus BTC.-->
-            <!--ETH/BTC Drops by 45 Percent-->
-            <!--Ether has lost almost ... </p>-->
-            <!--<div class="post-thread-title">-->
-            <!--<a href="https://letstalkbitcoin.com/forum/post/cryptocurrency-analytics-from-fxopen08-12-2017#post-0"-->
-            <!--title="Cryptocurrency Analytics from FXOpen.08/12/2017" class="view-post">-->
-            <!--<span class="pull-right text-right">View Thread <i-->
-            <!--class="fa fa-mail-forward"></i></span>-->
-            <!--</a>-->
-            <!--<strong>Cryptocurrency Analytics from FXOpen.08/12/2017</strong>-->
-            <!--<div class="clear"></div>-->
-            <!--</div>-->
-            <!--</div>-->
+                        </li>
+                        <li>
+                            <div class="post-title">
+                                <span class="post-date" title="December 8th, 2017 at 12:55 pm">2d</span>
+                                <a href="https://letstalkbitcoin.com/profile/user/andref" class="user-link"><span
+                                        class="mini-avatar"><img
+                                        src="https://letstalkbitcoin.com/files/avatars/0197027406a2eba3c1e28581cb845a2d.jpg"
+                                        alt=""></span><span class="user-name">andref</span></a>
+                            </div>
+                            <div class="post-content">
+                                <p>
+                                    Altcoins are getting sold aggressively for BTC. Since last Thursday BTC/USD gained
+                                    over 60 percent while ETH/BTC dropped by close to 45 percent. Now both ETH and Dash
+                                    are in a bear market versus BTC.
+                                    ETH/BTC Drops by 45 Percent
+                                    Ether has lost almost ... </p>
+                                <div class="post-thread-title">
+                                    <a href="https://letstalkbitcoin.com/forum/post/cryptocurrency-analytics-from-fxopen08-12-2017#post-0"
+                                       title="Cryptocurrency Analytics from FXOpen.08/12/2017" class="view-post">
+                                        <span class="pull-right text-right">View Thread <i
+                                                class="fa fa-mail-forward"></i></span>
+                                    </a>
+                                    <strong>Cryptocurrency Analytics from FXOpen.08/12/2017</strong>
+                                    <div class="clear"></div>
+                                </div>
+                            </div>
 
-            <!--</li>-->
-            <!--<li>-->
-            <!--<div class="post-title">-->
-            <!--<span class="post-date" title="December 7th, 2017 at 08:57 am">3d</span>-->
-            <!--<a href="https://disqus.com/by/bruno_cavalleri/" class="user-link"><span-->
-            <!--class="mini-avatar"><img-->
-            <!--src="https://disqus.com/api/users/avatars/bruno_cavalleri.jpg"-->
-            <!--alt=""></span><span class="user-name">Bruno Cavalleri</span></a>-->
-            <!--</div>-->
-            <!--<div class="post-content">-->
-            <!--<p>-->
-            <!--Wow! This identity idea looks like Black Mirror's Nosedive episode. "[...] You can-->
-            <!--require for somebody to befriend or follow you [...]", "[...] I'm not going befriend-->
-            <!--someone whom hasn't pledged bitcoin [...]" </p>-->
-            <!--<div class="post-thread-title">-->
-            <!--<a href="http://letstalkbitcoin.com/e04-the-horrible-warnings#comment-3651196002"-->
-            <!--title="E04 - The Horrible Warnings" class="view-post">-->
-            <!--<span class="pull-right text-right">View Thread <i-->
-            <!--class="fa fa-mail-forward"></i></span>-->
-            <!--</a>-->
-            <!--<strong>E04 - The Horrible Warnings</strong>-->
-            <!--<div class="clear"></div>-->
-            <!--</div>-->
-            <!--</div>-->
+                        </li>
+                        <li>
+                            <div class="post-title">
+                                <span class="post-date" title="December 7th, 2017 at 08:57 am">3d</span>
+                                <a href="https://disqus.com/by/bruno_cavalleri/" class="user-link"><span
+                                        class="mini-avatar"><img
+                                        src="https://disqus.com/api/users/avatars/bruno_cavalleri.jpg"
+                                        alt=""></span><span class="user-name">Bruno Cavalleri</span></a>
+                            </div>
+                            <div class="post-content">
+                                <p>
+                                    Wow! This identity idea looks like Black Mirror's Nosedive episode. "[...] You can
+                                    require for somebody to befriend or follow you [...]", "[...] I'm not going befriend
+                                    someone whom hasn't pledged bitcoin [...]" </p>
+                                <div class="post-thread-title">
+                                    <a href="http://letstalkbitcoin.com/e04-the-horrible-warnings#comment-3651196002"
+                                       title="E04 - The Horrible Warnings" class="view-post">
+                                        <span class="pull-right text-right">View Thread <i
+                                                class="fa fa-mail-forward"></i></span>
+                                    </a>
+                                    <strong>E04 - The Horrible Warnings</strong>
+                                    <div class="clear"></div>
+                                </div>
+                            </div>
 
-            <!--</li>-->
-            <!--<li>-->
-            <!--<div class="post-title">-->
-            <!--<span class="post-date" title="December 6th, 2017 at 11:21 am">4d</span>-->
-            <!--<a href="https://letstalkbitcoin.com/profile/user/andref" class="user-link"><span-->
-            <!--class="mini-avatar"><img-->
-            <!--src="https://letstalkbitcoin.com/files/avatars/0197027406a2eba3c1e28581cb845a2d.jpg"-->
-            <!--alt=""></span><span class="user-name">andref</span></a>-->
-            <!--</div>-->
-            <!--<div class="post-content">-->
-            <!--<p>-->
-            <!--The Great Britain Pound (GBP) inched lower against the US Dollar (USD) on Wednesday,-->
-            <!--decreasing the price of GBPUSD to less than 1.3450 following some key economic-->
-            <!--events. The technical bias remains bullish because of a higher low in the recent-->
-            <!--downs... </p>-->
-            <!--<div class="post-thread-title">-->
-            <!--<a href="https://letstalkbitcoin.com/forum/post/forex-analytics-06-12-17#post-0"-->
-            <!--title="Forex Analytics 06/12/17" class="view-post">-->
-            <!--<span class="pull-right text-right">View Thread <i-->
-            <!--class="fa fa-mail-forward"></i></span>-->
-            <!--</a>-->
-            <!--<strong>Forex Analytics 06/12/17</strong>-->
-            <!--<div class="clear"></div>-->
-            <!--</div>-->
-            <!--</div>-->
+                        </li>
+                        <li>
+                            <div class="post-title">
+                                <span class="post-date" title="December 6th, 2017 at 11:21 am">4d</span>
+                                <a href="https://letstalkbitcoin.com/profile/user/andref" class="user-link"><span
+                                        class="mini-avatar"><img
+                                        src="https://letstalkbitcoin.com/files/avatars/0197027406a2eba3c1e28581cb845a2d.jpg"
+                                        alt=""></span><span class="user-name">andref</span></a>
+                            </div>
+                            <div class="post-content">
+                                <p>
+                                    The Great Britain Pound (GBP) inched lower against the US Dollar (USD) on Wednesday,
+                                    decreasing the price of GBPUSD to less than 1.3450 following some key economic
+                                    events. The technical bias remains bullish because of a higher low in the recent
+                                    downs... </p>
+                                <div class="post-thread-title">
+                                    <a href="https://letstalkbitcoin.com/forum/post/forex-analytics-06-12-17#post-0"
+                                       title="Forex Analytics 06/12/17" class="view-post">
+                                        <span class="pull-right text-right">View Thread <i
+                                                class="fa fa-mail-forward"></i></span>
+                                    </a>
+                                    <strong>Forex Analytics 06/12/17</strong>
+                                    <div class="clear"></div>
+                                </div>
+                            </div>
 
-            <!--</li>-->
-            <!--</ul>&lt;!&ndash; recent-posts &ndash;&gt;-->
-            <!--<div class="clear"></div>-->
-            <!--<div class="text-right">-->
-            <!--<a href="https://letstalkbitcoin.com/forum/board/all" class="enter-forum">Enter-->
-            <!--<span>Forums</span></a>-->
-            <!--</div>-->
-            <!--</div>&lt;!&ndash; sidebar-inner-content &ndash;&gt;-->
-            <!--</div>&lt;!&ndash; sidebar-content &ndash;&gt;-->
+                        </li>
+                    </ul><!-- recent-posts -->
+                    <div class="clear"></div>
+                    <div class="text-right">
+                        <a href="https://letstalkbitcoin.com/forum/board/all" class="enter-forum">Enter
+                            <span>Forums</span></a>
+                    </div>
+                </div><!-- sidebar-inner-content -->
+            </div><!-- sidebar-content -->
         </div>
         <!-- End Sidebar -->
 
@@ -261,153 +399,23 @@
     </div>
     <!-- End Wrapper Container -->
 </div>
-<!--<div layout:fragment="content">-->
-    <!--<div id="blogPageWrapper" class="container clearfix" style="min-height: 144px;">-->
-        <!--<div class="row wrapper border-bottom white-bg page-heading">-->
-            <!--<div class="col-lg-10">-->
-                <!--<h2>Article</h2>-->
-                <!--<ol class="breadcrumb">-->
-                    <!--<li>-->
-                        <!--<a href="index.html">Home</a>-->
-                    <!--</li>-->
-                    <!--<li>-->
-                        <!--<a>Miscellaneous</a>-->
-                    <!--</li>-->
-                    <!--<li class="active">-->
-                        <!--<strong>Article</strong>-->
-                    <!--</li>-->
-                <!--</ol>-->
-            <!--</div>-->
-            <!--<div class="col-lg-2">-->
-
-            <!--</div>-->
-        <!--</div>-->
-
-        <!--<div class="article">-->
-            <!--<div class="row">-->
-                <!--<div class="col-lg-12">-->
-                    <!--<div class="ibox">-->
-                        <!--<div class="ibox-content">-->
-                            <!--<div class="text-center">-->
-                                <!--<h1 th:utext="${blog.title}"></h1>-->
-                                <!--<p class="article-label" style="border:1px solid red">-->
-                                    <!--<span class="" style="width:30px;" th:text="${#calendars.format(blog.createdDate, 'yyyy-MM-dd')}">时间</span>-->
-                                    <!--<span class="" style="width:30px;" th:utext="${blog?.user.nickname}">作者</span>-->
-                                    <!--<span class="" style="width:30px;" th:text="${blog.viewedTimes}">查看次数</span>-->
-                                <!--</p>-->
-                            <!--</div>-->
-                            <!--&lt;!&ndash;文章正文&ndash;&gt;-->
-                            <!--<div th:utext="${blog.content}"></div>-->
-                            <!--<hr>-->
-                            <!--<div class="row">-->
-                                <!--<div class="col-md-6 tags">-->
-                                    <!--<span>Tags:</span>-->
-                                    <!--<a href="/" class="">Model</a>-->
-                                    <!--<a href="/" class="">Publishing</a>-->
-                                <!--</div>-->
-                            <!--</div>-->
-                            <!--<row>-->
-
-                            <!--</row>-->
-                            <!--&lt;!&ndash;评论&ndash;&gt;-->
-                            <!--<div class="row" style="margin-top: 20px;">-->
-                                <!--<div class="col-lg-12">-->
-                                    <!--<h5>Comments:</h5>-->
-                                    <!--<div class="social-feed-box">-->
-                                        <!--<div class="social-avatar">-->
-                                            <!--<a href="" class="pull-left">-->
-                                                <!--<img alt="image" src="img/a1.jpg">-->
-                                            <!--</a>-->
-                                            <!--<div class="media-body">-->
-                                                <!--<a href="#">-->
-                                                    <!--Andrew Williams-->
-                                                <!--</a>-->
-                                                <!--<small class="text-muted">Today 4:21 pm - 12.06.2014</small>-->
-                                            <!--</div>-->
-                                        <!--</div>-->
-                                        <!--<div class="social-body">-->
-                                            <!--<p>-->
-                                                <!--Many desktop publishing packages and web page editors now use Lorem Ipsum as their-->
-                                                <!--default model text, and a search for 'lorem ipsum' will uncover many web sites still-->
-                                                <!--default model text.-->
-                                            <!--</p>-->
-                                        <!--</div>-->
-                                    <!--</div>-->
-                                    <!--<div class="social-feed-box">-->
-                                        <!--<div class="social-avatar">-->
-                                            <!--<a href="" class="pull-left">-->
-                                                <!--<img alt="image" src="img/a2.jpg">-->
-                                            <!--</a>-->
-                                            <!--<div class="media-body">-->
-                                                <!--<a href="#">-->
-                                                    <!--Michael Novek-->
-                                                <!--</a>-->
-                                                <!--<small class="text-muted">Today 4:21 pm - 12.06.2014</small>-->
-                                            <!--</div>-->
-                                        <!--</div>-->
-                                        <!--<div class="social-body">-->
-                                            <!--<p>-->
-                                                <!--Many desktop publishing packages and web page editors now use Lorem Ipsum as their-->
-                                                <!--default model text, and a search for 'lorem ipsum' will uncover many web sites still-->
-                                                <!--default model text, and a search for 'lorem ipsum' will uncover many web sites still-->
-                                                <!--in their infancy. Packages and web page editors now use Lorem Ipsum as their-->
-                                                <!--default model text.-->
-                                            <!--</p>-->
-                                        <!--</div>-->
-                                    <!--</div>-->
-                                    <!--<div class="social-feed-box">-->
-                                        <!--<div class="social-avatar">-->
-                                            <!--<a href="" class="pull-left">-->
-                                                <!--<img alt="image" src="img/a3.jpg">-->
-                                            <!--</a>-->
-                                            <!--<div class="media-body">-->
-                                                <!--<a href="#">-->
-                                                    <!--Alice Mediater-->
-                                                <!--</a>-->
-                                                <!--<small class="text-muted">Today 4:21 pm - 12.06.2014</small>-->
-                                            <!--</div>-->
-                                        <!--</div>-->
-                                        <!--<div class="social-body">-->
-                                            <!--<p>-->
-                                                <!--Many desktop publishing packages and web page editors now use Lorem Ipsum as their-->
-                                                <!--default model text, and a search for 'lorem ipsum' will uncover many web sites still-->
-                                                <!--in their infancy. Packages and web page editors now use Lorem Ipsum as their-->
-                                                <!--default model text.-->
-                                            <!--</p>-->
-                                        <!--</div>-->
-                                    <!--</div>-->
-                                    <!--<div class="social-feed-box">-->
-                                        <!--<div class="social-avatar">-->
-                                            <!--<a href="" class="pull-left">-->
-                                                <!--<img alt="image" src="img/a5.jpg">-->
-                                            <!--</a>-->
-                                            <!--<div class="media-body">-->
-                                                <!--<a href="#">-->
-                                                    <!--Monica Flex-->
-                                                <!--</a>-->
-                                                <!--<small class="text-muted">Today 4:21 pm - 12.06.2014</small>-->
-                                            <!--</div>-->
-                                        <!--</div>-->
-                                        <!--<div class="social-body">-->
-                                            <!--<p>-->
-                                                <!--Many desktop publishing packages and web page editors now use Lorem Ipsum as their-->
-                                                <!--default model text, and a search for 'lorem ipsum' will uncover many web sites still-->
-                                                <!--in their infancy. Packages and web page editors now use Lorem Ipsum as their-->
-                                                <!--default model text.-->
-                                            <!--</p>-->
-                                        <!--</div>-->
-                                    <!--</div>-->
+<div >
+    <div id="blogPageWrapper" class="container clearfix" style="min-height: 144px;">
 
 
-                                <!--</div>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                    <!--</div>-->
-                <!--</div>-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</div>-->
-<!--</div>-->
+        <div class="article">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="ibox">
+                        <div class="ibox-content">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>
 

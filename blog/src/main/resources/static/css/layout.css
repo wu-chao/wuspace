@@ -2,7 +2,12 @@
 
 body {
     background: url('../images/body_bg.png') repeat #161616;
-    color: #fff;
+    /*color: #fff;*/
+}
+
+body.dark {
+    color: #999;
+    background-color: #252525;
 }
 
 a {
@@ -159,12 +164,48 @@ tr:first-child th:last-child {
     margin-right: 10px;
 }
 
+.headline h2, .headline h3, .headline h4 {
+    border-bottom: 2px solid #e67e22;
+}
+
+/** Helper Classes **/
+
+.clear {
+    clear: both;
+}
+
+.pull-left {
+    float: left;
+}
+
+.center {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.pull-right {
+    float: right;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.text-left {
+    text-align: left;
+}
+
+.text-center {
+    text-align: center;
+}
+
 .text-orange {
     color: #dc6e23;
 }
 
-.headline h2, .headline h3, .headline h4 {
-    border-bottom: 2px solid #e67e22;
+.margin-bottom-30 {
+    margin-bottom: 30px !important;
 }
 
 /** Navbar **/
@@ -308,7 +349,7 @@ a.brand:hover {
     position: relative;
     margin: 0 auto;
     /*width: 90%;*/
-    background-color: #2E2F2F;
+    background-color: #252525;
 }
 
 .roof {
@@ -644,8 +685,8 @@ a.brand:hover {
     height: auto;
     padding: 50px 0;
     position: relative;
-    background: url(../images/about_us_bg.jpg) repeat fixed;
-    background-size: cover;
+    /*background: url(../images/about_us_bg.jpg) repeat fixed;*/
+    /*background-size: cover;*/
 }
 
 .about-us .headline-center {
@@ -1043,38 +1084,6 @@ a.brand:hover {
 
 .sidebar-inner-content .search-cont .search-icon:hover {
     color: #fff;
-}
-
-/** Helper Classes **/
-
-.clear {
-    clear: both;
-}
-
-.pull-left {
-    float: left;
-}
-
-.pull-right {
-    float: right;
-}
-
-.text-right {
-    text-align: right;
-}
-
-.text-left {
-    text-align: left;
-}
-
-.text-center {
-    text-align: center;
-}
-
-.center {
-    text-align: center;
-    margin-left: auto;
-    margin-right: auto;
 }
 
 /** Ads **/

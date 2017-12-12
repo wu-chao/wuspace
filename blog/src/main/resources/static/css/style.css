@@ -76,17 +76,111 @@ a.tag:hover {
 }
 
 .card-detail {
+    max-width: 900px;
     min-height: 500px;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     background-color: #363636;
+    margin-top: 50px;
+    padding: 20px 40px;
 }
 
-.card-detail h1 h2 h3 {
+.card-detail h1, h2, h3 {
     color: #ccc;
 }
 
-.card-detail article-content {
+.card-detail .article-info {
+    margin: 32px 0px;
     color: #999;
+}
+
+.card-detail .article-content {
+    color: #999;
+}
+
+/*--------------------------------------------------
+	Blog Comments
+----------------------------------------------------*/
+body.dark .blog-author {
+    background: #333;
+}
+
+/*Blog Comments
+------------------------------------*/
+body.dark .blog-comments .comments-itself {
+    background: #333;
+}
+
+body.dark .blog-comments .comments-itself:before {
+    border-color: transparent #333 transparent transparent;
+}
+
+body.dark .blog-comments .comments-itself span {
+    color: #999;
+}
+
+body.dark .sky-form.comment-style fieldset {
+    background: inherit;
+}
+
+.blog-comments img {
+    width: 80px;
+    height: auto;
+}
+
+.blog-comments .comments-itself {
+    background: #fff;
+    padding: 20px 30px;
+    position: relative;
+}
+
+.blog-comments .comments-itself:before {
+    width: 0;
+    height: 0;
+    top: 20px;
+    left: -17px;
+    content: " ";
+    position: absolute;
+    border-style: solid;
+    border-width: 15px 17px 15px 0;
+    border-color: transparent #fff transparent transparent;
+}
+
+.blog-comments .comments-itself h3 {
+    margin: 0 0 10px;
+}
+
+.blog-comments .comments-itself span {
+    color: #555;
+    float: right;
+    font-size: 13px;
+}
+
+.blog-comments .comments-itself p {
+    color: #555;
+}
+
+/*Comments Reply*/
+.blog-comments.blog-comments-reply {
+    margin-left: 70px;
+}
+
+/*Media Queries*/
+@media (max-width: 768px) {
+    .blog-comments .comments-itself:before {
+        display: none;
+    }
+
+    .blog-comments .comments-itself:after {
+        width: 0;
+        height: 0;
+        top: -17px;
+        left: 20px;
+        content: " ";
+        position: absolute;
+        border-style: solid;
+        border-width: 0 15px 17px 15px;
+        border-color: transparent transparent #fff transparent;
+    }
 }
 
 @media (min-width: 768px) and (max-width: 979px) {
