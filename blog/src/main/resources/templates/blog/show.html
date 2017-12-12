@@ -1,107 +1,27 @@
 <!DOCTYPE html>
-<html lang="en"
-      xmlns="http://www.w3.org/1999/xhtml"
+<html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+      xmlns:layout="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layouts/main}">
 <head>
     <meta charset="utf-8">
     <title>天才宝宝</title>
-    <!-- Enable responsive viewport -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- CSRF -->
-    <meta name="_csrf" th:content="${_csrf.token}"/>
-    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
-    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
-    <!--[if lt IE 9]>
-    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-
-    <!-- Le styles -->
-    <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css">
-    <link rel="stylesheet" href="/bower_components/font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="/css/layout.css">
-
-    <script src="/bower_components/jquery/dist/jquery.js"></script>
-    <script src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap.js"></script>
-    <script src="/js/scrollHandler.js" defer="true"></script>
-    <script src="/js/back-to-top.js"></script>
-
-    <!-- atom & rss feed -->
-    <link href="/site/atom.xml" type="application/atom+xml" rel="alternate" title="Sitewide ATOM Feed">
-    <link href="/site/rss.xml" type="application/rss+xml" rel="alternate" title="Sitewide RSS Feed">
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 
-<body style="background-position: 0px 0px;">
-<!-- Navbar -->
-<div layout:fragment="header" class="navbar">
-    <div class="navbar-inner">
-        <div class="nav-narrow">
-            <a class="brand" href="/"><span class="fa fa-mortar-board (alias)">首页</span></a>
-            <ul class="nav">
-                <li><a href="/site/archive.html">文章</a>
-                </li>
-                <li><a href="/site/categories.html">分类</a>
-                </li>
-                <li><a href="/site/pages.html">页面</a>
-                </li>
-                <li><a href="/site/tags.html">标签</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</div>
-<!-- End Navbar -->
-
+<body>
 <!-- Wrapper -->
 <div class="wrapper">
     <!-- Wrapper Container -->
     <div class="container" style="margin: 100px auto 0px;">
         <!-- Main -->
         <div layout:fragment="content" class="main">
-            <!--<div class="content">-->
-            <!--<div class="row-fluid">-->
-            <!--<div class="span12">-->
-            <!--<div class="card" th:each="blog : ${blogPageInfo.list}">-->
-            <!--<div class="date_label">-->
-            <!--<div class="day_month"-->
-            <!--th:text="${#calendars.format(blog.lastModifiedDate, 'MM/dd')}">-->
-            <!--12/11-->
-            <!--</div>-->
-            <!--<div class="year" th:text="${#calendars.format(blog.lastModifiedDate, 'yyyy')}">-->
-            <!--2017-->
-            <!--</div>-->
-            <!--</div>-->
-            <!--<h3 th:utext="${blog.title}">标题</h3>-->
-            <!--<hr/>-->
-            <!--<div class="article-content" th:utext="${blog.content}">内容</div>-->
-            <!--<div class="read_more">-->
-            <!--<a class="fa fa-link move-right"-->
-            <!--th:href="@{/blog/blogs/{blogId}(blogId=${blog.id})}"> 查看全文&hellip;</a>-->
-            <!--</div>-->
-            <!--<div class="article-info">-->
-            <!--<i><img class="mini-avatar inline" src="/images/avatars/avatar_1.jpg"></i>&nbsp;-->
-            <!--<a href="/" th:utext="${blog?.user.nickname}"></a>-->
-
-            <!--看过 <span th:text="${blog.viewedTimes}">0</span>-->
-            <!--评论 <span>0</span>-->
-
-            <!--<span class="pull-right">-->
-            <!--<a class="tag">aaa</a>-->
-            <!--<a class="tag">bbb</a>-->
-            <!--<a class="tag">ccc</a>-->
-            <!--<a class="tag">ccc</a>-->
-            <!--<a class="tag">ccc</a>-->
-            <!--<a class="tag">ccc</a>-->
-            <!--</span>-->
-            <!--</div>-->
-            <!--</div>-->
-            <!--</div>-->
-            <!--</div>-->
-            <!--</div>-->
-            <!--<div>-->
-            <!--<a style="font-size:20px;font-family:'幼圆';padding:10px;width:300px;display:block;margin:50px auto;text-align:center;"-->
-            <!--href="http://enml.github.io/site/archive.html">查看更多文章 >>></a>-->
-            <!--</div>-->
+            <div class="card-detail">
+                <div class="content">
+                    <h3 th:utext="${blog.title}"></h3>
+                    <div class="article-content" th:utext="${blog.content}"></div>
+                </div>
+            </div>
         </div>
         <!-- End Main -->
 
@@ -341,140 +261,153 @@
     </div>
     <!-- End Wrapper Container -->
 </div>
-<!-- End Wrapper -->
+<!--<div layout:fragment="content">-->
+    <!--<div id="blogPageWrapper" class="container clearfix" style="min-height: 144px;">-->
+        <!--<div class="row wrapper border-bottom white-bg page-heading">-->
+            <!--<div class="col-lg-10">-->
+                <!--<h2>Article</h2>-->
+                <!--<ol class="breadcrumb">-->
+                    <!--<li>-->
+                        <!--<a href="index.html">Home</a>-->
+                    <!--</li>-->
+                    <!--<li>-->
+                        <!--<a>Miscellaneous</a>-->
+                    <!--</li>-->
+                    <!--<li class="active">-->
+                        <!--<strong>Article</strong>-->
+                    <!--</li>-->
+                <!--</ol>-->
+            <!--</div>-->
+            <!--<div class="col-lg-2">-->
 
-<!-- Add-on -->
-<div layout:fragment="add-on" style="background-position: 50% 43px;">
-</div>
-<!-- End Add-on-->
+            <!--</div>-->
+        <!--</div>-->
 
-<!-- Footer -->
-<div layout:fragment="footer" class="footer">
-    <footer class="friendly-link">
-        <div class="container">
-            <div class="row">
-                <div class="col-xs-12 col-md-3 md-margin-bottom-40">
-                    <address class="md-margin-bottom-30 padding-left-5">
-                        QQ: <a class="text-orange"
-                               href="http://wpa.qq.com/msgrd?v=3&amp;uin=11110&amp;site=qq&amp;menu=yes"
-                               target="_blank">11110</a><br>
-                        Email: <a href="11110@qq.com" class="text-orange">11110@qq.com</a>
-                    </address>
-                </div>
-                <div class="hidden-xs col-md-9 md-margin-bottom-40">
-                    <div class="headline"><h2>友情链接</h2></div>
-                    <ul class="list-inline link-list">
-                        <li><a style="text-transform: none;" href="https://bixin.com/" target="_blank"
-                               onclick="trackOutgoingPageView('haobtc','friend')">币信</a></li>
-                        <li><a style="text-transform: none;" href="http://www.8btc.com/" target="_blank"
-                               onclick="trackOutgoingPageView('8btc','friend')">巴比特</a></li>
-                        <li><a style="text-transform: none;" href="http://www.btctrade.com/i-sbgnoc" target="_blank"
-                               onclick="trackOutgoingPageView('btctrade','friend')">比特币交易网</a></li>
-                        <li><a style="text-transform: none;" href="https://www.okex.com" target="_blank"
-                               onclick="trackOutgoingPageView('okex','friend')">OKEx比特币</a></li>
-                        <li><a style="text-transform: none;" href="https://www.huobi.com/" target="_blank"
-                               onclick="trackOutgoingPageView('huobi','friend')">火币网</a></li>
-                        <li><a style="text-transform: none;" href="http://chainb.com/" target="_blank"
-                               onclick="trackOutgoingPageView('chainb','friend')">铅笔</a></li>
-                        <li><a style="text-transform: none;" href="http://www.btcfans.com/" target="_blank"
-                               onclick="trackOutgoingPageView('btcfans','friend')">比特范</a></li>
-                        <li><a style="text-transform: none;" href="http://www.bitecoin.com" target="_blank"
-                               onclick="trackOutgoingPageView('bitecoin','friend')">比特币中文网</a></li>
-                        <li><a style="text-transform: none;" href="http://www.btc798.com" target="_blank"
-                               onclick="trackOutgoingPageView('btc798','friend')">比特币之家</a></li>
-                        <li><a style="text-transform: none;" href="http://www.cybtc.com" target="_blank"
-                               onclick="trackOutgoingPageView('cybtc','friend')">彩云比特</a></li>
-                        <li><a style="text-transform: none;" href="http://www.btc100.com/index" target="_blank"
-                               onclick="trackOutgoingPageView('btc100','friend')">BTC100</a></li>
-                        <li><a style="text-transform: none;" href="http://www.btc38.com" target="_blank"
-                               onclick="trackOutgoingPageView('btc38','friend')">比特时代</a></li>
-                        <li><a style="text-transform: none;" href="https://bter.com/" target="_blank"
-                               onclick="trackOutgoingPageView('bter','friend')">比特儿</a></li>
-                        <li><a style="text-transform: none;" href="http://www.wanbizu.com/" target="_blank"
-                               onclick="trackOutgoingPageView('wanbizu','friend')">玩币族</a></li>
-                        <li><a style="text-transform: none;" href="http://www.chbtc.com/" target="_blank"
-                               onclick="trackOutgoingPageView('chbtc','friend')">中国比特币</a></li>
-                        <li><a style="text-transform: none;" href="http://www.btc-q.com/" target="_blank"
-                               onclick="trackOutgoingPageView('btcq','friend')">BTC-Q</a></li>
-                        <li><a style="text-transform: none;" href="https://www.bitbank.com/" target="_blank"
-                               onclick="trackOutgoingPageView('bitbank','friend')">bitbank</a></li>
-                        <li><a style="text-transform: none;" href="https://www.wabi.com/" target="_blank"
-                               onclick="trackOutgoingPageView('wabi','friend')">挖币网</a></li>
-                        <li><a style="text-transform: none;" href="http://bitstones.com/" target="_blank"
-                               onclick="trackOutgoingPageView('bitstones','friend')">BITSTONES</a></li>
-                        <li><a style="text-transform: none;" href="https://www.wanbi.com/" target="_blank"
-                               onclick="trackOutgoingPageView('wanbi','friend')">万币网</a></li>
-                        <li><a style="text-transform: none;" href="https://www.bichuang.com/" target="_blank"
-                               onclick="trackOutgoingPageView('bichuang','friend')">币创网</a></li>
-                        <li><a style="text-transform: none;" href="https://www.sosobtc.com/" target="_blank"
-                               onclick="trackOutgoingPageView('sosobtc','friend')">搜搜比特币</a></li>
-                        <li><a style="text-transform: none;" href="http://www.lepaoquan.com" target="_blank"
-                               onclick="trackOutgoingPageView('lepaoquan','friend')">乐跑圈</a></li>
-                        <li><a style="text-transform: none;" href="http://www.bitcoin86.com" target="_blank"
-                               onclick="trackOutgoingPageView('bitcoin86','friend')">比特币资讯网</a></li>
-                        <li><a style="text-transform: none;" href="https://www.lhang.com" target="_blank"
-                               onclick="trackOutgoingPageView('lhang','friend')">链行</a></li>
-                        <li><a style="text-transform: none;" href="https://wequant.io/" target="_blank"
-                               onclick="trackOutgoingPageView('wequant','friend')">微宽网</a></li>
-                        <li><a style="text-transform: none;" href="https://www.binance.com/" target="_blank"
-                               onclick="trackOutgoingPageView('binance','friend')">币安</a></li>
-                        <li><a style="text-transform: none;" href="https://www.coingogo.com/" target="_blank"
-                               onclick="trackOutgoingPageView('coingogo','friend')">币源社区</a></li>
-                        <li><a style="text-transform: none;" href="https://www.btctrade.im/" target="_blank"
-                               onclick="trackOutgoingPageView('btctrade','friend')">BtcTrade国际站</a></li>
-                        <li><a style="text-transform: none;" href="https://www.coldlar.com/" target="_blank"
-                               onclick="trackOutgoingPageView('coldlar','friend')">库神</a></li>
-                        <li><a style="text-transform: none;" href="https://www.bibox.com/" target="_blank"
-                               onclick="trackOutgoingPageView('bibox','friend')">Bibox</a></li>
+        <!--<div class="article">-->
+            <!--<div class="row">-->
+                <!--<div class="col-lg-12">-->
+                    <!--<div class="ibox">-->
+                        <!--<div class="ibox-content">-->
+                            <!--<div class="text-center">-->
+                                <!--<h1 th:utext="${blog.title}"></h1>-->
+                                <!--<p class="article-label" style="border:1px solid red">-->
+                                    <!--<span class="" style="width:30px;" th:text="${#calendars.format(blog.createdDate, 'yyyy-MM-dd')}">时间</span>-->
+                                    <!--<span class="" style="width:30px;" th:utext="${blog?.user.nickname}">作者</span>-->
+                                    <!--<span class="" style="width:30px;" th:text="${blog.viewedTimes}">查看次数</span>-->
+                                <!--</p>-->
+                            <!--</div>-->
+                            <!--&lt;!&ndash;文章正文&ndash;&gt;-->
+                            <!--<div th:utext="${blog.content}"></div>-->
+                            <!--<hr>-->
+                            <!--<div class="row">-->
+                                <!--<div class="col-md-6 tags">-->
+                                    <!--<span>Tags:</span>-->
+                                    <!--<a href="/" class="">Model</a>-->
+                                    <!--<a href="/" class="">Publishing</a>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <!--<row>-->
 
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </footer>
-    <!-- 友情链接 -->
-    <div class="copyright">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-8">
-                    <p>
-                        ©2017 天才宝宝 版权所有 | <a class="text-orange" href="/help/privacy" target="_blank">隐私政策</a></p>
-                </div>
+                            <!--</row>-->
+                            <!--&lt;!&ndash;评论&ndash;&gt;-->
+                            <!--<div class="row" style="margin-top: 20px;">-->
+                                <!--<div class="col-lg-12">-->
+                                    <!--<h5>Comments:</h5>-->
+                                    <!--<div class="social-feed-box">-->
+                                        <!--<div class="social-avatar">-->
+                                            <!--<a href="" class="pull-left">-->
+                                                <!--<img alt="image" src="img/a1.jpg">-->
+                                            <!--</a>-->
+                                            <!--<div class="media-body">-->
+                                                <!--<a href="#">-->
+                                                    <!--Andrew Williams-->
+                                                <!--</a>-->
+                                                <!--<small class="text-muted">Today 4:21 pm - 12.06.2014</small>-->
+                                            <!--</div>-->
+                                        <!--</div>-->
+                                        <!--<div class="social-body">-->
+                                            <!--<p>-->
+                                                <!--Many desktop publishing packages and web page editors now use Lorem Ipsum as their-->
+                                                <!--default model text, and a search for 'lorem ipsum' will uncover many web sites still-->
+                                                <!--default model text.-->
+                                            <!--</p>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                    <!--<div class="social-feed-box">-->
+                                        <!--<div class="social-avatar">-->
+                                            <!--<a href="" class="pull-left">-->
+                                                <!--<img alt="image" src="img/a2.jpg">-->
+                                            <!--</a>-->
+                                            <!--<div class="media-body">-->
+                                                <!--<a href="#">-->
+                                                    <!--Michael Novek-->
+                                                <!--</a>-->
+                                                <!--<small class="text-muted">Today 4:21 pm - 12.06.2014</small>-->
+                                            <!--</div>-->
+                                        <!--</div>-->
+                                        <!--<div class="social-body">-->
+                                            <!--<p>-->
+                                                <!--Many desktop publishing packages and web page editors now use Lorem Ipsum as their-->
+                                                <!--default model text, and a search for 'lorem ipsum' will uncover many web sites still-->
+                                                <!--default model text, and a search for 'lorem ipsum' will uncover many web sites still-->
+                                                <!--in their infancy. Packages and web page editors now use Lorem Ipsum as their-->
+                                                <!--default model text.-->
+                                            <!--</p>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                    <!--<div class="social-feed-box">-->
+                                        <!--<div class="social-avatar">-->
+                                            <!--<a href="" class="pull-left">-->
+                                                <!--<img alt="image" src="img/a3.jpg">-->
+                                            <!--</a>-->
+                                            <!--<div class="media-body">-->
+                                                <!--<a href="#">-->
+                                                    <!--Alice Mediater-->
+                                                <!--</a>-->
+                                                <!--<small class="text-muted">Today 4:21 pm - 12.06.2014</small>-->
+                                            <!--</div>-->
+                                        <!--</div>-->
+                                        <!--<div class="social-body">-->
+                                            <!--<p>-->
+                                                <!--Many desktop publishing packages and web page editors now use Lorem Ipsum as their-->
+                                                <!--default model text, and a search for 'lorem ipsum' will uncover many web sites still-->
+                                                <!--in their infancy. Packages and web page editors now use Lorem Ipsum as their-->
+                                                <!--default model text.-->
+                                            <!--</p>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                    <!--<div class="social-feed-box">-->
+                                        <!--<div class="social-avatar">-->
+                                            <!--<a href="" class="pull-left">-->
+                                                <!--<img alt="image" src="img/a5.jpg">-->
+                                            <!--</a>-->
+                                            <!--<div class="media-body">-->
+                                                <!--<a href="#">-->
+                                                    <!--Monica Flex-->
+                                                <!--</a>-->
+                                                <!--<small class="text-muted">Today 4:21 pm - 12.06.2014</small>-->
+                                            <!--</div>-->
+                                        <!--</div>-->
+                                        <!--<div class="social-body">-->
+                                            <!--<p>-->
+                                                <!--Many desktop publishing packages and web page editors now use Lorem Ipsum as their-->
+                                                <!--default model text, and a search for 'lorem ipsum' will uncover many web sites still-->
+                                                <!--in their infancy. Packages and web page editors now use Lorem Ipsum as their-->
+                                                <!--default model text.-->
+                                            <!--</p>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
 
-                <!-- Social Links -->
-                <div class="col-md-4">
-                    <ul class="footer-socials list-inline">
-                        <li>
-                            <a href="https://www.facebook.com/btckan" target="_blank" class="tooltips"
-                               data-toggle="tooltip" data-placement="top" title="" data-original-title="Facebook">
-                                <i class="fa fa-facebook"></i>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://twitter.com/BitKanOfficial" target="_blank" class="tooltips"
-                               data-toggle="tooltip" data-placement="top" title="" data-original-title="Twitter">
-                                <i class="fa fa-twitter"></i>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="http://weibo.com/btcwatch" target="_blank" class="tooltips" data-toggle="tooltip"
-                               data-placement="top" title="" data-original-title="微博">
-                                <i class="fa fa-weibo"></i>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                <!-- End Social Links -->
-            </div>
-        </div>
-    </div>
-    <!--/copyright-->
-</div>
-<!-- End Footer -->
 
-<!-- JavaScript -->
-<script layout:fragment="scripts">
-</script>
-<!-- End JavaScript -->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</div>-->
 </body>
 </html>
+

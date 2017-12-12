@@ -3,12 +3,13 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.wuspace.mapper.BlogMapper">
-    <resultMap id="blogMap" type="blog">
+    <resultMap id="blogMap" type="com.wuspace.domain.Blog">
         <id column="id" property="id" javaType="Long"></id>
-        <result column="title" property="title" javaType="String"></result>
-        <association column="user_id" property="user" javaType="User">
-            <result column="id" property="id" javaType="Long"></result>
-            <result column="nickname" property="nickname" javaType="String"></result>
+        <result column="title" property="title"></result>
+        <result column="content" property="content"></result>
+        <association property="user" javaType="com.wuspace.domain.User">
+            <id column="user_id" property="id" javaType="Long"></id>
+            <result column="nickname" property="nickname"></result>
         </association>
     </resultMap>
 

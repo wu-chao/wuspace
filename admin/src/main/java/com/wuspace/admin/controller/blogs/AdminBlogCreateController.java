@@ -45,6 +45,6 @@ public class AdminBlogCreateController {
 
         blogRepository.save(blog);
 
-        return "redirect:/admin/blogs/index";
+        return "redirect:/admin/blog/index";
     }
 }

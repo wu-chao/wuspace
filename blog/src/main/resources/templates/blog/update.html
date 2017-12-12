@@ -43,7 +43,7 @@
 				<li th:if="${session.loginUser != null}"><a class="table" th:href="${#mvc.url('UC#careUsers').arg(3, session.loginUser.id).build()}">关注的人</a></li>
 				<li th:if="${session.loginUser != null}"><a class="table" th:href="${#mvc.url('UC#collects').arg(3, session.loginUser.id).build()}">我的收藏</a></li>
 				<li th:if="${session.loginUser != null}"><a class="table" th:href="${#mvc.url('UC#blogs').arg(3, session.loginUser.id).build()}">我的发帖</a></li>
-				<li><a class="table" th:href="@{/blogs/index}">首页</a></li>
+				<li><a class="table" th:href="@{/blog/index}">首页</a></li>
 			</ul>
 		</div>
 	</div>

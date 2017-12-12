@@ -29,7 +29,7 @@ public class AdminBlogIndexController {
 
         model.addAttribute("blogs", blogs);
 
-        return "admin/blogs/index";
+        return "admin/blog/index";
     }
 
     @RequestMapping("/blogs/{blogId}")

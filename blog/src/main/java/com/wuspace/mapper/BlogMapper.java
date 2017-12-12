@@ -2,22 +2,37 @@ package com.wuspace.mapper;
 
 import com.wuspace.domain.Blog;
 import org.apache.ibatis.annotations.*;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
 @Mapper
 public interface BlogMapper {
+    //.offset(pageable.getOffset())
+    //                .limit(pageable.getPageSize())
+//                .orderBy(qBlog.createdDate.desc())
+    @Select("select * from blogs as b order by b.created_date desc")
+    @Results({
+            @Result(id = true, property = "id", column = "id"),
+            @Result(property = "user", column = "user_id",
+                    one = @One(select = "com.wuspace.mapper.UserMapper.findUserById"))
+    })
+    Page<Blog> listBlogPageByOrderByCreatedAtDesc();
 
     @Select("select * from blogs as b order by b.created_date desc")
     @Results({
             @Result(id = true, property = "id", column = "id"),
-            @Result(property = "title", column = "title"),
             @Result(property = "user", column = "user_id",
                     one = @One(select = "com.wuspace.mapper.UserMapper.findUserById"))
     })
-    List<Blog> findAllByOrderByCreatedAtDesc();
+    List<Blog> findAllWithUserByOrderByCreatedAtDesc();
 
-    @Select("select * from blogs as b where b.id = #{id}")
-    @ResultMap(value = "com.wuspace.mapper.BlogMapper.blogMap")
+    @Select("select b.id as id, " +
+            "b.title as title, " +
+            "b.content as content, " +
+            "u.id as user_id, " +
+            "u.nickname as nickname " +
+            "from blogs as b, users as u where b.id = #{id} and u.id = b.user_id ")
+    @ResultMap("com.wuspace.mapper.BlogMapper.blogMap")
     Blog findBlogWithUserById(Long id);
 }

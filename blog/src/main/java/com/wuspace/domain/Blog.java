@@ -60,4 +60,10 @@ public class Blog extends AbstractAuditingEntity implements Serializable {
 
     private Long commentTimes = 0L;
 
+    public Blog() {}
+
+    public Blog(Long id) {
+        this.id = id;
+    }
+
 }
