@@ -13,10 +13,10 @@
     <div class="container" style="margin: 100px auto 0px;">
         <!-- Main -->
         <div layout:fragment="content" class="main">
-            <div class="card-detail">
-                <div class="content">
+            <div class="blog-v3">
+                <div class="blog-v3-in">
                     <h3 th:utext="${blog.title}"></h3>
-                    <div class="article-info">
+                    <div class="blog-info">
                         <i><img class="mini-avatar inline" src="/images/avatars/avatar_1.jpg"></i>&nbsp;
                         <a href="/" th:utext="${blog?.user.nickname}"></a>
 
@@ -27,11 +27,13 @@
 
                         &nbsp;&nbsp;评论：<span>0</span>
                     </div>
-                    <div class="article-content" th:utext="${blog.content}"></div>
+                    <div th:utext="${blog.content}"></div>
                 </div>
             </div>
 
-            <hr><h2 class="margin-bottom-20">评论</h2>
+            <hr>
+            <h2 class="margin-bottom-20">评论</h2>
+            <!-- Comments -->
             <div class="blog-comments-wrapper">
                 <!-- Comments -->
                 <div class="row blog-comments margin-bottom-30">
@@ -43,7 +45,8 @@
                             <h4>
                                 <strong>加尔007(6271701)</strong>
                                 <span>
-                                        2017-12-12 17:13:12 | ￥112924.08/BTC | <a href="javascript:;" onclick="showReply('81327', '回复')">回复</a>
+                                        2017-12-12 17:13:12 | ￥112924.08/BTC | <a href="javascript:;"
+                                                                                  onclick="showReply('81327', '回复')">回复</a>
                                                                             </span>
                             </h4>
                             <p style="color:#999">把比特币全送去日本，用比特币玩他们女人，买他们别墅，美滋滋</p>
@@ -63,7 +66,8 @@
                                 <strong>加尔007(6271701)</strong>
                                 回复&nbsp;<strong>加尔007(6271701)</strong>
                                 <span>
-                                            2017-12-12 17:13:49 | ￥112924.08/BTC | <a href="javascript:;" onclick="showReply('81328', '回复')">回复</a>
+                                            2017-12-12 17:13:49 | ￥112924.08/BTC | <a href="javascript:;"
+                                                                                      onclick="showReply('81328', '回复')">回复</a>
                                                                                     </span>
                             </h4>
                             <p style="color:#999">不过有美国爹在，棒子不敢禁</p>
@@ -75,14 +79,17 @@
                 <!-- Comments -->
                 <div class="row blog-comments margin-bottom-30">
                     <div class="col-sm-2 sm-margin-bottom-40">
-                        <img class="rounded-x" src="https://m.bitkan.com/public/uploads/2017/06/02/avatar_5832618_medium_150133_0858656274.png" alt="">
+                        <img class="rounded-x"
+                             src="https://m.bitkan.com/public/uploads/2017/06/02/avatar_5832618_medium_150133_0858656274.png"
+                             alt="">
                     </div>
                     <div class="col-sm-10">
                         <div class="comments-itself" id="comment-81331">
                             <h4>
                                 <strong>chenjian(5832618)</strong>
                                 <span>
-                                        2017-12-12 17:27:55 | ￥113340.90/BTC | <a href="javascript:;" onclick="showReply('81331', '回复')">回复</a>
+                                        2017-12-12 17:27:55 | ￥113340.90/BTC | <a href="javascript:;"
+                                                                                  onclick="showReply('81331', '回复')">回复</a>
                                                                             </span>
                             </h4>
                             <p style="color:#999">发现比特比价格规律：禁-跌-反弹－创新高-再禁&hellip;&hellip;，然后再来一圈。</p>
@@ -101,7 +108,8 @@
                             <h4>
                                 <strong>wds(5840409)</strong>
                                 <span>
-                                        2017-12-12 17:33:39 | ￥112852.21/BTC | <a href="javascript:;" onclick="showReply('81333', '回复')">回复</a>
+                                        2017-12-12 17:33:39 | ￥112852.21/BTC | <a href="javascript:;"
+                                                                                  onclick="showReply('81333', '回复')">回复</a>
                                                                             </span>
                             </h4>
                             <p style="color:#999">有人要做空了！小心！嘘！</p>
@@ -120,7 +128,8 @@
                             <h4>
                                 <strong>大书(6307868)</strong>
                                 <span>
-                                        2017-12-12 18:14:33 | ￥112293.09/BTC | <a href="javascript:;" onclick="showReply('81341', '回复')">回复</a>
+                                        2017-12-12 18:14:33 | ￥112293.09/BTC | <a href="javascript:;"
+                                                                                  onclick="showReply('81341', '回复')">回复</a>
                                                                             </span>
                             </h4>
                             <p style="color:#999">能用禁止的办法打压比特币的话，比特币早已经死了。</p>
@@ -139,7 +148,8 @@
                             <h4>
                                 <strong>ayseek(6269174)</strong>
                                 <span>
-                                        2017-12-12 18:51:24 | ￥112026.64/BTC | <a href="javascript:;" onclick="showReply('81351', '回复')">回复</a>
+                                        2017-12-12 18:51:24 | ￥112026.64/BTC | <a href="javascript:;"
+                                                                                  onclick="showReply('81351', '回复')">回复</a>
                                                                             </span>
                             </h4>
                             <p style="color:#999">大利好。</p>
@@ -155,13 +165,14 @@
                 </div>
                 <form id="sky-form3" class="comment-style" role="form" method="post" accept-charset="utf-8">
                     <div class="sky-space-30 margin-bottom-15">
-                        <input type="hidden" name="comment_id" value="0" />
-                        <textarea class="form-control" rows="4" name="comment" placeholder="在此输入评论内容" ></textarea>
+                        <input type="hidden" name="comment_id" value="0"/>
+                        <textarea class="form-control" rows="4" name="comment" placeholder="在此输入评论内容"></textarea>
                     </div>
                     <button type="submit" name="submit" class="btn-u" value="提交">提交</button>
                 </form>
                 <!-- End Form -->
             </div>
+            <!-- End Comments -->
         </div>
         <!-- End Main -->
 
@@ -401,7 +412,7 @@
     </div>
     <!-- End Wrapper Container -->
 </div>
-<div >
+<div>
     <div id="blogPageWrapper" class="container clearfix" style="min-height: 144px;">
 
 
@@ -417,6 +428,28 @@
             </div>
         </div>
     </div>
+</div>
+
+<div layout:fragment="script">
+    <script type="text/javascript">
+        $(function () {
+            function showReply(comment_id, reply) {
+                var html = '<div class="row" id="reply">';
+                html += '<div class="col-md-12">';
+                html += '<form role="form" method="post" accept-charset="utf-8">';
+                html += '<div class="margin-bottom-15">';
+                html += '<input type="hidden" name="comment_id" value="' + comment_id + '" />';
+                html += '<textarea class="form-control" rows="4" name="comment" id="dynamic-textarea"></textarea>';
+                html += '</div>';
+                html += '<input type="submit" name="submit" class="btn btn-primary pull-right" value="' + reply + '"/>';
+                html += '</form>';
+                html += '</div></div>';
+                $("#reply").remove();
+                $("#comment-" + comment_id).append(html);
+                $("#dynamic-textarea").focus();
+            }
+        });
+    </script>
 </div>
 </body>
 </html>

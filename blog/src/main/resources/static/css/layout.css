@@ -2,12 +2,6 @@
 
 body {
     background: url('../images/body_bg.png') repeat #161616;
-    /*color: #fff;*/
-}
-
-body.dark {
-    color: #999;
-    background-color: #252525;
 }
 
 a {
@@ -228,8 +222,6 @@ body.dark .input-group-addon {
     top: 0;
     z-index: 2;
     padding: 26px 0 10px 0;
-    background: rgba(255, 255, 255, 0.5);
-    color: #00a9a9;
 }
 
 .navbar-inner {
@@ -358,8 +350,6 @@ a.brand:hover {
 .wrapper {
     position: relative;
     margin: 0 auto;
-    /*width: 90%;*/
-    background-color: #252525;
 }
 
 .roof {
@@ -3655,6 +3645,11 @@ body.dash-home .admin-content {
 @media (max-width: 979px) {
     body {
         padding-top: 0;
+    }
+
+    .navbar {
+        box-shadow: 0 0 3px #000;
+        background: rgba(0, 0, 0, 0.9);
     }
 
     .navbar-fixed-top, .navbar-fixed-bottom {
