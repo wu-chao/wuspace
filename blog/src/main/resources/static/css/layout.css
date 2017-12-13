@@ -200,12 +200,22 @@ tr:first-child th:last-child {
     text-align: center;
 }
 
-.text-orange {
-    color: #dc6e23;
+/*Form Control
+------------------------------------*/
+body.dark .form-control {
+    color: #999;
+    border-color: #303030;
+    background: #202020;
 }
 
-.margin-bottom-30 {
-    margin-bottom: 30px !important;
+body.dark .form-control:focus {
+    box-shadow: none;
+    border-color: #555;
+}
+
+body.dark .input-group-addon {
+    border-color: #303030;
+    background: #202020;
 }
 
 /** Navbar **/
@@ -657,7 +667,7 @@ a.brand:hover {
 /** Main Content **/
 .content {
     position: relative;
-    /*padding: 25px 60px;*/
+    padding: 10px auto;
     min-height: 500px;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 16px;

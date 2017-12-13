@@ -831,23 +831,7 @@ body.dark code {
     background: #333;
 }
 
-/*Form Control
-------------------------------------*/
-body.dark .form-control {
-    color: #999;
-    border-color: #303030;
-    background: #202020;
-}
 
-body.dark .form-control:focus {
-    box-shadow: none;
-    border-color: #555;
-}
-
-body.dark .input-group-addon {
-    border-color: #303030;
-    background: #202020;
-}
 
 /*Close
 ------------------------------------*/

@@ -106,6 +106,10 @@ body.dark .blog-author {
 
 /*Blog Comments
 ------------------------------------*/
+body.dark .blog-comments-wrapper {
+    margin: 20px auto;
+}
+
 body.dark .blog-comments .comments-itself {
     background: #333;
 }
