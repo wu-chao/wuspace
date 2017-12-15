@@ -2,9 +2,13 @@ package com.wuspace.controller.blogs;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.querydsl.core.types.Predicate;
 import com.wuspace.domain.Blog;
 import com.wuspace.mapper.BlogMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -48,15 +52,15 @@ public class BlogIndexController {
 //        return "blog/index";
 //    }
 
-//    @GetMapping(value = {"", "/", "home", "/index", "/index.html"})
-//    public String index(@PageableDefault Pageable pageable, Model model) {
-//        QBlog qBlog = QBlog.blog;
-//        Predicate predicate = qBlog.id.gt(2);
-//        predicate = qBlog.title.containsIgnoreCase("spring").and(predicate);
-//        Page<Blog> blogs = blogRepository.findAll(predicate, pageable);
-//        model.addAttribute("articles", blogs);
-//        return "blog/index";
-//    }
+    @GetMapping(value = {"/index.html"})
+    public String index(@PageableDefault Pageable pageable, Model model) {
+        QBlog qBlog = QBlog.blog;
+        Predicate predicate = qBlog.id.gt(2);
+        predicate = qBlog.title.containsIgnoreCase("spring").and(predicate);
+        Page<Blog> blogs = blogRepository.findAll(predicate, pageable);
+        model.addAttribute("articles", blogs);
+        return "blog/index";
+    }
 
 //    @GetMapping(value = {"", "/", "home", "/index", "/index.html"})
 //    public String index(@PageableDefault Pageable pageable, Model model) {
