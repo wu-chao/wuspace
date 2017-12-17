@@ -9,9 +9,11 @@ import org.springframework.boot.autoconfigure.liquibase.LiquibaseAutoConfigurati
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
 @EnableAutoConfiguration(exclude = LiquibaseAutoConfiguration.class)
+@EnableScheduling
 //@EnableDiscoveryClient
 public class BlogApplication {
     public static void main(String args[]) {

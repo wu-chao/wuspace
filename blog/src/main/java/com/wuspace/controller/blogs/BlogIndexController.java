@@ -4,7 +4,9 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.querydsl.core.types.Predicate;
 import com.wuspace.domain.Blog;
+import com.wuspace.domain.QBlog;
 import com.wuspace.mapper.BlogMapper;
+import com.wuspace.repository.BlogRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,6 +24,9 @@ public class BlogIndexController {
 
     @Autowired
     private BlogMapper blogMapper;
+
+    @Autowired
+    private BlogRepository blogRepository;
 
     @GetMapping(value = {"", "/", "/blogs"})
     public String index(@RequestParam(defaultValue = "0") int pageNum,

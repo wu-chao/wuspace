@@ -84,6 +84,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sameOrigin()
                 .and()
                 .authorizeRequests()
+                .antMatchers("/websocket-server").permitAll()
+                .antMatchers("/app/**").permitAll()
+                .antMatchers("/topic/**").permitAll()
                 .antMatchers("/**").permitAll()
                 .anyRequest().authenticated();
     }

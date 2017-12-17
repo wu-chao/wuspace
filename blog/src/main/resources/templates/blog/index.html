@@ -6,6 +6,8 @@
       layout:decorator="layouts/main">
 <head>
     <script src="/js/prettify.js" async="true"></script>
+    <script src="/bower_components/sockjs/sockjs.js"></script>
+    <script src="/bower_components/stomp-websocket/lib/stomp.js"></script>
 </head>
 
 <body style="background-position: 0px 0px;">
@@ -321,6 +323,50 @@
         var limit = 3;
         var random = parseInt(Math.random() * limit + 1);
         $('.about-us').css('background', 'url(/images/about_us_bg_' + random + '.jpg) repeat fixed').css('background-size', 'cover');
+
+//        var socket;
+//        if (typeof (WebSocket) == undefined) {
+//            alert("该浏览器不支持 WebSocket !");
+//            return;
+//        }
+//
+//        socket = new WebSocket("ws:localhost:8000/notification");
+//        socket.send("socket message come from client");
+//
+//        socket.onopen = function () {
+//            alert("Socket 已打开");
+//        };
+//
+//        socket.onmessage = function (msg) {
+//            alert("Socket 接收了消息 : " + msg.data);
+//        }
+        var stompClient = null;
+        var socket;
+
+        if (typeof(WebSocket) == undefined) {
+            alert("该浏览器不支持 WebSocket。");
+            return;
+        }
+
+        socket = new SockJS('http://localhost:8008/websocket-server');
+        stompClient = Stomp.over(socket);
+        stompClient.connect({}, function (frame) {
+            console.log("Connected: " + frame);
+
+            stompClient.subscribe("/topic/greet", function (msg) {
+                console.log(JSON.parse(msg.body).content);
+                console.log(JSON.parse(msg.body).user.id + " + " + JSON.parse(msg.body).user.username);
+            });
+
+            stompClient.subscribe("/notifications", function (msg) {
+                console.log(JSON.parse(msg.body).content);
+            });
+
+            stompClient.send("/app/hello", {}, JSON.stringify({'content': 'xxxxxxxxxx'}));
+
+        });
+
+
     });
 </script>
 <!-- End JavaScript -->

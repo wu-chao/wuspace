@@ -64,6 +64,16 @@ public class User extends AbstractAuditingEntity implements Serializable {
     public User() {
     }
 
+    public User id(Long id) {
+        this.id = id;
+        return this;
+    }
+
+    public User username(String username) {
+        this.username = username;
+        return this;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
