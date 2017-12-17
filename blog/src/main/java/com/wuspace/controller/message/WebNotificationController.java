@@ -1,13 +1,18 @@
 package com.wuspace.controller.message;
 
+import com.wuspace.application.rabbitmq.Receiver;
+import com.wuspace.config.RabbitMQConfig;
 import com.wuspace.domain.User;
 import org.apache.commons.lang3.RandomUtils;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
+
+import java.util.concurrent.TimeUnit;
 
 @Controller
 public class WebNotificationController {
@@ -24,11 +29,23 @@ public class WebNotificationController {
         return message;
     }
 
-//    @Scheduled(cron = "0/5 * * * * ?")
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
+
+    @Scheduled(cron = "0/5 * * * * ?")
     public void notifications() {
         String payload = "messages " + RandomUtils.nextLong();
         System.out.println(payload);
         simpMessagingTemplate.convertAndSend("/notifications", new MessageDto().content(payload));
+
+
+        rabbitTemplate.convertAndSend(RabbitMQConfig.QUEUE_NAME, "Hello from RabbitMQ!");
+        try {
+            new Receiver().getLatch().await(10000, TimeUnit.MILLISECONDS);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
     }
 
 }
