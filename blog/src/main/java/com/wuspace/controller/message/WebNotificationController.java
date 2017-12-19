@@ -36,9 +36,9 @@ public class WebNotificationController {
     public void notifications() {
         String payload = "messages " + RandomUtils.nextLong();
         System.out.println(payload);
+        // websocket
         simpMessagingTemplate.convertAndSend("/notifications", new MessageDto().content(payload));
-
-
+        // rabbitmq
         rabbitTemplate.convertAndSend(RabbitMQConfig.QUEUE_NAME, "Hello from RabbitMQ!");
         try {
             new Receiver().getLatch().await(10000, TimeUnit.MILLISECONDS);

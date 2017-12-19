@@ -12,8 +12,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * 参考：springboot+rabbitmq整合示例程（ https://www.cnblogs.com/boshen-hzb/p/6841982.html）
- *
+ * 参考：springboot+rabbitmq整合示例程（https://www.cnblogs.com/boshen-hzb/p/6841982.html）
  */
 
 @Configuration
@@ -45,6 +44,12 @@ public class RabbitMQConfig {
         return container;
     }
 
+    /**
+     * 注册消息监听器
+     *
+     * @param receiver
+     * @return
+     */
     @Bean
     MessageListenerAdapter listenerAdapter(Receiver receiver) {
         return new MessageListenerAdapter(receiver, "receiveMessage");

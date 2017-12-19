@@ -7,7 +7,7 @@
 <head>
     <script src="/js/prettify.js" async="true"></script>
     <script src="/bower_components/sockjs/sockjs.js"></script>
-    <script src="/bower_components/stomp-websocket/lib/stomp.js"></script>
+    <script src="/bower_components/stomp-websocket/lib/stomp.min.js"></script>
 </head>
 
 <body style="background-position: 0px 0px;">
@@ -320,7 +320,7 @@
 <!-- JavaScript -->
 <script layout:fragment="scripts">
     $(function () {
-        var limit = 3;
+        var limit = 6;
         var random = parseInt(Math.random() * limit + 1);
         $('.about-us').css('background', 'url(/images/about_us_bg_' + random + '.jpg) repeat fixed').css('background-size', 'cover');
 
@@ -340,15 +340,15 @@
 //        socket.onmessage = function (msg) {
 //            alert("Socket 接收了消息 : " + msg.data);
 //        }
-        var stompClient = null;
-        var socket;
+
 
         if (typeof(WebSocket) == undefined) {
             alert("该浏览器不支持 WebSocket。");
             return;
         }
 
-        socket = new SockJS('http://localhost:8008/websocket-server');
+        var stompClient = null;
+        var socket = new SockJS('http://localhost:8008/ws-server');
         stompClient = Stomp.over(socket);
         stompClient.connect({}, function (frame) {
             console.log("Connected: " + frame);
