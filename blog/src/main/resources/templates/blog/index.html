@@ -341,15 +341,14 @@
 //            alert("Socket 接收了消息 : " + msg.data);
 //        }
 
-
         if (typeof(WebSocket) == undefined) {
             alert("该浏览器不支持 WebSocket。");
             return;
         }
 
         var stompClient = null;
-        var socket = new SockJS('http://localhost:8008/ws-server');
-        stompClient = Stomp.over(socket);
+        var webSocket = new SockJS('http://localhost:8008/ws-server');
+        stompClient = Stomp.over(webSocket);
         stompClient.connect({}, function (frame) {
             console.log("Connected: " + frame);
 
@@ -363,9 +362,7 @@
             });
 
             stompClient.send("/app/hello", {}, JSON.stringify({'content': 'xxxxxxxxxx'}));
-
         });
-
 
     });
 </script>
