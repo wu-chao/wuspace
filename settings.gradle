@@ -4,3 +4,5 @@ include 'commons'
 include 'eureka-server'
 include 'blog'
 include 'admin'
+include 'java-demo'
+
