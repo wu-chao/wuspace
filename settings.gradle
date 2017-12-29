@@ -5,4 +5,5 @@ include 'eureka-server'
 include 'blog'
 include 'admin'
 include 'java-demo'
+include 'netty-demo'
 
