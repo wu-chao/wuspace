@@ -222,6 +222,7 @@ body.dark .input-group-addon {
     top: 0;
     z-index: 2;
     padding: 26px 0 10px 0;
+    border-radius: 0px;
 }
 
 .navbar-inner {
@@ -761,7 +762,7 @@ a.brand:hover {
 /** Sidebar **/
 
 .sidebar {
-    margin-top: 50px;
+    margin-top: 60px;
     float: right;
     vertical-align: top;
     width: 30%;

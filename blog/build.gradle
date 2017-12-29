@@ -127,7 +127,7 @@ dependencies {
     compile "org.springframework.boot:spring-boot-starter-web"
     compile "org.springframework.boot:spring-boot-starter-tomcat"
     compile "org.springframework.boot:spring-boot-starter-websocket"
-    compile "org.springframework.boot:spring-boot-starter-amqp"
+//    compile "org.springframework.boot:spring-boot-starter-amqp"
 
     // Spring Cloud
     //compile 'org.springframework.cloud:spring-cloud-starter-eureka'
