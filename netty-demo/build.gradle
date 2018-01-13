@@ -1,13 +1,30 @@
-version 'unspecified'
+group = 'wuspace'
+version = '1.0.0'
+
+repositories {
+    repositories {
+        mavenLocal()
+        maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
+        jcenter()
+        maven { url 'http://repo.spring.io/milestone' }
+        maven { url 'http://repo.spring.io/snapshot' }
+        maven { url 'https://repository.jboss.org/nexus/content/repositories/releases' }
+        maven { url 'https://oss.sonatype.org/content/repositories/releases' }
+        maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
+        maven { url 'http://repo.maven.apache.org/maven2' }
+    }
+}
 
 apply plugin: 'java'
+apply plugin: 'idea'
 
 sourceCompatibility = 1.8
 
-repositories {
-    mavenCentral()
+ext {
+    netty_version = '4.1.19.Final'
 }
 
 dependencies {
+    compile "io.netty:netty-all:${netty_version}"
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
