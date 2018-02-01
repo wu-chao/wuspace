@@ -1,14 +1,13 @@
 package com.wuspace.controller;
 
-import com.wuspace.domain.User;
 import com.wuspace.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
-
-import java.util.Optional;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.servlet.ModelAndView;
 
 @ControllerAdvice
 public class BaseController {
@@ -40,5 +39,16 @@ public class BaseController {
     @ModelAttribute("fileAccessPrefix")
     public String fileAccessPrefix() {
         return "/";
+    }
+
+    @ExceptionHandler(RuntimeException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ModelAndView handleException(RuntimeException e) {
+        System.out.println("exception message : " + e.getClass() + " : " + e.getMessage());
+//        return "error/404";
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("error/404");
+        return modelAndView;
     }
 }

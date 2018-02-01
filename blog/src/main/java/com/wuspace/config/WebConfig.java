@@ -31,7 +31,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new FormTokenInterceptor())
                 .addPathPatterns("/**")
-                .excludePathPatterns("/login/**", "/logout/**", "/loginPage/**", "/error/**");
+                .excludePathPatterns("/login/**", "/logout/**", "/loginPage/**", "/templates/error/**");
         super.addInterceptors(registry);
     }
 }
