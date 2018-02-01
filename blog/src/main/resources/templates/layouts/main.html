@@ -53,6 +53,12 @@
                 <li><a href="/site/tags.html">标签</a>
                 </li>
             </ul>
+            <div class="pull-right">
+                <form id="logout" th:action="@{/logout}" method="post"></form>
+                <a href="javascript:{}" onclick="document.forms['logout'].submit()">
+                    <span class="p-l-sm">退出</span>
+                </a>
+            </div>
         </div>
     </div>
 </div>

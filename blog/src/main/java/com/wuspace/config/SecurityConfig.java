@@ -69,7 +69,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .formLogin()
-                .loginPage("/login")
                 .loginProcessingUrl("/authentication")
                 .usernameParameter("j_username")
                 .passwordParameter("j_password")
@@ -87,6 +86,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/websocket-server").permitAll()
                 .antMatchers("/app/**").permitAll()
                 .antMatchers("/topic/**").permitAll()
+                .antMatchers("/blog/**").authenticated()
                 .antMatchers("/**").permitAll()
                 .anyRequest().authenticated();
     }

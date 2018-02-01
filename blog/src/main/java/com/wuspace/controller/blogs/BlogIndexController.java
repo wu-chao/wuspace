@@ -2,6 +2,7 @@ package com.wuspace.controller.blogs;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.sun.deploy.net.HttpRequest;
 import com.wuspace.domain.Blog;
 import com.wuspace.mapper.BlogMapper;
 import com.wuspace.repository.BlogRepository;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
@@ -25,7 +27,7 @@ public class BlogIndexController {
 
     @GetMapping(value = {"", "/", "/blogs"})
     public String index(@RequestParam(defaultValue = "0") int pageNum,
-                        @RequestParam(defaultValue = "10") int pageSize, Model model) {
+                        @RequestParam(defaultValue = "10") int pageSize, Model model, HttpServletRequest request) {
         PageInfo blogPageInfo = listWithMarshalling(pageNum, pageSize);
         model.addAttribute("blogPageInfo", blogPageInfo);
         return "blog/index";
@@ -38,6 +40,10 @@ public class BlogIndexController {
         PageHelper.startPage(pageNum, pageSize);
         List<Blog> blogList = blogMapper.findAllWithUserByOrderByCreatedAtDesc();
         return new PageInfo(blogList);
+    }
+
+    private void loadBlogs(Model model){
+
     }
 
 
