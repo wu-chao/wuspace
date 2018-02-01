@@ -62,7 +62,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/swagger-ui/index.html")
                 .antMatchers("/test/**")
                 .antMatchers("/h2-console/**")
-                .antMatchers("/tmp/**");
+                .antMatchers("/tmp/**")
+                .antMatchers("/static/**");
     }
 
     @Override
@@ -83,6 +84,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sameOrigin()
                 .and()
                 .authorizeRequests()
+                .antMatchers("/blog/**").authenticated()
                 .antMatchers("/websocket-server").permitAll()
                 .antMatchers("/app/**").permitAll()
                 .antMatchers("/topic/**").permitAll()

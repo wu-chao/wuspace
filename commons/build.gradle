@@ -48,6 +48,8 @@ ext {
 }
 
 dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+
     // 正则表达式
     compile "org.apache.oro:com.springsource.org.apache.oro:2.0.8"
 
