@@ -3,14 +3,6 @@
 ######################
 
 ######################
-# Node
-######################
-/node/
-node_tmp/
-node_modules/
-npm-debug.log.*
-
-######################
 # Intellij
 ######################
 .idea/
@@ -31,6 +23,14 @@ npm-debug.log.*
 ######################
 .gradle/
 /build/
+
+######################
+# Node
+######################
+/node/
+node_tmp/
+node_modules/
+npm-debug.log.*
 
 ######################
 # Package Files

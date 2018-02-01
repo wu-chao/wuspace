@@ -45,6 +45,7 @@ esac
 # Attempt to set APP_HOME
 # Resolve links: $0 may be a link
 PRG="$0"
+
 # Need this for relative symlinks.
 while [ -h "$PRG" ] ; do
     ls=`ls -ld "$PRG"`
@@ -55,6 +56,7 @@ while [ -h "$PRG" ] ; do
         PRG=`dirname "$PRG"`"/$link"
     fi
 done
+
 SAVED="`pwd`"
 cd "`dirname \"$PRG\"`/" >&-
 APP_HOME="`pwd -P`"
@@ -118,11 +120,14 @@ if $cygwin ; then
         ROOTDIRS="$ROOTDIRS$SEP$dir"
         SEP="|"
     done
+
     OURCYGPATTERN="(^($ROOTDIRS))"
+
     # Add a user-defined pattern to the cygpath arguments
     if [ "$GRADLE_CYGPATTERN" != "" ] ; then
         OURCYGPATTERN="$OURCYGPATTERN|($GRADLE_CYGPATTERN)"
     fi
+
     # Now convert the arguments - kludge to limit ourselves to /bin/sh
     i=0
     for arg in "$@" ; do
@@ -136,6 +141,7 @@ if $cygwin ; then
         fi
         i=$((i+1))
     done
+
     case $i in
         (0) set -- ;;
         (1) set -- "$args0" ;;
