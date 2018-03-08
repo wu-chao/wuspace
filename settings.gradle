@@ -1,9 +1,10 @@
 rootProject.name = 'web-project'
 
+include 'admin'
+include 'blog'
 include 'commons'
 include 'eureka-server'
-include 'blog'
-include 'admin'
 include 'java-demo'
+include 'jsp-demo'
 include 'netty-demo'
 
