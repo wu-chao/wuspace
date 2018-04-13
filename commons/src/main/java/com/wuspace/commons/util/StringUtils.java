@@ -1,8 +1,5 @@
 package com.wuspace.commons.util;
 
-/**
- * Created by wu-chao on 17-8-20.
- */
 public abstract class StringUtils {
 
     public static boolean isEmpty(final CharSequence cs) {

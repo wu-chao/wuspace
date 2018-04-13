@@ -1,6 +1,7 @@
 package com.wuspace;
 
 import com.wuspace.application.impl.PdfServiceImpl;
+import com.wuspace.domain.Blog;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -10,6 +11,8 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
+
+import java.net.URL;
 
 @SpringBootApplication
 @EnableAutoConfiguration(exclude = LiquibaseAutoConfiguration.class)
@@ -35,5 +38,8 @@ public class BlogApplication {
 //        String filePath = "/home/wu-chao/下载/springboot.pdf";
 //        String imageDirection = "/home/wu-chao/下载/pdftoimages/";
 //        PdfServiceImpl.executorServicePdf2Images(imageDirection, filePath);
+
+        new Test().test();
+
     }
 }

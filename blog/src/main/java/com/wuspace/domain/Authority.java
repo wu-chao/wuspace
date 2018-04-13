@@ -47,4 +47,20 @@ public class Authority implements Serializable {
         result = 31 * result + chnName.hashCode();
         return result;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getChnName() {
+        return chnName;
+    }
+
+    public void setChnName(String chnName) {
+        this.chnName = chnName;
+    }
 }

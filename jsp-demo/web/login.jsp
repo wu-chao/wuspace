@@ -1,3 +1,4 @@
+<%@ page import="com.wuspace.commons.Test" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     String name = request.getParameter("name");
