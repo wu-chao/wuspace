@@ -18,5 +18,9 @@ public class Main {
         System.out.println("-------------------------");
 
         System.out.println(SubClass.a);
+
+        String a = new String("aaa");
+        String b = "aaa";
+        System.out.println(a == b);
     }
 }

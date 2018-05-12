@@ -1,5 +1,8 @@
 package com.wuspace.util;
 
+import lombok.Cleanup;
+import org.springframework.http.MediaType;
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
@@ -7,7 +10,7 @@ import java.io.*;
 import java.net.URLEncoder;
 import java.util.UUID;
 
-public class FileUtils {
+public abstract class FileUtils {
 
     /**
      * 上传文件
@@ -51,48 +54,42 @@ public class FileUtils {
      * @param fileName
      * @param response
      */
-    public static void downloadFile(String fileDownloadPath, String fileName, HttpServletResponse response) {
+    public static void download(String fileDownloadPath, String fileName, HttpServletResponse response) {
         try {
             fileName = URLEncoder.encode(fileName, "UTF-8");
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
         String downloadPath = fileDownloadPath + fileName;
-        response.setContentType("application/x-download");
+
+//        response.setContentType("application/x-download");
+        response.setContentType(MediaType.APPLICATION_OCTET_STREAM_VALUE);
         response.setCharacterEncoding("UTF-8");
         response.setHeader("Content-Disposition", "attachment; filename=" + fileName);
 
-        InputStream in = null;
-        OutputStream out = null;
         try {
-            in = new FileInputStream(downloadPath);
-            out = response.getOutputStream();
+            @Cleanup InputStream in = new FileInputStream(downloadPath);
+            @Cleanup OutputStream out = response.getOutputStream();
             byte[] b = new byte[1024];
             int length;
             while ((length = in.read(b)) > 0) {
                 out.write(b, 0, length);
             }
             out.flush();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        } finally {
-            try {
-                if (out != null) {
-                    out.close();
-                }
-                if (in != null) {
-                    in.close();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
     }
 
 
-    public String ext(String fileName) {
+
+    /**
+     * 获取文件拓展名
+     *
+     * @param fileName
+     * @return
+     */
+    public String getExt(String fileName) {
         return fileName.substring(fileName.lastIndexOf(".") + 1);
     }
 }

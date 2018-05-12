@@ -3,7 +3,9 @@ package com.wuspace.util;
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.util.StringUtils;
 
+import javax.imageio.ImageIO;
 import javax.imageio.stream.FileImageOutputStream;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
@@ -86,6 +88,20 @@ public abstract class ImageUtil {
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
             return "";
+        }
+    }
+
+    /**
+     * load image
+     *
+     * @param filePath
+     * @return
+     */
+    public static BufferedImage loadImage(String filePath) {
+        try {
+            return ImageIO.read(new File(filePath));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 }

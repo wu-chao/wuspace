@@ -77,9 +77,6 @@ repositories {
 //}
 
 ext {
-    thymeleaf_version = '3.0.0.RELEASE'
-    thymeleaf_layout_dialect_version = '2.0.3'
-    thymeleaf_spring_data_dialect_version = '3.1.1'
 
     mybatis_generator_version = '1.3.5'
     mybatis_spring_boot_starter_version = '1.3.1'
@@ -89,13 +86,6 @@ ext {
     hibernate_version = '5.2.8.Final'
     hibernate_search_version = '5.7.1.Final'
     hikaricp_version = '2.6.0'
-
-    commons_lang_version = '3.5'
-    commons_logging_version = '1.2'
-    apache_commons_io_version = '2.5'
-    apache_commons_fileupload_version = '1.3.3'
-
-    lombok_version = '1.16.16'
 
     poi_version = '3.9'
     poi_ooxml_version = '3.9'
@@ -111,7 +101,6 @@ ext {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile project(':commons')
 
     // Spring
     compile "org.springframework:spring-context-support"
@@ -120,8 +109,8 @@ dependencies {
     compile "org.springframework.boot:spring-boot-devtools"
     compile "org.springframework.boot:spring-boot-starter-aop"
     compile "org.springframework.boot:spring-boot-starter-test"
-    compile "org.springframework.boot:spring-boot-starter-actuator"
     compile "org.springframework.boot:spring-boot-starter-logging"
+    compile "org.springframework.boot:spring-boot-starter-actuator"
     compile "org.springframework.boot:spring-boot-starter-security"
     compile "org.springframework.boot:spring-boot-starter-data-jpa"
     compile "org.springframework.boot:spring-boot-starter-web"
@@ -175,9 +164,14 @@ dependencies {
 
     // Apache Commons
     compile "org.apache.commons:commons-lang3:${commons_lang_version}"
+    compile("commons-beanutils:commons-beanutils:${commons_beanutils_version}") {
+        exclude(module: 'commons-logging')
+    }
     compile "commons-logging:commons-logging:${commons_logging_version}"
-    compile "commons-io:commons-io:${apache_commons_io_version}"
-    compile "commons-fileupload:commons-fileupload:${apache_commons_fileupload_version}"
+    compile "commons-io:commons-io:${commons_io_version}"
+    compile "commons-fileupload:commons-fileupload:${commons_fileupload_version}"
+    // 正则表达式
+    compile "org.apache.oro:com.springsource.org.apache.oro:2.0.8"
 
     compile "org.projectlombok:lombok:${lombok_version}"
 

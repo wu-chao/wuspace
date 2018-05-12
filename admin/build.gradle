@@ -64,5 +64,4 @@ ext {
 
 dependencies {
     compile project(':blog')
-    compile project(':commons')
 }
