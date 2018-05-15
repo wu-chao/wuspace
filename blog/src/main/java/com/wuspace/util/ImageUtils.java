@@ -11,7 +11,7 @@ import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 
-public abstract class ImageUtil {
+public abstract class ImageUtils {
     /**
      * 将base64编码字符串转换为图片
      *

@@ -7,14 +7,16 @@ public abstract class StringUtils {
     }
 
     public static String convertArrayToString(Object[] ig) {
-        if (ig != null && ig.length > 0) {
-            StringBuilder str = new StringBuilder("");
-            for (int i = 0; i < ig.length; i++) {
-                str.append(String.valueOf(ig[i])).append(",");
-            }
-            return str.substring(0, str.length() - 1);
-        }
-        return "";
+        return org.apache.commons.lang3.StringUtils.join(ig, ',');
+
+//        if (ig != null && ig.length > 0) {
+//            StringBuilder str = new StringBuilder("");
+//            for (int i = 0; i < ig.length; i++) {
+//                str.append(String.valueOf(ig[i])).append(",");
+//            }
+//            return str.substring(0, str.length() - 1);
+//        }
+//        return "";
     }
 
     public static String cleanHTML(String content) {

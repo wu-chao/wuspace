@@ -1,13 +1,12 @@
 package com.wuspace.util;
 
+import com.wuspace.domain.User;
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.ObjectUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
 
-import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -142,6 +141,25 @@ public class ApacheCommonsTests {
          */
 
 
+        ///////////////////////// SerializationUtils /////////////////////////
+        System.out.println("-------------- SerializationUtils --------------");
+
+
+    }
+
+    ///////////////////////// StringUtils /////////////////////////
+    @Test
+    public void testStringUtils() {
+        System.out.println("-------------- StringUtils --------------");
+        Object[] stringUtilsVariables1 = {
+                new User().id(1L).username("ssss").password("123").activated(false),
+                "aaaaaaa",
+                new ArrayList<String>() {{
+                    add("bbb");
+                }}
+        };
+        System.out.println("1: StringUtils.join=" + StringUtils.join(stringUtilsVariables1, ','));
+        // 打印结果：1: StringUtils.join=com.wuspace.domain.User@904fb9ed,aaaaaaa,[bbb]
     }
 
 }

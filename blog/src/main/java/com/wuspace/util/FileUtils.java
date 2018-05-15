@@ -1,6 +1,8 @@
 package com.wuspace.util;
 
 import lombok.Cleanup;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -11,6 +13,8 @@ import java.net.URLEncoder;
 import java.util.UUID;
 
 public abstract class FileUtils {
+
+    private final static Logger logger = LoggerFactory.getLogger(FileUtils.class);
 
     /**
      * 上传文件
@@ -62,7 +66,7 @@ public abstract class FileUtils {
         }
         String downloadPath = fileDownloadPath + fileName;
 
-//        response.setContentType("application/x-download");
+        // response.setContentType("application/x-download");
         response.setContentType(MediaType.APPLICATION_OCTET_STREAM_VALUE);
         response.setCharacterEncoding("UTF-8");
         response.setHeader("Content-Disposition", "attachment; filename=" + fileName);
@@ -81,7 +85,25 @@ public abstract class FileUtils {
         }
     }
 
-
+    /**
+     * 删除单个文件
+     *
+     * @param fileLocation
+     */
+    public static void delete(String fileLocation) {
+        try {
+            File file = ResourceUtils.getFile(fileLocation);
+            if (file.exists() && file.isFile()) {
+                if (file.delete()) {
+                    logger.info("删除文件（" + fileLocation + "）成功");
+                } else {
+                    logger.info("删除文件（" + fileLocation + "）失败");
+                }
+            }
+        } catch (FileNotFoundException e) {
+            logger.warn("文件（" + fileLocation + "）不存在");
+        }
+    }
 
     /**
      * 获取文件拓展名

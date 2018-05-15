@@ -11,7 +11,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 
-public abstract class DateTimeUtil {
+public abstract class DateTimeUtils {
 
     public static ZonedDateTime string2ZonedDateTime(String source, String pattern) {
         return LocalDate.parse(source, DateTimeFormatter.ofPattern(pattern)).atStartOfDay(ZoneId.systemDefault());

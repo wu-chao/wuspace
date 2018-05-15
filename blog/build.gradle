@@ -162,7 +162,7 @@ dependencies {
         exclude(module: 'tools')
     }
 
-    // jackson
+    // Jackson
     compile "com.fasterxml.jackson.datatype:jackson-datatype-json-org:2.8.8"
     compile "com.fasterxml.jackson.datatype:jackson-datatype-hppc:2.8.8"
     compile "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.8.8"
@@ -184,12 +184,12 @@ dependencies {
     // 正则表达式
     compile "org.apache.oro:com.springsource.org.apache.oro:2.0.8"
 
-    compile "org.projectlombok:lombok:${lombok_version}"
-
-    // Office
+    // Apache POI
     compile "org.apache.poi:poi:${apache_poi_version}"
     compile "org.apache.poi:poi-ooxml:${apache_poi_ooxml_version}"
 //    compile "org.apache.poi:poi-ooxml-schemas:${poi_ooxml_schemas_version}"
+
+    compile "org.docx4j:docx4j:${docx4j_version}"
 
     compile "com.itextpdf:itextpdf:${itextpdf_version}"
     compile "com.itextpdf:itext-asian:${itext_asian_version}"
@@ -197,6 +197,8 @@ dependencies {
     // maven { url "http://maven.aliyun.com/nexus/content/groups/public/" } module 会错误
     compile "org.icepdf.os:icepdf-core:${icepdf_core_version}"
     compile "org.icepdf.os:icepdf-viewer:${icepdf_viewer_version}"
+
+    compile "org.projectlombok:lombok:${lombok_version}"
 
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }

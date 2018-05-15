@@ -94,6 +94,11 @@ public class User extends AbstractAuditingEntity implements Serializable {
         return password;
     }
 
+    public User password(String password) {
+        this.password = password;
+        return this;
+    }
+
     public void setPassword(String password) {
         this.password = password;
     }
@@ -140,6 +145,11 @@ public class User extends AbstractAuditingEntity implements Serializable {
 
     public Boolean getActivated() {
         return activated;
+    }
+
+    public User activated(Boolean activated) {
+        this.activated = activated;
+        return this;
     }
 
     public void setActivated(Boolean activated) {
