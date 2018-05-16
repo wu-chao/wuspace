@@ -10,7 +10,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
-public class CollectionTest {
+public class CollectionsTest {
 
     ///////////////////////// list new /////////////////////////
     @Test
