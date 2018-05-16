@@ -75,8 +75,29 @@ public class FileUtilsTests {
          * path 不以'/'开头时默认是从此类所在的包下取资源，以'/'开头则是从ClassPath(Src根目录)根下获取
          * 参考：https://www.cnblogs.com/yadongliang/p/7920053.html
          *
-         *
-         *
          */
+    }
+
+    @Test
+    public void testSeparator() {
+        System.out.println("\n-------------- " + System.getProperty("os.name") + " --------------");
+        System.out.println("pathSeparator:" + File.pathSeparator);
+        System.out.println("pathSeparatorChar:" + File.pathSeparatorChar);
+        System.out.println("separator:" + File.separator);
+        System.out.println("separatorChar:" + File.separatorChar);
+
+        /**
+         * 打印结果：
+         * pathSeparator:;
+         * pathSeparatorChar:;
+         * separator:\
+         * separatorChar:\
+         */
+
+        /**
+         * result:
+         * Char结尾的表示char类型，否则是String类型
+         */
+
     }
 }

@@ -165,6 +165,22 @@ public class User extends AbstractAuditingEntity implements Serializable {
     }
 
     @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", nickname='" + nickname + '\'' +
+                ", email='" + email + '\'' +
+                ", phone='" + phone + '\'' +
+                ", avatarUrl='" + avatarUrl + '\'' +
+                ", description='" + description + '\'' +
+                ", activated=" + activated +
+                ", authorities=" + authorities +
+                '}';
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;

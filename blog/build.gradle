@@ -173,6 +173,8 @@ dependencies {
     compile "com.fasterxml.jackson.module:jackson-module-parameter-names:2.8.8"
     compile "com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.8.8"
 
+    compile "org.hyperic:sigar:${sigar_version}"
+
     // Apache Commons
     compile "org.apache.commons:commons-lang3:${commons_lang_version}"
     compile("commons-beanutils:commons-beanutils:${commons_beanutils_version}") {
@@ -189,7 +191,9 @@ dependencies {
     compile "org.apache.poi:poi-ooxml:${apache_poi_ooxml_version}"
 //    compile "org.apache.poi:poi-ooxml-schemas:${poi_ooxml_schemas_version}"
 
-    compile "org.docx4j:docx4j:${docx4j_version}"
+    compile("org.docx4j:docx4j:${docx4j_version}") {
+        exclude(group: 'org.slf4j')
+    }
 
     compile "com.itextpdf:itextpdf:${itextpdf_version}"
     compile "com.itextpdf:itext-asian:${itext_asian_version}"

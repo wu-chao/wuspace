@@ -1,16 +1,26 @@
 package com.wuspace.util;
 
+import com.wuspace.domain.Authority;
 import com.wuspace.domain.User;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.ObjectUtils;
+import org.apache.commons.lang3.SerializationUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 
-public class ApacheCommonsTests {
+public class ApacheCommonsTests implements Serializable {
+
+    /**
+     * Apache Commons Lang
+     * <p>
+     * https://www.jianshu.com/p/c6ee58a2e2c0
+     */
 
     @Test
     public void testObjectUtils() {
@@ -140,11 +150,49 @@ public class ApacheCommonsTests {
          * ArrayUtils.isNotEmpty() 和 isEmpty() 方法与 CollectionUtils 工具类的 isNotEmpty() 方法和 isEmpty() 方法一样。
          */
 
+    }
 
-        ///////////////////////// SerializationUtils /////////////////////////
+    ///////////////////////// SerializationUtils /////////////////////////
+
+    /**
+     * Java对象序列化时参与序列化的内容包含以下几个方面。
+     * <p>
+     * 第一、属性，包括基本数据类型、数组以及其他对象的应用。
+     * <p>
+     * 第二、类名。
+     * <p>
+     * 不能被序列化的内容有以下几个方面。
+     * <p>
+     * 第一、方法。
+     * <p>
+     * 第二、有static修饰的属性。
+     * <p>
+     * 第三、有transient修饰的属性。
+     * <p>
+     * 在序列化过程中不仅保留当前类对象的数据，而且递归保存对象引用的每个对象的数据。
+     * 将整个对象层次写入字节流中，这也就是序列化对象的“深复制”，即复制对象本身及引用的对象本身。
+     * 序列化一个对象将可能得到整个对象序列（可以用来深拷贝）。
+     * <p>
+     * 在序列化过程中，由于有些属性值比较敏感(例如密码)，或者有些属性值的信息量比较大，它们不需要在网络中传递或在磁盘中存储，
+     * 即不需要参与序列化。对于此类属性只需要在定义时为其添加transient关键字即可，对于transient属性序列化机制会跳过而不会将其写入文件，
+     * 但在读取时也不可被恢复，该属性值保持默认初始化值。
+     */
+
+    @Test
+    public void testSerializationUtils() {
+        User user = new User().id(1L).username("aaa").password("123456").activated(false);
+        user.setAuthorities(new HashSet<Authority>() {{
+            add(new Authority().name("ROLE_ADMIN").chnName("ROLE_ADMIN"));
+            add(new Authority().name("ROLE_USER").chnName("ROLE_USER"));
+        }});
+        /**
+         * 这里调用 SerializationUtils.clone() 方法，ApacheCommonsTest.java 这个类也必须序列化，
+         * 不然会报 java.io.NotSerializableException 异常。
+         */
+        User cloneUser = SerializationUtils.clone(user);
         System.out.println("-------------- SerializationUtils --------------");
-
-
+        System.out.println("1: SerializationUtils.clone=" + cloneUser.toString());
+        System.out.println("2: cloneUser.username=" + cloneUser.getUsername());
     }
 
     ///////////////////////// StringUtils /////////////////////////
