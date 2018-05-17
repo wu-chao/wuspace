@@ -1,207 +1,258 @@
-$(document).ready(function () {
-    var pageTitle = document.title;
-    $('.mobile-table').mobilizeTables();
+//当浏览器窗口大小改变时重载网页
+/*window.onresize=function(){
+    window.location.reload();
+}*/
+ 
+//页面加载
+$('body').show();
+$('.version').text(NProgress.version);
+NProgress.start();
+setTimeout(function () {
+    NProgress.done();
+    $('.fade').removeClass('out');
+}, 1000);
 
-
-    $('body').delegate('.delete', 'click', function (e) {
-        var check = confirm('Are you sure you want to delete?');
-        if (!check || check == null) {
-            e.preventDefault();
-            return false;
-        }
-    });
-
-    if (typeof CKEDITOR != 'undefined') {
-        if ($('#html-editor').length > 0) {
-            CKEDITOR.replace('html-editor', {allowedContent: true});
-        }
-        if ($('#mini-editor').length > 0) {
-            CKEDITOR.replace('mini-editor', {allowedContent: true});
-        }
+//页面加载时给img和a标签添加draggable属性
+(function () {
+    $('img').attr('draggable', 'false');
+    $('a').attr('draggable', 'false');
+})();
+ 
+//设置Cookie
+function setCookie(name, value, time) {
+    var strsec = getsec(time);
+    var exp = new Date();
+    exp.setTime(exp.getTime() + strsec * 1);
+    document.cookie = name + "=" + escape(value) + ";expires=" + exp.toGMTString();
+}
+function getsec(str) {
+    var str1 = str.substring(1, str.length) * 1;
+    var str2 = str.substring(0, 1);
+    if (str2 == "s") {
+        return str1 * 1000;
+    } else if (str2 == "h") {
+        return str1 * 60 * 60 * 1000;
+    } else if (str2 == "d") {
+        return str1 * 24 * 60 * 60 * 1000;
     }
-
-    $('.header-top .menu').find('li').hover(function () {
-        $(this).find('ul').show();
-    }, function () {
-        $(this).find('ul').hide();
-    });
-
-    $('.header-top .notify-pull').click(function (e) {
-        e.preventDefault();
-        if ($(this).hasClass('collapse')) {
-            $('.notify-list').hide();
-            $(this).removeClass('collapse');
-        }
-        else {
-            $('.notify-list').show();
-            $(this).addClass('collapse');
-            var url = window.siteURL + '/account/notifications/setread';
-            $.get(url, function (data) {
-                $('.notify-pull').html(0);
-                $('.notifications').removeClass('has-notes');
-                document.title = pageTitle;
-            });
-        }
-    });
-
-
-    $('.fancy').fancybox();
-
-    $('.markdown-trigger').click(function (e) {
-        if ($(this).hasClass('collapse')) {
-            $('#markdown-guide').slideUp();
-            $(this).removeClass('collapse');
-        }
-        else {
-            $('#markdown-guide').slideDown();
-            $(this).addClass('collapse');
-        }
-        e.preventDefault();
-
-    });
-
-    if (window.userLogged) {
-        setInterval(function () {
-            var url = window.siteURL + '/account/notifications/check';
-            $.get(url, function (data) {
-                var curNotes = parseInt($('.notify-pull').html());
-                if (data.notes.length > curNotes) {
-                    var noteTitleText = 'notification';
-                    if (data.notes.length > 1) {
-                        noteTitleText = noteTitleText + 's';
-                    }
-                    document.title = '(' + data.notes.length + ') ' + noteTitleText + ' - ' + pageTitle;
-                    $('.notify-pull').html(data.notes.length);
-                    $('.notifications').addClass('has-notes');
-                    var noteHTML = $('.notify-list').html();
-                    $.each(data.notes, function (idx, val) {
-                        noteHTML = '<li><div class="note-text">' + val.message + '</div><div class="note-date">' + val.formatDate + '</div></li>' + noteHTML;
-
+}
+ 
+//获取Cookie
+function getCookie(name) {
+    var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
+    if (arr = document.cookie.match(reg)) {
+        return unescape(arr[2]);
+    } else {
+        return null;
+    }
+}
+ 
+//导航智能定位
+$.fn.navSmartFloat = function () {
+    var position = function (element) {
+        var top = element.position().top,
+            pos = element.css("position");
+        $(window).scroll(function () {
+            var scrolls = $(this).scrollTop();
+            if (scrolls > top) { //如果滚动到页面超出了当前元素element的相对页面顶部的高度
+                $('.header-topbar').fadeOut(0);
+                if (window.XMLHttpRequest) { //如果不是ie6
+                    element.css({
+                        position: "fixed",
+                        top: 0
+                    }).addClass("shadow");
+                } else { //如果是ie6
+                    element.css({
+                        top: scrolls
                     });
-                    $('.notify-list').html(noteHTML);
                 }
-                if (data.notes.length < curNotes) {
-                    $('.notify-pull').html(0);
-                    $('.notifications').removeClass('has-notes');
-                    document.title = pageTitle;
-                }
-            });
-        }, 60000);
+            } else {
+                $('.header-topbar').fadeIn(500);
+                element.css({
+                    position: pos,
+                    top: top
+                }).removeClass("shadow");
+            }
+        });
+    };
+    return $(this).each(function () {
+        position($(this));
+    });
+};
+ 
+//启用导航定位
+$("#navbar").navSmartFloat();
+ 
+//返回顶部按钮
+$("#gotop").hide();
+$(window).scroll(function () {
+    if ($(window).scrollTop() > 100) {
+        $("#gotop").fadeIn();
+    } else {
+        $("#gotop").fadeOut();
     }
-    $('.dash-pull').click(function () {
-        if ($(this).hasClass('collapse')) {
-            $('.mobile-dash-menu').slideUp();
-            $(this).removeClass('collapse');
-        }
-        else {
-            $('.mobile-dash-menu').slideDown();
-            $(this).addClass('collapse');
-        }
-        e.preventDefault();
-    });
-    $('.forum-mobile-pull').click(function () {
-        if ($(this).hasClass('collapse')) {
-            $('.forum-mobile-menu').slideUp();
-            $(this).removeClass('collapse');
-        }
-        else {
-            $('.forum-mobile-menu').slideDown();
-            $(this).addClass('collapse');
-        }
-        e.preventDefault();
-    });
-    $('.mobile-header .menu-pull').click(function () {
-        if ($(this).hasClass('collapse')) {
-            $('.mobile-nav').slideUp();
-            $(this).removeClass('collapse');
-        }
-        else {
-            $('.mobile-nav').slideDown();
-            $(this).addClass('collapse');
-        }
-        e.preventDefault();
-    });
-    $('.blog-pull').click(function () {
-        if ($(this).hasClass('collapse')) {
-            $('.blog-mobile-nav').slideUp();
-            $(this).removeClass('collapse');
-        }
-        else {
-            $('.blog-mobile-nav').slideDown();
-            $(this).addClass('collapse');
-        }
-        e.preventDefault();
-    });
-
-
-    $('.media-player').find('.pop-out').click(function (e) {
-        var newWindow = window.open('', '', 'width=350, height=180,resizable=no,scrollbars=no,menubar=no,toolbar=no');
-        var playerHTML = $('.top-featured').html();
-        var menuHTML = $('.featured-menu-cont').html();
-        $('.media-player-holder').jPlayer("pause");
-        var curTrackTime = $('.media-player-holder').data('jPlayer').status.currentTime;
-        var trackPercent = ((curTrackTime / window.curTrackDuration) * 100).toFixed(2);
-
-        newWindow.startPercent = trackPercent;
-        newWindow.isPlayer = true;
-        newWindow.headerMedia = window.headerMedia;
-        newWindow.currentTrack = window.currentTrack;
-        newWindow.currentTrackTime = curTrackTime;
-
-        newWindow.document.open();
-        newWindow.document.write('<html><head><title>Lets Talk Bitcoin Media Player</title>');
-        newWindow.document.write('<link rel="stylesheet" type="text/css" href="' + window.siteURL + '/themes/ltb3/css/fonts.css">');
-        newWindow.document.write('<link rel="stylesheet" type="text/css" href="' + window.siteURL + '/themes/ltb3/css/base.css">');
-        newWindow.document.write('<link rel="stylesheet" type="text/css" href="' + window.siteURL + '/themes/ltb3/css/legacy.css">');
-        newWindow.document.write('<link rel="stylesheet" type="text/css" href="' + window.siteURL + '/themes/ltb3/css/layout.css">');
-        newWindow.document.write('<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">');
-        newWindow.document.write('<script type="text/javascript" src="' + window.siteURL + '/themes/ltb3/js/jquery.js"></script>');
-        newWindow.document.write('<script type="text/javascript" src="' + window.siteURL + '/themes/ltb3/js/jquery.jplayer.min.js"></script>');
-        newWindow.document.write('<script type="text/javascript" src="' + window.siteURL + '/themes/ltb3/js/player.js"></script>');
-        newWindow.document.write('</head><body class="pop-out-body">');
-        newWindow.document.write('<div class="top-featured media-player-cont">' + playerHTML + '</div>');
-        newWindow.document.write('<div class="featured-menu-cont">' + menuHTML + '</div>');
-        //newWindow.document.write('<div class="logo"><a href="#"></a></div>');
-        //newWindow.document.write('<div class="pop-out-player"><div class="media-player-cont"><div class="media-player-holder"></div><div class="media-player">' + playerHTML + '</div></div></div>');
-        newWindow.document.write('</body></html>');
-        newWindow.document.close();
-
-
-    });
-
-
-    $('.nav').find('li').hover(function () {
-        $(this).children('.sub').show();
-
-    }, function () {
-        $(this).children('.sub').hide();
-    });
-
-    $('.side-menu').find('.children').children('i').click(function (e) {
-        e.preventDefault();
-        if ($(this).hasClass('collapse')) {
-            $(this).removeClass('collapse').removeClass('fa-caret-down').addClass('fa-caret-right');
-            $(this).parent().find('.sub').slideUp();
-        }
-        else {
-            $(this).addClass('collapse').removeClass('fa-caret-right').addClass('fa-caret-down');
-            $(this).parent().find('.sub').slideDown();
-        }
-    });
-
-    $('.list-switch').click(function (e) {
-        e.preventDefault();
-        var type = $(this).data('switch');
-        if (type == 'list') {
-            $('.blog-list.grid').hide();
-            $('.blog-list.list').show();
-        }
-        else if (type == 'grid') {
-            $('.blog-list.list').hide();
-            $('.blog-list.grid').show();
-        }
-        $.cookie('blog-list-type', type);
-        $('.list-switch').removeClass('active');
-        $(this).addClass('active');
-    });
 });
+$("#gotop").click(function () {
+    $('html,body').animate({
+        'scrollTop': 0
+    }, 500);
+});
+ 
+//图片延时加载
+$("img.thumb").lazyload({
+    placeholder: "/Home/images/occupying.png",
+    effect: "fadeIn"
+});
+$(".single .content img").lazyload({
+    placeholder: "/Home/images/occupying.png",
+    effect: "fadeIn"
+});
+ 
+//IE6-9禁止用户选中文本
+document.body.onselectstart = document.body.ondrag = function () {
+    return false;
+};
+ 
+//启用工具提示
+$('[data-toggle="tooltip"]').tooltip();
+ 
+ 
+//无限滚动反翻页
+jQuery.ias({
+	history: false,
+	container : '.content',
+	item: '.excerpt',
+	pagination: '.pagination',
+	next: '.next-page a',
+	trigger: '查看更多',
+	loader: '<div class="pagination-loading"><img src="/Home/images/loading.gif" /></div>',
+	triggerPageThreshold: 5,
+	onRenderComplete: function() {
+		$('.excerpt .thumb').lazyload({
+			placeholder: '/Home/images/occupying.png',
+			threshold: 400
+		});
+		$('.excerpt img').attr('draggable','false');
+		$('.excerpt a').attr('draggable','false');
+	}
+});
+ 
+//鼠标滚动超出侧边栏高度绝对定位
+$(window).scroll(function () {
+    var sidebar = $('.sidebar');
+    var sidebarHeight = sidebar.height();
+    var windowScrollTop = $(window).scrollTop();
+    if (windowScrollTop > sidebarHeight - 60 && sidebar.length) {
+        $('.fixed').css({
+            'position': 'fixed',
+            'top': '70px',
+            'width': '360px'
+        });
+    } else {
+        $('.fixed').removeAttr("style");
+    }
+});
+
+//禁止右键菜单
+/*window.oncontextmenu = function(){
+	return false;
+};*/
+
+/*自定义右键菜单*/
+(function () {
+    var oMenu = document.getElementById("rightClickMenu");
+    var aLi = oMenu.getElementsByTagName("li");
+	//加载后隐藏自定义右键菜单
+	//oMenu.style.display = "none";
+    //菜单鼠标移入/移出样式
+    for (i = 0; i < aLi.length; i++) {
+        //鼠标移入样式
+        aLi[i].onmouseover = function () {
+            $(this).addClass('rightClickMenuActive');
+			//this.className = "rightClickMenuActive";
+        };
+        //鼠标移出样式
+        aLi[i].onmouseout = function () {
+            $(this).removeClass('rightClickMenuActive');
+			//this.className = "";
+        };
+    }
+    //自定义菜单
+    document.oncontextmenu = function (event) {
+		$(oMenu).fadeOut(0);
+        var event = event || window.event;
+        var style = oMenu.style;
+        $(oMenu).fadeIn(300);
+		//style.display = "block";
+        style.top = event.clientY + "px";
+        style.left = event.clientX + "px";
+        return false;
+    };
+    //页面点击后自定义菜单消失
+    document.onclick = function () {
+        $(oMenu).fadeOut(100);
+		//oMenu.style.display = "none"
+    }
+})();
+
+/*禁止键盘操作*/
+document.onkeydown=function(event){
+	var e = event || window.event || arguments.callee.caller.arguments[0];
+	if((e.keyCode === 123) || (e.ctrlKey) || (e.ctrlKey) && (e.keyCode === 85)){
+		return false;
+	}
+}; 
+
+/*文章评论*/
+$(function(){
+	$("#comment-submit").click(function(){
+		var commentContent = $("#comment-textarea");
+		var commentButton = $("#comment-submit");
+		var promptBox = $('.comment-prompt');
+		var promptText = $('.comment-prompt-text');
+		var articleid = $('.articleid').val();
+		promptBox.fadeIn(400);
+		if(commentContent.val() === ''){
+			promptText.text('请留下您的评论');
+			return false;
+		} 
+		commentButton.attr('disabled',true);
+		commentButton.addClass('disabled');
+		promptText.text('正在提交...');
+		$.ajax({   
+			type:"POST",
+			url:"test.php?id=" + articleid,
+			//url:"/Article/comment/id/" + articleid,   
+			data:"commentContent=" + replace_em(commentContent.val()),   
+			cache:false, //不缓存此页面  
+			success:function(data){
+				alert(data);
+				promptText.text('评论成功!');
+			    commentContent.val(null);
+				$(".commentlist").fadeIn(300);
+				/*$(".commentlist").append();*/
+				commentButton.attr('disabled',false);
+				commentButton.removeClass('disabled');
+			}
+		});
+		/*$(".commentlist").append(replace_em(commentContent.val()));*/
+		promptBox.fadeOut(100);
+		return false;
+	});
+});
+//对文章内容进行替换
+function replace_em(str){
+	str = str.replace(/\</g,'&lt;');
+	str = str.replace(/\>/g,'&gt;');
+	str = str.replace(/\[em_([0-9]*)\]/g,'<img src="/Home/images/arclist/$1.gif" border="0" />');
+	return str;
+}
+
+//Console
+try {
+    if (window.console && window.console.log) {
+        console.log("\n欢迎访问异清轩博客！\n\n在本站可以看到前端技术，后端程序，网站内容管理系统等文章；\n\n还有我的程序人生！！！\n");
+        console.log("\n请记住我们的网址：%c www.ylsat.com", "color:red");
+        console.log("\nPOWERED BY WY ALL RIGHTS RESERVED");
+    }
+} catch (e) {};

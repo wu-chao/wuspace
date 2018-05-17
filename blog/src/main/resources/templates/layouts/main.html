@@ -5,493 +5,112 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
     <meta charset="utf-8">
-    <title>天才宝宝</title>
+    <title>...</title>
     <!-- Enable responsive viewport -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- CSRF -->
     <meta name="_csrf" th:content="${_csrf.token}"/>
     <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
-    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
-    <!--[if lt IE 9]>
-    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
 
-    <!-- Le styles -->
     <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css">
     <link rel="stylesheet" href="/bower_components/font-awesome/css/font-awesome.min.css">
-
-    <link rel="stylesheet" href="/css/rbt-unify.css">
-    <link rel="stylesheet" href="/css/dark.css">
-    <link rel="stylesheet" href="/css/orange.css">
-    <link rel="stylesheet" href="/css/layout.css">
-    <link rel="stylesheet" href="/css/prettify.css">
-    <link rel="stylesheet" href="/css/style.css" media="all">
+    <link rel="stylesheet" type="text/css" href="/css/nprogress.css">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link rel="apple-touch-icon-precomposed" href="/images/icon/icon.png">
+    <link rel="shortcut icon" href="/images/icon/favicon.ico">
 
     <script src="/bower_components/jquery/dist/jquery.js"></script>
     <script src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap.js"></script>
-    <script src="/js/scrollHandler.js" defer="true"></script>
-    <script src="/js/back-to-top.js"></script>
-
-    <!-- atom & rss feed -->
-    <link href="/site/atom.xml" type="application/atom+xml" rel="alternate" title="Sitewide ATOM Feed">
-    <link href="/site/rss.xml" type="application/rss+xml" rel="alternate" title="Sitewide RSS Feed">
+    <script src="/js/nprogress.js"></script>
+    <script src="/js/jquery.lazyload.min.js"></script>
+    <script src="/js/html5shiv.min.js" type="text/javascript"></script>
+    <script src="/js/respond.min.js" type="text/javascript"></script>
+    <script src="/js/selectivizr-min.js" type="text/javascript"></script>
+    <!--[if lt IE 9]>
+    <script>window.location.href = 'upgrade-browser.html';</script>
+    <![endif]-->
 </head>
 
-<body class="dark" style="background-position: 0px 0px;">
-<!-- Navbar -->
-<div layout:fragment="header" class="wrapper navbar">
-    <div class="navbar-inner">
-        <div class="nav-narrow">
-            <a class="brand" href="/"><span class="fa fa-mortar-board (alias)">首页</span></a>
-            <ul class="nav">
-                <li><a href="/site/archive.html">文章</a>
-                </li>
-                <li><a href="/site/categories.html">分类</a>
-                </li>
-                <li><a href="/site/pages.html">页面</a>
-                </li>
-                <li><a href="/site/tags.html">标签</a>
-                </li>
-            </ul>
-            <div class="pull-right">
-                <form id="logout" th:action="@{/logout}" method="post"></form>
-                <a href="javascript:{}" onclick="document.forms['logout'].submit()">
-                    <span class="p-l-sm">退出</span>
-                </a>
+<body class="user-select">
+<div layout:fragment="header">
+    <header class="header">
+        <nav class="navbar navbar-default" id="navbar">
+            <div class="container">
+                <div class="header-topbar hidden-xs link-border">
+                    <ul class="site-nav topmenu">
+                        <li><a href="tags.html">标签云</a></li>
+                        <li><a href="readers.html" rel="nofollow">读者墙</a></li>
+                        <li><a href="links.html" rel="nofollow">友情链接</a></li>
+                        <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                                aria-haspopup="true" aria-expanded="false" rel="nofollow">关注本站 <span
+                                class="caret"></span></a>
+                            <ul class="dropdown-menu header-topbar-dropdown-menu">
+                                <li><a data-toggle="modal" data-target="#WeChat" rel="nofollow"><i
+                                        class="fa fa-weixin"></i> 微信</a></li>
+                                <li><a href="#" rel="nofollow"><i class="fa fa-weibo"></i> 微博</a></li>
+                                <li><a data-toggle="modal" data-target="#areDeveloping" rel="nofollow"><i
+                                        class="fa fa-rss"></i> RSS</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <a data-toggle="modal" data-target="#loginModal" class="login" rel="nofollow">Hi,请登录</a>&nbsp;&nbsp;<a
+                        href="javascript:;" class="register" rel="nofollow">我要注册</a>&nbsp;&nbsp;<a href=""
+                                                                                                   rel="nofollow">找回密码</a>
+                </div>
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                            data-target="#header-navbar" aria-expanded="false"><span class="sr-only"></span> <span
+                            class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
+                    </button>
+                    <h1 class="logo hvr-bounce-in"><a href="" title=""><img src="/images/logo.png" alt=""></a></h1>
+                </div>
+                <div class="collapse navbar-collapse" id="header-navbar">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="hidden-index active"><a data-cont="异清轩首页" href="index.html">异清轩首页</a></li>
+                        <li><a href="category.html">前端技术</a></li>
+                        <li><a href="category.html">后端程序</a></li>
+                        <li><a href="category.html">管理系统</a></li>
+                        <li><a href="category.html">授人以渔</a></li>
+                        <li><a href="category.html">程序人生</a></li>
+                    </ul>
+                    <form class="navbar-form visible-xs" action="/Search" method="post">
+                        <div class="input-group">
+                            <input type="text" name="keyword" class="form-control" placeholder="请输入关键字" maxlength="20"
+                                   autocomplete="off">
+                            <span class="input-group-btn">
+            <button class="btn btn-default btn-search" name="search" type="submit">搜索</button>
+            </span></div>
+                    </form>
+                </div>
             </div>
-        </div>
-    </div>
+        </nav>
+    </header>
 </div>
-<!-- End Navbar -->
 
-<!-- Wrapper -->
-<div class="wrapper">
-    <div class="bg-color-container">
+<div layout:fragment="content">
 
-        <!-- Wrapper Container -->
-        <div class="container">
-
-            <!-- Main -->
-            <div layout:fragment="content" class="main">
-                <!--<div class="content">-->
-                <!--<div class="row-fluid">-->
-                <!--<div class="span12">-->
-                <!--<div class="card" th:each="blog : ${blogPageInfo.list}">-->
-                <!--<div class="date_label">-->
-                <!--<div class="day_month"-->
-                <!--th:text="${#calendars.format(blog.lastModifiedDate, 'MM/dd')}">-->
-                <!--12/11-->
-                <!--</div>-->
-                <!--<div class="year" th:text="${#calendars.format(blog.lastModifiedDate, 'yyyy')}">-->
-                <!--2017-->
-                <!--</div>-->
-                <!--</div>-->
-                <!--<h3 th:utext="${blog.title}">标题</h3>-->
-                <!--<hr/>-->
-                <!--<div class="article-content" th:utext="${blog.content}">内容</div>-->
-                <!--<div class="read_more">-->
-                <!--<a class="fa fa-link move-right"-->
-                <!--th:href="@{/blog/blogs/{blogId}(blogId=${blog.id})}"> 查看全文&hellip;</a>-->
-                <!--</div>-->
-                <!--<div class="article-info">-->
-                <!--<i><img class="mini-avatar inline" src="/images/avatars/avatar_1.jpg"></i>&nbsp;-->
-                <!--<a href="/" th:utext="${blog?.user.nickname}"></a>-->
-
-                <!--看过 <span th:text="${blog.viewedTimes}">0</span>-->
-                <!--评论 <span>0</span>-->
-
-                <!--<span class="pull-right">-->
-                <!--<a class="tag">aaa</a>-->
-                <!--<a class="tag">bbb</a>-->
-                <!--<a class="tag">ccc</a>-->
-                <!--<a class="tag">ccc</a>-->
-                <!--<a class="tag">ccc</a>-->
-                <!--<a class="tag">ccc</a>-->
-                <!--</span>-->
-                <!--</div>-->
-                <!--</div>-->
-                <!--</div>-->
-                <!--</div>-->
-                <!--</div>-->
-                <!--<div>-->
-                <!--<a style="font-size:20px;font-family:'幼圆';padding:10px;width:300px;display:block;margin:50px auto;text-align:center;"-->
-                <!--href="http://enml.github.io/site/archive.html">查看更多文章 >>></a>-->
-                <!--</div>-->
-            </div>
-            <!-- End Main -->
-
-            <!-- Sidebar -->
-            <div layout:fragment="sidebar" class="sidebar">
-                <!--<div class="top-featured media-player-cont">-->
-                <!--<div class="media-player-holder" id="jp_jplayer_0" style="width: 0px; height: 0px;"><img-->
-                <!--id="jp_poster_0" style="width: 0px; height: 0px; display: none;">-->
-                <!--<audio id="jp_audio_0" preload="none"-->
-                <!--src="https://api.soundcloud.com/tracks/367797902/stream?client_id=7801c7a5dcce2c1f33d66c82d867f1d6"></audio>-->
-                <!--</div>-->
-                <!--<div class="featured-wrap">-->
-                <!--<div class="current-featured media-player">-->
-                <!--<div class="featured-player">-->
-                <!--<div class="player-overlay">-->
-                <!--<div class="player-controls">-->
-                <!--<span class="backward prev" title="Previous"><i class="fa fa-backward"></i></span>-->
-                <!--<span class="play-pause pause jp-pause" style="display: none;" title="Pause"><i-->
-                <!--class="fa fa-pause"></i></span>-->
-                <!--<span class="play-pause play jp-play" title="Play"><i class="fa fa-play"></i></span>-->
-                <!--<span class="forward next" title="Next"><i class="fa fa-forward"></i></span>-->
-                <!--<div class="player-pop">-->
-                <!--<span title="Pop out media player" class="pop-out"><i-->
-                <!--class="fa fa-caret-square-o-up"></i></span>-->
-                <!--</div>-->
-                <!--</div>-->
-                <!--</div>&lt;!&ndash; player-overlay &ndash;&gt;-->
-                <!--<div class="featured-image">-->
-                <!--<img src="https://letstalkbitcoin.com/files/blogs/2392-278acb75d014c753d500b540101abc17cedd7f9d53093a603ade578e91536204.jpg"-->
-                <!--alt=""></div>&lt;!&ndash; featured-image &ndash;&gt;-->
-                <!--</div>&lt;!&ndash; featured-player &ndash;&gt;-->
-                <!--<div class="featured-content">-->
-                <!--<h2>On Today's Show</h2>-->
-                <!--<div class="featured-title track-title">-->
-                <!--<p class="track">-->
-                <!--<a href="https://letstalkbitcoin.com/blog/post/the-third-web-micro-economies-2-spankchain"-->
-                <!--title="The Third Web Micro - Economies #2 - SpankChain" target="_blank">The Third-->
-                <!--Web Micro - Economies #2 - SpankChain</a></p>-->
-                <!--</div>&lt;!&ndash; featured-title &ndash;&gt;-->
-                <!--<div class="featured-date">-->
-                <!--<a href="#" class="pop-out-player" title="Pop out audio player"></a>-->
-                <!--<span>-->
-                <!--10TH DECEMBER 2017										</span>-->
-                <!--</div>&lt;!&ndash; featured-date &ndash;&gt;-->
-                <!--</div>&lt;!&ndash; featured-content &ndash;&gt;-->
-                <!--</div>&lt;!&ndash; current-featured &ndash;&gt;-->
-                <!--</div>&lt;!&ndash; featured-wrap &ndash;&gt;-->
-                <!--</div>&lt;!&ndash; top-featured &ndash;&gt;-->
-                <!--<div class="featured-menu-cont">-->
-                <!--<ul class="featured-menu">-->
-                <!--<li><a href="https://feeds.feedburner.com/TheDailyBitcoinShow"-->
-                <!--title="Subscribe to the LTBN RSS Feed" target="_blank">Subscribe <i-->
-                <!--class="fa fa-rss"></i></a></li>-->
-                <!--<li><a href="/blog/category/ltb-network-shows" title="Listen to the latest podcast episodes">Episodes-->
-                <!--<i class="fa fa-volume-up"></i></a></li>-->
-                <!--</ul>-->
-                <!--</div>&lt;!&ndash; featured-menu-cont &ndash;&gt;-->
-                <!--<div class="sidebar-content">-->
-                <!--<div class="sidebar-inner-content">-->
-                <!--<div style="margin-bottom: 20px;">-->
-
-                <!--<div style="margin-bottom: 20px;">-->
-                <!--</div>-->
-                <!--</div>-->
-                <!--<div class="search-cont pull-right">-->
-                <!--<a href="#" class="search-icon" title="Search website"><i class="fa fa-search"></i></a>-->
-                <!--</div>&lt;!&ndash; search-cont &ndash;&gt;-->
-                <!--<h2>LTB Community <span>Recent Posts</span></h2>-->
-                <!--<div class="clear"></div>-->
-                <!--<ul class="recent-posts">-->
-                <!--<li>-->
-                <!--<div class="post-title">-->
-                <!--<span class="post-date" title="December 10th, 2017 at 18:01 pm">7h</span>-->
-                <!--<a href="https://letstalkbitcoin.com/profile/user/mmanvil74" class="user-link"><span-->
-                <!--class="mini-avatar"><img-->
-                <!--src="https://disqus.com/api/users/avatars/letstalkbitcoin-68d30a9594728bc39aa24be94b319d21.jpg"-->
-                <!--alt=""></span><span class="user-name">mmanvil74</span></a>-->
-                <!--</div>-->
-                <!--<div class="post-content">-->
-                <!--<p>-->
-                <!--While we may have overestimated the potential for public blockchains to run (at-->
-                <!--scale) dapps in the short term, we may have underestimated the potential for-->
-                <!--cryptocurrency to replace centralized fiat money in the long term. If better money-->
-                <!--is the onl... </p>-->
-                <!--<div class="post-thread-title">-->
-                <!--<a href="https://letstalkbitcoin.com/blog/post/lets-talk-bitcoin-349-a-little-diversion#comment-3656400302"-->
-                <!--title="A Little Diversion" class="view-post">-->
-                <!--<span class="pull-right text-right">View Thread <i-->
-                <!--class="fa fa-mail-forward"></i></span>-->
-                <!--</a>-->
-                <!--<strong>A Little Diversion</strong>-->
-                <!--<div class="clear"></div>-->
-                <!--</div>-->
-                <!--</div>-->
-
-                <!--</li>-->
-                <!--<li>-->
-                <!--<div class="post-title">-->
-                <!--<span class="post-date" title="December 9th, 2017 at 02:11 am">1d</span>-->
-                <!--<a href="https://disqus.com/by/matthewchowhk/" class="user-link"><span-->
-                <!--class="mini-avatar"><img-->
-                <!--src="https://disqus.com/api/users/avatars/matthewchowhk.jpg" alt=""></span><span-->
-                <!--class="user-name">Matthew Chow Hk</span></a>-->
-                <!--</div>-->
-                <!--<div class="post-content">-->
-                <!--<p>-->
-                <!--A real eye opener. This is an interesting future Stan. Thanks for the share. Do you-->
-                <!--have a regular blog? </p>-->
-                <!--<div class="post-thread-title">-->
-                <!--<a href="http://letstalkbitcoin.com/bitcoin-and-the-three-laws-of-robotics#comment-3653969786"-->
-                <!--title="Bitcoin and the Three Laws of Robotics" class="view-post">-->
-                <!--<span class="pull-right text-right">View Thread <i-->
-                <!--class="fa fa-mail-forward"></i></span>-->
-                <!--</a>-->
-                <!--<strong>Bitcoin and the Three Laws of Robotics</strong>-->
-                <!--<div class="clear"></div>-->
-                <!--</div>-->
-                <!--</div>-->
-
-                <!--</li>-->
-                <!--<li>-->
-                <!--<div class="post-title">-->
-                <!--<span class="post-date" title="December 8th, 2017 at 22:58 pm">2d</span>-->
-                <!--<a href="" class="user-link"><span class="mini-avatar"><img-->
-                <!--src="//a.disquscdn.com/1510956940/images/noavatar92.png" alt=""></span><span-->
-                <!--class="user-name">ancap</span></a>-->
-                <!--</div>-->
-                <!--<div class="post-content">-->
-                <!--<p>-->
-                <!--It's misleading to say "the Bitcoin space" and then get have non-Bitcoin topics in-->
-                <!--there. I don't mind to get triggered by an occasional alt, but having interviews-->
-                <!--about off-topic stuff is too much. Either put it in the summary so that we c... </p>-->
-                <!--<div class="post-thread-title">-->
-                <!--<a href="https://letstalkbitcoin.com/blog/post/the-crypto-show-labitconf-brock-pierce-griff-green-givethio-alex-casas-shelpincom-and-anthony-conrad-holaluka#comment-3653870563"-->
-                <!--title="The Crypto Show: LaBitConf Brock Pierce, Griff Green Giveth.io, Alex Casas Shelpin.com And Anthony Conrad HolaLuka"-->
-                <!--class="view-post">-->
-                <!--<span class="pull-right text-right">View Thread <i-->
-                <!--class="fa fa-mail-forward"></i></span>-->
-                <!--</a>-->
-                <!--<strong>The Crypto Show: LaBitConf Brock Pierce, Griff Green Giveth.io, Alex Casas-->
-                <!--Shelpin.com And Anthony Conrad HolaLuka</strong>-->
-                <!--<div class="clear"></div>-->
-                <!--</div>-->
-                <!--</div>-->
-
-                <!--</li>-->
-                <!--<li>-->
-                <!--<div class="post-title">-->
-                <!--<span class="post-date" title="December 8th, 2017 at 12:55 pm">2d</span>-->
-                <!--<a href="https://letstalkbitcoin.com/profile/user/andref" class="user-link"><span-->
-                <!--class="mini-avatar"><img-->
-                <!--src="https://letstalkbitcoin.com/files/avatars/0197027406a2eba3c1e28581cb845a2d.jpg"-->
-                <!--alt=""></span><span class="user-name">andref</span></a>-->
-                <!--</div>-->
-                <!--<div class="post-content">-->
-                <!--<p>-->
-                <!--Altcoins are getting sold aggressively for BTC. Since last Thursday BTC/USD gained-->
-                <!--over 60 percent while ETH/BTC dropped by close to 45 percent. Now both ETH and Dash-->
-                <!--are in a bear market versus BTC.-->
-                <!--ETH/BTC Drops by 45 Percent-->
-                <!--Ether has lost almost ... </p>-->
-                <!--<div class="post-thread-title">-->
-                <!--<a href="https://letstalkbitcoin.com/forum/post/cryptocurrency-analytics-from-fxopen08-12-2017#post-0"-->
-                <!--title="Cryptocurrency Analytics from FXOpen.08/12/2017" class="view-post">-->
-                <!--<span class="pull-right text-right">View Thread <i-->
-                <!--class="fa fa-mail-forward"></i></span>-->
-                <!--</a>-->
-                <!--<strong>Cryptocurrency Analytics from FXOpen.08/12/2017</strong>-->
-                <!--<div class="clear"></div>-->
-                <!--</div>-->
-                <!--</div>-->
-
-                <!--</li>-->
-                <!--<li>-->
-                <!--<div class="post-title">-->
-                <!--<span class="post-date" title="December 7th, 2017 at 08:57 am">3d</span>-->
-                <!--<a href="https://disqus.com/by/bruno_cavalleri/" class="user-link"><span-->
-                <!--class="mini-avatar"><img-->
-                <!--src="https://disqus.com/api/users/avatars/bruno_cavalleri.jpg"-->
-                <!--alt=""></span><span class="user-name">Bruno Cavalleri</span></a>-->
-                <!--</div>-->
-                <!--<div class="post-content">-->
-                <!--<p>-->
-                <!--Wow! This identity idea looks like Black Mirror's Nosedive episode. "[...] You can-->
-                <!--require for somebody to befriend or follow you [...]", "[...] I'm not going befriend-->
-                <!--someone whom hasn't pledged bitcoin [...]" </p>-->
-                <!--<div class="post-thread-title">-->
-                <!--<a href="http://letstalkbitcoin.com/e04-the-horrible-warnings#comment-3651196002"-->
-                <!--title="E04 - The Horrible Warnings" class="view-post">-->
-                <!--<span class="pull-right text-right">View Thread <i-->
-                <!--class="fa fa-mail-forward"></i></span>-->
-                <!--</a>-->
-                <!--<strong>E04 - The Horrible Warnings</strong>-->
-                <!--<div class="clear"></div>-->
-                <!--</div>-->
-                <!--</div>-->
-
-                <!--</li>-->
-                <!--<li>-->
-                <!--<div class="post-title">-->
-                <!--<span class="post-date" title="December 6th, 2017 at 11:21 am">4d</span>-->
-                <!--<a href="https://letstalkbitcoin.com/profile/user/andref" class="user-link"><span-->
-                <!--class="mini-avatar"><img-->
-                <!--src="https://letstalkbitcoin.com/files/avatars/0197027406a2eba3c1e28581cb845a2d.jpg"-->
-                <!--alt=""></span><span class="user-name">andref</span></a>-->
-                <!--</div>-->
-                <!--<div class="post-content">-->
-                <!--<p>-->
-                <!--The Great Britain Pound (GBP) inched lower against the US Dollar (USD) on Wednesday,-->
-                <!--decreasing the price of GBPUSD to less than 1.3450 following some key economic-->
-                <!--events. The technical bias remains bullish because of a higher low in the recent-->
-                <!--downs... </p>-->
-                <!--<div class="post-thread-title">-->
-                <!--<a href="https://letstalkbitcoin.com/forum/post/forex-analytics-06-12-17#post-0"-->
-                <!--title="Forex Analytics 06/12/17" class="view-post">-->
-                <!--<span class="pull-right text-right">View Thread <i-->
-                <!--class="fa fa-mail-forward"></i></span>-->
-                <!--</a>-->
-                <!--<strong>Forex Analytics 06/12/17</strong>-->
-                <!--<div class="clear"></div>-->
-                <!--</div>-->
-                <!--</div>-->
-
-                <!--</li>-->
-                <!--</ul>&lt;!&ndash; recent-posts &ndash;&gt;-->
-                <!--<div class="clear"></div>-->
-                <!--<div class="text-right">-->
-                <!--<a href="https://letstalkbitcoin.com/forum/board/all" class="enter-forum">Enter-->
-                <!--<span>Forums</span></a>-->
-                <!--</div>-->
-                <!--</div>&lt;!&ndash; sidebar-inner-content &ndash;&gt;-->
-                <!--</div>&lt;!&ndash; sidebar-content &ndash;&gt;-->
-            </div>
-            <!-- End Sidebar -->
-
-            <div class="clear"></div>
-
-        </div>
-    <!-- End Wrapper Container -->
-
-    </div>
 </div>
-<!-- End Wrapper -->
 
 <!-- Add-on -->
-<div layout:fragment="add-on" id="add-on" style="background-position: 50% 43px;">
-</div>
+<!--<div layout:fragment="add-on" id="add-on" style="background-position: 50% 43px;">-->
+<!--</div>-->
 <!-- End Add-on-->
 
-<!-- Footer -->
-<div layout:fragment="footer" class="footer">
-    <footer class="friendly-link">
+<div layout:fragment="footer">
+    <footer class="footer">
         <div class="container">
-            <div class="row">
-                <div class="col-xs-12 col-md-3 md-margin-bottom-40">
-                    <address class="md-margin-bottom-30 padding-left-5">
-                        QQ: <a class="text-orange"
-                               href="http://wpa.qq.com/msgrd?v=3&amp;uin=11110&amp;site=qq&amp;menu=yes"
-                               target="_blank">11110</a><br>
-                        Email: <a href="11110@qq.com" class="text-orange">11110@qq.com</a>
-                    </address>
-                </div>
-                <div class="hidden-xs col-md-9 md-margin-bottom-40">
-                    <div class="headline"><h2>友情链接</h2></div>
-                    <ul class="list-inline link-list">
-                        <li><a style="text-transform: none;" href="https://bixin.com/" target="_blank"
-                               onclick="trackOutgoingPageView('haobtc','friend')">币信</a></li>
-                        <li><a style="text-transform: none;" href="http://www.8btc.com/" target="_blank"
-                               onclick="trackOutgoingPageView('8btc','friend')">巴比特</a></li>
-                        <li><a style="text-transform: none;" href="http://www.btctrade.com/i-sbgnoc" target="_blank"
-                               onclick="trackOutgoingPageView('btctrade','friend')">比特币交易网</a></li>
-                        <li><a style="text-transform: none;" href="https://www.okex.com" target="_blank"
-                               onclick="trackOutgoingPageView('okex','friend')">OKEx比特币</a></li>
-                        <li><a style="text-transform: none;" href="https://www.huobi.com/" target="_blank"
-                               onclick="trackOutgoingPageView('huobi','friend')">火币网</a></li>
-                        <li><a style="text-transform: none;" href="http://chainb.com/" target="_blank"
-                               onclick="trackOutgoingPageView('chainb','friend')">铅笔</a></li>
-                        <li><a style="text-transform: none;" href="http://www.btcfans.com/" target="_blank"
-                               onclick="trackOutgoingPageView('btcfans','friend')">比特范</a></li>
-                        <li><a style="text-transform: none;" href="http://www.bitecoin.com" target="_blank"
-                               onclick="trackOutgoingPageView('bitecoin','friend')">比特币中文网</a></li>
-                        <li><a style="text-transform: none;" href="http://www.btc798.com" target="_blank"
-                               onclick="trackOutgoingPageView('btc798','friend')">比特币之家</a></li>
-                        <li><a style="text-transform: none;" href="http://www.cybtc.com" target="_blank"
-                               onclick="trackOutgoingPageView('cybtc','friend')">彩云比特</a></li>
-                        <li><a style="text-transform: none;" href="http://www.btc100.com/index" target="_blank"
-                               onclick="trackOutgoingPageView('btc100','friend')">BTC100</a></li>
-                        <li><a style="text-transform: none;" href="http://www.btc38.com" target="_blank"
-                               onclick="trackOutgoingPageView('btc38','friend')">比特时代</a></li>
-                        <li><a style="text-transform: none;" href="https://bter.com/" target="_blank"
-                               onclick="trackOutgoingPageView('bter','friend')">比特儿</a></li>
-                        <li><a style="text-transform: none;" href="http://www.wanbizu.com/" target="_blank"
-                               onclick="trackOutgoingPageView('wanbizu','friend')">玩币族</a></li>
-                        <li><a style="text-transform: none;" href="http://www.chbtc.com/" target="_blank"
-                               onclick="trackOutgoingPageView('chbtc','friend')">中国比特币</a></li>
-                        <li><a style="text-transform: none;" href="http://www.btc-q.com/" target="_blank"
-                               onclick="trackOutgoingPageView('btcq','friend')">BTC-Q</a></li>
-                        <li><a style="text-transform: none;" href="https://www.bitbank.com/" target="_blank"
-                               onclick="trackOutgoingPageView('bitbank','friend')">bitbank</a></li>
-                        <li><a style="text-transform: none;" href="https://www.wabi.com/" target="_blank"
-                               onclick="trackOutgoingPageView('wabi','friend')">挖币网</a></li>
-                        <li><a style="text-transform: none;" href="http://bitstones.com/" target="_blank"
-                               onclick="trackOutgoingPageView('bitstones','friend')">BITSTONES</a></li>
-                        <li><a style="text-transform: none;" href="https://www.wanbi.com/" target="_blank"
-                               onclick="trackOutgoingPageView('wanbi','friend')">万币网</a></li>
-                        <li><a style="text-transform: none;" href="https://www.bichuang.com/" target="_blank"
-                               onclick="trackOutgoingPageView('bichuang','friend')">币创网</a></li>
-                        <li><a style="text-transform: none;" href="https://www.sosobtc.com/" target="_blank"
-                               onclick="trackOutgoingPageView('sosobtc','friend')">搜搜比特币</a></li>
-                        <li><a style="text-transform: none;" href="http://www.lepaoquan.com" target="_blank"
-                               onclick="trackOutgoingPageView('lepaoquan','friend')">乐跑圈</a></li>
-                        <li><a style="text-transform: none;" href="http://www.bitcoin86.com" target="_blank"
-                               onclick="trackOutgoingPageView('bitcoin86','friend')">比特币资讯网</a></li>
-                        <li><a style="text-transform: none;" href="https://www.lhang.com" target="_blank"
-                               onclick="trackOutgoingPageView('lhang','friend')">链行</a></li>
-                        <li><a style="text-transform: none;" href="https://wequant.io/" target="_blank"
-                               onclick="trackOutgoingPageView('wequant','friend')">微宽网</a></li>
-                        <li><a style="text-transform: none;" href="https://www.binance.com/" target="_blank"
-                               onclick="trackOutgoingPageView('binance','friend')">币安</a></li>
-                        <li><a style="text-transform: none;" href="https://www.coingogo.com/" target="_blank"
-                               onclick="trackOutgoingPageView('coingogo','friend')">币源社区</a></li>
-                        <li><a style="text-transform: none;" href="https://www.btctrade.im/" target="_blank"
-                               onclick="trackOutgoingPageView('btctrade','friend')">BtcTrade国际站</a></li>
-                        <li><a style="text-transform: none;" href="https://www.coldlar.com/" target="_blank"
-                               onclick="trackOutgoingPageView('coldlar','friend')">库神</a></li>
-                        <li><a style="text-transform: none;" href="https://www.bibox.com/" target="_blank"
-                               onclick="trackOutgoingPageView('bibox','friend')">Bibox</a></li>
-
-                    </ul>
-                </div>
-            </div>
+            <p>&copy; 2016 <a href="">ylsat.com</a> &nbsp; <a href="#" target="_blank"
+                                                              rel="nofollow">豫ICP备20151109-1</a> &nbsp; &nbsp; <a
+                    href="http://www.mycodes.net/" target="_blank">源码之家</a></p>
         </div>
+        <div id="gotop"><a class="gotop"></a></div>
     </footer>
-    <!-- 友情链接 -->
-    <div class="copyright">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-8">
-                    <p>
-                        ©2017 天才宝宝 版权所有 | <a class="text-orange" href="http://bitkan.com/" target="_blank">隐私政策</a></p>
-                </div>
-
-                <!-- Social Links -->
-                <div class="col-md-4">
-                    <ul class="footer-socials list-inline">
-                        <li>
-                            <a href="https://www.facebook.com/btckan" target="_blank" class="tooltips"
-                               data-toggle="tooltip" data-placement="top" title="" data-original-title="Facebook">
-                                <i class="fa fa-facebook"></i>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://twitter.com/BitKanOfficial" target="_blank" class="tooltips"
-                               data-toggle="tooltip" data-placement="top" title="" data-original-title="Twitter">
-                                <i class="fa fa-twitter"></i>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="http://weibo.com/btcwatch" target="_blank" class="tooltips" data-toggle="tooltip"
-                               data-placement="top" title="" data-original-title="微博">
-                                <i class="fa fa-weibo"></i>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                <!-- End Social Links -->
-            </div>
-        </div>
-    </div>
-    <!--/copyright-->
 </div>
-<!-- End Footer -->
 
 <!-- JavaScript -->
+<script src="/js/jquery.ias.js"></script>
 <script layout:fragment="scripts">
+
 </script>
 <!-- End JavaScript -->
 </body>

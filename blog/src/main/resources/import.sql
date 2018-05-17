@@ -5,8 +5,8 @@
 INSERT INTO authorities(name, chn_name) VALUES ('ROLE_ADMIN', '管理员权限');
 INSERT INTO authorities(name, chn_name) VALUES ('ROLE_USER', '用户权限');
 
-INSERT INTO users(id,created_by,created_date,last_modified_date,username,nickname,password,activated) VALUES (1,'admin','2016-11-20 13:50:00','2016-11-20 13:50:00','admin','管理员','$2a$10$lHS0hHR1XjVhhtvGrr9Ujuty2fWA2Ig6xdvLmq17jymhQJ4BeckGm',TRUE );
-INSERT INTO users(id,created_by,created_date,last_modified_date,username,nickname,password,activated) VALUES (2,'admin','2016-11-20 13:50:00','2016-11-20 13:50:00','user','chao','$2a$10$EJW771uabpcviSBZ6EBiVOGIo05h3YCPkq1ZvZmwJGy7TCsHa1Me6',TRUE );
+INSERT INTO users(id,created_by,created_date,last_modified_date,username,nickname,password,activated) VALUES (1,'admin','2016-11-20 13:50:00','2016-11-20 13:50:00','admin','管理员','$2a$10$pGf9C4/gB3VjZnFw0fyP4OyjdLkL7dY6oYnbVJMoaX2qQUIyiQfYa',TRUE );
+INSERT INTO users(id,created_by,created_date,last_modified_date,username,nickname,password,activated) VALUES (2,'admin','2016-11-20 13:50:00','2016-11-20 13:50:00','user1','用户1','$2a$10$pGf9C4/gB3VjZnFw0fyP4OyjdLkL7dY6oYnbVJMoaX2qQUIyiQfYa',TRUE );
 
 INSERT INTO user_authority(authority,user_id) VALUES ('ROLE_ADMIN',1);
 INSERT INTO user_authority(authority,user_id) VALUES ('ROLE_USER',2);

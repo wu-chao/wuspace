@@ -13,14 +13,21 @@ public final class RegexpUtil {
      * 17 + 除 9 的任意数
      * 147
      */
-    public static final String PRC_PHONE_REGEXP = "^((13[0-9])|(15[^4])|(18[0,2,3,5-9])|(17[0-8])|(147))\\d{8}$";
+    // public static final String PRC_PHONE_REGEXP = "^((13[0-9])|(15[^4])|(18[0,2,3,5-9])|(17[0-8])|(147))\\d{8}$";
 
     /**
-     * 邮箱
+     * 大陆手机号码正则表达式
+     * 为拓展性好，不验证具体规则，只要满足以数字1开头，后跟10位数组即可
+     */
+    public static final String PRC_PHONE_REGEXP = "^(1)\\d{10}$";
+
+    /**
+     * 邮箱正则表达式
      */
     public static final String EMAIL = "[a-zA-Z_]{1,}[0-9]{0,}@(([a-zA-z0-9]-*){1,}\\.){1,3}[a-zA-z\\-]{1,}";
 
     /**
+     * 微信号正则表达式
      * 1、微信号是微信的唯一凭证，只能设置 1 次；
      * 2、可使用 6-20 个字母、数字、下划线和减号；
      * 3、必须以字母开头（字母不区分大小写）；
@@ -29,6 +36,7 @@ public final class RegexpUtil {
     public static final String WECHAT_REGEXP = "^[a-zA-Z]{1}[-_a-zA-Z0-9]{5,19}$";
 
     /**
+     * 身份证号码正则表达式
      * 18 位身份证号码各位的含义:
      * 1-2 位省、自治区、直辖市代码；
      * 3-4 位地级市、盟、自治州代码；
@@ -41,17 +49,17 @@ public final class RegexpUtil {
     public static final String ID_REGEXP = "^[1-9]\\d{5}[1-9]\\d{3}((0\\d)|(1[0-2]))(([0|1|2]\\d)|3[0-1])\\d{3}([0-9]|X)$";
 
     /**
-     * 邮编（6位纯数字）
+     * 邮编（6位纯数字）正则表达式
      */
     public static final String ZIP_REGEXP = "^[0-9]{6}$";
 
     /**
-     * IP
+     * IP 正则表达式
      */
     public static final String IP_REGEXP = "(25[0-5]|2[0-4]\\\\d|1\\\\d{2}|[1-9]?\\\\d)(\\\\.(25[0-5]|2[0-4]\\\\d|1\\\\d{2}|[1-9]?\\\\d)){3}";
 
     /**
-     * 域名
+     * 域名正则表达式
      * DNS (https://baike.baidu.com/item/dns/427444) 规定:
      * 域名中的标号都由英文字母和数字组成，每一个标号不超过 63 个字符，也不区分大小写字母
      * 标号中除连字符（-）外不能使用其他的标点符号。级别最低的域名写在最左边，而级别最高的域名写在最右边
@@ -60,7 +68,7 @@ public final class RegexpUtil {
     public static final String DOMAIN = " ^(?=^.{3,255}$)[a-zA-Z0-9][-a-zA-Z0-9]{0,62}(\\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+$";
 
     /**
-     * 网址
+     * 网址正则表达式
      */
     public static final String URL_PREFIX = "(http://|ftp://|https://|www){0,1}[^\u4e00-\u9fa5\\s]*?\\.(com|net|cn|me|tw|fr)[^\u4e00-\u9fa5\\s]*";
 

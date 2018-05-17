@@ -2,16 +2,19 @@ package com.wuspace.controller.blogs;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.sun.deploy.net.HttpRequest;
 import com.wuspace.domain.Blog;
+import com.wuspace.domain.User;
 import com.wuspace.mapper.BlogMapper;
 import com.wuspace.repository.BlogRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
@@ -25,12 +28,30 @@ public class BlogIndexController {
     @Autowired
     private BlogRepository blogRepository;
 
+    @PersistenceContext
+    private EntityManager entityManager;
+
+    @Transactional(rollbackFor = Exception.class)
     @GetMapping(value = {"", "/", "/blogs"})
     public String index(@RequestParam(defaultValue = "0") int pageNum,
                         @RequestParam(defaultValue = "10") int pageSize, Model model, HttpServletRequest request) {
         PageInfo blogPageInfo = listWithMarshalling(pageNum, pageSize);
         model.addAttribute("blogPageInfo", blogPageInfo);
-        return "blog/index";
+
+
+//        Blog blog = new Blog();
+//        blog.setTitle("title");
+//        blog.setContent("content");
+//        blog.setCreatedBy("1");
+//        User user = new User().id(1L).username("chao").password("123456");
+//        user.setCreatedBy("1");
+//        blog.setUser(user);
+//        entityManager.persist(blog);
+//        System.out.println("blog 已保存");
+//        blog.setTags("tag1");
+//        entityManager.getTransaction().commit();
+
+        return "index";
     }
 
     @RequestMapping(value = "/blogs", produces = {"application/xml", "application/json"})
@@ -42,7 +63,7 @@ public class BlogIndexController {
         return new PageInfo(blogList);
     }
 
-    private void loadBlogs(Model model){
+    private void loadBlogs(Model model) {
 
     }
 

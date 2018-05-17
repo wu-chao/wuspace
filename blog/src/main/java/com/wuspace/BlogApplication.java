@@ -39,7 +39,5 @@ public class BlogApplication {
 //        String imageDirection = "/home/wu-chao/下载/pdftoimages/";
 //        PdfServiceImpl.executorServicePdf2Images(imageDirection, filePath);
 
-        new Test().test();
-
     }
 }

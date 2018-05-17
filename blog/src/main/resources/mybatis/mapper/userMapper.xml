@@ -4,16 +4,17 @@
 
 <mapper namespace="com.wuspace.domain.UserMapper">
 
-    <resultMap id="userResultMap" type="com.wuspace.domain.User">
-        <result column="id" property="id"></result>
-        <result column="username" property="username"></result>
+    <!--<resultMap id="userResultMap" type="com.wuspace.domain.User">-->
+        <!--<result column="id" property="id"></result>-->
+        <!--<result column="username" property="username"></result>-->
 
-        <collection property="authorities" ofType="com.wuspace.domain.Authority">
-            <result column="authority" property="name"></result>
-        </collection>
-    </resultMap>
+        <!--<collection property="authorities" ofType="com.wuspace.domain.Authority">-->
+            <!--<result column="authority" property="name"></result>-->
+        <!--</collection>-->
+    <!--</resultMap>-->
 
-    <select id="findUserById" parameterType="long" resultType="com.wuspace.domain.User">
-        select * from users u where u.id = #{id}
-    </select>
+    <!--<select id="findUserById" parameterType="long" resultType="com.wuspace.domain.User">-->
+        <!--select * from users u where u.id = #{id}-->
+    <!--</select>-->
+
 </mapper>
