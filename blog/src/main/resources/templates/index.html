@@ -14,12 +14,14 @@
 
 <div layout:fragment="content">
     <section class="container">
+        <!--文章列表-->
         <div class="content-wrap">
             <div class="content">
-                <div class="jumbotron">
-                    <h1>欢迎访问异清轩博客</h1>
-                    <p>在这里可以看到前端技术，后端程序，网站内容管理系统等文章，还有我的程序人生！</p>
-                </div>
+                <!--<div class="jumbotron">-->
+                <!--<h1>欢迎访问异清轩博客</h1>-->
+                <!--<p>在这里可以看到前端技术，后端程序，网站内容管理系统等文章，还有我的程序人生！</p>-->
+                <!--</div>-->
+                <!--滚动图片-->
                 <div id="focusslide" class="carousel slide" data-ride="carousel">
                     <ol class="carousel-indicators">
                         <li data-target="#focusslide" data-slide-to="0" class="active"></li>
@@ -45,16 +47,22 @@
                     </a> <a class="right carousel-control" href="#focusslide" role="button" data-slide="next"
                             rel="nofollow"> <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
                     <span class="sr-only">下一个</span> </a></div>
+
+                <!--今日推荐-->
                 <article class="excerpt-minic excerpt-minic-index">
                     <h2><span class="red">【今日推荐】</span><a href="" title="">从下载看我们该如何做事</a></h2>
                     <p class="note">一次我下载几部电影，发现如果同时下载多部要等上几个小时，然后我把最想看的做个先后排序，去设置同时只能下载一部，结果是不到一杯茶功夫我就能看到最想看的电影。
                         这就像我们一段时间内想干成很多事情，是同时干还是有选择有顺序的干，结果很不一样。同时...</p>
                 </article>
+
+                <!--文章列表标题栏目-->
                 <div class="title">
                     <h3>最新发布</h3>
                     <div class="more"><a href="">PHP</a><a href="">JavaScript</a><a href="">EmpireCMS</a><a href="">Apache</a><a
                             href="">MySQL</a></div>
                 </div>
+
+                <!--文章列表项-->
                 <article class="excerpt excerpt-1"><a class="focus" href="article.html" title=""><img class="thumb"
                                                                                                       data-original="/images/water.gif"
                                                                                                       src="/images/water.gif"
@@ -146,6 +154,8 @@
                 </nav>
             </div>
         </div>
+
+        <!--右侧边栏-->
         <aside class="sidebar">
             <div class="fixed">
                 <div class="widget widget-tabs">
@@ -202,34 +212,139 @@
                         别让你不能做的事妨碍到你能做的事。（John Wooden）</p>
                 </div>
             </div>
+
+            <!--热门文章-->
             <div class="widget widget_hot">
                 <h3>热门文章</h3>
                 <ul>
-                    <li><a href=""><span class="thumbnail"><img class="thumb" data-original="/images/water.gif"
-                                                                src="/images/water.gif" alt=""></span><span
-                            class="text">php如何判断一个日期的格式是否正确</span><span class="muted"><i
-                            class="glyphicon glyphicon-time"></i> 2016-1-4 </span><span class="muted"><i
-                            class="glyphicon glyphicon-eye-open"></i> 120</span></a></li>
-                    <li><a href=""><span class="thumbnail"><img class="thumb" data-original="/images/water.gif"
-                                                                src="/images/water.gif" alt=""></span><span
-                            class="text">php如何判断一个日期的格式是否正确</span><span class="muted"><i
-                            class="glyphicon glyphicon-time"></i> 2016-1-4 </span><span class="muted"><i
-                            class="glyphicon glyphicon-eye-open"></i> 120</span></a></li>
-                    <li><a href=""><span class="thumbnail"><img class="thumb" data-original="/images/water.gif"
-                                                                src="/images/water.gif" alt=""></span><span
-                            class="text">php如何判断一个日期的格式是否正确</span><span class="muted"><i
-                            class="glyphicon glyphicon-time"></i> 2016-1-4 </span><span class="muted"><i
-                            class="glyphicon glyphicon-eye-open"></i> 120</span></a></li>
-                    <li><a href=""><span class="thumbnail"><img class="thumb" data-original="/images/water.gif"
-                                                                src="/images/water.gif" alt=""></span><span
-                            class="text">php如何判断一个日期的格式是否正确</span><span class="muted"><i
-                            class="glyphicon glyphicon-time"></i> 2016-1-4 </span><span class="muted"><i
-                            class="glyphicon glyphicon-eye-open"></i> 120</span></a></li>
-                    <li><a href=""><span class="thumbnail"><img class="thumb" data-original="/images/water.gif"
-                                                                src="/images/water.gif" alt=""></span><span
-                            class="text">php如何判断一个日期的格式是否正确</span><span class="muted"><i
-                            class="glyphicon glyphicon-time"></i> 2016-1-4 </span><span class="muted"><i
-                            class="glyphicon glyphicon-eye-open"></i> 120</span></a></li>
+                    <li>
+                        <a href="">
+                            <!--<span class="thumbnail">-->
+                            <!--<img class="thumb" data-original="/images/water.gif" src="/images/water.gif" alt="">-->
+                            <!--</span>-->
+                            <span class="text">php如何判断一个日期的格式是否正确</span>
+                            <span class="muted"><i class="glyphicon glyphicon-time"></i> 2016-1-4 </span>
+                            <span class="muted"><i class="glyphicon glyphicon-eye-open"></i> 120</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <span class="text">php如何判断一个日期的格式是否正确</span>
+                            <span class="muted"><i class="glyphicon glyphicon-time"></i> 2016-1-4 </span>
+                            <span class="muted"><i class="glyphicon glyphicon-eye-open"></i> 120</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <span class="text">php如何判断一个日期的格式是否正确</span>
+                            <span class="muted"><i class="glyphicon glyphicon-time"></i> 2016-1-4 </span>
+                            <span class="muted"><i class="glyphicon glyphicon-eye-open"></i> 120</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <span class="text">php如何判断一个日期的格式是否正确</span>
+                            <span class="muted"><i class="glyphicon glyphicon-time"></i> 2016-1-4 </span>
+                            <span class="muted"><i class="glyphicon glyphicon-eye-open"></i> 120</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <span class="text">php如何判断一个日期的格式是否正确</span>
+                            <span class="muted"><i class="glyphicon glyphicon-time"></i> 2016-1-4 </span>
+                            <span class="muted"><i class="glyphicon glyphicon-eye-open"></i> 120</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <!--标签云-->
+            <div class="widget widget_hot">
+                <h3>标签云</h3>
+                <ul>
+                    <li>
+                        <a href="">
+                            <!--<span class="thumbnail">-->
+                            <!--<img class="thumb" data-original="/images/water.gif" src="/images/water.gif" alt="">-->
+                            <!--</span>-->
+                            <span class="text">php如何判断一个日期的格式是否正确</span>
+                            <span class="muted"><i class="glyphicon glyphicon-time"></i> 2016-1-4 </span>
+                            <span class="muted"><i class="glyphicon glyphicon-eye-open"></i> 120</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <span class="text">php如何判断一个日期的格式是否正确</span>
+                            <span class="muted"><i class="glyphicon glyphicon-time"></i> 2016-1-4 </span>
+                            <span class="muted"><i class="glyphicon glyphicon-eye-open"></i> 120</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <span class="text">php如何判断一个日期的格式是否正确</span>
+                            <span class="muted"><i class="glyphicon glyphicon-time"></i> 2016-1-4 </span>
+                            <span class="muted"><i class="glyphicon glyphicon-eye-open"></i> 120</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <span class="text">php如何判断一个日期的格式是否正确</span>
+                            <span class="muted"><i class="glyphicon glyphicon-time"></i> 2016-1-4 </span>
+                            <span class="muted"><i class="glyphicon glyphicon-eye-open"></i> 120</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <span class="text">php如何判断一个日期的格式是否正确</span>
+                            <span class="muted"><i class="glyphicon glyphicon-time"></i> 2016-1-4 </span>
+                            <span class="muted"><i class="glyphicon glyphicon-eye-open"></i> 120</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <!--友情链接-->
+            <div class="widget widget_hot">
+                <h3>友情链接</h3>
+                <ul>
+                    <li>
+                        <a href="">
+                            <!--<span class="thumbnail">-->
+                            <!--<img class="thumb" data-original="/images/water.gif" src="/images/water.gif" alt="">-->
+                            <!--</span>-->
+                            <span class="text">php如何判断一个日期的格式是否正确</span>
+                            <span class="muted"><i class="glyphicon glyphicon-time"></i> 2016-1-4 </span>
+                            <span class="muted"><i class="glyphicon glyphicon-eye-open"></i> 120</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <span class="text">php如何判断一个日期的格式是否正确</span>
+                            <span class="muted"><i class="glyphicon glyphicon-time"></i> 2016-1-4 </span>
+                            <span class="muted"><i class="glyphicon glyphicon-eye-open"></i> 120</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <span class="text">php如何判断一个日期的格式是否正确</span>
+                            <span class="muted"><i class="glyphicon glyphicon-time"></i> 2016-1-4 </span>
+                            <span class="muted"><i class="glyphicon glyphicon-eye-open"></i> 120</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <span class="text">php如何判断一个日期的格式是否正确</span>
+                            <span class="muted"><i class="glyphicon glyphicon-time"></i> 2016-1-4 </span>
+                            <span class="muted"><i class="glyphicon glyphicon-eye-open"></i> 120</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <span class="text">php如何判断一个日期的格式是否正确</span>
+                            <span class="muted"><i class="glyphicon glyphicon-time"></i> 2016-1-4 </span>
+                            <span class="muted"><i class="glyphicon glyphicon-eye-open"></i> 120</span>
+                        </a>
+                    </li>
                 </ul>
             </div>
         </aside>

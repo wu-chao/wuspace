@@ -1362,7 +1362,7 @@ color:#FFF;
 }
 /*侧边栏热门文章*/
 .widget_hot li a {
-	padding: 10px 15px 10px 150px;
+	padding: 10px 15px 10px 15px;
 	color: #888;
 	border-bottom: solid 1px #eee;
 	overflow: hidden;
@@ -1377,16 +1377,16 @@ color:#FFF;
 	-webkit-transition-timing-function: cubic-bezier(0.47, 2.02, 0.31, -0.36);
 	transition-timing-function: cubic-bezier(0.47, 2.02, 0.31, -0.36);
 }
-.widget_hot .thumbnail {
-	float: left;
-	margin-left: -135px;
-	border: none;
-	margin-bottom: 0;
-}
-.widget_hot .thumbnail img {
-	width: 122px;
-	height: 86px;
-}
+/*.widget_hot .thumbnail {*/
+	/*float: left;*/
+	/*margin-left: -135px;*/
+	/*border: none;*/
+	/*margin-bottom: 0;*/
+/*}*/
+/*.widget_hot .thumbnail img {*/
+	/*width: 122px;*/
+	/*height: 86px;*/
+/*}*/
 .widget_hot .text {
 	display: block;
 }
