@@ -1,8 +1,7 @@
 package com.wuspace.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.validator.constraints.Email;
 
 import javax.persistence.*;
@@ -14,6 +13,11 @@ import java.util.Set;
 
 @Getter
 @Setter
+@Builder
+@EqualsAndHashCode(of = {"id", "username", "activated"}, callSuper = true)
+@ToString(exclude = {"authorities"})
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "users")
 public class User extends AbstractAuditingEntity implements Serializable {
@@ -25,7 +29,7 @@ public class User extends AbstractAuditingEntity implements Serializable {
     private Long id;
 
     @NotNull
-    @Size(min = 4, max = 50)
+    @Size(min = 2, max = 50)
     @Column(name = "username", length = 50, unique = true, nullable = false)
     private String username;
 
@@ -61,9 +65,6 @@ public class User extends AbstractAuditingEntity implements Serializable {
             inverseJoinColumns = {@JoinColumn(name = "authority", referencedColumnName = "name")})
     private Set<Authority> authorities = new HashSet<>();
 
-    public User() {
-    }
-
     public User id(Long id) {
         this.id = id;
         return this;
@@ -74,77 +75,9 @@ public class User extends AbstractAuditingEntity implements Serializable {
         return this;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
     public User password(String password) {
         this.password = password;
         return this;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getNickname() {
-        return nickname;
-    }
-
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public String getAvatarUrl() {
-        return avatarUrl;
-    }
-
-    public void setAvatarUrl(String avatarUrl) {
-        this.avatarUrl = avatarUrl;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Boolean getActivated() {
-        return activated;
     }
 
     public User activated(Boolean activated) {
@@ -152,57 +85,4 @@ public class User extends AbstractAuditingEntity implements Serializable {
         return this;
     }
 
-    public void setActivated(Boolean activated) {
-        this.activated = activated;
-    }
-
-    public Set<Authority> getAuthorities() {
-        return authorities;
-    }
-
-    public void setAuthorities(Set<Authority> authorities) {
-        this.authorities = authorities;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", nickname='" + nickname + '\'' +
-                ", email='" + email + '\'' +
-                ", phone='" + phone + '\'' +
-                ", avatarUrl='" + avatarUrl + '\'' +
-                ", description='" + description + '\'' +
-                ", activated=" + activated +
-                ", authorities=" + authorities +
-                '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        User user = (User) o;
-
-        if (activated != user.activated) return false;
-        if (!id.equals(user.id)) return false;
-        if (!username.equals(user.username)) return false;
-        if (!password.equals(user.password)) return false;
-        if (email != null ? !email.equals(user.email) : user.email != null) return false;
-        return phone != null ? phone.equals(user.phone) : user.phone == null;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = id.hashCode();
-        result = 31 * result + username.hashCode();
-        result = 31 * result + password.hashCode();
-        result = 31 * result + (email != null ? email.hashCode() : 0);
-        result = 31 * result + (phone != null ? phone.hashCode() : 0);
-        result = 31 * result + (activated ? 1 : 0);
-        return result;
-    }
 }

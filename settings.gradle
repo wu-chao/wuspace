@@ -5,4 +5,5 @@ include 'blog'
 include 'eureka-server'
 include 'java-demo'
 include 'jsp-demo'
+include 'hibernate-demo'
 

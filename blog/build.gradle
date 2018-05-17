@@ -83,8 +83,6 @@ ext {
     mapper_spring_boot_starter_version = '1.1.4'
     pagehelper_spring_boot_starter_version = '1.2.1'
 
-    hibernate_version = '5.2.8.Final'
-    hibernate_search_version = '5.7.1.Final'
     hikaricp_version = '2.6.0'
 
 //    poi_version = '3.9'
@@ -173,8 +171,6 @@ dependencies {
     compile "com.fasterxml.jackson.module:jackson-module-parameter-names:2.8.8"
     compile "com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.8.8"
 
-    compile "org.hyperic:sigar:${sigar_version}"
-
     // Apache Commons
     compile "org.apache.commons:commons-lang3:${commons_lang_version}"
     // 包含 commons-collections、commons-logging
@@ -202,6 +198,8 @@ dependencies {
     // maven { url "http://maven.aliyun.com/nexus/content/groups/public/" } module 会错误
     compile "org.icepdf.os:icepdf-core:${icepdf_core_version}"
     compile "org.icepdf.os:icepdf-viewer:${icepdf_viewer_version}"
+
+    compile "org.hyperic:sigar:${sigar_version}"
 
     compile "org.projectlombok:lombok:${lombok_version}"
 
