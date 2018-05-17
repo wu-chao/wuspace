@@ -38,19 +38,6 @@ public class BlogIndexController {
         PageInfo blogPageInfo = listWithMarshalling(pageNum, pageSize);
         model.addAttribute("blogPageInfo", blogPageInfo);
 
-
-//        Blog blog = new Blog();
-//        blog.setTitle("title");
-//        blog.setContent("content");
-//        blog.setCreatedBy("1");
-//        User user = new User().id(1L).username("chao").password("123456");
-//        user.setCreatedBy("1");
-//        blog.setUser(user);
-//        entityManager.persist(blog);
-//        System.out.println("blog 已保存");
-//        blog.setTags("tag1");
-//        entityManager.getTransaction().commit();
-
         return "index";
     }
 
