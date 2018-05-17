@@ -2,8 +2,7 @@ package com.wuspace.security;
 
 import com.wuspace.domain.User;
 import com.wuspace.repository.UserRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -21,10 +20,9 @@ import java.util.stream.Collectors;
 /**
  * Authenticate a user from the database.
  */
+@Slf4j
 @Component("userDetailsService")
 public class DomainUserDetailsService implements UserDetailsService {
-
-    private final Logger log = LoggerFactory.getLogger(DomainUserDetailsService.class);
 
     private final UserRepository userRepository;
 

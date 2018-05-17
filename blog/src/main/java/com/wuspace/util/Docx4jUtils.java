@@ -1,6 +1,7 @@
 package com.wuspace.util;
 
 import lombok.Cleanup;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.docx4j.jaxb.Context;
@@ -12,8 +13,6 @@ import org.docx4j.openpackaging.parts.WordprocessingML.MainDocumentPart;
 import org.docx4j.org.apache.poi.util.IOUtils;
 import org.docx4j.relationships.Relationship;
 import org.docx4j.wml.CTAltChunk;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.util.ResourceUtils;
 
 import java.io.*;
@@ -21,13 +20,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-/**
- * @author wuchao
- * @date 2018/5/15 10:16
- */
+@Slf4j
 public abstract class Docx4jUtils {
-
-    private final static Logger logger = LoggerFactory.getLogger(Docx4jUtils.class);
 
     /**
      * 合并文件
@@ -51,7 +45,7 @@ public abstract class Docx4jUtils {
                     }
                     inList.add(i);
                 } catch (FileNotFoundException e) {
-                    logger.warn("文件不存在");
+                    log.warn("文件不存在");
                     return;
                 }
             }

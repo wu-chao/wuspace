@@ -1,8 +1,7 @@
 package com.wuspace.util;
 
 import lombok.Cleanup;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -12,9 +11,8 @@ import java.io.*;
 import java.net.URLEncoder;
 import java.util.UUID;
 
+@Slf4j
 public abstract class FileUtils {
-
-    private final static Logger logger = LoggerFactory.getLogger(FileUtils.class);
 
     /**
      * 上传文件
@@ -95,13 +93,13 @@ public abstract class FileUtils {
             File file = ResourceUtils.getFile(fileLocation);
             if (file.exists() && file.isFile()) {
                 if (file.delete()) {
-                    logger.info("删除文件（" + fileLocation + "）成功");
+                    log.info("删除文件（" + fileLocation + "）成功");
                 } else {
-                    logger.info("删除文件（" + fileLocation + "）失败");
+                    log.info("删除文件（" + fileLocation + "）失败");
                 }
             }
         } catch (FileNotFoundException e) {
-            logger.warn("文件（" + fileLocation + "）不存在");
+            log.warn("文件（" + fileLocation + "）不存在");
         }
     }
 

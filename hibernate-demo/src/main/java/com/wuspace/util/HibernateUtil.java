@@ -1,5 +1,6 @@
 package com.wuspace.util;
 
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.Metadata;
@@ -9,6 +10,7 @@ import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 
+@Slf4j
 public final class HibernateUtil {
 
     // 初始化一个ThreadLocal对象
@@ -39,8 +41,10 @@ public final class HibernateUtil {
             Metadata metadata = new MetadataSources(standardRegistry).getMetadataBuilder()
                     .applyImplicitNamingStrategy(ImplicitNamingStrategyComponentPathImpl.INSTANCE).build();
             sessionFactory = metadata.getSessionFactoryBuilder().build();
+            log.warn("创建 sessionFactory 成功");
 
         } catch (Throwable ex) {
+            log.warn("创建 sessionFactory 失败");
             ex.printStackTrace();
             throw new ExceptionInInitializerError(ex);
         }
