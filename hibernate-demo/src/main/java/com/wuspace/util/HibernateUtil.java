@@ -61,7 +61,7 @@ public final class HibernateUtil {
         // 如果 session 为 null，则打开一个新的 session
         if (session == null) {
             // 创建一个数据库连接对象 session。
-            session = sessionFactory.openSession();
+            session = sessionFactory.getCurrentSession();
             // 保存该数据库连接 session 到 ThreadLocal 中。
             sessionTL.set(session);
         }
@@ -72,6 +72,38 @@ public final class HibernateUtil {
 
     /**
      * 关闭Session
+     * <p>
+     * 1、getCurrentSession()与openSession()的区别？
+     * <p>
+     * * 采用getCurrentSession()创建的session会绑定到当前线程中，而采用openSession()，创建的session则不会
+     * <p>
+     * * 采用getCurrentSession()创建的session在commit或rollback时会自动关闭，而采用openSession()，创建的session必须手动关闭
+     * <p>
+     * 2、使用getCurrentSession()需要在hibernate.cfg.xml文件中加入如下配置：
+     * <p>
+     * * 如果使用的是本地事务（jdbc事务）
+     *
+     * <property name="hibernate.current_session_context_class">thread</property>
+     * <p>
+     * * 如果使用的是全局事务（jta事务）
+     *
+     * <property name="hibernate.current_session_context_class">jta</property>
+     * <p>
+     * <p>
+     * <p>
+     * openSession() 与 getCurrentSession() 有何不同和关联呢？
+     * <p>
+     * 在 SessionFactory 启动的时候， Hibernate 会根据配置创建相应的 CurrentSessionContext ，在getCurrentSession() 被调用的时候，实际被执行的方法是 CurrentSessionContext.currentSession() 。在currentSession() 执行时，如果当前 Session 为空， currentSession 会调用 SessionFactory 的 openSession 。所以 getCurrentSession() 对于 Java EE 来说是更好的获取 Session 的方法。
+     * <p>
+     * <p>
+     * <p>
+     * 许多时候出现session is close();原因就是你在hibernate.cfg.xml里面设置了
+     *
+     * <property name="hibernate.current_session_context_class">thread</property>
+     * <p>
+     * 系统在commit();执行完之后就关闭了session，这时候你手动再关闭session就当然提示错误了
+     *
+     * https://blog.csdn.net/mr_hhh/article/details/50681309
      */
     @SuppressWarnings("unchecked")
     public static void close() {

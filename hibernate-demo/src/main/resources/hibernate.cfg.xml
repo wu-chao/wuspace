@@ -40,9 +40,7 @@
         <property name="hibernate.connection.autocommit">true</property>
         <!-- 将Session与线程绑定=> 只有配置了该配置,才能使用getCurrentSession -->
         <property name="hibernate.current_session_context_class">thread</property>
-        <!-- 引入ORM 映射文件
-            填写src之后的路径
-         -->
+        <!-- 引入ORM 映射文件 -->
         <mapping resource="com/wuspace/domain/User.hbm.xml"/>
     </session-factory>
 </hibernate-configuration>
