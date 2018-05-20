@@ -1,6 +1,6 @@
 package com.wuspace.aop.logging;
 
-import com.wuspace.admin.common.Constants;
+import com.wuspace.common.Constants;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
