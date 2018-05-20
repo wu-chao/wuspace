@@ -3,7 +3,6 @@ package com.wuspace.controller.blogs;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.wuspace.domain.Blog;
-import com.wuspace.domain.User;
 import com.wuspace.mapper.BlogMapper;
 import com.wuspace.repository.BlogRepository;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -10,6 +10,6 @@ org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor
 ``` 
 
 dependencies : 
-``` 
+```
 compile "org.hibernate:hibernate-jpamodelgen"
 ```

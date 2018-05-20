@@ -1,6 +1,6 @@
 package com.wuspace.config;
 
-import com.wuspace.admin.filter.VerificationCodeAuthenticationFilter;
+import com.wuspace.config.filter.VerificationCodeAuthenticationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -126,7 +126,7 @@ Could not verify the provided CSRF token because your session was not found.
         }
     }
 
-    @Bean
+    @Bean(name = "passwordEncoder")
     public PasswordEncoder passwordEncoder() {
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         return passwordEncoder;

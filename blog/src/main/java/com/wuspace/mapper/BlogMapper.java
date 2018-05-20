@@ -33,6 +33,6 @@ public interface BlogMapper {
             "u.id as user_id, " +
             "u.nickname as nickname " +
             "from blogs as b, users as u where b.id = #{id} and u.id = b.user_id ")
-    @ResultMap("com.wuspace.mapper.BlogMapper.blogMap")
+//    @ResultMap("com.wuspace.mapper.BlogMapper.blogMap")
     Blog findBlogWithUserById(Long id);
 }
