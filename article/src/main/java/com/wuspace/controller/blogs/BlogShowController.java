@@ -1,6 +1,6 @@
 package com.wuspace.controller.blogs;
 
-import com.wuspace.domain.Blog;
+import com.wuspace.domain.Article;
 import com.wuspace.exception.ResourceNotFoundException;
 import com.wuspace.mapper.BlogMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,7 @@ public class BlogShowController {
 
     @GetMapping("/blogs/{blogId}")
     public String show(@PathVariable("blogId") Long blogId, Model model) {
-        Blog blog = blogMapper.findBlogWithUserById(blogId);
+        Article blog = blogMapper.findBlogWithUserById(blogId);
         if (blog == null) {
             throw new ResourceNotFoundException();
         }

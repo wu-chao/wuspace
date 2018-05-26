@@ -10,11 +10,11 @@ import java.util.List;
 
 public class BlogSpecs {
 
-    public static Specification<Blog> findAll(final String titleOrContent) {
+    public static Specification<Article> findAll(final String titleOrContent) {
         return Specifications.where(filter(titleOrContent));
     }
 
-    public static Specification<Blog> filter(final String titleOrContent) {
+    public static Specification<Article> filter(final String titleOrContent) {
         return (root, query, cb) -> {
             List<Predicate> predicates = new ArrayList<>();
 

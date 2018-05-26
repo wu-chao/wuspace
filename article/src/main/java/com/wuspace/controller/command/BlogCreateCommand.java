@@ -1,6 +1,6 @@
 package com.wuspace.controller.command;
 
-import com.wuspace.domain.Blog;
+import com.wuspace.domain.Article;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,13 +12,12 @@ public class BlogCreateCommand {
 
     private String content;
 
-    public Blog toBlog(Blog blog) {
+    public Article toBlog(Article blog) {
         if (blog == null) {
-            blog = new Blog();
+            blog = new Article();
         }
 
         blog.setTitle(this.getTitle());
-        blog.setContent(this.getContent());
 
         return blog;
     }

@@ -66,7 +66,7 @@
 <div class="wrapper">
     <header layout:fragment="header" class="main-header">
         <!-- Logo -->
-        <a href="https://adminlte.io/themes/AdminLTE/index2.html" class="logo">
+        <a href="/admin/home" class="logo">
             <!-- mini logo for sidebar mini 50x50 pixels -->
             <span class="logo-mini"><b>A</b>LT</span>
             <!-- logo for regular state and mobile devices -->
@@ -265,144 +265,64 @@
             <!-- sidebar menu: : style can be found in sidebar.less -->
             <ul class="sidebar-menu tree" data-widget="tree">
                 <li class="header">MAIN NAVIGATION</li>
-                <li class="treeview">
+                <!--Dashboard-->
+                <li>
                     <a href="https://adminlte.io/themes/AdminLTE/pages/examples/pace.html#">
                         <i class="fa fa-dashboard"></i> <span>Dashboard</span>
-                        <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
                     </a>
-                    <ul class="treeview-menu">
-                        <li><a href="https://adminlte.io/themes/AdminLTE/index.html"><i class="fa fa-circle-o"></i>
-                            Dashboard v1</a></li>
-                        <li><a href="https://adminlte.io/themes/AdminLTE/index2.html"><i class="fa fa-circle-o"></i>
-                            Dashboard v2</a></li>
-                    </ul>
                 </li>
+                <!--Article-->
                 <li class="treeview">
-                    <a href="https://adminlte.io/themes/AdminLTE/pages/examples/pace.html#">
-                        <i class="fa fa-files-o"></i>
-                        <span>Layout Options</span>
+                    <a href="#">
+                        <i class="fa fa-edit"></i> <span>Article</span>
                         <span class="pull-right-container">
-              <span class="label label-primary pull-right">4</span>
-            </span>
+                          <i class="fa fa-angle-left pull-right"></i>
+                        </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="https://adminlte.io/themes/AdminLTE/pages/layout/top-nav.html"><i
-                                class="fa fa-circle-o"></i> Top Navigation</a></li>
-                        <li><a href="https://adminlte.io/themes/AdminLTE/pages/layout/boxed.html"><i
-                                class="fa fa-circle-o"></i> Boxed</a></li>
-                        <li><a href="https://adminlte.io/themes/AdminLTE/pages/layout/fixed.html"><i
-                                class="fa fa-circle-o"></i> Fixed</a></li>
-                        <li><a href="https://adminlte.io/themes/AdminLTE/pages/layout/collapsed-sidebar.html"><i
-                                class="fa fa-circle-o"></i> Collapsed Sidebar</a></li>
+                        <li><a href="/admin/articles"><i
+                                class="fa fa-circle-o"></i> blog</a></li>
+                        <li><a href="/admin/articles/publish"><i
+                                class="fa fa-circle-o"></i> publish</a></li>
                     </ul>
                 </li>
+                <!--News-->
                 <li>
-                    <a href="https://adminlte.io/themes/AdminLTE/pages/widgets.html">
-                        <i class="fa fa-th"></i> <span>Widgets</span>
+                    <a href="#">
+                        <i class="fa fa-newspaper-o"></i> <span>News</span>
                         <span class="pull-right-container">
-              <small class="label pull-right bg-green">Hot</small>
-            </span>
+                          <small class="label pull-right bg-yellow">12</small>
+                          <small class="label pull-right bg-green">16</small>
+                          <small class="label pull-right bg-red">5</small>
+                        </span>
                     </a>
                 </li>
-                <li class="treeview">
-                    <a href="https://adminlte.io/themes/AdminLTE/pages/examples/pace.html#">
-                        <i class="fa fa-pie-chart"></i>
-                        <span>Charts</span>
-                        <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-                    </a>
-                    <ul class="treeview-menu">
-                        <li><a href="https://adminlte.io/themes/AdminLTE/pages/charts/chartjs.html"><i
-                                class="fa fa-circle-o"></i> ChartJS</a></li>
-                        <li><a href="https://adminlte.io/themes/AdminLTE/pages/charts/morris.html"><i
-                                class="fa fa-circle-o"></i> Morris</a></li>
-                        <li><a href="https://adminlte.io/themes/AdminLTE/pages/charts/flot.html"><i
-                                class="fa fa-circle-o"></i> Flot</a></li>
-                        <li><a href="https://adminlte.io/themes/AdminLTE/pages/charts/inline.html"><i
-                                class="fa fa-circle-o"></i> Inline charts</a></li>
-                    </ul>
-                </li>
-                <li class="treeview">
-                    <a href="https://adminlte.io/themes/AdminLTE/pages/examples/pace.html#">
-                        <i class="fa fa-laptop"></i>
-                        <span>UI Elements</span>
-                        <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-                    </a>
-                    <ul class="treeview-menu">
-                        <li><a href="https://adminlte.io/themes/AdminLTE/pages/UI/general.html"><i
-                                class="fa fa-circle-o"></i> General</a></li>
-                        <li><a href="https://adminlte.io/themes/AdminLTE/pages/UI/icons.html"><i
-                                class="fa fa-circle-o"></i> Icons</a></li>
-                        <li><a href="https://adminlte.io/themes/AdminLTE/pages/UI/buttons.html"><i
-                                class="fa fa-circle-o"></i> Buttons</a></li>
-                        <li><a href="https://adminlte.io/themes/AdminLTE/pages/UI/sliders.html"><i
-                                class="fa fa-circle-o"></i> Sliders</a></li>
-                        <li><a href="https://adminlte.io/themes/AdminLTE/pages/UI/timeline.html"><i
-                                class="fa fa-circle-o"></i> Timeline</a></li>
-                        <li><a href="https://adminlte.io/themes/AdminLTE/pages/UI/modals.html"><i
-                                class="fa fa-circle-o"></i> Modals</a></li>
-                    </ul>
-                </li>
-                <li class="treeview">
-                    <a href="https://adminlte.io/themes/AdminLTE/pages/examples/pace.html#">
-                        <i class="fa fa-edit"></i> <span>Forms</span>
-                        <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-                    </a>
-                    <ul class="treeview-menu">
-                        <li><a href="https://adminlte.io/themes/AdminLTE/pages/forms/general.html"><i
-                                class="fa fa-circle-o"></i> General Elements</a></li>
-                        <li><a href="https://adminlte.io/themes/AdminLTE/pages/forms/advanced.html"><i
-                                class="fa fa-circle-o"></i> Advanced Elements</a></li>
-                        <li><a href="https://adminlte.io/themes/AdminLTE/pages/forms/editors.html"><i
-                                class="fa fa-circle-o"></i> Editors</a></li>
-                    </ul>
-                </li>
-                <li class="treeview">
-                    <a href="https://adminlte.io/themes/AdminLTE/pages/examples/pace.html#">
-                        <i class="fa fa-table"></i> <span>Tables</span>
-                        <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-                    </a>
-                    <ul class="treeview-menu">
-                        <li><a href="https://adminlte.io/themes/AdminLTE/pages/tables/simple.html"><i
-                                class="fa fa-circle-o"></i> Simple tables</a></li>
-                        <li><a href="https://adminlte.io/themes/AdminLTE/pages/tables/data.html"><i
-                                class="fa fa-circle-o"></i> Data tables</a></li>
-                    </ul>
-                </li>
+
                 <li>
                     <a href="https://adminlte.io/themes/AdminLTE/pages/calendar.html">
                         <i class="fa fa-calendar"></i> <span>Calendar</span>
                         <span class="pull-right-container">
-              <small class="label pull-right bg-red">3</small>
-              <small class="label pull-right bg-blue">17</small>
-            </span>
+                          <small class="label pull-right bg-red">3</small>
+                          <small class="label pull-right bg-blue">17</small>
+                        </span>
                     </a>
                 </li>
                 <li>
                     <a href="https://adminlte.io/themes/AdminLTE/pages/mailbox/mailbox.html">
                         <i class="fa fa-envelope"></i> <span>Mailbox</span>
                         <span class="pull-right-container">
-              <small class="label pull-right bg-yellow">12</small>
-              <small class="label pull-right bg-green">16</small>
-              <small class="label pull-right bg-red">5</small>
-            </span>
+                          <small class="label pull-right bg-yellow">12</small>
+                          <small class="label pull-right bg-green">16</small>
+                          <small class="label pull-right bg-red">5</small>
+                        </span>
                     </a>
                 </li>
                 <li class="treeview active menu-open">
                     <a href="https://adminlte.io/themes/AdminLTE/pages/examples/pace.html#">
                         <i class="fa fa-folder"></i> <span>Examples</span>
                         <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
+                          <i class="fa fa-angle-left pull-right"></i>
+                        </span>
                     </a>
                     <ul class="treeview-menu">
                         <li><a href="https://adminlte.io/themes/AdminLTE/pages/examples/invoice.html"><i
@@ -425,58 +345,9 @@
                                 class="fa fa-circle-o"></i> Pace Page</a></li>
                     </ul>
                 </li>
-                <li class="treeview">
-                    <a href="https://adminlte.io/themes/AdminLTE/pages/examples/pace.html#">
-                        <i class="fa fa-share"></i> <span>Multilevel</span>
-                        <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-                    </a>
-                    <ul class="treeview-menu">
-                        <li><a href="https://adminlte.io/themes/AdminLTE/pages/examples/pace.html#"><i
-                                class="fa fa-circle-o"></i> Level One</a></li>
-                        <li class="treeview">
-                            <a href="https://adminlte.io/themes/AdminLTE/pages/examples/pace.html#"><i
-                                    class="fa fa-circle-o"></i> Level One
-                                <span class="pull-right-container">
-                  <i class="fa fa-angle-left pull-right"></i>
-                </span>
-                            </a>
-                            <ul class="treeview-menu">
-                                <li><a href="https://adminlte.io/themes/AdminLTE/pages/examples/pace.html#"><i
-                                        class="fa fa-circle-o"></i> Level Two</a></li>
-                                <li class="treeview">
-                                    <a href="https://adminlte.io/themes/AdminLTE/pages/examples/pace.html#"><i
-                                            class="fa fa-circle-o"></i> Level Two
-                                        <span class="pull-right-container">
-                      <i class="fa fa-angle-left pull-right"></i>
-                    </span>
-                                    </a>
-                                    <ul class="treeview-menu">
-                                        <li><a href="https://adminlte.io/themes/AdminLTE/pages/examples/pace.html#"><i
-                                                class="fa fa-circle-o"></i> Level Three</a></li>
-                                        <li><a href="https://adminlte.io/themes/AdminLTE/pages/examples/pace.html#"><i
-                                                class="fa fa-circle-o"></i> Level Three</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </li>
-                        <li><a href="https://adminlte.io/themes/AdminLTE/pages/examples/pace.html#"><i
-                                class="fa fa-circle-o"></i> Level One</a></li>
-                    </ul>
+                <li>
+                    <a href="https://adminlte.io/docs"><i class="fa fa-book"></i> <span>Documentation</span></a>
                 </li>
-                <li><a href="https://adminlte.io/docs"><i class="fa fa-book"></i> <span>Documentation</span></a>
-                </li>
-                <li class="header">LABELS</li>
-                <li><a href="https://adminlte.io/themes/AdminLTE/pages/examples/pace.html#"><i
-                        class="fa fa-circle-o text-red"></i> <span>Important</span></a></li>
-                <li><a href="https://adminlte.io/themes/AdminLTE/pages/examples/pace.html#"><i
-                        class="fa fa-circle-o text-yellow"></i> <span>Warning</span></a></li>
-                <li><a href="https://adminlte.io/themes/AdminLTE/pages/examples/pace.html#"><i
-                        class="fa fa-circle-o text-aqua"></i> <span>Information</span></a></li>
-                <li class="bg-green"><a href="https://themequarry.com/"><i class="fa fa-star-o"
-                                                                           style="color: rgb(255, 255, 255);"></i><span
-                        style="color: rgb(255, 255, 255);">Premium Templates</span></a></li>
             </ul>
         </section>
         <!-- /.sidebar -->
@@ -485,23 +356,8 @@
     <!-- =============================================== -->
 
     <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper" style="min-height: 1170px;">
-        <div style="padding: 20px 30px; background: rgb(243, 156, 18); z-index: 999999; font-size: 16px; font-weight: 600;">
-            <a class="pull-right" href="https://adminlte.io/themes/AdminLTE/pages/examples/pace.html#"
-               data-toggle="tooltip" data-placement="left" title="" style="color: rgb(255, 255, 255); font-size: 20px;"
-               data-original-title="Never show me this again!">×</a>
-            <a href="https://themequarry.com/"
-               style="color: rgba(255, 255, 255, 0.9); display: inline-block; margin-right: 10px; text-decoration: none;">Ready
-                to sell your theme? Submit your theme to our new marketplace now and let over 200k visitors see
-                it!</a><a
-                class="btn btn-default btn-sm" href="https://themequarry.com/"
-                style="margin-top: -5px; border: 0px; box-shadow: none; color: rgb(243, 156, 18); font-weight: 600; background: rgb(255, 255, 255);">Let's
-            Do It!</a>
-        </div>
+    <div layout:fragment="content">
 
-        <div layout:fragment="content">
-
-        </div>
     </div>
     <!-- /.content-wrapper -->
 

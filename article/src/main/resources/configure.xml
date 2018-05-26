@@ -19,6 +19,6 @@
 
 	<mappers>
 		<mapper resource="com.wuspace.domain.User.xml"/>
-		<mapper resource="com.wuspace.domain.Blog.xml"/>
+		<mapper resource="com.wuspace.domain.Article.xml"/>
 	</mappers>
 </configuration>

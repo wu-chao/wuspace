@@ -7,7 +7,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.FilterType;
 
-@ComponentScan(excludeFilters = @ComponentScan.Filter(type = FilterType.REGEX, pattern = "com\\.wuspace\\.controller\\.*"))
+@ComponentScan(excludeFilters = @ComponentScan.Filter(type = FilterType.REGEX, pattern = "com\\.wuspace\\.*"))
 @EnableAutoConfiguration(exclude = LiquibaseAutoConfiguration.class)
 public class AdminApplication {
     public static void main(String args[]) {
