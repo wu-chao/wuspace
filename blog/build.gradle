@@ -161,15 +161,16 @@ dependencies {
     }
 
     // Jackson
-    compile "com.fasterxml.jackson.datatype:jackson-datatype-json-org:2.8.8"
-    compile "com.fasterxml.jackson.datatype:jackson-datatype-hppc:2.8.8"
-    compile "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.8.8"
-    compile "com.fasterxml.jackson.datatype:jackson-datatype-hibernate5:2.8.8"
+    // https://github.com/FasterXML/jackson-modules-java8
     compile "com.fasterxml.jackson.core:jackson-annotations"
     compile "com.fasterxml.jackson.core:jackson-databind"
     compile "com.fasterxml.jackson.module:jackson-module-afterburner:2.8.8"
     compile "com.fasterxml.jackson.module:jackson-module-parameter-names:2.8.8"
     compile "com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.8.8"
+    compile "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.8.8"
+    compile "com.fasterxml.jackson.datatype:jackson-datatype-json-org:2.8.8"
+    compile "com.fasterxml.jackson.datatype:jackson-datatype-hppc:2.8.8"
+    compile "com.fasterxml.jackson.datatype:jackson-datatype-hibernate5:2.8.8"
 
     // Apache Commons
     compile "org.apache.commons:commons-lang3:${commons_lang_version}"
