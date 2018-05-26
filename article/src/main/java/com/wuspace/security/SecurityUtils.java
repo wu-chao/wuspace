@@ -34,6 +34,23 @@ public final class SecurityUtils {
     }
 
     /**
+     * 获取当前登录用户
+     *
+     * @return
+     */
+    public static CustomUser getCurrentUser() {
+        SecurityContext securityContext = SecurityContextHolder.getContext();
+        Authentication authentication = securityContext.getAuthentication();
+        CustomUser customUser = null;
+        if (authentication != null) {
+            if (authentication.getPrincipal() instanceof UserDetails) {
+                customUser = (CustomUser) authentication.getPrincipal();
+            }
+        }
+        return customUser;
+    }
+
+    /**
      * Check if a user is authenticated.
      *
      * @return true if the user is authenticated, false otherwise

@@ -1,6 +1,6 @@
 group = 'wuspace'
 version = '1.0.0'
-description = 'blog'
+description = 'article'
 
 buildscript {
     repositories {
