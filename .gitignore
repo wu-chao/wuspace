@@ -6,6 +6,7 @@
 # Intellij
 ######################
 .idea/
+out/
 *.iml
 *.iws
 *.ipr
@@ -13,16 +14,28 @@
 *.orig
 
 ######################
-# Maven
+# Visual Studio Code
 ######################
-/log/
-/target/
+.vscode/
 
 ######################
-# Gradle
+# Eclipse
 ######################
-.gradle/
-/build/
+*.pydevproject
+.project
+.metadata
+tmp/
+tmp/**/*
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.classpath
+.settings/
+.loadpath
+.factorypath
+/src/main/resources/rebel.xml
 
 ######################
 # Node
@@ -31,6 +44,16 @@
 node_tmp/
 node_modules/
 npm-debug.log.*
+
+######################
+# Bower
+######################
+bower_components/
+
+######################
+# SASS
+######################
+.sass-cache/
 
 ######################
 # Package Files
@@ -60,9 +83,21 @@ npm-debug.log.*
 .merge_file*
 
 ######################
+# Gradle
+######################
+.gradle/
+/build/
+
+######################
 # Gradle Wrapper
 ######################
 !gradle/wrapper/gradle-wrapper.jar
+
+######################
+# Maven
+######################
+/log/
+/target/
 
 ######################
 # Maven Wrapper
@@ -73,3 +108,9 @@ npm-debug.log.*
 # ESLint
 ######################
 .eslintcache
+
+######################
+# Querydsl
+######################
+generated/
+generated_tests/

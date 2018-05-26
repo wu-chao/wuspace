@@ -1,7 +1,7 @@
 {
-  "name": "blog",
+  "name": "article",
   "homepage": "https://github.com/wuchao/wuspace",
-  "description": "blog",
+  "description": "article",
   "appPath": "src/main/resources/",
   "license": "MIT",
   "ignore": [

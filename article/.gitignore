@@ -3,14 +3,6 @@
 ######################
 
 ######################
-# Node
-######################
-/node/
-node_tmp/
-node_modules/
-npm-debug.log.*
-
-######################
 # Intellij
 ######################
 .idea/
@@ -22,16 +14,46 @@ out/
 *.orig
 
 ######################
-# Maven
+# Visual Studio Code
 ######################
-/log/
-/target/
+.vscode/
 
 ######################
-# Gradle
+# Eclipse
 ######################
-.gradle/
-/build/
+*.pydevproject
+.project
+.metadata
+tmp/
+tmp/**/*
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.classpath
+.settings/
+.loadpath
+.factorypath
+/src/main/resources/rebel.xml
+
+######################
+# Node
+######################
+/node/
+node_tmp/
+node_modules/
+npm-debug.log.*
+
+######################
+# Bower
+######################
+bower_components/
+
+######################
+# SASS
+######################
+.sass-cache/
 
 ######################
 # Package Files
@@ -61,9 +83,21 @@ out/
 .merge_file*
 
 ######################
+# Gradle
+######################
+.gradle/
+/build/
+
+######################
 # Gradle Wrapper
 ######################
 !gradle/wrapper/gradle-wrapper.jar
+
+######################
+# Maven
+######################
+/log/
+/target/
 
 ######################
 # Maven Wrapper
