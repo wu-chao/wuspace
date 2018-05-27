@@ -2,7 +2,8 @@
 <html lang="zh-CN"
       xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="utf-8"/>
     <title>Admin 后台管理系统</title>
@@ -19,7 +20,7 @@
     <!-- Ionicons -->
     <link rel="stylesheet" href="/css/ionicons.min.css"/>
     <!-- Theme style -->
-    <link rel="stylesheet" href="/css/AdminLTE.min.css"/>
+    <link rel="stylesheet" href="/css/AdminLTE.css"/>
     <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="/css/skins/_all-skins.min.css"/>
@@ -179,20 +180,20 @@
                         </ul>
                     </li>
                     <!-- User Account: style can be found in dropdown.less -->
-                    <li class="dropdown user user-menu">
+                    <li class="dropdown user user-menu" sec:authorize="isAuthenticated()">
                         <a href="https://adminlte.io/themes/AdminLTE/pages/examples/pace.html#"
                            class="dropdown-toggle" data-toggle="dropdown">
                             <img src="/images/AdminLTE/user2-160x160.jpg" class="user-image" alt="User Image"/>
-                            <span class="hidden-xs">Alexander Pierce</span>
+                            <span class="hidden-xs" sec:authentication="principal.firstName">Alexander Pierce</span>
                         </a>
                         <ul class="dropdown-menu">
                             <!-- User image -->
                             <li class="user-header">
                                 <img src="/images/AdminLTE/user2-160x160.jpg" class="img-circle" alt="User Image"/>
 
-                                <p>
+                                <p sec:authentication="principal.firstName">
                                     Alexander Pierce - Web Developer
-                                    <small>Member since Nov. 2012</small>
+                                    <!--<small>Member since Nov. 2012</small>-->
                                 </p>
                             </li>
                             <!-- Menu Body -->
@@ -213,7 +214,7 @@
                             <!-- Menu Footer-->
                             <li class="user-footer">
                                 <div class="pull-left">
-                                    <a href="https://adminlte.io/themes/AdminLTE/pages/examples/pace.html#"
+                                    <a href="/admin/user/profile"
                                        class="btn btn-default btn-flat">Profile</a>
                                 </div>
                                 <div class="pull-right">
@@ -240,16 +241,16 @@
         <!-- sidebar: style can be found in sidebar.less -->
         <section class="sidebar" style="height: auto;">
             <!-- Sidebar user panel -->
-            <div class="user-panel">
-                <div class="pull-left image">
-                    <img src="/images/AdminLTE/user2-160x160.jpg" class="img-circle" alt="User Image"/>
-                </div>
-                <div class="pull-left info">
-                    <p>Alexander Pierce</p>
-                    <a href="https://adminlte.io/themes/AdminLTE/pages/examples/pace.html#"><i
-                            class="fa fa-circle text-success"></i> Online</a>
-                </div>
-            </div>
+            <!--<div class="user-panel">-->
+                <!--<div class="pull-left image">-->
+                    <!--<img src="/images/AdminLTE/user2-160x160.jpg" class="img-circle" alt="User Image"/>-->
+                <!--</div>-->
+                <!--<div class="pull-left info">-->
+                    <!--<p>Alexander Pierce</p>-->
+                    <!--<a href="https://adminlte.io/themes/AdminLTE/pages/examples/pace.html#"><i-->
+                            <!--class="fa fa-circle text-success"></i> Online</a>-->
+                <!--</div>-->
+            <!--</div>-->
             <!-- search form -->
             <form action="https://adminlte.io/themes/AdminLTE/pages/examples/pace.html#" method="get"
                   class="sidebar-form">
@@ -281,9 +282,11 @@
                     </a>
                     <ul class="treeview-menu">
                         <li><a href="/admin/articles"><i
-                                class="fa fa-circle-o"></i> blog</a></li>
+                                class="fa fa-circle-o"></i> Article</a></li>
+                        <li><a href="/admin/categories"><i
+                                class="fa fa-circle-o"></i> Category</a></li>
                         <li><a href="/admin/articles/publish"><i
-                                class="fa fa-circle-o"></i> publish</a></li>
+                                class="fa fa-circle-o"></i> Publish</a></li>
                     </ul>
                 </li>
                 <!--News-->

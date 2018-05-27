@@ -21,7 +21,7 @@ import javax.annotation.PostConstruct;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
-@Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
+@Order(2)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
@@ -70,6 +70,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .formLogin()
+                .loginPage("/login")
                 .loginProcessingUrl("/authentication")
                 .usernameParameter("j_username")
                 .passwordParameter("j_password")
@@ -89,6 +90,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/app/**").permitAll()
                 .antMatchers("/topic/**").permitAll()
                 .antMatchers("/blog/**").authenticated()
+                .antMatchers("/login/**").permitAll()
                 .antMatchers("/**").permitAll()
                 .anyRequest().authenticated();
     }

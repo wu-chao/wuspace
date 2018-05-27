@@ -121,10 +121,12 @@ dependencies {
 
     // Thymeleaf 模板
     compile "org.springframework.boot:spring-boot-starter-thymeleaf"
-    compile "org.thymeleaf:thymeleaf:${thymeleaf_version}"
-    compile "org.thymeleaf:thymeleaf-spring4:${thymeleaf_version}"
-    compile "nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:${thymeleaf_layout_dialect_version}"
-    compile "io.github.jpenren:thymeleaf-spring-data-dialect:${thymeleaf_spring_data_dialect_version}"
+    compile "nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect"
+    compile "org.thymeleaf.extras:thymeleaf-extras-springsecurity4"
+//    compile "org.thymeleaf:thymeleaf:${thymeleaf_version}"
+//    compile "org.thymeleaf:thymeleaf-spring4:${thymeleaf_version}"
+//    compile "nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:${thymeleaf_layout_dialect_version}"
+//    compile "io.github.jpenren:thymeleaf-spring-data-dialect:${thymeleaf_spring_data_dialect_version}"
 
     // 数据库持久化
 //    compile "org.liquibase:liquibase-core"

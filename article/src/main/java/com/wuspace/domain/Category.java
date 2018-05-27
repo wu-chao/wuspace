@@ -20,8 +20,17 @@ public class Category extends AbstractAuditingEntity {
     @Column(name = "id", unique = true, nullable = false)
     private Long id;
 
-    @Column(name = "name", unique = true, nullable = false)
+    /**
+     * 名称
+     */
+    @Column(name = "name", unique = true)
     private String name;
+
+    /**
+     * 描述
+     */
+    @Column(name = "description")
+    private String description;
 
     @Column(name = "category_id")
     private Long categoryId;

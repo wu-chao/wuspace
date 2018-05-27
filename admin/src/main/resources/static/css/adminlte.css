@@ -3305,7 +3305,9 @@ table.text-center th {
   }
 }
 .error-page > .error-content {
-  margin-left: 190px;
+  /*margin-left: 190px;*/
+  padding-top: 14px;
+  margin: 190px 0 0 190px;
   display: block;
 }
 @media (max-width: 991px) {

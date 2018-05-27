@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zh-CN"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/main">
+<head>
+    <title></title>
+</head>
+<body class="hold-transition sidebar-mini">
+<!-- Content Wrapper. Contains page content -->
+<div layout:fragment="content" class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            General Form Elements
+            <small>Preview</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li><a href="#">Forms</a></li>
+            <li class="active">General Elements</li>
+        </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <form role="form" th:action="@{/admin/categories/new}" th:method="post" th:object="${categoryDTO}">
+                    <div class="box box-warning">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">New Category</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <!--父栏目-->
+                            <div class="form-group">
+                                <label>Parent Category</label>
+                                <select class="form-control" th:field="*{category.categoryId}">
+                                    <option th:each="parentCategory : ${parentCategories}"
+                                            th:value="${parentCategory.id}"
+                                            th:text="${parentCategory.value}"></option>
+                                </select>
+                            </div>
+                            <!-- Name -->
+                            <div class="form-group">
+                                <label>Name</label>
+                                <input type="text" class="form-control" placeholder="Enter ..."
+                                       th:field="*{category.name}"/>
+                            </div>
+                            <!-- Description -->
+                            <div class="form-group">
+                                <label>Description</label>
+                                <textarea class="form-control" rows="3" placeholder="Enter ..."
+                                          th:field="*{category.description}"></textarea>
+                            </div>
+                        </div>
+                        <!-- /.box-body -->
+                        <div class="box-footer">
+                            <button type="submit" class="btn btn-info">Save</button>
+                            <a href="/admin/categories" class="btn btn-default float-right">Cancel</a>
+                        </div>
+                        <!-- /.box-footer -->
+                    </div>
+                    <!-- /.box -->
+                </form>
+            </div>
+            <!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>
+
+<!-- jQuery -->
+</body>
+</html>
