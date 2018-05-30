@@ -483,7 +483,7 @@ public class WordTemplate {
                                         List<XWPFParagraph> paragraphs = tableCell.getParagraphs();
                                         if (CollectionUtils.isNotEmpty(paragraphs)) {
                                             for (XWPFParagraph paragraph : paragraphs) {
-                                                newLine(paragraph, 0);
+                                                newLine(paragraph);
                                             }
                                         }
                                     });
@@ -494,7 +494,7 @@ public class WordTemplate {
                 }
 
                 // word段落一段文字中包含换行符("\r")，则换行
-                newLine(xWPFParagraph, 1);
+                newLine(xWPFParagraph);
 
             }// 处理${**}被分成多个run
 
@@ -508,27 +508,22 @@ public class WordTemplate {
      * 根据段落中的换行符（"\r"）换行
      *
      * @param paragraph
-     * @param needIndent 换行后首行是否缩进（1表示缩进，0表示不缩进）
      */
-    private void newLine(XWPFParagraph paragraph, Integer needIndent) {
+    private void newLine(XWPFParagraph paragraph) {
         List<XWPFRun> runList = paragraph.getRuns();
         if (CollectionUtils.isNotEmpty(runList)) {
             int runSize = paragraph.getRuns().size();
             int runSizeCount = runSize;
             String[] pTexts = paragraph.getText().split("\r");
             if (pTexts.length > 1) {
+                XWPFRun oldRun = paragraph.getRuns().get(0);
                 for (int j = 0; j < pTexts.length; j++) {
                     // 在段落原有的 XWPFRun 后新增 XWPFRun
                     XWPFRun run = paragraph.insertNewRun(runSizeCount++);
-
-                    if (needIndent != null && needIndent == 1) {
-                        // 首行缩进
-                        run.setText((StringUtils.isNotBlank(pTexts[j]) ? "    " : "") + pTexts[j]);
-                        run.addCarriageReturn();
-                    } else {
-                        run.setText(pTexts[j]);
-                        run.addBreak();
-                    }
+                    run.setFontFamily("仿宋");
+                    run.setFontSize(oldRun.getFontSize());
+                    run.setText(pTexts[j]);
+                    run.addBreak();
                 }
 
                 // 删除旧的 XWPFRun
@@ -900,6 +895,60 @@ public class WordTemplate {
             src.set(makeBody);
         } catch (XmlException e) {
             e.printStackTrace();
+        }
+    }
+
+
+    /**
+     * 导出文档方法2
+     */
+    public void processParagraphs(Map<String, Object> dataMap) {
+        List<XWPFParagraph> paragraphList = document.getParagraphs();
+        if (paragraphList != null && paragraphList.size() > 0) {
+            for (XWPFParagraph paragraph : paragraphList) {
+                List<XWPFRun> runs = paragraph.getRuns();
+                for (XWPFRun run : runs) {
+                    String text = run.getText(0);
+                    if (text != null) {
+                        boolean isSetText = false;
+                        for (Map.Entry<String, Object> entry : dataMap.entrySet()) {
+                            String key = entry.getKey();
+                            if (text.contains(key)) {
+                                isSetText = true;
+                                Object value = entry.getValue();
+                                //文本替换
+                                if (value instanceof String) {
+                                    text = text.replace(key, value.toString());
+                                }
+                                //图片替换
+                                else if (value instanceof Map) {
+                                    text = text.replace(key, "");
+                                    Map pic = (Map) value;
+                                    Object content = pic.get("content");
+//                                    int width = Integer.parseInt(pic.get("width").toString());
+//                                    int height = Integer.parseInt(pic.get("height").toString());
+//                                    int picType = getPictureType(pic.get("type").toString());
+//                                    byte[] byteArray = (byte[]) pic.get("content");
+//                                    ByteArrayInputStream byteInputStream = new ByteArrayInputStream(byteArray);
+//                                    try {
+//                                        int ind = document.addPicture(byteInputStream, picType);
+//                                        doc.createPicture(ind, width, height, paragraph);
+//                                    } catch (Exception e) {
+//                                        e.printStackTrace();
+//                                    }
+                                    // 图片链接
+                                    if (content instanceof String) {
+                                        replacePicture(paragraph, run, String.valueOf(content));
+                                    }
+                                }
+                            }
+                        }
+                        if (isSetText) {
+                            run.setText(text, 0);
+                        }
+                    }
+                }
+            }
         }
     }
 

@@ -14,7 +14,7 @@ import java.net.URLEncoder;
 import java.util.List;
 import java.util.Map;
 
-public class POIUtils {
+public class POIUtil {
 
     /**
      * 替换模板文件
@@ -78,6 +78,20 @@ public class POIUtils {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }
+
+    }
+
+    public static void exportDocument2(String resourceLocation, Map<String, Object> dataMap, String descLocation) {
+        try {
+            @Cleanup InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream(resourceLocation);
+            @Cleanup OutputStream os = new FileOutputStream(ResourceUtils.getFile(descLocation));
+            WordTemplate template = new WordTemplate(is);
+            template.processParagraphs(dataMap);
+            template.getDocument().write(os);
+            os.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
     }
