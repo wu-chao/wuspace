@@ -130,8 +130,8 @@ dependencies {
 
     // 数据库持久化
 //    compile "org.liquibase:liquibase-core"
-    runtime "com.h2database:h2"
-    runtime "mysql:mysql-connector-java"
+    compile "com.h2database:h2"
+    compile "mysql:mysql-connector-java"
 
     // Mybatis
 //    compile "org.mybatis.generator:mybatis-generator-core:${mybatis_generator_version}"
