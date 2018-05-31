@@ -87,7 +87,8 @@ public class POIUtil {
             @Cleanup InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream(resourceLocation);
             @Cleanup OutputStream os = new FileOutputStream(ResourceUtils.getFile(descLocation));
             WordTemplate template = new WordTemplate(is);
-            template.processParagraphs(dataMap);
+            // 处理段落
+            template.processDocument(dataMap);
             template.getDocument().write(os);
             os.flush();
         } catch (IOException e) {

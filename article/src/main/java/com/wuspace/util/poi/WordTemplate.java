@@ -16,6 +16,7 @@ import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -898,14 +899,23 @@ public class WordTemplate {
         }
     }
 
+    /**
+     * 导出word文档方法2（无表格循环）
+     *
+     * @param dataMap
+     */
+    public void processDocument(Map<String, Object> dataMap) {
+        List<XWPFParagraph> paragraphs = document.getParagraphs();
+        processParagraphs(paragraphs, dataMap);
+        processTables(dataMap);
+    }
 
     /**
-     * 导出文档方法2
+     * 处理段落
      */
-    public void processParagraphs(Map<String, Object> dataMap) {
-        List<XWPFParagraph> paragraphList = document.getParagraphs();
-        if (paragraphList != null && paragraphList.size() > 0) {
-            for (XWPFParagraph paragraph : paragraphList) {
+    public void processParagraphs(List<XWPFParagraph> paragraphs, Map<String, Object> dataMap) {
+        if (paragraphs != null && paragraphs.size() > 0) {
+            for (XWPFParagraph paragraph : paragraphs) {
                 List<XWPFRun> runs = paragraph.getRuns();
                 for (XWPFRun run : runs) {
                     String text = run.getText(0);
@@ -947,6 +957,22 @@ public class WordTemplate {
                             run.setText(text, 0);
                         }
                     }
+                }
+            }
+        }
+    }
+
+    //处理表格
+    public void processTables(Map<String, Object> dataMap) {
+        Iterator<XWPFTable> it = document.getTablesIterator();
+        while (it.hasNext()) {
+            XWPFTable table = it.next();
+            List<XWPFTableRow> rows = table.getRows();
+            for (XWPFTableRow row : rows) {
+                List<XWPFTableCell> cells = row.getTableCells();
+                for (XWPFTableCell cell : cells) {
+                    List<XWPFParagraph> paragraphListTable = cell.getParagraphs();
+                    processParagraphs(paragraphListTable, dataMap);
                 }
             }
         }
