@@ -1,6 +1,6 @@
 package com.wuspace.controller.app.article;
 
-import com.wuspace.domain.Article;
+import com.wuspace.domain.MediaInfo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -17,21 +17,21 @@ public class ArticleIndexController {
 
     @GetMapping(value = {"", "/", "/index", "/home"})
     public String index(@PageableDefault Pageable pageable, Model model) {
-        List<Article> articles = new ArrayList() {{
-            add(new Article());
-            add(new Article());
-            add(new Article());
-            add(new Article());
-            add(new Article());
-            add(new Article());
-            add(new Article());
-            add(new Article());
-            add(new Article());
-            add(new Article());
-            add(new Article());
+        List<MediaInfo> articles = new ArrayList() {{
+            add(new MediaInfo());
+            add(new MediaInfo());
+            add(new MediaInfo());
+            add(new MediaInfo());
+            add(new MediaInfo());
+            add(new MediaInfo());
+            add(new MediaInfo());
+            add(new MediaInfo());
+            add(new MediaInfo());
+            add(new MediaInfo());
+            add(new MediaInfo());
         }};
 
-        Page<Article> articlePage = new PageImpl(articles, pageable, 10);
+        Page<MediaInfo> articlePage = new PageImpl(articles, pageable, 10);
         model.addAttribute("articles", articlePage);
         return "index";
     }

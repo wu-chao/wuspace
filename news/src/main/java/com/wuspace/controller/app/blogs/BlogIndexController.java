@@ -2,9 +2,9 @@ package com.wuspace.controller.app.blogs;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.wuspace.domain.Article;
+import com.wuspace.domain.MediaInfo;
 import com.wuspace.mapper.BlogMapper;
-import com.wuspace.repository.ArticleRepository;
+import com.wuspace.repository.MediaInfoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -25,7 +25,7 @@ public class BlogIndexController {
     private BlogMapper blogMapper;
 
     @Autowired
-    private ArticleRepository blogRepository;
+    private MediaInfoRepository mediaInfoRepository;
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -45,7 +45,7 @@ public class BlogIndexController {
     @ResponseStatus(HttpStatus.OK)
     public PageInfo listWithMarshalling(int pageNum, int pageSize) {
         PageHelper.startPage(pageNum, pageSize);
-        List<Article> blogList = blogMapper.findAllWithUserByOrderByCreatedAtDesc();
+        List<MediaInfo> blogList = blogMapper.findAllWithUserByOrderByCreatedAtDesc();
         return new PageInfo(blogList);
     }
 

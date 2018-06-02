@@ -1,8 +1,7 @@
 package com.wuspace.service.article;
 
-import com.wuspace.domain.Article;
-import com.wuspace.repository.ArticleRepository;
-import com.wuspace.service.article.dto.AdminArticleDTO;
+import com.wuspace.domain.MediaInfo;
+import com.wuspace.repository.MediaInfoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,10 +11,10 @@ import org.springframework.stereotype.Service;
 public class AdminArticleIndexService {
 
     @Autowired
-    private ArticleRepository articleRepository;
+    private MediaInfoRepository mediaInfoRepository;
 
-    public Page<Article> listArticles(Pageable pageable){
-        Page<Article> articles = articleRepository.findAll(pageable);
+    public Page<MediaInfo> listArticles(Pageable pageable) {
+        Page<MediaInfo> articles = mediaInfoRepository.findAll(pageable);
         return articles;
     }
 }

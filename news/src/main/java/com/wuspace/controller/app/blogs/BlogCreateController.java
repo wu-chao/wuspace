@@ -1,10 +1,10 @@
 package com.wuspace.controller.app.blogs;
 
 import com.wuspace.controller.app.command.BlogCreateCommand;
-import com.wuspace.domain.Article;
 import com.wuspace.domain.FormToken;
+import com.wuspace.domain.MediaInfo;
 import com.wuspace.domain.User;
-import com.wuspace.repository.ArticleRepository;
+import com.wuspace.repository.MediaInfoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,7 +20,7 @@ import javax.validation.Valid;
 public class BlogCreateController {
 
     @Autowired
-    private ArticleRepository blogRepository;
+    private MediaInfoRepository mediaInfoRepository;
 
     @RequestMapping("/blogs/create")
     @FormToken(create = true)
@@ -41,10 +41,10 @@ public class BlogCreateController {
         String b = "hello";
         System.out.println(a == b + "----------------");
 
-        Article blog = new Article();
+        MediaInfo blog = new MediaInfo();
         blog = blogCreateCommand.toBlog(blog);
         blog.setAuthor(user);
-        blogRepository.save(blog);
+        mediaInfoRepository.save(blog);
 
         return "blogs/blogs";
     }

@@ -10,8 +10,8 @@ import javax.persistence.*;
 @EqualsAndHashCode(of = {"id"}, callSuper = true)
 @NoArgsConstructor
 @Entity
-@Table(name = "works_contents")
-public class WorksContent extends AbstractAuditingEntity {
+@Table(name = "media_content")
+public class MediaContent extends AbstractAuditingEntity {
 
     private static final long serialVersionUID = 1L;
 
@@ -27,6 +27,6 @@ public class WorksContent extends AbstractAuditingEntity {
     private String content;
 
     @OneToOne
-    private Works works;
+    private MediaInfo mediaInfo;
 
 }

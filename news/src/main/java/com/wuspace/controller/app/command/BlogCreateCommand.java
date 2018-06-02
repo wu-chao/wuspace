@@ -1,6 +1,6 @@
 package com.wuspace.controller.app.command;
 
-import com.wuspace.domain.Article;
+import com.wuspace.domain.MediaInfo;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,9 +12,9 @@ public class BlogCreateCommand {
 
     private String content;
 
-    public Article toBlog(Article blog) {
+    public MediaInfo toBlog(MediaInfo blog) {
         if (blog == null) {
-            blog = new Article();
+            blog = new MediaInfo();
         }
 
         blog.setTitle(this.getTitle());

@@ -11,9 +11,9 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableAutoConfiguration(exclude = LiquibaseAutoConfiguration.class)
 @EnableScheduling
 //@EnableDiscoveryClient
-public class ArticleApplication {
+public class NewsApplication {
     public static void main(String args[]) {
-        ConfigurableApplicationContext context = SpringApplication.run(ArticleApplication.class, args);
+        ConfigurableApplicationContext context = SpringApplication.run(NewsApplication.class, args);
 
 //        String src = "/home/wu-chao/下载/spring boot实战.pdf";
 //        String dest = "/home/wu-chao/下载/2222.pdf";

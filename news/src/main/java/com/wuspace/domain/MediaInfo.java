@@ -10,14 +10,11 @@ import java.time.ZonedDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
-/**
- * All manner of Works.
- */
 @Getter
 @Setter
 @Entity
-@MappedSuperclass
-public class Works extends AbstractAuditingEntity {
+@Table(name = "media_info")
+public class MediaInfo extends AbstractAuditingEntity {
 
     private static final long serialVersionUID = 1L;
 
@@ -25,13 +22,6 @@ public class Works extends AbstractAuditingEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true, nullable = false)
     private Long id;
-
-    /**
-     * 媒体类型
-     */
-    @Column(name = "media_type")
-    @Enumerated(value = EnumType.STRING)
-    private MediaType mediaType;
 
     @Column(name = "publish_date")
     private ZonedDateTime publishDate;
@@ -60,8 +50,15 @@ public class Works extends AbstractAuditingEntity {
      * 内容
      */
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "works_content_id")
-    private WorksContent worksContent;
+    @JoinColumn(name = "media_content_id")
+    private MediaContent mediaContent;
+
+    /**
+     * 媒体类型
+     */
+    @Column(name = "media_type")
+    @Enumerated(value = EnumType.STRING)
+    private MediaType mediaType;
 
     /**
      * 来源

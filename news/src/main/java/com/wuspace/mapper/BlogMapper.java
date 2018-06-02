@@ -1,6 +1,6 @@
 package com.wuspace.mapper;
 
-import com.wuspace.domain.Article;
+import com.wuspace.domain.MediaInfo;
 import org.apache.ibatis.annotations.*;
 import org.springframework.data.domain.Page;
 
@@ -17,7 +17,7 @@ public interface BlogMapper {
             @Result(property = "user", column = "user_id",
                     one = @One(select = "com.wuspace.mapper.UserMapper.findUserById"))
     })
-    Page<Article> listBlogPageByOrderByCreatedAtDesc();
+    Page<MediaInfo> listBlogPageByOrderByCreatedAtDesc();
 
     @Select("select * from blogs as b order by b.created_date desc")
     @Results({
@@ -25,7 +25,7 @@ public interface BlogMapper {
             @Result(property = "user", column = "user_id",
                     one = @One(select = "com.wuspace.mapper.UserMapper.findUserById"))
     })
-    List<Article> findAllWithUserByOrderByCreatedAtDesc();
+    List<MediaInfo> findAllWithUserByOrderByCreatedAtDesc();
 
     @Select("select b.id as id, " +
             "b.title as title, " +
@@ -34,5 +34,5 @@ public interface BlogMapper {
             "u.nickname as nickname " +
             "from blogs as b, users as u where b.id = #{id} and u.id = b.user_id ")
 //    @ResultMap("com.wuspace.mapper.BlogMapper.blogMap")
-    Article findBlogWithUserById(Long id);
+    MediaInfo findBlogWithUserById(Long id);
 }
