@@ -63,5 +63,5 @@ ext {
 }
 
 dependencies {
-    compile project(':article')
+    compile project(':news')
 }

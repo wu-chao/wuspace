@@ -38,9 +38,10 @@
                             <div class="form-group">
                                 <label>Parent Category</label>
                                 <select class="form-control" th:field="*{category.categoryId}">
-                                    <option th:each="parentCategory : ${parentCategories}"
+                                    <option value="">请选择父级栏目名称</option>
+                                    <option th:each="parentCategory : *{parentCategories}"
                                             th:value="${parentCategory.id}"
-                                            th:text="${parentCategory.value}"></option>
+                                            th:text="${parentCategory.name}"></option>
                                 </select>
                             </div>
                             <!-- Name -->
@@ -71,7 +72,5 @@
     </section>
     <!-- /.content -->
 </div>
-
-<!-- jQuery -->
 </body>
 </html>
