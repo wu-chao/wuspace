@@ -1,4 +1,4 @@
-package com.wuspace.controller.admin.article;
+package com.wuspace.controller.admin.news;
 
 import com.wuspace.domain.Category;
 import com.wuspace.domain.enumeration.MediaType;
@@ -16,7 +16,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/admin")
-public class AdminArticleNewController {
+public class AdminNewsNewController {
 
     @Autowired
     private CategoryRepository categoryRepository;
@@ -24,7 +24,7 @@ public class AdminArticleNewController {
     @Autowired
     private AdminArticleService adminArticleService;
 
-    @GetMapping("/article/new")
+    @GetMapping("/news/new")
     public String publishView(Model model) {
         // 获取栏目
         List<Category> categories = categoryRepository.findAll();
@@ -34,14 +34,13 @@ public class AdminArticleNewController {
         articleDTO.setMediaType(MediaType.ARTICLE);
         model.addAttribute("articleDTO", articleDTO);
 
-        return "article/new";
+        return "news/new";
     }
 
-    // @PostMapping(value = "/article/new", params = {"mediaType=ARTICLE"})
-    @PostMapping("/article/new")
+    @PostMapping("/news/new")
     public String publish(AdminArticleDTO articleDTO) {
         adminArticleService.saveArticle(articleDTO);
-        return "redirect:/admin/articles";
+        return "redirect:/admin/news";
     }
 
 }

@@ -5,7 +5,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorator="layout/main">
 <head>
-    <title>Editors</title>
+    <title>Article - New</title>
 </head>
 <body class="sidebar-mini skin-green-light">
 <!-- Content Wrapper. Contains page content -->
@@ -30,55 +30,57 @@
                 <!--@{'/admin/article/new?mediaType='+${articleDTO.mediaType}}-->
                 <form role="form" th:action="@{/admin/article/new}" method="post"
                       th:object="${articleDTO}">
-                    <div class="col-md-12">
-                        <div class="box box-info">
-                            <div class="box-header">
-                                <h3 class="box-title">CK Editor
-                                    <small>Advanced and full of features</small>
-                                </h3>
-                                <!-- tools box -->
-                                <!--<div class="pull-right box-tools">-->
-                                <!--<button type="button" class="btn btn-info btn-sm" data-widget="collapse"-->
-                                <!--data-toggle="tooltip" title="" data-original-title="Collapse">-->
-                                <!--<i class="fa fa-minus"></i></button>-->
-                                <!--<button type="button" class="btn btn-info btn-sm" data-widget="remove" data-toggle="tooltip"-->
-                                <!--title="" data-original-title="Remove">-->
-                                <!--<i class="fa fa-times"></i></button>-->
-                                <!--</div>-->
-                                <!-- /. tools -->
-                            </div>
-                            <!-- /.box-header -->
-                            <div class="box-body pad">
-                                <!-- Category -->
-                                <!--<div class="form-group">-->
-                                <!--<label>Category</label>-->
-                                <!--<select class="form-control" th:field="*{categoryId}">-->
-                                <!--<option value="">请选择栏目名称</option>-->
-                                <!--<option th:each="category : ${categories}"-->
-                                <!--th:value="${category.id}"-->
-                                <!--th:text="${category.name}"></option>-->
-                                <!--</select>-->
-                                <!--</div>-->
-                                <!-- Title -->
-                                <div class="form-group">
-                                    <label>Title</label>
-                                    <input type="text" class="form-control" placeholder="Enter ..."
-                                           th:field="*{title}"/>
+                    <div th:fragment="adminArticleNewForm">
+                        <div class="col-md-12">
+                            <div class="box box-info">
+                                <div class="box-header">
+                                    <h3 class="box-title">CK Editor
+                                        <small>Advanced and full of features</small>
+                                    </h3>
+                                    <!-- tools box -->
+                                    <!--<div class="pull-right box-tools">-->
+                                    <!--<button type="button" class="btn btn-info btn-sm" data-widget="collapse"-->
+                                    <!--data-toggle="tooltip" title="" data-original-title="Collapse">-->
+                                    <!--<i class="fa fa-minus"></i></button>-->
+                                    <!--<button type="button" class="btn btn-info btn-sm" data-widget="remove" data-toggle="tooltip"-->
+                                    <!--title="" data-original-title="Remove">-->
+                                    <!--<i class="fa fa-times"></i></button>-->
+                                    <!--</div>-->
+                                    <!-- /. tools -->
                                 </div>
-                                <!-- Content -->
-                                <textarea id="ckeditor" th:field="*{content}" rows="10" cols="80"
-                                          style="visibility: hidden; display: none;"></textarea>
+                                <!-- /.box-header -->
+                                <div class="box-body pad">
+                                    <!-- Category -->
+                                    <!--<div class="form-group">-->
+                                    <!--<label>Category</label>-->
+                                    <!--<select class="form-control" th:field="*{categoryId}">-->
+                                    <!--<option value="">请选择栏目名称</option>-->
+                                    <!--<option th:each="category : ${categories}"-->
+                                    <!--th:value="${category.id}"-->
+                                    <!--th:text="${category.name}"></option>-->
+                                    <!--</select>-->
+                                    <!--</div>-->
+                                    <!-- Title -->
+                                    <div class="form-group">
+                                        <label>Title</label>
+                                        <input type="text" class="form-control" placeholder="Enter ..."
+                                               th:field="*{title}"/>
+                                    </div>
+                                    <!-- Content -->
+                                    <textarea id="ckeditor" th:field="*{content}" rows="10" cols="80"
+                                              style="visibility: hidden; display: none;"></textarea>
+                                </div>
+                                <!-- /.box-body -->
+                                <div class="box-footer">
+                                    <button type="submit" class="btn btn-info">Save</button>
+                                    <a href="/admin/articles" class="btn btn-default float-right">Cancel</a>
+                                </div>
+                                <!-- /.box-footer -->
                             </div>
-                            <!-- /.box-body -->
-                            <div class="box-footer">
-                                <button type="submit" class="btn btn-info">Save</button>
-                                <a href="/admin/articles" class="btn btn-default float-right">Cancel</a>
-                            </div>
-                            <!-- /.box-footer -->
+                            <!-- /.box -->
                         </div>
-                        <!-- /.box -->
+                        <!-- /.col-->
                     </div>
-                    <!-- /.col-->
                 </form>
                 <!-- /.form -->
             </div>

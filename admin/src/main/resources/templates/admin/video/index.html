@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en-US"
+<html lang="zh-CN"
       xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorator="layout/main">
 <head>
-    <title>Article - Index</title>
+    <title>Video</title>
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
@@ -78,19 +78,19 @@
                                                 </th>
                                                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1"
                                                     colspan="1"
-                                                    aria-label="Status: activate to sort column ascending"
-                                                    style="width: 100px;">Status
+                                                    aria-label="IsDelete: activate to sort column ascending"
+                                                    style="width: 100px;">IsDelete
                                                 </th>
                                                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1"
                                                     colspan="1"
-                                                    aria-label="Operations: activate to sort column ascending"
-                                                    style="width: 100px;">Operations
+                                                    aria-label="Status: activate to sort column ascending"
+                                                    style="width: 100px;">Status
                                                 </th>
                                             </tr>
                                             </thead>
                                             <tbody>
                                             <tr role="row" th:class="${articleStat.count%2.0 == 1 ? 'odd' : 'even'}"
-                                                th:each="article : ${articles}" th:attr="data-id=${article.id}">
+                                                th:each="article : ${articles}">
                                                 <td class="sorting_1" th:text="${articleStat.count}"></td>
                                                 <td th:text="${article.id}"></td>
                                                 <td th:text="${#strings.abbreviate(article.title, 60)}"
@@ -101,30 +101,8 @@
                                                 <td th:text="${article.author != null ? article.author.nickname : '--'}"></td>
                                                 <td th:text="${#calendars.format(article.publishDate, 'yyyy-MM-dd')}"
                                                     th:title="${#calendars.format(article.publishDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
-                                                <td th:text="#{'mediaInfo.status.' + ${article.status}}"></td>
-                                                <td style="text-align: left !important;"
-                                                    th:if="${article.isDeleted == 0}">
-                                                    <a data-toggle="tooltip" data-placement="top" title="edit"
-                                                       class="edit">
-                                                        <span class="fa fa-edit"></span>
-                                                    </a>
-                                                    <a data-toggle="tooltip" data-placement="top" title="delete"
-                                                       class="delete">
-                                                        <span class="fa fa-trash"></span>
-                                                    </a>
-                                                    <a data-toggle="tooltip" data-placement="top" title="off"
-                                                       class="off"
-                                                       th:if="${article.isDisabled == 0}">
-                                                        <span class="fa fa-toggle-off"></span>
-                                                    </a>
-                                                    <a data-toggle="tooltip" data-placement="top" title="on" class="on"
-                                                       th:if="${article.isDisabled == 1}">
-                                                        <span class="fa fa-toggle-on"></span>
-                                                    </a>
-                                                </td>
-                                                <td th:if="${article.isDeleted == 1}">
-                                                    --
-                                                </td>
+                                                <td th:text="${article.isDeleted eq 1 ? '是' : '否'}"></td>
+                                                <td th:text="${article.status}"></td>
                                             </tr>
                                             </tbody>
                                         </table>
@@ -153,35 +131,7 @@
 
     <script>
         $(function () {
-            // 初始化 data table
             $('#example1').DataTable();
-
-            // 点击进入详情页
-            $('#example1_wrapper tr').on('click', function () {
-                var id = $(this).data('id');
-                window.location.href = '/admin/articles/' + id;
-            });
-
-            // Edit
-            addAdminArticleEditEvent();
-
-            function addAdminArticleEditEvent() {
-                $('#example1_wrapper a.edit').unbind('click').on('click', function (event) {
-                    event.stopPropagation();
-                    var id = $(this).parents('tr').data('id');
-                    window.location.href = "/admin/articles/" + id + "/edit";
-                });
-            }
-
-            // Delete
-            addAdminArticleDeleteEvent();
-
-            function addAdminArticleDeleteEvent() {
-                $('#example1_wrapper a.delete').unbind('click').on('click', function (event) {
-                    event.stopPropagation();
-                });
-            }
-
         });
     </script>
 </div>

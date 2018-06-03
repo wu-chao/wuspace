@@ -46,7 +46,7 @@ body {
   position: relative;
 }
 .layout-boxed {
-  background: url('../img/boxed-bg.jpg') repeat fixed;
+  background: url('/images/AdminLTE/boxed-bg.jpg') repeat fixed;
 }
 /*
  * Content Wrapper - contains the main content
@@ -1854,7 +1854,7 @@ a:focus {
 }
 .box-comments .username {
   color: #444;
-  display: block;
+  /*display: block;*/
   font-weight: 600;
 }
 .box-comments .text-muted {

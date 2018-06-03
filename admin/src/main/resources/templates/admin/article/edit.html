@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-CN"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/main">
+<head>
+    <title>Article - Edit</title>
+</head>
+<body class="sidebar-mini skin-green-light">
+<!-- Content Wrapper. Contains page content -->
+<div layout:fragment="content" class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            Text Editors
+            <small>Advanced form element</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li><a href="#">Forms</a></li>
+            <li class="active">Editors</li>
+        </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <!--@{'/admin/article/new?mediaType='+${articleDTO.mediaType}}-->
+                <form role="form" th:action="@{/admin/articles/{articleId}(articleId=${articleDTO.id})}" th:method="put"
+                      th:object="${articleDTO}">
+                    <div th:substituteby="article/new :: adminArticleNewForm"></div>
+                    <!-- /.col-->
+                </form>
+                <!-- /.form -->
+            </div>
+            <!-- ./row -->
+        </div>
+    </section>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+
+<div layout:fragment="scripts">
+    <!-- CK Editor -->
+    <script src="/bower_components/ckeditor/ckeditor.js"></script>
+    <script>
+        $(function () {
+            // Replace the textarea with a CKEditor
+            // instance, using default configuration.
+            CKEDITOR.replace('content');
+        })
+    </script>
+</div>
+</body>
+</html>

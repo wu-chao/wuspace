@@ -32,6 +32,12 @@ public class Category extends AbstractAuditingEntity {
     @Column(name = "description")
     private String description;
 
+    /**
+     * 1表示被禁用的，0表示可用的
+     */
+    @Column(name = "is_disabled")
+    private Integer isDisabled = 0;
+
     @Column(name = "category_id")
     private Long categoryId;
 

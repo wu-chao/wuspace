@@ -1,5 +1,6 @@
 package com.wuspace.domain;
 
+import com.wuspace.domain.enumeration.CheckStatus;
 import com.wuspace.domain.enumeration.MediaType;
 import com.wuspace.util.StringUtils;
 import lombok.Getter;
@@ -73,6 +74,24 @@ public class MediaInfo extends AbstractAuditingEntity {
     private String sourceUrl;
 
     /**
+     * 审核状态
+     */
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
+    private CheckStatus status;
+
+    /**
+     * 1表示被禁用的，0表示可用的
+     */
+    @Column(name = "is_disabled")
+    private Integer isDisabled = 0;
+
+    /**
+     * 浏览次数
+     */
+    private Long viewedTimes = 0L;
+
+    /**
      * 栏目
      */
     @Column(name = "category_id")
@@ -91,13 +110,8 @@ public class MediaInfo extends AbstractAuditingEntity {
             inverseJoinColumns = @JoinColumn(name = "tag_id", referencedColumnName = "id"))
     private Set<Tag> tags = new HashSet<>();
 
-    /**
-     * 浏览次数
-     */
-    private Long viewedTimes = 0L;
-
-    @Column(name = "status")
-    private Integer status;
+    @Column(name = "location")
+    private String location;
 
 
     /**

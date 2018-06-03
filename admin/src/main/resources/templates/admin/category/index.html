@@ -41,7 +41,7 @@
                                     </div>
                                 </div>
                                 <div class="pull-right">
-                                    <a href="/admin/categories/new" class="btn btn-info">New</a>
+                                    <a href="/admin/category/new" class="btn btn-info">New</a>
                                 </div>
                             </div>
                         </div>
@@ -55,6 +55,8 @@
                                     <!--<th>Date</th>-->
                                     <!--<th>Status</th>-->
                                     <th>Name</th>
+                                    <th>Description</th>
+                                    <th>Operations</th>
                                 </tr>
                                 <tr th:each="category : ${categories}">
                                     <td th:text="${categoryStat.count}">1</td>
@@ -63,6 +65,24 @@
                                     <!--<td><span class="label label-warning">Pending</span></td>-->
                                     <!--<td><span class="label label-danger">Denied</span></td>-->
                                     <td th:text="${category.name}"></td>
+                                    <td th:utext="${#strings.abbreviate(category.description, 60)}"
+                                        th:title="${category.description}"></td>
+                                    <td style="text-align: left !important;">
+                                        <a data-toggle="tooltip" data-placement="top" title="edit">
+                                            <span class="fa fa-edit"></span>
+                                        </a>
+                                        <a data-toggle="tooltip" data-placement="top" title="delete">
+                                            <span class="fa fa-trash"></span>
+                                        </a>
+                                        <a data-toggle="tooltip" data-placement="top" title="off"
+                                           th:if="${category.isDisabled == 0}">
+                                            <span class="fa fa-toggle-off"></span>
+                                        </a>
+                                        <a data-toggle="tooltip" data-placement="top" title="on"
+                                           th:if="${category.isDisabled == 1}">
+                                            <span class="fa fa-toggle-on"></span>
+                                        </a>
+                                    </td>
                                 </tr>
                                 </tbody>
                             </table>

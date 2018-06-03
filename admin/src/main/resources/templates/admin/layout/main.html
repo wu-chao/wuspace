@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN"
+<html lang="en-US"
       xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
@@ -294,15 +294,16 @@
                     <!-- sidebar menu: : style can be found in sidebar.less -->
                     <ul class="sidebar-menu tree" data-widget="tree">
                         <li class="header">MAIN NAVIGATION</li>
-                        <!--Dashboard-->
+                        <!-- Dashboard -->
                         <li>
                             <a href="https://adminlte.io/themes/AdminLTE/pages/examples/pace.html#">
                                 <i class="fa fa-dashboard"></i>
                                 <span>Dashboard</span>
                             </a>
                         </li>
-                        <!--Article-->
-                        <li class="treeview">
+                        <!-- Works -->
+                        <li class="treeview"
+                            th:classappend="${#strings.containsIgnoreCase(#httpServletRequest.getRequestURL(), '/admin/article')} ? 'menu-open active' : ''">
                             <a href="#">
                                 <i class="fa fa-edit"></i>
                                 <span>Works</span>
@@ -311,32 +312,22 @@
                                 </span>
                             </a>
                             <ul class="treeview-menu">
-                                <li>
+                                <li th:classappend="${#strings.containsIgnoreCase(#httpServletRequest.getRequestURL(), '/admin/article')} ? 'active' : ''">
                                     <a href="/admin/articles">
-                                        <i
-                                                class="fa fa-circle-o"></i>
+                                        <i class="fa fa-circle-o"></i>
                                         Article
                                     </a>
                                 </li>
                                 <li>
                                     <a href="/admin/articles">
-                                        <i
-                                                class="fa fa-circle-o"></i>
+                                        <i class="fa fa-circle-o"></i>
                                         Video
                                     </a>
                                 </li>
                                 <li>
                                     <a href="/admin/articles">
-                                        <i
-                                                class="fa fa-circle-o"></i>
+                                        <i class="fa fa-circle-o"></i>
                                         Music
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="/admin/categories">
-                                        <i
-                                                class="fa fa-circle-o"></i>
-                                        Category
                                     </a>
                                 </li>
                                 <li class="treeview">
@@ -370,19 +361,72 @@
                                 </li>
                             </ul>
                         </li>
-                        <!--News-->
-                        <li>
+                        <!-- News -->
+                        <li class="treeview"
+                            th:classappend="${#strings.containsIgnoreCase(#httpServletRequest.getRequestURL(), '/admin/news')
+                            or #strings.containsIgnoreCase(#httpServletRequest.getRequestURL(), '/admin/categor')} ? 'menu-open active' : ''">
                             <a href="#">
                                 <i class="fa fa-newspaper-o"></i>
                                 <span>News</span>
+                                <!--<span class="pull-right-container">-->
+                                <!--<small class="label pull-right bg-yellow">12</small>-->
+                                <!--<small class="label pull-right bg-green">16</small>-->
+                                <!--<small class="label pull-right bg-red">5</small>-->
+                                <!--</span>-->
                                 <span class="pull-right-container">
-                                    <small class="label pull-right bg-yellow">12</small>
-                                    <small class="label pull-right bg-green">16</small>
-                                    <small class="label pull-right bg-red">5</small>
+                                    <i class="fa fa-angle-left pull-right"></i>
                                 </span>
                             </a>
+                            <ul class="treeview-menu"
+                                th:classappend="${#strings.containsIgnoreCase(#httpServletRequest.getRequestURL(), '/admin/news')} ? 'menu-open active' : ''">
+                                <li class="treeview"
+                                    th:classappend="${#strings.containsIgnoreCase(#httpServletRequest.getRequestURL(), '/admin/news')} ? 'menu-open active' : ''">
+                                    <a href="#">
+                                        <i class="fa fa-circle-o"></i>
+                                        News
+                                        <span class="pull-right-container">
+                                            <i class="fa fa-angle-left pull-right"></i>
+                                        </span>
+                                    </a>
+                                    <ul class="treeview-menu" style="display: none;"
+                                        th:classappend="${#strings.containsIgnoreCase(#httpServletRequest.getRequestURL(), '/admin/news')} ? 'menu-open active' : ''">
+                                        <li th:classappend="${#strings.containsIgnoreCase(#httpServletRequest.getRequestURL(), '/admin/news')} ? 'active' : ''">
+                                            <a href="/admin/news">
+                                                <i class="fa fa-circle-o"></i>
+                                                <span>等待审查</span>
+                                                <span class="pull-right-container">
+                                                    <small class="label pull-right bg-red">5</small>
+                                                </span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="/admin/news">
+                                                <i class="fa fa-circle-o"></i>
+                                                <span>已通过审查</span>
+                                                <span class="pull-right-container">
+                                                    <small class="label pull-right bg-green">16</small>
+                                                </span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="/admin/news">
+                                                <i class="fa fa-circle-o"></i>
+                                                <span>未通过审查</span>
+                                                <span class="pull-right-container">
+                                                    <small class="label pull-right bg-yellow">12</small>
+                                                </span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li th:classappend="${#strings.containsIgnoreCase(#httpServletRequest.getRequestURL(), '/admin/categor')} ? 'active' : ''">
+                                    <a href="/admin/categories">
+                                        <i class="fa fa-circle-o"></i>
+                                        Category
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
-
                         <li>
                             <a href="https://adminlte.io/themes/AdminLTE/pages/calendar.html">
                                 <i class="fa fa-calendar"></i>

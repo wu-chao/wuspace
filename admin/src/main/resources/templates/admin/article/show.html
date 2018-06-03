@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/main">
+<head>
+    <title>Article - Show</title>
+</head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+    <!-- Content Wrapper. Contains page content -->
+    <div layout:fragment="content" class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+                Widgets
+                <small>Preview page</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+                <li class="active">Widgets</li>
+            </ol>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="box box-widget">
+                        <div class="box-header with-border">
+                            <div class="user-block">
+                                <img class="img-circle" src="/images/AdminLTE/user1-128x128.jpg"/>
+                                <span class="username"><a href="#" th:utext="${article.author.nickname}">Jonathan Burke Jr.</a></span>
+                                <span class="description"
+                                      th:text="${(!#strings.isEmpty(article.location)? article.location + ' - ' : '') + #calendars.format(article.publishDate, 'yyyy-MM-dd HH:mm:ss')}">Shared publicly - 7:30 PM Today</span>
+                            </div>
+                            <!-- /.user-block -->
+                            <!--<div class="box-tools">-->
+                            <!--<button type="button" class="btn btn-box-tool" data-toggle="tooltip" title=""-->
+                            <!--data-original-title="Mark as read">-->
+                            <!--<i class="fa fa-circle-o"></i></button>-->
+                            <!--<button type="button" class="btn btn-box-tool" data-widget="collapse"><i-->
+                            <!--class="fa fa-minus"></i>-->
+                            <!--</button>-->
+                            <!--<button type="button" class="btn btn-box-tool" data-widget="remove"><i-->
+                            <!--class="fa fa-times"></i></button>-->
+                            <!--</div>-->
+                            <!-- /.box-tools -->
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <div class="h4" th:utext="${article.title}"></div>
+                            <br/>
+                            <div th:utext="${article.mediaContent.content}">
+                                <img class="img-responsive pad" src="/images/AdminLTE/photo2.png"/>
+                                <p>I took this photo this morning. What do you guys think?</p>
+                            </div>
+                            <button type="button" class="btn btn-default btn-xs"><i class="fa fa-share"></i> Share
+                            </button>
+                            <!--<button type="button" class="btn btn-default btn-xs"><i class="fa fa-thumbs-o-up"></i> Like-->
+                            <!--</button>-->
+                            <span class="pull-right text-muted">127 likes - 3 comments</span>
+                        </div>
+                        <!-- /.box-body -->
+                        <div class="box-footer box-comments">
+                            <div class="box-comment">
+                                <!-- User image -->
+                                <img class="img-circle img-sm" src="/images/AdminLTE/user3-128x128.jpg"/>
+
+                                <div class="comment-text">
+                      <span class="username">
+                        Maria Gonzales
+                        <span class="text-muted pull-right">8:03 PM Today</span>
+                      </span><!-- /.username -->
+                                    It is a long established fact that a reader will be distracted
+                                    by the readable content of a page when looking at its layout.
+                                </div>
+                                <!-- /.comment-text -->
+                            </div>
+                            <!-- /.box-comment -->
+                            <div class="box-comment">
+                                <!-- User image -->
+                                <img class="img-circle img-sm" src="/images/AdminLTE/user4-128x128.jpg"/>
+
+                                <div class="comment-text">
+                      <span class="username">
+                        Luna Stark
+                        <span class="text-muted pull-right">8:03 PM Today</span>
+                      </span><!-- /.username -->
+                                    It is a long established fact that a reader will be distracted
+                                    by the readable content of a page when looking at its layout.
+                                </div>
+                                <!-- /.comment-text -->
+                            </div>
+                            <!-- /.box-comment -->
+                        </div>
+                        <!-- /.box-footer -->
+                        <div class="box-footer">
+                            <form action="#" method="post">
+                                <img class="img-responsive img-circle img-sm" src="/images/AdminLTE/user4-128x128.jpg"/>
+                                <!-- .img-push is used to add margin to elements next to floating images -->
+                                <div class="img-push">
+                                    <input type="text" class="form-control input-sm"
+                                           placeholder="Press enter to post comment"/>
+                                </div>
+                            </form>
+                        </div>
+                        <!-- /.box-footer -->
+                    </div>
+                    <!-- /.card -->
+                </div>
+                <!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+</div>
+<!-- ./wrapper -->
+</body>
+</html>
