@@ -52,10 +52,10 @@
                                 <tr>
                                     <th>序号</th>
                                     <th>ID</th>
-                                    <!--<th>Date</th>-->
-                                    <!--<th>Status</th>-->
                                     <th>Name</th>
+                                    <th>Value</th>
                                     <th>Description</th>
+                                    <th>Date</th>
                                     <th>Operations</th>
                                 </tr>
                                 <tr th:each="category : ${categories}">
@@ -64,9 +64,12 @@
                                     <!--<td><span class="label label-success">Approved</span></td>-->
                                     <!--<td><span class="label label-warning">Pending</span></td>-->
                                     <!--<td><span class="label label-danger">Denied</span></td>-->
-                                    <td th:text="${category.name}"></td>
+                                    <td th:text="${category.name}">history</td>
+                                    <td th:text="${category.value}">历史</td>
                                     <td th:utext="${#strings.abbreviate(category.description, 60)}"
                                         th:title="${category.description}"></td>
+                                    <td th:text="${#calendars.format(category.createdDate, 'yyyy-MM-dd')}"
+                                        th:title="${#calendars.format(category.createdDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
                                     <td style="text-align: left !important;">
                                         <a data-toggle="tooltip" data-placement="top" title="edit">
                                             <span class="fa fa-edit"></span>
@@ -75,11 +78,11 @@
                                             <span class="fa fa-trash"></span>
                                         </a>
                                         <a data-toggle="tooltip" data-placement="top" title="off"
-                                           th:if="${category.isDisabled == 0}">
+                                           th:if="${category.disabled == 0}">
                                             <span class="fa fa-toggle-off"></span>
                                         </a>
                                         <a data-toggle="tooltip" data-placement="top" title="on"
-                                           th:if="${category.isDisabled == 1}">
+                                           th:if="${category.disabled == 1}">
                                             <span class="fa fa-toggle-on"></span>
                                         </a>
                                     </td>

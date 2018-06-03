@@ -21,10 +21,16 @@ public class Category extends AbstractAuditingEntity {
     private Long id;
 
     /**
-     * 名称
+     * 英文名称
      */
     @Column(name = "name", unique = true)
     private String name;
+
+    /**
+     * 中文名称
+     */
+    @Column(name = "value")
+    private String value;
 
     /**
      * 描述
@@ -35,8 +41,8 @@ public class Category extends AbstractAuditingEntity {
     /**
      * 1表示被禁用的，0表示可用的
      */
-    @Column(name = "is_disabled")
-    private Integer isDisabled = 0;
+    @Column(name = "disabled")
+    private Integer disabled = 0;
 
     @Column(name = "category_id")
     private Long categoryId;

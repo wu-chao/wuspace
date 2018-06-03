@@ -83,8 +83,8 @@ public class MediaInfo extends AbstractAuditingEntity {
     /**
      * 1表示被禁用的，0表示可用的
      */
-    @Column(name = "is_disabled")
-    private Integer isDisabled = 0;
+    @Column(name = "disabled")
+    private Integer disabled = 0;
 
     /**
      * 浏览次数

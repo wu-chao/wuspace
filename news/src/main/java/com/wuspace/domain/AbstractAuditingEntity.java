@@ -44,8 +44,8 @@ public class AbstractAuditingEntity implements Serializable {
     /**
      * 1删除，0未删除
      */
-    @Column(name = "is_deleted")
-    private Integer isDeleted = 0;
+    @Column(name = "deleted")
+    private Integer deleted = 0;
 
     public String getCreatedBy() {
         return createdBy;
@@ -79,12 +79,12 @@ public class AbstractAuditingEntity implements Serializable {
         this.lastModifiedDate = lastModifiedDate;
     }
 
-    public Integer getIsDeleted() {
-        return isDeleted;
+    public Integer isDeleted() {
+        return deleted;
     }
 
-    public void setIsDeleted(Integer isDeleted) {
-        this.isDeleted = isDeleted;
+    public void setDeleted(Integer isDeleted) {
+        this.deleted = isDeleted;
     }
 
 }
