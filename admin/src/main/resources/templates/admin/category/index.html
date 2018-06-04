@@ -27,73 +27,71 @@
     <section class="content">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-xs-12">
-                    <div class="box">
-                        <div class="box-header">
-                            <h3 class="box-title">Article Category</h3>
-                            <div class="pull-right">
-                                <div class="input-group input-group-sm pull-right" style="width: 150px;">
-                                    <input type="text" name="table_search" class="form-control pull-right"
-                                           placeholder="Search"/>
-                                    <div class="input-group-btn">
-                                        <button type="submit" class="btn btn-default"><i class="fa fa-search"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                                <div class="pull-right">
-                                    <a href="/admin/category/new" class="btn btn-info">New</a>
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title">Article Category</h3>
+                        <div class="pull-right">
+                            <div class="input-group input-group-sm pull-right" style="width: 150px;">
+                                <input type="text" name="table_search" class="form-control pull-right"
+                                       placeholder="Search"/>
+                                <div class="input-group-btn">
+                                    <button type="submit" class="btn btn-default"><i class="fa fa-search"></i>
+                                    </button>
                                 </div>
                             </div>
+                            <div class="pull-right">
+                                <a href="/admin/category/new" class="btn btn-info">New</a>
+                            </div>
                         </div>
-                        <!-- /.box-header -->
-                        <div class="box-body table-responsive no-padding">
-                            <table class="table table-hover">
-                                <tbody>
-                                <tr>
-                                    <th>序号</th>
-                                    <th>ID</th>
-                                    <th>Name</th>
-                                    <th>Value</th>
-                                    <th>Description</th>
-                                    <th>Date</th>
-                                    <th>Operations</th>
-                                </tr>
-                                <tr th:each="category : ${categories}">
-                                    <td th:text="${categoryStat.count}">1</td>
-                                    <td th:text="${category.id}">183</td>
-                                    <!--<td><span class="label label-success">Approved</span></td>-->
-                                    <!--<td><span class="label label-warning">Pending</span></td>-->
-                                    <!--<td><span class="label label-danger">Denied</span></td>-->
-                                    <td th:text="${category.name}">history</td>
-                                    <td th:text="${category.value}">历史</td>
-                                    <td th:utext="${#strings.abbreviate(category.description, 60)}"
-                                        th:title="${category.description}"></td>
-                                    <td th:text="${#calendars.format(category.createdDate, 'yyyy-MM-dd')}"
-                                        th:title="${#calendars.format(category.createdDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
-                                    <td style="text-align: left !important;">
-                                        <a data-toggle="tooltip" data-placement="top" title="edit">
-                                            <span class="fa fa-edit"></span>
-                                        </a>
-                                        <a data-toggle="tooltip" data-placement="top" title="delete">
-                                            <span class="fa fa-trash"></span>
-                                        </a>
-                                        <a data-toggle="tooltip" data-placement="top" title="off"
-                                           th:if="${category.disabled == 0}">
-                                            <span class="fa fa-toggle-off"></span>
-                                        </a>
-                                        <a data-toggle="tooltip" data-placement="top" title="on"
-                                           th:if="${category.disabled == 1}">
-                                            <span class="fa fa-toggle-on"></span>
-                                        </a>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <!-- /.box-body -->
                     </div>
-                    <!-- /.box -->
+                    <!-- /.box-header -->
+                    <div class="box-body table-responsive no-padding">
+                        <table class="table table-hover">
+                            <tbody>
+                            <tr>
+                                <th>序号</th>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Value</th>
+                                <th>Description</th>
+                                <!--<th>Date</th>-->
+                                <th>Operations</th>
+                            </tr>
+                            <tr th:each="category : ${categories}">
+                                <td th:text="${categoryStat.count}">1</td>
+                                <td th:text="${category.id}">183</td>
+                                <!--<td><span class="label label-success">Approved</span></td>-->
+                                <!--<td><span class="label label-warning">Pending</span></td>-->
+                                <!--<td><span class="label label-danger">Denied</span></td>-->
+                                <td th:text="${category.name}">history</td>
+                                <td th:text="${category.value}">历史</td>
+                                <td th:utext="${#strings.abbreviate(category.description, 60)}"
+                                    th:title="${category.description}"></td>
+                                <!--<td th:text="${#calendars.format(category.createdDate, 'yyyy-MM-dd')}"-->
+                                <!--th:title="${#calendars.format(category.createdDate, 'yyyy-MM-dd HH:mm:ss')}"></td>-->
+                                <td style="text-align: left !important;">
+                                    <a data-toggle="tooltip" data-placement="top" title="edit">
+                                        <span class="fa fa-edit"></span>
+                                    </a>
+                                    <a data-toggle="tooltip" data-placement="top" title="delete">
+                                        <span class="fa fa-trash"></span>
+                                    </a>
+                                    <a data-toggle="tooltip" data-placement="top" title="off"
+                                       th:if="${category.disabled == 0}">
+                                        <span class="fa fa-toggle-off"></span>
+                                    </a>
+                                    <a data-toggle="tooltip" data-placement="top" title="on"
+                                       th:if="${category.disabled == 1}">
+                                        <span class="fa fa-toggle-on"></span>
+                                    </a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.box-body -->
                 </div>
+                <!-- /.box -->
             </div>
             <!-- /.row -->
         </div><!-- /.container-fluid -->
@@ -101,7 +99,5 @@
     <!-- /.content -->
 </div>
 <!-- ./wrapper -->
-
-<!-- jQuery -->
 </body>
 </html>

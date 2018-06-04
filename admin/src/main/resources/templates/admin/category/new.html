@@ -43,12 +43,21 @@
                                             th:value="${parentCategory.id}"
                                             th:text="${parentCategory.name}"></option>
                                 </select>
+                                <label class="prompt-text">栏目是有层级关系的，您可以有一个“音乐”分类目录，在这个目录下可以有叫做“流行”和“古典”的子目录。</label>
                             </div>
                             <!-- Name -->
                             <div class="form-group">
                                 <label>Name</label>
                                 <input type="text" class="form-control" placeholder="Enter ..."
                                        th:field="*{category.name}"/>
+                                <label class="prompt-text">Name 是在 URL 中使用的英文别称，它可以令 URL 更美观。通常使用小写，只能包含字母，数字和连字符（-）。</label>
+                            </div>
+                            <!-- Value -->
+                            <div class="form-group">
+                                <label>Value</label>
+                                <input type="text" class="form-control" placeholder="Enter ..."
+                                       th:field="*{category.value}"/>
+                                <label class="prompt-text">这将是它在站点上显示的中文名字。</label>
                             </div>
                             <!-- Description -->
                             <div class="form-group">

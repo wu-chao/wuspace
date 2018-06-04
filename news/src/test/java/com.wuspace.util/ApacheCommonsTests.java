@@ -181,7 +181,7 @@ public class ApacheCommonsTests implements Serializable {
 
     @Test
     public void testSerializationUtils() {
-        User user = new User().id(1L).username("aaa").password("123456").activated(false);
+        User user = new User().id(1L).username("aaa").password("123456").activated(0);
         user.setAuthorities(new HashSet<Authority>() {{
             add(new Authority().name("ROLE_ADMIN").chnName("ROLE_ADMIN"));
             add(new Authority().name("ROLE_USER").chnName("ROLE_USER"));
@@ -201,7 +201,7 @@ public class ApacheCommonsTests implements Serializable {
     public void testStringUtils() {
         System.out.println("-------------- StringUtils --------------");
         Object[] stringUtilsVariables1 = {
-                new User().id(1L).username("ssss").password("123").activated(false),
+                new User().id(1L).username("ssss").password("123").activated(0),
                 "aaaaaaa",
                 new ArrayList<String>() {{
                     add("bbb");

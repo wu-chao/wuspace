@@ -53,7 +53,7 @@ public class DomainUserDetailsService implements UserDetailsService {
         String lowercaseUsername = username.toLowerCase(Locale.ENGLISH);
         Optional<User> userOptional = userRepository.findOneWithAuthoritiesByUsername(lowercaseUsername);
         return userOptional.map(user -> {
-            if (!user.getActivated()) {
+            if (!user.isActivated()) {
                 throw new UserNotActivatedException("User " + lowercaseUsername + " was not activated");
             }
             List<GrantedAuthority> grantedAuthorities = user.getAuthorities().stream()
