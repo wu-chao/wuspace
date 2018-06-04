@@ -39,7 +39,7 @@ public class Category extends AbstractAuditingEntity {
     private String description;
 
     /**
-     * 1表示被禁用的，0表示可用的
+     * 1 表示被禁用的，0 表示可用的
      */
     @Column(name = "disabled")
     private Integer disabled = 0;
@@ -50,5 +50,9 @@ public class Category extends AbstractAuditingEntity {
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id", insertable = false, updatable = false)
     Set<Category> categories = new HashSet<>();
+
+    public boolean isDisabled() {
+        return disabled != null && disabled == 1;
+    }
 
 }

@@ -42,49 +42,13 @@ public class AbstractAuditingEntity implements Serializable {
     private ZonedDateTime lastModifiedDate = ZonedDateTime.now();
 
     /**
-     * 1删除，0未删除
+     * 1 表示已删除，0 表示未删除
      */
     @Column(name = "deleted")
     private Integer deleted = 0;
 
-    public String getCreatedBy() {
-        return createdBy;
-    }
-
-    public void setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
-    }
-
-    public ZonedDateTime getCreatedDate() {
-        return createdDate;
-    }
-
-    public void setCreatedDate(ZonedDateTime createdDate) {
-        this.createdDate = createdDate;
-    }
-
-    public String getLastModifiedBy() {
-        return lastModifiedBy;
-    }
-
-    public void setLastModifiedBy(String lastModifiedBy) {
-        this.lastModifiedBy = lastModifiedBy;
-    }
-
-    public ZonedDateTime getLastModifiedDate() {
-        return lastModifiedDate;
-    }
-
-    public void setLastModifiedDate(ZonedDateTime lastModifiedDate) {
-        this.lastModifiedDate = lastModifiedDate;
-    }
-
-    public Integer isDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(Integer isDeleted) {
-        this.deleted = isDeleted;
+    public boolean isDeleted() {
+        return deleted != null && deleted == 1;
     }
 
 }
