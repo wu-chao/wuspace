@@ -364,11 +364,12 @@ public class WordTemplate {
                     key.append(beginRunText, 1, endIndex);
                     Object paramValue = getValueByKey(key.toString(), parametersMap);
                     if (paramValue instanceof String) {
+                        // 设置文本
                         insertNewRun.setText(paramValue.toString());
                     }
-                    // 替换为图片
                     if (paramValue instanceof Map) {
-                        replacePicture(xWPFParagraph, insertNewRun, ((Map) paramValue).get("pictureLocation").toString());
+                        // 替换为图片
+                        replacePicture(xWPFParagraph, insertNewRun, String.valueOf(((Map) paramValue).get("pictureLocation")));
                     }
                     xWPFParagraph.removeRun(beginRunIndex + 1);
 
@@ -432,9 +433,18 @@ public class WordTemplate {
                     // 该run标签为**{**或者 {** ，替换key后，还需要加上原始key前的文本
                     XWPFRun insertNewRun = xWPFParagraph.insertNewRun(beginRunIndex);
                     insertNewRun.getCTR().setRPr(beginRun.getCTR().getRPr());
-                    // 设置文本
-                    String textString = beginRunText.substring(0, beginRunText.indexOf("{")) + getValueByKey(key.toString(), parametersMap);
-                    insertNewRun.setText(textString);
+                    key.append(beginRunText, beginRunText.indexOf("{") + 1, beginRunText.indexOf("}"));
+                    Object paramValue = getValueByKey(key.toString(), parametersMap);
+                    if (paramValue instanceof String) {
+                        // 设置文本
+                        String textString = beginRunText.substring(0, beginIndex) + paramValue.toString()
+                                + beginRunText.substring(endIndex + 1);
+                        insertNewRun.setText(textString);
+                    }
+                    if (paramValue instanceof Map) {
+                        // 替换为图片
+                        replacePicture(xWPFParagraph, insertNewRun, String.valueOf(((Map) paramValue).get("pictureLocation")));
+                    }
                     // 移除原始的run
                     xWPFParagraph.removeRun(beginRunIndex + 1);
                 }
@@ -453,9 +463,15 @@ public class WordTemplate {
                     // 该run标签为**}**或者 }** 或者**}，替换key后，还需要加上原始key后的文本
                     XWPFRun insertNewRun = xWPFParagraph.insertNewRun(endRunIndex);
                     insertNewRun.getCTR().setRPr(endRun.getCTR().getRPr());
-                    // 设置文本
-                    String textString = endRunText.substring(endRunText.indexOf("}") + 1);
-                    insertNewRun.setText(textString);
+                    Object paramValue = getValueByKey(key.toString(), parametersMap);
+                    if (paramValue instanceof String) {
+                        // 设置文本
+                        insertNewRun.setText(beginRunText.substring(0, beginRunText.indexOf("{")) + paramValue.toString());
+                    }
+                    if (paramValue instanceof Map) {
+                        // 替换为图片
+                        replacePicture(xWPFParagraph, insertNewRun, String.valueOf(((Map) paramValue).get("pictureLocation")));
+                    }
                     // 移除原始的run
                     xWPFParagraph.removeRun(endRunIndex + 1);
                 }
@@ -679,7 +695,7 @@ public class WordTemplate {
      */
     public void replacePicture(XWPFParagraph paragraph, XWPFRun run, String pictureLocation) {
 
-        if (StringUtils.isNotEmpty(pictureLocation)) {
+        if (StringUtils.isNotEmpty(pictureLocation) && !"null".equals(pictureLocation)) {
             try {
                 // 图片输入流
                 InputStream is;

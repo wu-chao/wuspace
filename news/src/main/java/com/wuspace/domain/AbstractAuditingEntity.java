@@ -1,5 +1,6 @@
 package com.wuspace.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
@@ -24,7 +25,7 @@ public class AbstractAuditingEntity implements Serializable {
     @CreatedBy
     private String createdBy;
 
-    @JsonIgnore
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(name = "created_date", nullable = false)
 //    @Type(type = "org.jadira.usertype.dateandtime.threeten.PersistentLocalDateTime")
     @CreatedDate
@@ -35,7 +36,7 @@ public class AbstractAuditingEntity implements Serializable {
     @LastModifiedBy
     private String lastModifiedBy;
 
-    @JsonIgnore
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(name = "last_modified_date")
 //    @Type(type = "org.jadira.usertype.dateandtime.threeten.PersistentLocalDateTime")
     @LastModifiedDate
