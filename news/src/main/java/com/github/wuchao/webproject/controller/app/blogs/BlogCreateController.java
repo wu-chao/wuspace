@@ -28,8 +28,8 @@ public class BlogCreateController {
         return "blogs/create";
     }
 
-    @PostMapping("/blogs/publish")
-    @FormToken(recreate = true, remove = true)
+    @PostMapping(value = "/blogs/publish")
+    @FormToken(remove = true)
     public String publish(@Valid BlogCreateCommand blogCreateCommand, BindingResult bindingResult,
                           @ModelAttribute("currentUser") User user, Model model) {
         if (bindingResult.hasErrors()) {

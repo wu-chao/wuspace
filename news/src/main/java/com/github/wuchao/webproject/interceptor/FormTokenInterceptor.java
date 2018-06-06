@@ -12,7 +12,7 @@ import java.lang.reflect.Method;
 import java.util.UUID;
 
 /**
- * 表单提交验证Token，防止表单重复提交
+ * 表单提交验证 Token，防止表单重复提交
  */
 @Component
 public class FormTokenInterceptor extends HandlerInterceptorAdapter {
@@ -28,14 +28,14 @@ public class FormTokenInterceptor extends HandlerInterceptorAdapter {
             if (annotation != null) {
                 boolean needSaveSession = annotation.create();
                 if (needSaveSession) {
-                    request.getSession(false).setAttribute(this.FORM_TOKEN_SESSION_ATTRIBUTE, UUID.randomUUID().toString());
+                    request.getSession(false).setAttribute(FORM_TOKEN_SESSION_ATTRIBUTE, UUID.randomUUID().toString());
                 }
                 boolean needRemoveSession = annotation.remove();
                 if (needRemoveSession) {
                     if (isRepeatSubmit(request)) {
                         return false;
                     }
-                    request.getSession(false).removeAttribute(this.FORM_TOKEN_SESSION_ATTRIBUTE);
+                    request.getSession(false).removeAttribute(FORM_TOKEN_SESSION_ATTRIBUTE);
                 }
             }
             return true;
@@ -45,43 +45,44 @@ public class FormTokenInterceptor extends HandlerInterceptorAdapter {
     }
 
     /**
-     * 后台验证不通过重新生成表单Token
+     * 后台验证不通过，重新生成表单Token
      *
      * @param request
      * @param response
      * @param handler
      * @param modelAndView
-     * @throws Exception
      */
     @Override
-    public void postHandle(
-            HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView)
-            throws Exception {
+    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) {
         if (handler instanceof HandlerMethod) {
             HandlerMethod handlerMethod = (HandlerMethod) handler;
             Method method = handlerMethod.getMethod();
             FormToken annotation = method.getAnnotation(FormToken.class);
             if (annotation != null) {
-                boolean needSaveSession = annotation.recreate();
-                if (needSaveSession && !modelAndView.getViewName().startsWith("redirect:")) {
-                    request.getSession(false).setAttribute(this.FORM_TOKEN_SESSION_ATTRIBUTE, UUID.randomUUID().toString());
+                boolean needRemoveSession = annotation.remove();
+                // 表单后台验证不通过的情况
+                if (needRemoveSession && !modelAndView.getViewName().startsWith("redirect:")) {
+                    request.getSession(false).setAttribute(FORM_TOKEN_SESSION_ATTRIBUTE, UUID.randomUUID().toString());
                 }
             }
         }
     }
 
+    /**
+     * 判断表单是否重复提交
+     *
+     * @param request
+     * @return
+     */
     private boolean isRepeatSubmit(HttpServletRequest request) {
-        String serverToken = (String) request.getSession(false).getAttribute(this.FORM_TOKEN_SESSION_ATTRIBUTE);
+        String serverToken = (String) request.getSession(false).getAttribute(FORM_TOKEN_SESSION_ATTRIBUTE);
         if (serverToken == null) {
             return true;
         }
-        String clientToken = request.getParameter(this.FORM_TOKEN_SESSION_ATTRIBUTE);
+        String clientToken = request.getParameter(FORM_TOKEN_SESSION_ATTRIBUTE);
         if (clientToken == null) {
             return true;
         }
-        if (!serverToken.equals(clientToken)) {
-            return true;
-        }
-        return false;
+        return !serverToken.equals(clientToken);
     }
 }

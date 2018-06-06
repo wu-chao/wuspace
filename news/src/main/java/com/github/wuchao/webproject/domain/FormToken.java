@@ -11,7 +11,6 @@ public @interface FormToken {
 
     boolean create() default false;
 
-    boolean recreate() default false;
-
     boolean remove() default false;
+
 }
