@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.liquibase.LiquibaseAutoConfigurati
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 
-@ComponentScan(excludeFilters = @ComponentScan.Filter(type = FilterType.REGEX, pattern = "com\\.wuspace\\.controller\\.app\\..*"))
+@ComponentScan(excludeFilters = @ComponentScan.Filter(type = FilterType.REGEX, pattern = "com\\.github\\.wuchao\\.webproject\\.controller\\.app\\..*"))
 @EnableAutoConfiguration(exclude = LiquibaseAutoConfiguration.class)
 public class AdminApplication {
     public static void main(String args[]) {

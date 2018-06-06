@@ -17,7 +17,7 @@ function publishNotice(obj){
 	content = contentHtml;
 	$.ajax({
 		type:"post",
-		url:"/wuspace/notices/publish",
+		url:"/news/notices/publish",
 		data:{
 			"adminId":userId,
 			"title":title,
@@ -30,11 +30,11 @@ function publishNotice(obj){
 
 				$("#blogs").prepend("<li class='blog'>"+
 					"<div class='blog_header'>"+
-					"	<a href='/wuspace/notices/"+data.id+"'>"+title+"</a>"+
+					"	<a href='/news/notices/"+data.id+"'>"+title+"</a>"+
 					"</div>"+
 					"<div class='blog_body'>"+blogText+"</div>"+
 					"<div class='blog_footer'>"+
-					"	<i style='background:url(/wuspace/images/blog_time.png) no-repeat'></i>"+
+					"	<i style='background:url(/images/blog_time.png) no-repeat'></i>"+
 					"	<span class='blog_time'>"+getLocalTime(data.createTime)+"</span>&nbsp;&nbsp;"+
 					"	<a data-id='"+data.id+"' onclick='deleteNotice(this)' th:text='删除'>删除</a>"+
 					"</div>"+
@@ -88,7 +88,7 @@ function deleteNotice(obj){
 		var noticeId = $this.data("id");
 		$.ajax({
 			type:"get",
-			url:"/wuspace/notices/"+noticeId+"/delete",
+			url:"/news/notices/"+noticeId+"/delete",
 			success:function(data){
 				if(data.trim() == "success"){
 					$this.parents(".blog").slideUp();
