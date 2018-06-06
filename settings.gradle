@@ -2,6 +2,3 @@ rootProject.name = 'web-project'
 
 include 'admin'
 include 'news'
-include 'jsp-demo'
-include 'hibernate-demo'
-
