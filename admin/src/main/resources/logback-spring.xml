@@ -53,7 +53,7 @@
     <logger name="liquibase" level="WARN"/>
     <logger name="LiquibaseSchemaResolver" level="INFO"/>
     <logger name="sun.rmi.transport" level="WARN"/>
-    <logger name="com.wuspace.controller.admin" level="DEBUG"/>
+    <logger name="com.github.wuchao.webproject.controller.admin" level="DEBUG"/>
 
     <contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator">
         <resetJUL>true</resetJUL>

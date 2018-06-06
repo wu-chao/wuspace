@@ -3,7 +3,7 @@
       xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorator="layouts/main">
+      layout:decorator="layout/main">
 <head>
     <meta charset="utf-8"/>
     <meta name="renderer" content="webkit"/>
@@ -54,19 +54,14 @@
                     <ol class="carousel-indicators">
                         <li data-target="#focusslide" data-slide-to="0" class="active"></li>
                         <li data-target="#focusslide" data-slide-to="1"></li>
-                        <li data-target="#focusslide" data-slide-to="2"></li>
                     </ol>
                     <div class="carousel-inner" role="listbox">
                         <div class="item active"><a href="" target="_blank"><img src="/images/banner/banner_01.jpg"
-                                                                                 alt="" class="img-responsive"></a>
+                                                                                 alt="" class="img-responsive"/></a>
                             <!--<div class="carousel-caption"> </div>-->
                         </div>
                         <div class="item"><a href="" target="_blank"><img src="/images/banner/banner_02.jpg" alt=""
-                                                                          class="img-responsive"></a>
-                            <!--<div class="carousel-caption"> </div>-->
-                        </div>
-                        <div class="item"><a href="" target="_blank"><img src="/images/banner/banner_03.jpg" alt=""
-                                                                          class="img-responsive"></a>
+                                                                          class="img-responsive"/></a>
                             <!--<div class="carousel-caption"> </div>-->
                         </div>
                     </div>
@@ -76,8 +71,8 @@
                     </a>
                     <!--右切换按钮-->
                     <a class="right carousel-control" href="#focusslide" role="button" data-slide="next"
-                            rel="nofollow"> <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                    <span class="sr-only">下一个</span> </a>
+                       rel="nofollow"> <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                        <span class="sr-only">下一个</span> </a>
                 </div>
 
                 <!--今日推荐-->
@@ -102,7 +97,7 @@
                 <!--文章列表项-->
                 <article class="excerpt excerpt-1" th:each="article : ${articles}">
                     <a class="focus" href="article.html" title="">
-                        <img class="thumb" data-original="/images/water.gif" src="/images/water.gif" alt="">
+                        <img class="thumb" data-original="/images/water.gif" src="/images/water.gif" alt=""/>
                     </a>
                     <header>
                         <a class="cat" href="program">后端程序<i></i></a>
@@ -181,14 +176,14 @@
                 <!--</form>-->
                 <!--</div>-->
             </div>
-            <div class="widget widget_sentence">
-                <h3>每日一句</h3>
-                <div class="widget-sentence-content">
-                    <h4>2016年01月05日星期二</h4>
-                    <p>Do not let what you cannot do interfere with what you can do.<br/>
-                        别让你不能做的事妨碍到你能做的事。（John Wooden）</p>
-                </div>
-            </div>
+            <!--<div class="widget widget_sentence">-->
+            <!--<h3>每日一句</h3>-->
+            <!--<div class="widget-sentence-content">-->
+            <!--<h4>2016年01月05日星期二</h4>-->
+            <!--<p>Do not let what you cannot do interfere with what you can do.<br/>-->
+            <!--别让你不能做的事妨碍到你能做的事。（John Wooden）</p>-->
+            <!--</div>-->
+            <!--</div>-->
 
             <!--热门文章-->
             <div class="widget widget_hot">
@@ -237,93 +232,93 @@
 
             <!--标签云-->
             <!--<div class="widget widget_hot">-->
-                <!--<h3>标签云</h3>-->
-                <!--<ul>-->
-                    <!--<li>-->
-                        <!--<a href="">-->
-                            <!--&lt;!&ndash;<span class="thumbnail">&ndash;&gt;-->
-                            <!--&lt;!&ndash;<img class="thumb" data-original="/images/water.gif" src="/images/water.gif" alt="">&ndash;&gt;-->
-                            <!--&lt;!&ndash;</span>&ndash;&gt;-->
-                            <!--<span class="text">php如何判断一个日期的格式是否正确</span>-->
-                            <!--<span class="muted"><i class="glyphicon glyphicon-time"></i> 2016-1-4 </span>-->
-                            <!--<span class="muted"><i class="glyphicon glyphicon-eye-open"></i> 120</span>-->
-                        <!--</a>-->
-                    <!--</li>-->
-                    <!--<li>-->
-                        <!--<a href="">-->
-                            <!--<span class="text">php如何判断一个日期的格式是否正确</span>-->
-                            <!--<span class="muted"><i class="glyphicon glyphicon-time"></i> 2016-1-4 </span>-->
-                            <!--<span class="muted"><i class="glyphicon glyphicon-eye-open"></i> 120</span>-->
-                        <!--</a>-->
-                    <!--</li>-->
-                    <!--<li>-->
-                        <!--<a href="">-->
-                            <!--<span class="text">php如何判断一个日期的格式是否正确</span>-->
-                            <!--<span class="muted"><i class="glyphicon glyphicon-time"></i> 2016-1-4 </span>-->
-                            <!--<span class="muted"><i class="glyphicon glyphicon-eye-open"></i> 120</span>-->
-                        <!--</a>-->
-                    <!--</li>-->
-                    <!--<li>-->
-                        <!--<a href="">-->
-                            <!--<span class="text">php如何判断一个日期的格式是否正确</span>-->
-                            <!--<span class="muted"><i class="glyphicon glyphicon-time"></i> 2016-1-4 </span>-->
-                            <!--<span class="muted"><i class="glyphicon glyphicon-eye-open"></i> 120</span>-->
-                        <!--</a>-->
-                    <!--</li>-->
-                    <!--<li>-->
-                        <!--<a href="">-->
-                            <!--<span class="text">php如何判断一个日期的格式是否正确</span>-->
-                            <!--<span class="muted"><i class="glyphicon glyphicon-time"></i> 2016-1-4 </span>-->
-                            <!--<span class="muted"><i class="glyphicon glyphicon-eye-open"></i> 120</span>-->
-                        <!--</a>-->
-                    <!--</li>-->
-                <!--</ul>-->
+            <!--<h3>标签云</h3>-->
+            <!--<ul>-->
+            <!--<li>-->
+            <!--<a href="">-->
+            <!--&lt;!&ndash;<span class="thumbnail">&ndash;&gt;-->
+            <!--&lt;!&ndash;<img class="thumb" data-original="/images/water.gif" src="/images/water.gif" alt="">&ndash;&gt;-->
+            <!--&lt;!&ndash;</span>&ndash;&gt;-->
+            <!--<span class="text">php如何判断一个日期的格式是否正确</span>-->
+            <!--<span class="muted"><i class="glyphicon glyphicon-time"></i> 2016-1-4 </span>-->
+            <!--<span class="muted"><i class="glyphicon glyphicon-eye-open"></i> 120</span>-->
+            <!--</a>-->
+            <!--</li>-->
+            <!--<li>-->
+            <!--<a href="">-->
+            <!--<span class="text">php如何判断一个日期的格式是否正确</span>-->
+            <!--<span class="muted"><i class="glyphicon glyphicon-time"></i> 2016-1-4 </span>-->
+            <!--<span class="muted"><i class="glyphicon glyphicon-eye-open"></i> 120</span>-->
+            <!--</a>-->
+            <!--</li>-->
+            <!--<li>-->
+            <!--<a href="">-->
+            <!--<span class="text">php如何判断一个日期的格式是否正确</span>-->
+            <!--<span class="muted"><i class="glyphicon glyphicon-time"></i> 2016-1-4 </span>-->
+            <!--<span class="muted"><i class="glyphicon glyphicon-eye-open"></i> 120</span>-->
+            <!--</a>-->
+            <!--</li>-->
+            <!--<li>-->
+            <!--<a href="">-->
+            <!--<span class="text">php如何判断一个日期的格式是否正确</span>-->
+            <!--<span class="muted"><i class="glyphicon glyphicon-time"></i> 2016-1-4 </span>-->
+            <!--<span class="muted"><i class="glyphicon glyphicon-eye-open"></i> 120</span>-->
+            <!--</a>-->
+            <!--</li>-->
+            <!--<li>-->
+            <!--<a href="">-->
+            <!--<span class="text">php如何判断一个日期的格式是否正确</span>-->
+            <!--<span class="muted"><i class="glyphicon glyphicon-time"></i> 2016-1-4 </span>-->
+            <!--<span class="muted"><i class="glyphicon glyphicon-eye-open"></i> 120</span>-->
+            <!--</a>-->
+            <!--</li>-->
+            <!--</ul>-->
             <!--</div>-->
 
             <!--友情链接-->
-            <!--<div class="widget widget_hot">-->
-                <!--<h3>友情链接</h3>-->
-                <!--<ul>-->
-                    <!--<li>-->
-                        <!--<a href="">-->
-                            <!--&lt;!&ndash;<span class="thumbnail">&ndash;&gt;-->
-                            <!--&lt;!&ndash;<img class="thumb" data-original="/images/water.gif" src="/images/water.gif" alt="">&ndash;&gt;-->
-                            <!--&lt;!&ndash;</span>&ndash;&gt;-->
-                            <!--<span class="text">php如何判断一个日期的格式是否正确</span>-->
-                            <!--<span class="muted"><i class="glyphicon glyphicon-time"></i> 2016-1-4 </span>-->
-                            <!--<span class="muted"><i class="glyphicon glyphicon-eye-open"></i> 120</span>-->
-                        <!--</a>-->
-                    <!--</li>-->
-                    <!--<li>-->
-                        <!--<a href="">-->
-                            <!--<span class="text">php如何判断一个日期的格式是否正确</span>-->
-                            <!--<span class="muted"><i class="glyphicon glyphicon-time"></i> 2016-1-4 </span>-->
-                            <!--<span class="muted"><i class="glyphicon glyphicon-eye-open"></i> 120</span>-->
-                        <!--</a>-->
-                    <!--</li>-->
-                    <!--<li>-->
-                        <!--<a href="">-->
-                            <!--<span class="text">php如何判断一个日期的格式是否正确</span>-->
-                            <!--<span class="muted"><i class="glyphicon glyphicon-time"></i> 2016-1-4 </span>-->
-                            <!--<span class="muted"><i class="glyphicon glyphicon-eye-open"></i> 120</span>-->
-                        <!--</a>-->
-                    <!--</li>-->
-                    <!--<li>-->
-                        <!--<a href="">-->
-                            <!--<span class="text">php如何判断一个日期的格式是否正确</span>-->
-                            <!--<span class="muted"><i class="glyphicon glyphicon-time"></i> 2016-1-4 </span>-->
-                            <!--<span class="muted"><i class="glyphicon glyphicon-eye-open"></i> 120</span>-->
-                        <!--</a>-->
-                    <!--</li>-->
-                    <!--<li>-->
-                        <!--<a href="">-->
-                            <!--<span class="text">php如何判断一个日期的格式是否正确</span>-->
-                            <!--<span class="muted"><i class="glyphicon glyphicon-time"></i> 2016-1-4 </span>-->
-                            <!--<span class="muted"><i class="glyphicon glyphicon-eye-open"></i> 120</span>-->
-                        <!--</a>-->
-                    <!--</li>-->
-                <!--</ul>-->
-            <!--</div>-->
+            <div class="widget widget_hot">
+                <h3>友情链接</h3>
+                <ul>
+                    <li>
+                        <a href="">
+                            <!--<span class="thumbnail">-->
+                            <!--<img class="thumb" data-original="/images/water.gif" src="/images/water.gif" alt="">-->
+                            <!--</span>-->
+                            <span class="text">php如何判断一个日期的格式是否正确</span>
+                            <span class="muted"><i class="glyphicon glyphicon-time"></i> 2016-1-4 </span>
+                            <span class="muted"><i class="glyphicon glyphicon-eye-open"></i> 120</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <span class="text">php如何判断一个日期的格式是否正确</span>
+                            <span class="muted"><i class="glyphicon glyphicon-time"></i> 2016-1-4 </span>
+                            <span class="muted"><i class="glyphicon glyphicon-eye-open"></i> 120</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <span class="text">php如何判断一个日期的格式是否正确</span>
+                            <span class="muted"><i class="glyphicon glyphicon-time"></i> 2016-1-4 </span>
+                            <span class="muted"><i class="glyphicon glyphicon-eye-open"></i> 120</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <span class="text">php如何判断一个日期的格式是否正确</span>
+                            <span class="muted"><i class="glyphicon glyphicon-time"></i> 2016-1-4 </span>
+                            <span class="muted"><i class="glyphicon glyphicon-eye-open"></i> 120</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <span class="text">php如何判断一个日期的格式是否正确</span>
+                            <span class="muted"><i class="glyphicon glyphicon-time"></i> 2016-1-4 </span>
+                            <span class="muted"><i class="glyphicon glyphicon-eye-open"></i> 120</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </aside>
     </section>
 </div>
@@ -384,13 +379,14 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="loginModalUserNmae">用户名</label>
-                        <input type="text" class="form-control" id="loginModalUserNmae" placeholder="请输入用户名" autofocus
-                               maxlength="15" autocomplete="off" required>
+                        <input type="text" class="form-control" id="loginModalUserNmae" placeholder="请输入用户名"
+                               autofocus="autofocus"
+                               maxlength="15" autocomplete="off" required="required"/>
                     </div>
                     <div class="form-group">
                         <label for="loginModalUserPwd">密码</label>
                         <input type="password" class="form-control" id="loginModalUserPwd" placeholder="请输入密码"
-                               maxlength="18" autocomplete="off" required>
+                               maxlength="18" autocomplete="off" required="required"/>
                     </div>
                 </div>
                 <div class="modal-footer">

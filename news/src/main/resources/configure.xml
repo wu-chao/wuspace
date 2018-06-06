@@ -3,7 +3,7 @@
 		"http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 	<typeAliases>
-		<typeAlias alias="User" type="com.wuspace.domain.User"/>
+		<typeAlias alias="User" type="com.github.wuchao.webproject.domain.User"/>
 	</typeAliases>
 	<environments default="dev">
 		<environment id="dev">
@@ -18,7 +18,7 @@
 	</environments>
 
 	<mappers>
-		<mapper resource="com.wuspace.domain.User.xml"/>
-		<mapper resource="com.wuspace.domain.Article.xml"/>
+		<mapper resource="com.github.wuchao.webproject.domain.User.xml"/>
+		<mapper resource="com.github.wuchao.webproject.domain.Article.xml"/>
 	</mappers>
 </configuration>

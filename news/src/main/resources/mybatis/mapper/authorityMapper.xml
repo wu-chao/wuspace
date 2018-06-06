@@ -2,9 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.wuspace.domain.AuthorityMapper">
+<mapper namespace="com.github.wuchao.webproject.domain.AuthorityMapper">
     
-    <select id="findAuthoritesByUsername" resultType="com.wuspace.domain.Authority">
+    <select id="findAuthoritesByUsername" resultType="com.github.wuchao.webproject.domain.Authority">
         select ua.name from user_authority ua where ua.username = #{username}
     </select>
 </mapper>
