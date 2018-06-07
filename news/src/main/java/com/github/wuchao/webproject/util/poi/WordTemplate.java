@@ -510,7 +510,7 @@ public class WordTemplate {
                     });
                 }
 
-                // word段落一段文字中包含换行符("\r")，则换行
+                // word段落一段文字中包含换行符("\\\\n")，则换行
                 newLine(xWPFParagraph);
 
             }// 处理${**}被分成多个run
@@ -522,17 +522,20 @@ public class WordTemplate {
     }
 
     /**
-     * 根据段落中的换行符（"\r"）换行
+     * 根据段落中的换行符换行
      *
      * @param paragraph
      */
     private void newLine(XWPFParagraph paragraph) {
         List<XWPFRun> runList = paragraph.getRuns();
         if (CollectionUtils.isNotEmpty(runList)) {
-            int runSize = paragraph.getRuns().size();
-            int runSizeCount = runSize;
-            String[] pTexts = paragraph.getText().split("\r");
+            int runSize;
+            int runSizeCount;
+            String paraText = paragraph.getText().trim();
+            String[] pTexts = paraText.split("\r|\\\\n");
             if (pTexts.length > 1) {
+                runSize = paragraph.getRuns().size();
+                runSizeCount = runSize;
                 XWPFRun oldRun = paragraph.getRuns().get(0);
                 for (int j = 0; j < pTexts.length; j++) {
                     // 在段落原有的 XWPFRun 后新增 XWPFRun
