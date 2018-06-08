@@ -102,6 +102,7 @@ dependencies {
 
     // Spring
     compile "org.springframework:spring-context-support"
+    compile "org.springframework:spring-agent:${spring_agent_version}"
 
     // Spring Boot
     compile "org.springframework.boot:spring-boot-devtools"
@@ -111,6 +112,7 @@ dependencies {
     compile "org.springframework.boot:spring-boot-starter-actuator"
     compile "org.springframework.boot:spring-boot-starter-security"
     compile "org.springframework.boot:spring-boot-starter-data-jpa"
+    compile "org.springframework.boot:spring-boot-starter-data-redis"
     compile "org.springframework.boot:spring-boot-starter-web"
     compile "org.springframework.boot:spring-boot-starter-tomcat"
     compile "org.springframework.boot:spring-boot-starter-websocket"
@@ -132,6 +134,7 @@ dependencies {
 //    compile "org.liquibase:liquibase-core"
     compile "com.h2database:h2"
     compile "mysql:mysql-connector-java"
+    compile "com.github.ben-manes.caffeine:caffeine"
 
     // Mybatis
 //    compile "org.mybatis.generator:mybatis-generator-core:${mybatis_generator_version}"
