@@ -2,20 +2,17 @@ package com.github.wuchao.webproject.controller.app.blogs;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.github.wuchao.webproject.repository.MediaInfoRepository;
 import com.github.wuchao.webproject.domain.MediaInfo;
 import com.github.wuchao.webproject.mapper.BlogMapper;
 import com.github.wuchao.webproject.repository.MediaInfoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
@@ -31,15 +28,14 @@ public class BlogIndexController {
     @PersistenceContext
     private EntityManager entityManager;
 
-    @Transactional(rollbackFor = Exception.class)
-    @GetMapping(value = {"", "/", "/blogs"})
-    public String index(@RequestParam(defaultValue = "0") int pageNum,
-                        @RequestParam(defaultValue = "10") int pageSize, Model model, HttpServletRequest request) {
-        PageInfo blogPageInfo = listWithMarshalling(pageNum, pageSize);
-        model.addAttribute("blogPageInfo", blogPageInfo);
-
-        return "index";
-    }
+//    @GetMapping(value = {"", "/", "/blogs"})
+//    public String index(@RequestParam(defaultValue = "0") int pageNum,
+//                        @RequestParam(defaultValue = "10") int pageSize, Model model) {
+//        PageInfo blogPageInfo = listWithMarshalling(pageNum, pageSize);
+//        model.addAttribute("blogPageInfo", blogPageInfo);
+//
+//        return "index";
+//    }
 
     @RequestMapping(value = "/blogs", produces = {"application/xml", "application/json"})
     @ResponseBody

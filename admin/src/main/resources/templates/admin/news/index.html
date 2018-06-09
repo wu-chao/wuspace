@@ -73,8 +73,8 @@
                                                 </th>
                                                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1"
                                                     colspan="1"
-                                                    aria-label="PublishDate: activate to sort column ascending"
-                                                    style="width: 100px;">PublishDate
+                                                    aria-label="PublishedDate: activate to sort column ascending"
+                                                    style="width: 100px;">PublishedDate
                                                 </th>
                                                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1"
                                                     colspan="1"
@@ -94,8 +94,8 @@
                                                     th:title="${news.getSummaryText()}"></td>
                                                 <td th:text="${news.category != null ? news.category.name : '--'}"></td>
                                                 <td th:text="${news.author != null ? news.author.nickname : '--'}"></td>
-                                                <td th:text="${#calendars.format(news.publishDate, 'yyyy-MM-dd')}"
-                                                    th:title="${#calendars.format(news.publishDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                                                <td th:text="${#calendars.format(news.publishedDate, 'yyyy-MM-dd')}"
+                                                    th:title="${#calendars.format(news.publishedDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
                                                 <td th:text="#{'mediaInfo.status.' + ${news.status}}"></td>
                                             </tr>
                                             </tbody>

@@ -73,8 +73,8 @@
                                                 </th>
                                                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1"
                                                     colspan="1"
-                                                    aria-label="PublishDate: activate to sort column ascending"
-                                                    style="width: 100px;">PublishDate
+                                                    aria-label="PublishedDate: activate to sort column ascending"
+                                                    style="width: 100px;">PublishedDate
                                                 </th>
                                                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1"
                                                     colspan="1"
@@ -99,11 +99,11 @@
                                                     th:title="${article.getSummaryText()}"></td>
                                                 <td th:text="${article.category != null ? article.category.name : '--'}"></td>
                                                 <td th:text="${article.author != null ? article.author.nickname : '--'}"></td>
-                                                <td th:text="${#calendars.format(article.publishDate, 'yyyy-MM-dd')}"
-                                                    th:title="${#calendars.format(article.publishDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                                                <td th:text="${#calendars.format(article.publishedDate, 'yyyy-MM-dd')}"
+                                                    th:title="${#calendars.format(article.publishedDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
                                                 <td th:text="#{'mediaInfo.status.' + ${article.status}}"></td>
                                                 <td style="text-align: left !important;"
-                                                    th:if="${article.isDeleted == 0}">
+                                                    th:if="${article.isDeleted()}">
                                                     <a data-toggle="tooltip" data-placement="top" title="edit"
                                                        class="edit">
                                                         <span class="fa fa-edit"></span>
@@ -118,11 +118,11 @@
                                                         <span class="fa fa-toggle-off"></span>
                                                     </a>
                                                     <a data-toggle="tooltip" data-placement="top" title="on" class="on"
-                                                       th:if="${article.isDisabled == 1}">
+                                                       th:if="${article.isDisabled()}">
                                                         <span class="fa fa-toggle-on"></span>
                                                     </a>
                                                 </td>
-                                                <td th:if="${article.isDeleted == 1}">
+                                                <td th:if="${article.isDeleted()}">
                                                     --
                                                 </td>
                                             </tr>

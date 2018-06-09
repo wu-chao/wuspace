@@ -33,7 +33,7 @@
                                 <img class="img-circle" src="/images/AdminLTE/user1-128x128.jpg"/>
                                 <span class="username"><a href="#" th:utext="${article.author.nickname}">Jonathan Burke Jr.</a></span>
                                 <span class="description"
-                                      th:text="${(!#strings.isEmpty(article.location)? article.location + ' - ' : '') + #calendars.format(article.publishDate, 'yyyy-MM-dd HH:mm:ss')}">Shared publicly - 7:30 PM Today</span>
+                                      th:text="${(!#strings.isEmpty(article.location)? article.location + ' - ' : '') + #calendars.format(article.publishedDate, 'yyyy-MM-dd HH:mm:ss')}">Shared publicly - 7:30 PM Today</span>
                             </div>
                             <!-- /.user-block -->
                             <!--<div class="box-tools">-->

@@ -3,9 +3,6 @@ package com.github.wuchao.webproject.controller.admin.article;
 import com.github.wuchao.webproject.domain.Category;
 import com.github.wuchao.webproject.domain.enumeration.MediaType;
 import com.github.wuchao.webproject.repository.CategoryRepository;
-import com.github.wuchao.webproject.domain.Category;
-import com.github.wuchao.webproject.domain.enumeration.MediaType;
-import com.github.wuchao.webproject.repository.CategoryRepository;
 import com.github.wuchao.webproject.service.article.AdminArticleService;
 import com.github.wuchao.webproject.service.article.dto.AdminArticleDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +37,6 @@ public class AdminArticleNewController {
         return "article/new";
     }
 
-    // @PostMapping(value = "/article/new", params = {"mediaType=ARTICLE"})
     @PostMapping("/article/new")
     public String publish(AdminArticleDTO articleDTO) {
         adminArticleService.saveArticle(articleDTO);

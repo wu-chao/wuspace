@@ -682,7 +682,6 @@ body, input, button, textarea, select {
 .excerpt {
     clear: both;
     border: 1px solid #EAEAEA;
-    padding: 20px 20px 20px 255px;
     overflow: hidden;
     background-color: #fff;
     margin-bottom: -1px;
@@ -696,6 +695,12 @@ body, input, button, textarea, select {
 }
 
 .excerpt-1 {
+    padding: 20px;
+    border-radius: 4px 4px 0 0;
+}
+
+.excerpt-2 {
+    padding: 20px 20px 20px 255px;
     border-radius: 4px 4px 0 0;
 }
 
@@ -707,8 +712,10 @@ body, input, button, textarea, select {
 
 .excerpt .thumb {
     border-radius: 5px;
-    width: 220px;
-    height: 150px;
+    /*width: 220px;*/
+    /*height: 150px;*/
+    width: 190px;
+    height: 124px;
     overflow: hidden;
 }
 

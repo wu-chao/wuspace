@@ -1,8 +1,9 @@
 package com.github.wuchao.webproject.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.github.wuchao.webproject.domain.enumeration.CheckStatus;
 import com.github.wuchao.webproject.domain.enumeration.MediaType;
-import com.github.wuchao.webproject.util.StringUtils;
+import com.github.wuchao.webproject.util.HtmlUtils;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -24,8 +25,9 @@ public class MediaInfo extends AbstractAuditingEntity {
     @Column(name = "id", unique = true, nullable = false)
     private Long id;
 
-    @Column(name = "publish_date")
-    private ZonedDateTime publishDate;
+    @Column(name = "published_date")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private ZonedDateTime publishedDate;
 
     /**
      * 作者
@@ -46,6 +48,12 @@ public class MediaInfo extends AbstractAuditingEntity {
      * 摘要
      */
     private String summary;
+
+    /**
+     * 缩略图个数
+     */
+    @Column(name = "thumbnail_num")
+    private int thumbnailNum = 0;
 
     /**
      * 缩略图 url
@@ -89,8 +97,8 @@ public class MediaInfo extends AbstractAuditingEntity {
     /**
      * 1表示被禁用的，0表示可用的
      */
-    @Column(name = "disabled")
-    private Integer disabled = 0;
+//    @Column(name = "disabled")
+//    private Integer disabled = 0;
 
     /**
      * 浏览次数
@@ -126,7 +134,7 @@ public class MediaInfo extends AbstractAuditingEntity {
      * @return
      */
     public String getSummaryText() {
-        return StringUtils.cleanHTML(getSummary());
+        return HtmlUtils.cleanHTML(getSummary());
     }
 
 }

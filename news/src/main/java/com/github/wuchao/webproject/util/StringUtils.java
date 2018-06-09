@@ -6,27 +6,21 @@ public abstract class StringUtils {
         return cs == null || cs.length() == 0;
     }
 
-    public static String convertArrayToString(Object[] ig) {
-        return org.apache.commons.lang3.StringUtils.join(ig, ',');
-
-//        if (ig != null && ig.length > 0) {
-//            StringBuilder str = new StringBuilder("");
-//            for (int i = 0; i < ig.length; i++) {
-//                str.append(String.valueOf(ig[i])).append(",");
-//            }
-//            return str.substring(0, str.length() - 1);
-//        }
-//        return "";
-    }
-
     /**
-     * 去除 HTML 标签
-     *
-     * @param content
+     * 将
+     * @param ig
+     * @param count
      * @return
      */
-    public static String cleanHTML(String content) {
-        return content.replaceAll("</?[^>]+>", "").replaceAll("<a>\\s*|\t|\r|\n</a>", "");
+    public static String convertArrayToString(Object[] ig, int count) {
+        if (ig != null && ig.length > 0) {
+            StringBuilder str = new StringBuilder("");
+            for (int i = 0; i < ig.length && i < count; i++) {
+                str.append(String.valueOf(ig[i])).append(",");
+            }
+            return str.substring(0, str.length() - 1);
+        }
+        return "";
     }
 
     public static Double getPercentValue(String percent) {

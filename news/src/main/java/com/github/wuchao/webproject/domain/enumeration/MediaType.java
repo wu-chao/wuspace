@@ -19,5 +19,10 @@ public enum MediaType {
     /**
      * 音乐
      */
-    MUSIC
+    MUSIC,
+
+    /**
+     * 图片
+     */
+    IMAGE
 }
