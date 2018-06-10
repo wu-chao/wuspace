@@ -28,6 +28,16 @@ public class MediaInfo extends AbstractAuditingEntity {
     private ZonedDateTime publishedDate;
 
     /**
+     * 栏目
+     */
+    @Column(name = "category_id")
+    private Long categoryId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id", insertable = false, updatable = false)
+    private Category category;
+
+    /**
      * 作者
      */
     @Column(name = "author_id")
@@ -54,7 +64,7 @@ public class MediaInfo extends AbstractAuditingEntity {
     private int thumbnailNum = 0;
 
     /**
-     * 缩略图 url
+     * 缩略图 URL
      */
     @Column(name = "thumbnail_urls")
     private String thumbnailUrls;
@@ -120,16 +130,6 @@ public class MediaInfo extends AbstractAuditingEntity {
      * 浏览次数
      */
     private Long viewedTimes = 0L;
-
-    /**
-     * 栏目
-     */
-    @Column(name = "category_id")
-    private Long categoryId;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "category_id", insertable = false, updatable = false)
-    private Category category;
 
 
     @Column(name = "location")
