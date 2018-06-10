@@ -1,10 +1,10 @@
-package com.github.wuchao.webproject.service;
+package com.github.wuchao.webproject.service.news;
 
 import com.github.wuchao.webproject.domain.Category;
 import com.github.wuchao.webproject.domain.MediaInfo;
 import com.github.wuchao.webproject.repository.CategoryRepository;
 import com.github.wuchao.webproject.repository.MediaInfoRepository;
-import com.github.wuchao.webproject.service.dto.HomeDTO;
+import com.github.wuchao.webproject.service.news.dto.HomeDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

@@ -723,7 +723,7 @@ body, input, button, textarea, select {
     display: inline;
 }
 
-.excerpt .focus:hover {
+.excerpt .thumb:hover {
     -webkit-transform: scale(1.05);
     transform: scale(1.05);
     -webkit-transition-timing-function: cubic-bezier(0.47, 2.02, 0.31, -0.36);
@@ -1609,16 +1609,18 @@ body, input, button, textarea, select {
     transition-timing-function: cubic-bezier(0.47, 2.02, 0.31, -0.36);
 }
 
-/*.widget_hot .thumbnail {*/
-/*float: left;*/
-/*margin-left: -135px;*/
-/*border: none;*/
-/*margin-bottom: 0;*/
-/*}*/
-/*.widget_hot .thumbnail img {*/
-/*width: 122px;*/
-/*height: 86px;*/
-/*}*/
+.widget_hot .thumbnail {
+    float: left;
+    margin-left: 2px;
+    border: none;
+    margin-bottom: 0;
+}
+
+.widget_hot .thumbnail img {
+    width: 122px;
+    height: 86px;
+}
+
 .widget_hot .text {
     display: block;
 }

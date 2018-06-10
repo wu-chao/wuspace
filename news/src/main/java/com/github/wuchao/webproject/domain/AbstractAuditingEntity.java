@@ -2,6 +2,8 @@ package com.github.wuchao.webproject.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -14,6 +16,8 @@ import javax.persistence.MappedSuperclass;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 
+@Getter
+@Setter
 @MappedSuperclass
 @EntityListeners({AuditingEntityListener.class})
 public class AbstractAuditingEntity implements Serializable {

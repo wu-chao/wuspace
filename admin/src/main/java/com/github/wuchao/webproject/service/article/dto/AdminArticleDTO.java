@@ -48,7 +48,7 @@ public class AdminArticleDTO {
 
         mediaInfo.setMediaContent(mediaContent);
         mediaInfo.setTitle(this.getTitle());
-        mediaInfo.setSummary(this.getContent().length() <= 60 ? this.getContent() : this.getContent().substring(0, 60));
+        mediaInfo.setSummary(this.getContent().length() <= 60 ? HtmlUtils.html2text(this.getContent()) : HtmlUtils.html2text(this.getContent()).substring(0, 60));
         mediaInfo.setMediaType(MediaType.ARTICLE);
         mediaInfo.setPublishedDate(ZonedDateTime.now());
         mediaInfo.setAuthorId(SecurityUtils.getCurrentUser().getUserId());

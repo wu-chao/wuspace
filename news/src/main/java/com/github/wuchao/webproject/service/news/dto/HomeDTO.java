@@ -1,4 +1,4 @@
-package com.github.wuchao.webproject.service.dto;
+package com.github.wuchao.webproject.service.news.dto;
 
 import com.github.wuchao.webproject.domain.Category;
 import com.github.wuchao.webproject.domain.MediaInfo;

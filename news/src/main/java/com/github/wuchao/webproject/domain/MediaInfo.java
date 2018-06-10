@@ -76,16 +76,25 @@ public class MediaInfo extends AbstractAuditingEntity {
     private MediaType mediaType;
 
     /**
-     * 来源
+     * 来源主体 ID
      */
-    @Column(name = "source")
-    private String source;
+    @Column(name = "source_id")
+    private Long sourceId;
 
     /**
-     * 来源 url
+     * 原文来源账号主体
+     */
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "source_id", insertable = false, updatable = false)
+    private MediaSource mediaSource;
+
+
+    /**
+     * 原文 URL
      */
     @Column(name = "source_url")
     private String sourceUrl;
+
 
     /**
      * 审核状态
