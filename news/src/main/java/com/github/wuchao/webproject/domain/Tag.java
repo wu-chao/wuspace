@@ -1,14 +1,16 @@
 package com.github.wuchao.webproject.domain;
 
-import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 
-@Data
+@Getter
+@Setter
 @EqualsAndHashCode(of = {"id", "name"}, callSuper = true)
 @Entity
-@Table(name = "tags")
+@Table(name = "tag")
 public class Tag extends AbstractAuditingEntity {
 
     private static final long serialVersionUID = 1L;

@@ -1,17 +1,18 @@
 package com.github.wuchao.webproject.domain;
 
-import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
-@Data
-@EqualsAndHashCode(of = {"id"}, callSuper = true)
-@NoArgsConstructor
+@Getter
+@Setter
+@EqualsAndHashCode(of = {"id"})
 @Entity
 @Table(name = "media_content")
-public class MediaContent extends AbstractAuditingEntity {
+public class MediaContent implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -25,8 +26,5 @@ public class MediaContent extends AbstractAuditingEntity {
      */
     @Lob
     private String content;
-
-    @OneToOne
-    private MediaInfo mediaInfo;
 
 }

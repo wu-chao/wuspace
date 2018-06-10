@@ -14,12 +14,12 @@ import java.util.Set;
 @Getter
 @Setter
 @Builder
-@EqualsAndHashCode(of = {"id", "username", "activated"}, callSuper = true)
+@EqualsAndHashCode(of = {"id", "username", "activated", "deleted"}, callSuper = true)
 @ToString(exclude = {"authorities"})
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "users")
+@Table(name = "user")
 public class User extends AbstractAuditingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -35,7 +35,7 @@ public class User extends AbstractAuditingEntity implements Serializable {
 
     @JsonIgnore
     @NotNull
-    @Column(name = "password", length = 60, nullable = false)
+    @Column(name = "password_hash", length = 60, nullable = false)
     private String password;
 
     @Column(name = "nickname", length = 50, unique = true)
@@ -62,7 +62,7 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @JoinTable(
             name = "user_authority",
             joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "authority", referencedColumnName = "name")})
+            inverseJoinColumns = {@JoinColumn(name = "authority_name", referencedColumnName = "name")})
     private Set<Authority> authorities = new HashSet<>();
 
     public User id(Long id) {

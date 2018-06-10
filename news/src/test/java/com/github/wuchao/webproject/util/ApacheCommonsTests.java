@@ -183,8 +183,8 @@ public class ApacheCommonsTests implements Serializable {
     public void testSerializationUtils() {
         User user = new User().id(1L).username("aaa").password("123456").activated(0);
         user.setAuthorities(new HashSet<Authority>() {{
-            add(new Authority().name("ROLE_ADMIN").chnName("ROLE_ADMIN"));
-            add(new Authority().name("ROLE_USER").chnName("ROLE_USER"));
+            add(new Authority().name("ROLE_ADMIN").value("ROLE_ADMIN"));
+            add(new Authority().name("ROLE_USER").value("ROLE_USER"));
         }});
         /**
          * 这里调用 SerializationUtils.clone() 方法，ApacheCommonsTest.java 这个类也必须序列化，

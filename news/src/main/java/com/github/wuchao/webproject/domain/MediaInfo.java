@@ -3,14 +3,12 @@ package com.github.wuchao.webproject.domain;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.github.wuchao.webproject.domain.enumeration.CheckStatus;
 import com.github.wuchao.webproject.domain.enumeration.MediaType;
-import com.github.wuchao.webproject.util.HtmlUtils;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.ZonedDateTime;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 @Getter
 @Setter
@@ -76,6 +74,15 @@ public class MediaInfo extends AbstractAuditingEntity {
     private MediaType mediaType;
 
     /**
+     * Tag
+     */
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "media_info_tag",
+            joinColumns = @JoinColumn(name = "media_info_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "tag_id", referencedColumnName = "id"))
+    private List<Tag> tags;
+
+    /**
      * 来源主体 ID
      */
     @Column(name = "source_id")
@@ -124,26 +131,9 @@ public class MediaInfo extends AbstractAuditingEntity {
     @JoinColumn(name = "category_id", insertable = false, updatable = false)
     private Category category;
 
-    /**
-     * 标签
-     */
-    @ManyToMany
-    @JoinTable(name = "article_tags",
-            joinColumns = @JoinColumn(name = "article_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "tag_id", referencedColumnName = "id"))
-    private Set<Tag> tags = new HashSet<>();
 
     @Column(name = "location")
     private String location;
 
-
-    /**
-     * 获取去除 HTML 标签的 summary
-     *
-     * @return
-     */
-    public String getSummaryText() {
-        return HtmlUtils.cleanHTML(getSummary());
-    }
 
 }

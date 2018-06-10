@@ -131,10 +131,10 @@ dependencies {
 //    compile "io.github.jpenren:thymeleaf-spring-data-dialect:${thymeleaf_spring_data_dialect_version}"
 
     // 数据库持久化
-//    compile "org.liquibase:liquibase-core"
     compile "com.h2database:h2"
     compile "mysql:mysql-connector-java"
     compile "com.github.ben-manes.caffeine:caffeine"
+    compile "org.liquibase:liquibase-core"
 
     // Mybatis
 //    compile "org.mybatis.generator:mybatis-generator-core:${mybatis_generator_version}"

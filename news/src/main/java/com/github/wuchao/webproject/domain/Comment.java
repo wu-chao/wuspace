@@ -10,7 +10,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
-@Table(name = "comments")
+@Table(name = "comment")
 public class Comment extends AbstractAuditingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <!--
+        Added the constraints for entity MediaInfo.
+    -->
+    <changeSet id="00000000000006-2" author="wuchao">
+
+        <addForeignKeyConstraint baseColumnNames="author_id"
+                                 baseTableName="media_info"
+                                 constraintName="fk_media_info_author_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="user"/>
+
+        <addForeignKeyConstraint baseColumnNames="category_id"
+                                 baseTableName="category"
+                                 constraintName="fk_media_info_category_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="category"/>
+
+        <addForeignKeyConstraint baseColumnNames="source_id"
+                                 baseTableName="media_info"
+                                 constraintName="fk_media_info_source_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="media_source"/>
+
+        <addForeignKeyConstraint baseColumnNames="media_content_id"
+                                 baseTableName="media_info"
+                                 constraintName="fk_media_info_content_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="media_content"/>
+
+        <addForeignKeyConstraint baseTableName="media_info_tag"
+                                 baseColumnNames="media_info_id"
+                                 constraintName="fk_media_info_id"
+                                 referencedTableName="media_info"
+                                 referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint baseTableName="media_info_tag"
+                                 baseColumnNames="tag_id"
+                                 constraintName="fk_tag_id"
+                                 referencedTableName="tag"
+                                 referencedColumnNames="id"/>
+
+    </changeSet>
+</databaseChangeLog>

@@ -47,13 +47,13 @@ public class AbstractAuditingEntity implements Serializable {
     private ZonedDateTime lastModifiedDate = ZonedDateTime.now();
 
     /**
-     * 1 表示已删除，0 表示未删除
+     * 是否已删除
      */
     @Column(name = "deleted")
-    private Integer deleted = 0;
+    private boolean deleted;
 
     public boolean isDeleted() {
-        return deleted != null && deleted == 1;
+        return deleted;
     }
 
 }

@@ -10,7 +10,7 @@ import java.util.Set;
 @Data
 @EqualsAndHashCode(of = {"id", "name"}, callSuper = true)
 @Entity
-@Table(name = "categories")
+@Table(name = "category")
 public class Category extends AbstractAuditingEntity {
 
     private static final long serialVersionUID = 1L;
@@ -39,10 +39,10 @@ public class Category extends AbstractAuditingEntity {
     private String description;
 
     /**
-     * 1 表示被禁用的，0 表示可用的
+     * 是否被禁用
      */
     @Column(name = "disabled")
-    private Integer disabled = 0;
+    private boolean disabled;
 
     @Column(name = "category_id")
     private Long categoryId;
@@ -52,7 +52,7 @@ public class Category extends AbstractAuditingEntity {
     Set<Category> categories = new HashSet<>();
 
     public boolean isDisabled() {
-        return disabled != null && disabled == 1;
+        return disabled;
     }
 
 }
