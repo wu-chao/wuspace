@@ -17,6 +17,8 @@
              relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/00000000000006_added_entity_Tag.xml"
              relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/00000000000007_added_entity_MediaComment.xml"
+             relativeToChangelogFile="false"/>
 
     <!-- liquibase constraints changelogs -->
     <include file="classpath:config/liquibase/changelog/00000000000005_added_entity_constraints_MediaInfo.xml"

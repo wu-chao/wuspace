@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Setter
 @EqualsAndHashCode(of = {"id", "name"})
 @Entity
-@Table(name = "media_sources")
+@Table(name = "media_source")
 public class MediaSource extends AbstractAuditingEntity {
 
     private static final long serialVersionUID = 1L;

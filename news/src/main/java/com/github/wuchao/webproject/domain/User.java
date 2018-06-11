@@ -54,9 +54,8 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @Column(name = "description", length = 500)
     private String description;
 
-    @NotNull
     @Column(name = "activated", nullable = false)
-    private Integer activated;
+    private boolean activated;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
@@ -80,13 +79,13 @@ public class User extends AbstractAuditingEntity implements Serializable {
         return this;
     }
 
-    public User activated(Integer activated) {
+    public User activated(boolean activated) {
         this.activated = activated;
         return this;
     }
 
     public boolean isActivated() {
-        return activated != null && activated == 1;
+        return activated;
     }
 
 }

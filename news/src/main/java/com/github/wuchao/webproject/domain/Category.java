@@ -39,10 +39,10 @@ public class Category extends AbstractAuditingEntity {
     private String description;
 
     /**
-     * 是否被禁用
+     * 是否启用
      */
-    @Column(name = "disabled")
-    private boolean disabled;
+    @Column(name = "activated")
+    private boolean activated;
 
     @Column(name = "category_id")
     private Long categoryId;
@@ -51,8 +51,8 @@ public class Category extends AbstractAuditingEntity {
     @JoinColumn(name = "category_id", insertable = false, updatable = false)
     Set<Category> categories = new HashSet<>();
 
-    public boolean isDisabled() {
-        return disabled;
+    public boolean isActivated() {
+        return activated;
     }
 
 }

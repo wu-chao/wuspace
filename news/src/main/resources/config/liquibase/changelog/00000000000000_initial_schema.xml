@@ -43,13 +43,12 @@
             <column name="phone" type="varchar(11)"/>
             <column name="email" type="varchar(100)"/>
             <column name="password_hash" type="varchar(60)"/>
-            <column name="activated" type="boolean" valueBoolean="false">
-                <constraints nullable="false"/>
-            </column>
-            <column name="deleted" type="boolean" valueBoolean="false"/>
             <column name="avatar_url" type="varchar(255)"/>
             <column name="nickname" type="varchar(50)"/>
             <column name="description" type="varchar(255)"/>
+            <column name="activated" type="boolean" valueBoolean="true">
+                <constraints nullable="false"/>
+            </column>
 
             <column name="created_by" type="varchar(50)">
                 <constraints nullable="false"/>
@@ -68,7 +67,7 @@
         <createIndex indexName="idx_user_username"
                      tableName="user"
                      unique="true">
-            <column name="login" type="varchar(50)"/>
+            <column name="username" type="varchar(50)"/>
         </createIndex>
 
         <createIndex indexName="idx_user_email"
@@ -115,6 +114,7 @@
                   tableName="user">
             <column name="activated" type="boolean"/>
             <column name="created_date" type="timestamp"/>
+            <column name="deleted" type="boolean"/>
         </loadData>
 
         <loadData file="config/liquibase/user_authority.csv"
@@ -160,7 +160,7 @@
             </column>
             <column name="value" type="varchar(255)"/>
         </createTable>
-        <addPrimaryKey columnNames="event_id, name" tableName="jhi_persistent_audit_evt_data"/>
+        <addPrimaryKey columnNames="event_id, name" tableName="persistent_audit_evt_data"/>
 
         <createIndex indexName="idx_persistent_audit_event"
                      tableName="persistent_audit_event"

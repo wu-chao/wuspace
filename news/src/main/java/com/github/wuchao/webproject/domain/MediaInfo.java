@@ -23,10 +23,6 @@ public class MediaInfo extends AbstractAuditingEntity {
     @Column(name = "id", unique = true, nullable = false)
     private Long id;
 
-    @Column(name = "published_date")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private ZonedDateTime publishedDate;
-
     /**
      * 栏目
      */
@@ -46,6 +42,13 @@ public class MediaInfo extends AbstractAuditingEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "author_id", insertable = false, updatable = false)
     private User author;
+
+    /**
+     * 发布时间
+     */
+    @Column(name = "published_date")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private ZonedDateTime publishedDate;
 
     /**
      * 标题
@@ -104,14 +107,6 @@ public class MediaInfo extends AbstractAuditingEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "source_id", insertable = false, updatable = false)
     private MediaSource mediaSource;
-
-
-    /**
-     * 原文 URL
-     */
-    @Column(name = "source_url")
-    private String sourceUrl;
-
 
     /**
      * 审核状态

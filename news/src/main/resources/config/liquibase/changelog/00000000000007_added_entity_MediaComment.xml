@@ -12,14 +12,18 @@
     <property name="floatType" value="float" dbms="mysql, oracle, mssql"/>
 
     <!--
-        Added the entity Tag.
+        Added the entity MediaComment.
     -->
-    <changeSet id="00000000000006-1" author="wuchao">
-        <createTable tableName="tag">
+    <changeSet id="00000000000007-1" author="wuchao">
+        <createTable tableName="media_comment">
             <column name="id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="name" type="varchar(50)"/>
+            <column name="user_id" type="bigint"/>
+            <column name="content" type="clob"/>
+            <column name="status" type="varchar(50)"/>
+            <column name="media_info_id" type="bigint"/>
+            <column name="parent_comment_id" type="bigint"/>
 
             <column name="created_by" type="varchar(50)">
                 <constraints nullable="false"/>
@@ -31,12 +35,5 @@
             <column name="last_modified_date" type="timestamp"/>
             <column name="deleted" type="boolean" valueBoolean="false"/>
         </createTable>
-
-        <createTable tableName="media_info_tag">
-            <column name="media_info_id" type="bigint"/>
-            <column name="tag_id" type="bigint"/>
-        </createTable>
-        <addPrimaryKey tableName="media_info_tag" columnNames="media_info_id, tag_id"/>
-
     </changeSet>
 </databaseChangeLog>

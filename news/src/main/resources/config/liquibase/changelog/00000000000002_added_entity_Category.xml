@@ -22,7 +22,7 @@
             <column name="name" type="varchar(50)"/>
             <column name="value" type="varchar(50)"/>
             <column name="description" type="varchar(50)"/>
-            <column name="disabled" type="boolean" valueBoolean="false"/>
+            <column name="activated" type="boolean" valueBoolean="true"/>
             <column name="category_id" type="bigint"/>
 
             <column name="created_by" type="varchar(50)">

@@ -1,3 +1,3 @@
-id;username;phone;email;password_hash;activated;deleted;avatar_url;nickname;description;created_by;created_date;last_modified_by;last_modified_date
-1;admin;16600000001;admin@qq.com;$2a$10$pGf9C4/gB3VjZnFw0fyP4OyjdLkL7dY6oYnbVJMoaX2qQUIyiQfYa;;管理员;管理员账号;admin;2016-11-20 13:50:00;admin;2016-11-20 13:50:00
-1;user1;16600000002;user1@qq.com;$2a$10$pGf9C4/gB3VjZnFw0fyP4OyjdLkL7dY6oYnbVJMoaX2qQUIyiQfYa;;;;admin;2016-11-20 13:50:00;admin;2016-11-20 13:50:00
+id;username;phone;email;password_hash;avatar_url;nickname;description;activated;created_by;created_date;last_modified_by;last_modified_date;deleted
+1;admin;16600000001;admin@qq.com;$2a$10$pGf9C4/gB3VjZnFw0fyP4OyjdLkL7dY6oYnbVJMoaX2qQUIyiQfYa;;管理员;管理员账号;true;admin;2016-11-20 13:50:00;admin;2016-11-20 13:50:00;false
+2;user1;16600000002;user1@qq.com;$2a$10$pGf9C4/gB3VjZnFw0fyP4OyjdLkL7dY6oYnbVJMoaX2qQUIyiQfYa;;;;true;admin;2016-11-20 13:50:00;admin;2016-11-20 13:50:00;false
