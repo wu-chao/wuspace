@@ -1,14 +1,14 @@
 package com.github.wuchao.webproject.config;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.hibernate5.Hibernate5Module;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 
+/**
+ * spring MVC errors : Could not instantiate bean class [org.springframework.data.domain.Pageable]: Specified class is an interface
+ */
 @Configuration
-public class WebSupportConfig extends WebMvcConfigurationSupport {
+public class WebSupportConfig
+//        extends WebMvcConfigurationSupport
+{
 
 //    @Bean
 //    public Jackson2ObjectMapperFactoryBean jackson2ObjectMapperFactoryBean() {

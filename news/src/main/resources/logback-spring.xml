@@ -50,17 +50,33 @@
     <logger name="org.xnio" level="WARN"/>
     <logger name="springfox" level="WARN"/>
     <logger name="sun.rmi" level="WARN"/>
-    <logger name="liquibase" level="INFO"/>
-    <logger name="LiquibaseSchemaResolver" level="INFO"/>
+    <logger name="liquibase" level="WARN"/>
+    <logger name="LiquibaseSchemaResolver" level="WARN"/>
     <logger name="sun.rmi.transport" level="WARN"/>
-    <logger name="com.github.wuchao.webproject.controller.app" level="DEBUG"/>
+    <logger name="com.github.wuchao.webproject" level="DEBUG"/>
 
     <contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator">
         <resetJUL>true</resetJUL>
     </contextListener>
 
-    <root level="DEBUG">
-        <appender-ref ref="CONSOLE"/>
-    </root>
+    <springProfile name="prod">
+        <root level="DEBUG">
+            <!--<appender-ref ref="FILEERROR"/>-->
+            <!--<appender-ref ref="FILEWARN"/>-->
+            <!--<appender-ref ref="FILEINFO"/>-->
+            <!--<appender-ref ref="DBAPPENDER"/>-->
+            <appender-ref ref="STDOUT"/>
+        </root>
+    </springProfile>
+
+    <springProfile name="dev">
+        <root level="DEBUG">
+            <!--<appender-ref ref="FILEERROR"/>-->
+            <!--<appender-ref ref="FILEWARN"/>-->
+            <!--<appender-ref ref="FILEINFO"/>-->
+            <!--<appender-ref ref="DBAPPENDER"/>-->
+            <appender-ref ref="CONSOLE"/>
+        </root>
+    </springProfile>
 
 </configuration>

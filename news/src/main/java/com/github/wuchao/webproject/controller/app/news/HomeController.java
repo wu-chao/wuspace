@@ -21,7 +21,8 @@ public class HomeController {
     public String index(@RequestParam(defaultValue = "1") Long categoryId,
                         @RequestParam(required = false) Long subCategoryId,
                         @RequestParam(required = false) String keyword,
-                        @PageableDefault(sort = "createdDate", direction = Sort.Direction.DESC) Pageable pageable, Model model) {
+                        @PageableDefault(sort = "createdDate", direction = Sort.Direction.DESC) Pageable pageable,
+                        Model model) {
         HomeDTO homeDTO = homeService.initHome(categoryId, subCategoryId, keyword, pageable);
         model.addAttribute("homeDTO", homeDTO);
         return "news/home";

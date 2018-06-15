@@ -1,7 +1,6 @@
 package com.github.wuchao.webproject.controller.app;
 
 import com.github.wuchao.webproject.repository.UserRepository;
-import com.github.wuchao.webproject.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -46,7 +45,6 @@ public class BaseController {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ModelAndView handleException(RuntimeException e) {
         System.out.println("exception message : " + e.getClass() + " : " + e.getMessage());
-//        return "error/404";
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("error/404");
