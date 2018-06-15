@@ -117,12 +117,6 @@ public class MediaInfo extends AbstractAuditingEntity {
     private CheckStatus status;
 
     /**
-     * 1表示被禁用的，0表示可用的
-     */
-//    @Column(name = "disabled")
-//    private Integer disabled = 0;
-
-    /**
      * 浏览次数
      */
     private Long viewedTimes = 0L;

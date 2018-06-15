@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <!--
+        Added the constraints for entity FundAccount.
+    -->
+    <changeSet id="20170728083722-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="product_id"
+                                 baseTableName="fund_account"
+                                 constraintName="fk_fund_account_product_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="financial_product"/>
+
+        <addForeignKeyConstraint baseColumnNames="owner_id"
+                                 baseTableName="fund_account"
+                                 constraintName="fk_fund_account_owner_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="jhi_user"/>
+
+        <addForeignKeyConstraint baseColumnNames="enterprise_id"
+                                 baseTableName="fund_account"
+                                 constraintName="fk_fund_account_enterprise_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="enterprise"/>
+
+    </changeSet>
+
+    <changeSet id="20170728083722-3" author="wuchao">
+        <dropColumn tableName="fund_account" columnName="strategy"/>
+        <dropColumn tableName="fund_account" columnName="account_type"/>
+        <dropNotNullConstraint tableName="fund_account" columnName="end_time" columnDataType="timestamp"/>
+        <dropNotNullConstraint tableName="fund_account" columnName="leverage" columnDataType="double"/>
+        <dropNotNullConstraint tableName="fund_account" columnName="leverage_symbol" columnDataType="varchar(255)"/>
+        <dropNotNullConstraint tableName="fund_account" columnName="warning_amount" columnDataType="double"/>
+        <dropNotNullConstraint tableName="fund_account" columnName="stop_loss" columnDataType="double"/>
+        <addColumn tableName="fund_account">
+            <column name="contact" type="varchar(50)">
+                <constraints nullable="false"></constraints>
+            </column>
+        </addColumn>
+        <addColumn tableName="fund_account">
+            <column name="inner_manager" type="varchar(50)">
+                <constraints nullable="false"></constraints>
+            </column>
+        </addColumn>
+    </changeSet>
+</databaseChangeLog>

@@ -90,8 +90,8 @@
                                                 <td th:text="${news.id}"></td>
                                                 <td th:text="${#strings.abbreviate(news.title, 60)}"
                                                     th:title="${news.title}"></td>
-                                                <td th:text="${#strings.abbreviate(news.getSummaryText(), 60)}"
-                                                    th:title="${news.getSummaryText()}"></td>
+                                                <td th:text="${#strings.abbreviate(news.summary, 60)}"
+                                                    th:title="${news.summary}"></td>
                                                 <td th:text="${news.category != null ? news.category.name : '--'}"></td>
                                                 <td th:text="${news.author != null ? news.author.nickname : '--'}"></td>
                                                 <td th:text="${#calendars.format(news.publishedDate, 'yyyy-MM-dd')}"

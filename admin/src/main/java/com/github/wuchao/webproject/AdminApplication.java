@@ -7,7 +7,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 
 @ComponentScan(excludeFilters = @ComponentScan.Filter(type = FilterType.REGEX, pattern = "com\\.github\\.wuchao\\.webproject\\.controller\\.app\\..*"))
-@EnableAutoConfiguration(exclude = LiquibaseAutoConfiguration.class)
+@EnableAutoConfiguration
 public class AdminApplication {
     public static void main(String args[]) {
         SpringApplication.run(AdminApplication.class);

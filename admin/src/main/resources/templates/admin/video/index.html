@@ -95,13 +95,13 @@
                                                 <td th:text="${article.id}"></td>
                                                 <td th:text="${#strings.abbreviate(article.title, 60)}"
                                                     th:title="${article.title}"></td>
-                                                <td th:text="${#strings.abbreviate(article.getSummaryText(), 60)}"
-                                                    th:title="${article.getSummaryText()}"></td>
+                                                <td th:text="${#strings.abbreviate(article.summary, 60)}"
+                                                    th:title="${article.summary}"></td>
                                                 <td th:text="${article.category != null ? article.category.name : '--'}"></td>
                                                 <td th:text="${article.author != null ? article.author.nickname : '--'}"></td>
                                                 <td th:text="${#calendars.format(article.publishedDate, 'yyyy-MM-dd')}"
                                                     th:title="${#calendars.format(article.publishedDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
-                                                <td th:text="${article.isDeleted() ? '是' : '否'}"></td>
+                                                <td th:text="${article.deleted ? '是' : '否'}"></td>
                                                 <td th:text="${article.status}"></td>
                                             </tr>
                                             </tbody>
