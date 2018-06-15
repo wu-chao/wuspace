@@ -8,7 +8,7 @@ import com.github.wuchao.webproject.util.HtmlUtils;
 import lombok.*;
 import org.apache.commons.collections.CollectionUtils;
 
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 @Getter
@@ -50,7 +50,7 @@ public class AdminArticleDTO {
         mediaInfo.setTitle(this.getTitle());
         mediaInfo.setSummary(this.getContent().length() <= 60 ? HtmlUtils.html2text(this.getContent()) : HtmlUtils.html2text(this.getContent()).substring(0, 60));
         mediaInfo.setMediaType(MediaType.ARTICLE);
-        mediaInfo.setPublishedDate(ZonedDateTime.now());
+        mediaInfo.setPublishedDate(LocalDateTime.now());
         mediaInfo.setAuthorId(SecurityUtils.getCurrentUser().getUserId());
 
         // 缩略图

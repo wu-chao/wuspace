@@ -3,17 +3,28 @@ package com.github.wuchao.webproject;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.liquibase.LiquibaseAutoConfiguration;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
 @EnableAutoConfiguration
 @EnableScheduling
 //@EnableDiscoveryClient
+@EnableCaching
 public class NewsApplication {
+//    @Bean
+//    public OpenEntityManagerInViewFilter openEntityManagerInViewFilter() {
+//        return new OpenEntityManagerInViewFilter();
+//    }
+
     public static void main(String args[]) {
         ConfigurableApplicationContext context = SpringApplication.run(NewsApplication.class, args);
+
+
 
 //        String src = "/home/wu-chao/下载/spring boot实战.pdf";
 //        String dest = "/home/wu-chao/下载/2222.pdf";

@@ -7,20 +7,19 @@ import org.hibernate.validator.constraints.Email;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.io.Serializable;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Getter
 @Setter
 @Builder
-@EqualsAndHashCode(of = {"id", "username", "activated", "deleted"}, callSuper = true)
 @ToString(exclude = {"authorities"})
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name = "user")
-public class User extends AbstractAuditingEntity implements Serializable {
+public class User extends AbstractAuditingEntity {
 
     private static final long serialVersionUID = 1L;
 
@@ -57,6 +56,7 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @Column(name = "activated", nullable = false)
     private boolean activated;
 
+    //    @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "user_authority",
@@ -88,4 +88,19 @@ public class User extends AbstractAuditingEntity implements Serializable {
         return activated;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return activated == user.activated &&
+                Objects.equals(id, user.id) &&
+                Objects.equals(username, user.username);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(id, username, activated);
+    }
 }

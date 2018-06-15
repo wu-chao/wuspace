@@ -2,6 +2,10 @@ package com.github.wuchao.webproject.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedBy;
@@ -14,7 +18,7 @@ import javax.persistence.Column;
 import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;
 import java.io.Serializable;
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -30,10 +34,11 @@ public class AbstractAuditingEntity implements Serializable {
     private String createdBy;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
     @Column(name = "created_date", nullable = false)
-//    @Type(type = "org.jadira.usertype.dateandtime.threeten.PersistentLocalDateTime")
     @CreatedDate
-    private ZonedDateTime createdDate = ZonedDateTime.now();
+    private LocalDateTime createdDate;
 
     @JsonIgnore
     @Column(name = "last_modified_by", length = 50)
@@ -41,10 +46,11 @@ public class AbstractAuditingEntity implements Serializable {
     private String lastModifiedBy;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
     @Column(name = "last_modified_date")
-//    @Type(type = "org.jadira.usertype.dateandtime.threeten.PersistentLocalDateTime")
     @LastModifiedDate
-    private ZonedDateTime lastModifiedDate = ZonedDateTime.now();
+    private LocalDateTime lastModifiedDate;
 
     /**
      * 是否已删除

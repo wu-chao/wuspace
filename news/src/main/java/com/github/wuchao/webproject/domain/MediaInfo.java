@@ -7,8 +7,9 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 @Getter
 @Setter
@@ -48,7 +49,7 @@ public class MediaInfo extends AbstractAuditingEntity {
      */
     @Column(name = "published_date")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private ZonedDateTime publishedDate;
+    private LocalDateTime publishedDate;
 
     /**
      * 标题
@@ -130,5 +131,19 @@ public class MediaInfo extends AbstractAuditingEntity {
     @Column(name = "location")
     private String location;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        MediaInfo mediaInfo = (MediaInfo) o;
+        return Objects.equals(id, mediaInfo.id) &&
+                Objects.equals(categoryId, mediaInfo.categoryId) &&
+                Objects.equals(authorId, mediaInfo.authorId);
+    }
 
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(id, categoryId, authorId);
+    }
 }

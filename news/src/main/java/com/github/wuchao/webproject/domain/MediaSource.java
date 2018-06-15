@@ -1,14 +1,13 @@
 package com.github.wuchao.webproject.domain;
 
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Getter
 @Setter
-@EqualsAndHashCode(of = {"id", "name"})
 @Entity
 @Table(name = "media_source")
 public class MediaSource extends AbstractAuditingEntity {
@@ -37,5 +36,19 @@ public class MediaSource extends AbstractAuditingEntity {
     @Column(name = "description")
     private String description;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        MediaSource that = (MediaSource) o;
+        return Objects.equals(id, that.id) &&
+                Objects.equals(name, that.name);
+    }
 
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(super.hashCode(), id, name);
+    }
 }
