@@ -27,7 +27,7 @@ public class WebNotificationController {
 //    @Autowired
 //    private RabbitTemplate rabbitTemplate;
 
-    @Scheduled(cron = "0/5 * * * * ?")
+//    @Scheduled(cron = "0/5 * * * * ?")
     public void notifications() {
         String payload = "messages " + RandomUtils.nextLong();
         System.out.println(payload);

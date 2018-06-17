@@ -184,6 +184,9 @@ dependencies {
     compile "com.fasterxml.jackson.datatype:jackson-datatype-hppc:2.8.8"
     compile "com.fasterxml.jackson.datatype:jackson-datatype-hibernate5:2.8.8"
 
+    compile "com.dyuproject.protostuff:protostuff-core:${protostuff_core_version}"
+    compile "com.dyuproject.protostuff:protostuff-runtime:${protostuff_runtime_version}"
+
     // Apache Commons
     compile "org.apache.commons:commons-lang3:${commons_lang_version}"
     // 包含 commons-collections、commons-logging
