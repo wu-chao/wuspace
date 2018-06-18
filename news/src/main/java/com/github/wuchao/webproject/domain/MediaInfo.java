@@ -81,6 +81,12 @@ public class MediaInfo extends AbstractAuditingEntity {
     private MediaContent mediaContent;
 
     /**
+     * 原文地址
+     */
+    @Column(name = "source_url")
+    private String sourceUrl;
+
+    /**
      * 媒体类型
      */
     @Column(name = "media_type")

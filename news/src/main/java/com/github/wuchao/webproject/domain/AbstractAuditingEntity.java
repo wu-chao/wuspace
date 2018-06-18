@@ -34,8 +34,8 @@ public class AbstractAuditingEntity implements Serializable {
     private String createdBy;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-    @JsonSerialize(using = LocalDateTimeSerializer.class)
+//    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+//    @JsonSerialize(using = LocalDateTimeSerializer.class)
     @Column(name = "created_date", nullable = false)
     @CreatedDate
     private LocalDateTime createdDate;
@@ -46,8 +46,8 @@ public class AbstractAuditingEntity implements Serializable {
     private String lastModifiedBy;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-    @JsonSerialize(using = LocalDateTimeSerializer.class)
+//    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+//    @JsonSerialize(using = LocalDateTimeSerializer.class)
     @Column(name = "last_modified_date")
     @LastModifiedDate
     private LocalDateTime lastModifiedDate;

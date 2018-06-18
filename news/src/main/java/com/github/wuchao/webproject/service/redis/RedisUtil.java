@@ -1,6 +1,7 @@
 package com.github.wuchao.webproject.service.redis;
 
 import com.github.wuchao.webproject.util.JacksonUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.connection.RedisZSetCommands;
@@ -13,6 +14,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
+@Slf4j
 public class RedisUtil {
 
     private final RedisTemplate<String, String> redisTemplate;
@@ -420,6 +422,25 @@ public class RedisUtil {
         return items.stream()
                 .map(record -> ImmutablePair.of(new String(record.getValue()), BigDecimal.valueOf(record.getScore())))
                 .collect(Collectors.toList());
+    }
+
+    /**
+     * 生成 Redis Key
+     *
+     * @param className
+     * @param methodName
+     * @param params
+     * @return
+     */
+    public static String keyGenerator(String className, String methodName, Object... params) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(className);
+        sb.append(methodName);
+        if (params != null && params.length > 0) {
+            Arrays.stream(params).forEach(param -> sb.append(param.toString()));
+        }
+        log.info("调用Redis缓存:Key= " + sb.toString());
+        return sb.toString();
     }
 
 }

@@ -32,6 +32,7 @@ public class HomeController {
                         @RequestParam(required = false) String keyword,
                         @PageableDefault(sort = "createdDate", direction = Sort.Direction.DESC) Pageable pageable,
                         Model model) {
+
         HomeDTO homeDTO = homeService.initHome(categoryId, subCategoryId, keyword, pageable);
         model.addAttribute("homeDTO", homeDTO);
 
@@ -42,7 +43,18 @@ public class HomeController {
             User user1 = redisService.getUser("user1");
             log.info("第{}次执行查询结果：" + user.equals(user1), index[0]);
         }
+
         log.info("------------------------------------------------------");
+
+        for (int i = 0; i < 10; i++) {
+            index[0] = i + 1;
+            User user = redisService.getUser2("user1");
+            User user1 = redisService.getUser2("user1");
+            log.info("第{}次执行查询结果：" + user.equals(user1), index[0]);
+        }
+
+        log.info("------------------------------------------------------");
+
         for (int i = 0; i < 10; i++) {
             index[0] = i + 1;
             List<User> users = redisService.getUsers();

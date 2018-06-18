@@ -77,11 +77,11 @@
                                         <span class="fa fa-trash"></span>
                                     </a>
                                     <a data-toggle="tooltip" data-placement="top" title="off"
-                                       th:if="${category.disabled == 0}">
+                                       th:if="${category.activated}">
                                         <span class="fa fa-toggle-off"></span>
                                     </a>
                                     <a data-toggle="tooltip" data-placement="top" title="on"
-                                       th:if="${category.disabled == 1}">
+                                       th:if="${!category.activated}">
                                         <span class="fa fa-toggle-on"></span>
                                     </a>
                                 </td>

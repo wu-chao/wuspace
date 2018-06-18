@@ -7,6 +7,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -24,6 +25,9 @@ public class RedisService {
     private CacheManager cacheManager;
 
     @Autowired
+    private RedisTemplate redisTemplate;
+
+    @Autowired
     private RedisUtil redisUtil;
 
     //    @Cacheable
@@ -33,23 +37,32 @@ public class RedisService {
         if (CollectionUtils.isNotEmpty(cacheNames)) {
             cacheNames.stream().forEach(s -> log.info("缓存：name= {}", s));
         }
-        String key = "key1122";
+        String key = RedisUtil.keyGenerator(this.getClass().getName(),
+                "getUser", username);
         User user = redisUtil.get(key, User.class);
         if (user == null) {
             user = userRepository.findByUsername(username);
             redisUtil.set(key, user);
         }
 
-        /**
-         * ((RedisCacheManager) cacheManager).getRedisOperations().opsForValue().get("key112")
-         */
+        return user;
+    }
+
+    public User getUser2(String username) {
+        String key = RedisUtil.keyGenerator(this.getClass().getName(),
+                "getUser2", username);
+        User user = redisUtil.get(key, User.class);
+        if (user == null) {
+            user = userRepository.findByUsername(username);
+        }
 
         return user;
     }
 
 
     public List<User> getUsers() {
-        String key = "key22222233456";
+        String key = RedisUtil.keyGenerator(this.getClass().getName(),
+                "getUsers", null);
         List<User> users = redisUtil.getList(key, User.class);
         if (users == null) {
             users = userRepository.findAll();

@@ -100,7 +100,7 @@
                                                 <td th:text="${article.category != null ? article.category.name : '--'}"></td>
                                                 <td th:text="${article.author != null ? article.author.nickname : '--'}"></td>
                                                 <td th:text="${#calendars.format(article.publishedDate, 'yyyy-MM-dd')}"
-                                                    th:title="${#calendars.format(article.publishedDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                                                    th:title="${article.publishedDate}"></td>
                                                 <td th:text="${article.deleted ? '是' : '否'}"></td>
                                                 <td th:text="${article.status}"></td>
                                             </tr>

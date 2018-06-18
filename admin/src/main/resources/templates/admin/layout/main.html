@@ -35,6 +35,8 @@
     <script src="/bower_components/jquery/dist/jquery.js"></script>
     <!-- Bootstrap -->
     <script src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap.js"></script>
+    <!-- jQuery UI -->
+    <script src="/bower_components/jquery-ui/jquery-ui.min.js"></script>
     <!-- SlimScroll -->
     <script src="/bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
     <!-- FastClick -->
@@ -324,7 +326,7 @@
                             </a>
                             <ul class="treeview-menu" style="display: none;">
                                 <li>
-                                    <a href="/admin/news">
+                                    <a href="/admin/articles">
                                         <i class="fa fa-circle-o"></i>
                                         <span>等待审查</span>
                                         <span class="pull-right-container">
@@ -333,7 +335,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="/admin/news">
+                                    <a href="/admin/articles">
                                         <i class="fa fa-circle-o"></i>
                                         <span>已通过审查</span>
                                         <span class="pull-right-container">
@@ -342,7 +344,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="/admin/news">
+                                    <a href="/admin/articles">
                                         <i class="fa fa-circle-o"></i>
                                         <span>未通过审查</span>
                                         <span class="pull-right-container">
@@ -522,6 +524,24 @@
                                 Category
                             </a>
                         </li>
+                    </ul>
+                </li>
+                <!-- Page -->
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-laptop"></i> <span>Page</span>
+                        <span class="pull-right-container">
+                          <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu" style="">
+                        <!-- Home Banner -->
+                        <li th:classappend="${#strings.containsIgnoreCase(#httpServletRequest.getRequestURL(), '/admin/friend-links')} ? 'active' : ''">
+                            <a href="/admin/friend-links">
+                                <i class="fa fa-circle-o"></i>
+                                Home Banner
+                            </a>
+                        </li>
                         <!-- Friend Link -->
                         <li th:classappend="${#strings.containsIgnoreCase(#httpServletRequest.getRequestURL(), '/admin/friend-links')} ? 'active' : ''">
                             <a href="/admin/friend-links">
@@ -531,31 +551,75 @@
                         </li>
                     </ul>
                 </li>
+                <!-- User Authority -->
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-users"></i> <span>User Authority</span>
+                        <span class="pull-right-container">
+                          <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu" style="">
+                        <li><a href="/admin/mailboxes">User</a></li>
+                        <li><a href="/admin/mailbox/compose">Authority</a></li>
+                    </ul>
+                </li>
+                <!-- Notice -->
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-bullhorn"></i> <span>Notice</span>
+                        <span class="pull-right-container">
+                          <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu" style="">
+                        <li>
+                            <a href="/admin/mailboxes">Inbox
+                                <span class="pull-right-container">
+                                  <span class="label label-primary pull-right">13</span>
+                                </span>
+                            </a>
+                        </li>
+                        <li><a href="/admin/mailbox/compose">Compose</a></li>
+                    </ul>
+                </li>
+                <!-- Message -->
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-bell"></i> <span>Message</span>
+                        <span class="pull-right-container">
+                            <small class="label pull-right bg-blue">17</small>
+                        </span>
+                    </a>
+                </li>
+                <!-- Mailbox -->
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-envelope"></i> <span>Mailbox</span>
+                        <span class="pull-right-container">
+                          <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu" style="">
+                        <li>
+                            <a href="/admin/mailboxes">Inbox
+                                <span class="pull-right-container">
+                                  <span class="label label-primary pull-right">13</span>
+                                </span>
+                            </a>
+                        </li>
+                        <li><a href="/admin/mailbox/compose">Compose</a></li>
+                    </ul>
+                </li>
+                <!-- Calendar -->
                 <li>
-                    <a href="https://adminlte.io/themes/AdminLTE/pages/calendar.html">
+                    <a href="/admin/calendar">
                         <i class="fa fa-calendar"></i>
                         <span>Calendar</span>
                         <span class="pull-right-container">
                                     <small class="label pull-right bg-red">3</small>
                                     <small class="label pull-right bg-blue">17</small>
                                 </span>
-                    </a>
-                </li>
-                <li>
-                    <a href="https://adminlte.io/themes/AdminLTE/pages/mailbox/mailbox.html">
-                        <i class="fa fa-envelope"></i>
-                        <span>Mailbox</span>
-                        <span class="pull-right-container">
-                                    <small class="label pull-right bg-yellow">12</small>
-                                    <small class="label pull-right bg-green">16</small>
-                                    <small class="label pull-right bg-red">5</small>
-                                </span>
-                    </a>
-                </li>
-                <li>
-                    <a href="https://adminlte.io/docs">
-                        <i class="fa fa-book"></i>
-                        <span>Documentation</span>
                     </a>
                 </li>
             </ul>

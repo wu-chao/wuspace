@@ -27,6 +27,7 @@
             <column name="summary" type="varchar(255)"/>
             <column name="thumbnail_num" type="int"/>
             <column name="thumbnail_urls" type="varchar(255)"/>
+            <column name="source_url" type="varchar(255)"/>
             <column name="media_content_id" type="bigint"/>
             <column name="media_type" type="varchar(50)"/>
             <column name="location" type="varchar(255)"/>
