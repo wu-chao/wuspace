@@ -1,12 +1,16 @@
 package com.github.wuchao.webproject.config;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.hibernate5.Hibernate5Module;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
-import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,12 +19,10 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
-import org.springframework.data.redis.serializer.StringRedisSerializer;
-
-import java.util.Collections;
+import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 
 @Configuration
-
+//@EnableCaching
 @Slf4j
 public class RedisConfig extends CachingConfigurerSupport {
 
@@ -46,23 +48,14 @@ public class RedisConfig extends CachingConfigurerSupport {
         redisTemplate.setEnableTransactionSupport(true);
 
         // 设置数据序列化方式
-//        ObjectMapper objectMapper = new ObjectMapper()
-//                .registerModule(new ParameterNamesModule())
-//                .registerModule(new Jdk8Module())
-//                // new module, NOT JSR310Module
-//                .registerModule(new JavaTimeModule())
-//                .registerModule(new Hibernate5Module().configure(Hibernate5Module.Feature.FORCE_LAZY_LOADING, false))
-//                .setSerializationInclusion(JsonInclude.Include.NON_NULL)
-//                // 忽略json字符串中不识别的属性
-//                .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
-//                // 忽略无法转换的对象 "No serializer found for class com.xxx.Xxx"
-//                .configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
-//
-//        GenericJackson2JsonRedisSerializer genericJackson2JsonRedisSerializer = new GenericJackson2JsonRedisSerializer(objectMapper);
-
         ObjectMapper objectMapper = new ObjectMapper()
-                .registerModule(new Hibernate5Module());
-        GenericJackson2JsonRedisSerializer genericJackson2JsonRedisSerializer = new GenericJackson2JsonRedisSerializer(objectMapper);
+                .registerModule(new ParameterNamesModule())
+                .registerModule(new Jdk8Module())
+                // new module, NOT JSR310Module
+                .registerModule(new JavaTimeModule())
+                .setSerializationInclusion(JsonInclude.Include.NON_NULL)
+                .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+                .configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
 
 //        Jackson2JsonRedisSerializer jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer(Object.class);
 //        jackson2JsonRedisSerializer.setObjectMapper(new ObjectMapper()
@@ -73,12 +66,9 @@ public class RedisConfig extends CachingConfigurerSupport {
 //                .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
 //                .configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false)
 //        );
-
-        redisTemplate.setKeySerializer(new StringRedisSerializer());
-        redisTemplate.setValueSerializer(new GenericJackson2JsonRedisSerializer());
-        redisTemplate.setHashKeySerializer(new StringRedisSerializer());
-        redisTemplate.setHashValueSerializer(genericJackson2JsonRedisSerializer);
-        redisTemplate.setDefaultSerializer(genericJackson2JsonRedisSerializer);
+        GenericJackson2JsonRedisSerializer genericJackson2JsonRedisSerializer = new GenericJackson2JsonRedisSerializer(objectMapper);
+        redisTemplate.setValueSerializer(genericJackson2JsonRedisSerializer);
+        redisTemplate.setHashValueSerializer(new Jackson2JsonRedisSerializer<>(Object.class));
 
         redisTemplate.afterPropertiesSet();
 
@@ -87,10 +77,9 @@ public class RedisConfig extends CachingConfigurerSupport {
 
     @Bean
     public CacheManager cacheManager(RedisTemplate redisTemplate) {
-        RedisCacheManager cacheManager = new RedisCacheManager(redisTemplate, Collections.emptyList(), true);
+        RedisCacheManager cacheManager = new RedisCacheManager(redisTemplate);
         cacheManager.setUsePrefix(true);
-        // 缓存默认过期时间 60s
-        cacheManager.setDefaultExpiration(60);
+        cacheManager.setDefaultExpiration(0);
         return cacheManager;
     }
 
@@ -106,8 +95,8 @@ public class RedisConfig extends CachingConfigurerSupport {
     public KeyGenerator keyGenerator() {
         return (target, method, params) -> {
             StringBuilder sb = new StringBuilder();
-            sb.append(target.getClass().getName());
-            sb.append(method.getName());
+            sb.append(target.getClass().getName()).append('.')
+                    .append(method.getName()).append('.');
             for (Object obj : params) {
                 sb.append(obj.toString());
             }

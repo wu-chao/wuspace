@@ -4,6 +4,8 @@ import com.github.wuchao.webproject.util.JacksonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.connection.RedisZSetCommands;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -370,8 +372,9 @@ public class RedisUtil {
      *
      * @param key
      */
-    public void deleteCache(String key) {
-        redisTemplate.delete(key);
+    public void evict(String key) {
+//        redisTemplate.delete(key);
+        redisTemplate.execute((RedisCallback<Long>) connection -> connection.del(key.getBytes()));
     }
 
 
@@ -434,8 +437,8 @@ public class RedisUtil {
      */
     public static String keyGenerator(String className, String methodName, Object... params) {
         StringBuilder sb = new StringBuilder();
-        sb.append(className);
-        sb.append(methodName);
+        sb.append(className).append('.');
+        sb.append(methodName).append('.');
         if (params != null && params.length > 0) {
             Arrays.stream(params).forEach(param -> sb.append(param.toString()));
         }

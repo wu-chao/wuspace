@@ -5,16 +5,13 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
 @EnableAutoConfiguration
 @EnableScheduling
 //@EnableDiscoveryClient
-@EnableCaching
+@EnableCaching(proxyTargetClass = true)
 public class NewsApplication {
 //    @Bean
 //    public OpenEntityManagerInViewFilter openEntityManagerInViewFilter() {
@@ -23,7 +20,6 @@ public class NewsApplication {
 
     public static void main(String args[]) {
         ConfigurableApplicationContext context = SpringApplication.run(NewsApplication.class, args);
-
 
 
 //        String src = "/home/wu-chao/下载/spring boot实战.pdf";
