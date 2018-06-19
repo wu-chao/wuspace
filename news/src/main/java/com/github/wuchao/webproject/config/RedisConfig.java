@@ -19,10 +19,8 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
-import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 
 @Configuration
-//@EnableCaching
 @Slf4j
 public class RedisConfig extends CachingConfigurerSupport {
 
@@ -57,18 +55,10 @@ public class RedisConfig extends CachingConfigurerSupport {
                 .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
                 .configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
 
-//        Jackson2JsonRedisSerializer jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer(Object.class);
-//        jackson2JsonRedisSerializer.setObjectMapper(new ObjectMapper()
-//                .setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY)
-//                .enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL)
-//                .registerModule(new Hibernate5Module())
-//                .setSerializationInclusion(JsonInclude.Include.NON_NULL)
-//                .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
-//                .configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false)
-//        );
         GenericJackson2JsonRedisSerializer genericJackson2JsonRedisSerializer = new GenericJackson2JsonRedisSerializer(objectMapper);
         redisTemplate.setValueSerializer(genericJackson2JsonRedisSerializer);
-        redisTemplate.setHashValueSerializer(new Jackson2JsonRedisSerializer<>(Object.class));
+        redisTemplate.setHashValueSerializer(genericJackson2JsonRedisSerializer);
+        redisTemplate.setDefaultSerializer(genericJackson2JsonRedisSerializer);
 
         redisTemplate.afterPropertiesSet();
 

@@ -11,7 +11,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableAutoConfiguration
 @EnableScheduling
 //@EnableDiscoveryClient
-@EnableCaching(proxyTargetClass = true)
+@EnableCaching
 public class NewsApplication {
 //    @Bean
 //    public OpenEntityManagerInViewFilter openEntityManagerInViewFilter() {

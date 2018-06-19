@@ -66,7 +66,7 @@ public class RedisService {
         List<User> users = redisUtil.getList(key, User.class);
         if (users == null) {
             users = userRepository.findAll();
-            redisUtil.setList(key, users);
+            redisUtil.set(key, users);
         }
         return users;
     }

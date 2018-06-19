@@ -43,39 +43,35 @@ public class HomeController {
         model.addAttribute("homeDTO", homeDTO);
 
         int[] index = {0};
-//        for (int i = 0; i < 10; i++) {
-//            index[0] = i + 1;
-//            User user = redisService.getUser("user1");
-//            User user1 = redisService.getUser("user1");
-//            log.info("第{}次执行查询结果：" + user.equals(user1), index[0]);
-//        }
-//
-//        log.info("------------------------------------------------------");
-//
-//        for (int i = 0; i < 10; i++) {
-//            index[0] = i + 1;
-//            User user = redisService.getUser2("user1");
-//            User user1 = redisService.getUser2("user1");
-//            log.info("第{}次执行查询结果：" + user.equals(user1), index[0]);
-//        }
-//
+        for (int i = 0; i < 10; i++) {
+            index[0] = i + 1;
+            User user = redisService.getUser("user1");
+            User user1 = redisService.getUser("user1");
+            log.info("第{}次执行查询结果：" + user.equals(user1), index[0]);
+        }
+
+        log.info("------------------------------------------------------");
+
+        for (int i = 0; i < 10; i++) {
+            index[0] = i + 1;
+            User user = redisService.getUser("user1");
+            User user1 = redisService.getUser("user1");
+            log.info("第{}次执行查询结果：" + user.equals(user1), index[0]);
+            try {
+                Thread.sleep(10000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
 //        log.info("------------------------------------------------------");
 //
 //        for (int i = 0; i < 10; i++) {
 //            index[0] = i + 1;
 //            List<User> users = redisService.getUsers();
 //            log.info("第{}次执行查询结果：" + users, index[0]);
+//
 //        }
-
-        log.info("------------------------------------------------------");
-
-
-        for (int i = 0; i < 10; i++) {
-            index[0] = i + 1;
-            User user = userRepository.findByUsername("user1");
-            User user1 = userRepository.findByUsername("user1");
-            log.info("第{}次执行查询结果：" + user.equals(user1), index[0]);
-        }
 
         return "news/home";
     }
