@@ -1,4 +1,4 @@
-package com.github.wuchao.webproject.config;
+package com.github.wuchao.webproject.config.redis;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -19,6 +19,8 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
+import redis.clients.jedis.JedisPool;
+import redis.clients.jedis.JedisPoolConfig;
 
 @Configuration
 @Slf4j
@@ -28,7 +30,26 @@ public class RedisConfig extends CachingConfigurerSupport {
     private String host;
 
     @Value("${spring.redis.port}")
-    private Integer port;
+    private int port;
+
+    @Value("${spring.redis.pool.max-idle}")
+    private int maxIdle;
+
+    @Value("${spring.redis.pool.max-wait}")
+    private int maxWaitMillis;
+
+    @Bean
+    public JedisPool jedisPool() {
+        log.info("redis 地址：" + host + ":" + port);
+
+        JedisPoolConfig jedisPoolConfig = new JedisPoolConfig();
+        // 控制一个pool最多有多少个状态为idle(空闲的)的jedis实例，默认值是8。
+        jedisPoolConfig.setMaxIdle(maxIdle);
+        // 等待可用连接的最大时间，单位毫秒，默认值为-1，表示永不超时。如果超过等待时间，则直接抛出JedisConnectionException
+        jedisPoolConfig.setMaxWaitMillis(maxWaitMillis);
+
+        return new JedisPool(jedisPoolConfig, host, port);
+    }
 
     @Bean
     public JedisConnectionFactory redisConnectionFactory() {

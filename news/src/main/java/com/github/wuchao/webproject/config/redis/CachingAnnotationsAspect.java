@@ -1,5 +1,6 @@
-package com.github.wuchao.webproject.springcacherefresh2;
+package com.github.wuchao.webproject.config.redis;
 
+import com.github.wuchao.webproject.springcacherefresh2.InvocationRegistry;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.aop.framework.AopProxyUtils;

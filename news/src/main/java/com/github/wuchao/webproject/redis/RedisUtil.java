@@ -1,4 +1,4 @@
-package com.github.wuchao.webproject.service.redis;
+package com.github.wuchao.webproject.redis;
 
 import com.github.wuchao.webproject.domain.User;
 import com.github.wuchao.webproject.util.JacksonUtil;
@@ -9,10 +9,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 import redis.clients.jedis.JedisPool;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Set;
-import java.util.concurrent.TimeUnit;
+import java.util.*;
 
 @Component
 @Slf4j
@@ -21,6 +18,10 @@ public class RedisUtil {
     private final RedisTemplate<String, String> redisTemplate;
     private JedisPool jedisPool = null;
     private static final String DEFAULT_KEYS_PATTERN = "com.github.wuchao.webproject*";
+
+//    private static final Map REDIS_CACHE_MAP = new HashMap<String, CustomizedRedisCache>();
+
+
 
     @Autowired
     public RedisUtil(RedisTemplate<String, String> redisTemplate, JedisPool jedisPool) {
@@ -48,11 +49,6 @@ public class RedisUtil {
     public <T> void set(String field, T obj) {
         String value = JacksonUtil.serializeAsString(obj);
         this.redisTemplate.opsForValue().set(field, value);
-    }
-
-    public <T> void setWithExpiration(String field, T obj, final long expireTime) {
-        String value = JacksonUtil.serializeAsString(obj);
-        this.redisTemplate.opsForValue().set(field, value, expireTime, TimeUnit.SECONDS);
     }
 
     public <T> T get(String field, Class<T> targetClass) {
@@ -89,7 +85,7 @@ public class RedisUtil {
             Arrays.stream(params).forEach(param -> sb.append(param.toString()));
         }
         if (expiration > 0) {
-            sb.append('_').append(expiration);
+            sb.append("_").append(expiration);
         }
         log.info("调用Redis缓存:Key= " + sb.toString());
         return sb.toString();

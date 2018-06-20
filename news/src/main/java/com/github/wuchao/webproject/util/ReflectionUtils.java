@@ -9,12 +9,6 @@ import org.springframework.aop.support.AopUtils;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
-/**
- * 方法类
- *
- * @author syh
- */
-
 public class ReflectionUtils {
     private static final Logger logger = LoggerFactory.getLogger(ReflectionUtils.class);
 

@@ -1,6 +1,5 @@
-package com.github.wuchao.webproject.aop;
+package com.github.wuchao.webproject.config.redis;
 
-import com.github.wuchao.webproject.springcacherefresh2.CachingAnnotationsAspect;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -21,7 +20,7 @@ public class RedisCacheAspect {
     @Autowired
     CachingAnnotationsAspect cachingAnnotationsAspect;
 
-    @Pointcut("execution(public * com.github.wuchao.webproject.repository.*.*(..))")
+    @Pointcut("execution(public * com.github.wuchao.webproject.service.*.*(..))")
     public void methodsToBeInspected() {
     }
 
