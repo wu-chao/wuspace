@@ -9,7 +9,9 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 import redis.clients.jedis.JedisPool;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Set;
 
 @Component
 @Slf4j
@@ -18,10 +20,6 @@ public class RedisUtil {
     private final RedisTemplate<String, String> redisTemplate;
     private JedisPool jedisPool = null;
     private static final String DEFAULT_KEYS_PATTERN = "com.github.wuchao.webproject*";
-
-//    private static final Map REDIS_CACHE_MAP = new HashMap<String, CustomizedRedisCache>();
-
-
 
     @Autowired
     public RedisUtil(RedisTemplate<String, String> redisTemplate, JedisPool jedisPool) {

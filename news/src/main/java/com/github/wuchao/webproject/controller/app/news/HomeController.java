@@ -5,9 +5,7 @@ import com.github.wuchao.webproject.repository.UserRepository;
 import com.github.wuchao.webproject.service.news.HomeService;
 import com.github.wuchao.webproject.service.news.dto.HomeDTO;
 import com.github.wuchao.webproject.service.redis.RedisService;
-import com.github.wuchao.webproject.service.redis.RedisUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -17,8 +15,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import java.util.Set;
 
 @Controller
 @Slf4j
@@ -36,9 +32,6 @@ public class HomeController {
     @Autowired
     private RedisTemplate redisTemplate;
 
-    @Autowired
-    private RedisUtil redisUtil;
-
     @GetMapping(value = {"", "/", "/index", "/home"})
     public String index(@RequestParam(defaultValue = "1") Long categoryId,
                         @RequestParam(required = false) Long subCategoryId,
@@ -49,6 +42,8 @@ public class HomeController {
         HomeDTO homeDTO = homeService.initHome(categoryId, subCategoryId, keyword, pageable);
         model.addAttribute("homeDTO", homeDTO);
 
+//        log.info(System.getProperty("java.io.tmpdir"));
+
         int[] index = {0};
         for (int i = 0; i < 10; i++) {
             index[0] = i + 1;
@@ -56,26 +51,26 @@ public class HomeController {
             User user1 = redisService.getUser("user1");
             log.info("第{}次执行查询结果：" + user.equals(user1), index[0]);
         }
-
-        log.info("------------------------------------------------------");
-
-        for (int i = 0; i < 10; i++) {
-            index[0] = i + 1;
-            User user = redisService.getUser("user1");
-            User user1 = redisService.getUser("user1");
-            log.info("第{}次执行查询结果：" + user.equals(user1), index[0]);
-
-            Set<String> keys = redisUtil.keys();
-            if (CollectionUtils.isNotEmpty(keys)) {
-                log.info(keys.toString());
-            }
-
-            try {
-                Thread.sleep(10000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
+//
+//        log.info("------------------------------------------------------");
+//
+//        for (int i = 0; i < 10; i++) {
+//            index[0] = i + 1;
+//            User user = redisService.getUser("user1");
+//            User user1 = redisService.getUser("user1");
+//            log.info("第{}次执行查询结果：" + user.equals(user1), index[0]);
+//
+//            Set<String> keys = redisUtil.keys();
+//            if (CollectionUtils.isNotEmpty(keys)) {
+//                log.info(keys.toString());
+//            }
+//
+//            try {
+//                Thread.sleep(10000);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//        }
 
 
 //        log.info("------------------------------------------------------");

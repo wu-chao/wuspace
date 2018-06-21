@@ -1,10 +1,15 @@
-package com.github.wuchao.webproject.config.redis;
+package com.github.wuchao.webproject.redis;
 
 import com.github.wuchao.webproject.common.Constants;
+import com.github.wuchao.webproject.config.redis.CustomizedRedisCache;
+import com.github.wuchao.webproject.config.redis.RedisLock;
 import com.github.wuchao.webproject.config.redis.expression.CacheOperationExpressionEvaluator;
+import com.github.wuchao.webproject.domain.User;
+import com.github.wuchao.webproject.repository.UserRepository;
 import com.github.wuchao.webproject.util.RedisTemplateUtils;
 import com.github.wuchao.webproject.util.ReflectionUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.concurrent.BasicThreadFactory;
@@ -18,7 +23,7 @@ import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.expression.EvaluationContext;
-import org.springframework.util.CollectionUtils;
+import org.springframework.stereotype.Component;
 import org.springframework.util.MethodInvoker;
 
 import java.lang.reflect.Method;
@@ -30,6 +35,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * 手动刷新缓存实现类
  */
+@Component
 @Slf4j
 public class CacheSupportImpl implements CacheSupport {
 
@@ -51,6 +57,15 @@ public class CacheSupportImpl implements CacheSupport {
     @Autowired
     DefaultListableBeanFactory beanFactory;
 
+    @Autowired
+    private RedisTemplate redisTemplate;
+
+    @Autowired
+    private RedisUtil redisUtil;
+
+    @Autowired
+    private UserRepository userRepository;
+
     @Override
     public void registerInvocation(Object targetBean, Method targetMethod, Class[] invocationParamTypes,
                                    Object[] invocationArgs, Set<String> annotatedCacheNames, String cacheKey) {
@@ -62,7 +77,7 @@ public class CacheSupportImpl implements CacheSupport {
         Object key = generateKey(caches, cacheKey, targetMethod, invocationArgs, targetBean, CacheOperationExpressionEvaluator.NO_RESULT);
 
         // 新建一个代理对象（记录了缓存注解的方法类信息）
-        final CachedMethodInvocation invocation = new CachedMethodInvocation(key, targetBean, targetMethod, invocationParamTypes, invocationArgs);
+        final CachedMethodInvocation invocation = new CachedMethodInvocation(key.toString(), targetBean.getClass().getName(), targetMethod, invocationParamTypes, invocationArgs);
         for (Cache cache : caches) {
             if (cache instanceof CustomizedRedisCache) {
                 CustomizedRedisCache redisCache = ((CustomizedRedisCache) cache);
@@ -85,23 +100,47 @@ public class CacheSupportImpl implements CacheSupport {
         }
     }
 
-    private void refreshCache(CachedMethodInvocation invocation, String cacheName) {
+    @Override
+    public void refreshAllCaches() {
+        Map<String, CachedMethodInvocation> methodInvocations = Constants.REDIS_CACHE_METHOD_INVOCATION_MAP;
+        if (MapUtils.isNotEmpty(methodInvocations)) {
+            String[] key = {""};
+            CachedMethodInvocation[] value = new CachedMethodInvocation[1];
+            methodInvocations.entrySet().forEach(methodInvocation -> {
+                key[0] = methodInvocation.getKey();
+                value[0] = methodInvocation.getValue();
+                if (StringUtils.isNotBlank(key[0])) {
+                    Integer schedule = Integer.valueOf(key[0].substring(key[0].lastIndexOf("_") + 1));
+                    ScheduledExecutorService service = new ScheduledThreadPoolExecutor(1, new BasicThreadFactory.Builder().namingPattern("example-schedule-pool-%d").daemon(true).build());
+                    if (key[0].contains("getUser.username_" + schedule)) {
+                        List<User> users = userRepository.findAll();
+                        if (CollectionUtils.isNotEmpty(users)) {
+                            users.forEach(user -> {
+                                value[0].getArguments().add(user.getUsername());
+                                value[0].setRedisLock(new RedisLock(redisTemplate, key[0]));
+                                service.scheduleWithFixedDelay(() ->
+                                        refreshCache(value[0], key[0]), 0, schedule, TimeUnit.SECONDS);
+                            });
+                        }
+
+                    }
+                }
+            });
+        }
+    }
+
+    private void refreshCache(CachedMethodInvocation invocation, String key) {
         try {
             // 通过代理调用方法，并记录返回值
             Object computed = invoke(invocation);
 
-            // 通过cacheManager获取操作缓存的cache对象
-            Cache cache = cacheManager.getCache(cacheName);
             // 通过Cache对象更新缓存
-            cache.put(invocation.getKey(), computed);
+            redisUtil.set(invocation.getKey(), computed);
 
-            RedisTemplate redisTemplate = RedisTemplateUtils.getRedisTemplate(redisConnectionFactory);
-            CustomizedRedisCache redisCache = (CustomizedRedisCache) cache;
-            long expireTime = redisCache.getExpirationSecondTime();
             // 刷新redis中缓存法信息key的有效时间
-            redisTemplate.expire(getInvocationCacheKey(redisCache.getCacheKey(invocation.getKey())), expireTime, TimeUnit.SECONDS);
+//            redisTemplate.expire(getInvocationCacheKey(redisCache.getCacheKey(invocation.getKey())), expireTime, TimeUnit.SECONDS);
 
-            log.info("缓存：{}-{}，重新加载数据", cacheName, invocation.getKey().toString().getBytes());
+            log.info("缓存：{}-{}，重新加载数据", key, invocation.getKey().toString().getBytes());
         } catch (Exception e) {
             log.info("刷新缓存失败：" + e.getMessage(), e);
         }
@@ -109,7 +148,6 @@ public class CacheSupportImpl implements CacheSupport {
     }
 
     private Object invoke(CachedMethodInvocation invocation) throws Exception {
-
         // 获取执行方法所需要的参数
         Object[] args = null;
         if (!CollectionUtils.isEmpty(invocation.getArguments())) {
@@ -133,7 +171,7 @@ public class CacheSupportImpl implements CacheSupport {
      *
      * @return
      */
-    protected Object generateKey(Collection<? extends Cache> caches, String key, Method method, Object[] args,
+    protected String generateKey(Collection<? extends Cache> caches, String key, Method method, Object[] args,
                                  Object target, Object result) {
 
         // 获取注解上的key属性值
@@ -143,9 +181,9 @@ public class CacheSupportImpl implements CacheSupport {
                     targetClass, result, null);
 
             AnnotatedElementKey methodCacheKey = new AnnotatedElementKey(method, targetClass);
-            return evaluator.key(key, methodCacheKey, evaluationContext);
+            return evaluator.key(key, methodCacheKey, evaluationContext).toString();
         }
-        return this.keyGenerator.generate(target, method, args);
+        return this.keyGenerator.generate(target, method, args).toString();
     }
 
     /**

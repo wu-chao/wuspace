@@ -1,8 +1,6 @@
 package com.github.wuchao.webproject.redis;
 
 import com.github.wuchao.webproject.config.redis.RedisLock;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;
@@ -21,19 +19,13 @@ public final class CachedMethodInvocation {
     private String key;
     private String targetBean;
     private String targetMethod;
-    private List<Object> arguments;
+    private List<Object> arguments = new ArrayList<>();
     private List<String> parameterTypes = new ArrayList<>();
     private RedisLock redisLock = null;
 
-    @Autowired
-    private RedisTemplate redisTemplate;
-
-    public CachedMethodInvocation() {
-    }
-
-    public CachedMethodInvocation(String key, Object targetBean, Method targetMethod, Class[] parameterTypes, Object[] arguments) {
+    public CachedMethodInvocation(String key, String targetBean, Method targetMethod, Class[] parameterTypes, Object[] arguments) {
         this.key = key;
-        this.targetBean = targetBean.getClass().getName();
+        this.targetBean = targetBean;
         this.targetMethod = targetMethod.getName();
         if (arguments != null && arguments.length != 0) {
             this.arguments = Arrays.asList(arguments);
@@ -45,12 +37,7 @@ public final class CachedMethodInvocation {
         }
     }
 
-    public void refreshCache() {
-        this.redisLock = new RedisLock(redisTemplate, key);
-
-    }
-
-    public Object getKey() {
+    public String getKey() {
         return key;
     }
 
