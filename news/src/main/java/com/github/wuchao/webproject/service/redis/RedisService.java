@@ -11,8 +11,9 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Function;
+import java.util.concurrent.CompletableFuture;
 
 @Service
 @Slf4j
@@ -32,12 +33,24 @@ public class RedisService {
     private com.github.wuchao.webproject.redis.RedisUtil redisUtil;
 
     @PostConstruct
-    public void init(Function username) {
-        String key = redisUtil.keyGenerator(this.getClass().getName(),
-                "getUser", new String[]{username}, 30);
+    public void init() {
+        String[] username = {""};
+        User[] user = new User[1];
+        List<CompletableFuture<User>> futures = new ArrayList<>();
+        futures.add(CompletableFuture.supplyAsync(() -> {
+            user[0] = userRepository.findByUsername(username[0]);
+            return user[0];
+        }, Constants.GLOBAL_THREAD_POOL));
 
-        User user = userRepository.findByUsername(username);
-        redisUtil.set(key, user);
+        if (futures.size() > 0) {
+            CompletableFuture.allOf(futures.toArray(new CompletableFuture[futures.size()])).join();
+        }
+
+        String key = redisUtil.keyGenerator(this.getClass().getName(),
+                "getUser", new String[]{username[0]}, 30);
+        redisUtil.set(key, user[0]);
+
+
     }
 
     public User getUser(String username) {
