@@ -3,6 +3,7 @@ package com.github.wuchao.webproject.service.redis;
 import com.github.wuchao.webproject.common.Constants;
 import com.github.wuchao.webproject.domain.User;
 import com.github.wuchao.webproject.redis.CachedMethodInvocation;
+import com.github.wuchao.webproject.redis.RedisUtil;
 import com.github.wuchao.webproject.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,15 +31,30 @@ public class RedisService {
     private RedisTemplate redisTemplate;
 
     @Autowired
-    private com.github.wuchao.webproject.redis.RedisUtil redisUtil;
+    private RedisUtil redisUtil;
 
     @PostConstruct
+
     public void init() {
-        String[] username = {""};
+        try {
+            String key = redisUtil.keyGenerator(this.getClass().getName(),
+                    "getUser", null, 30);
+            CachedMethodInvocation cachedMethodInvocation = new CachedMethodInvocation(key, RedisService.class.getName(),
+                    RedisService.class.getMethod("refreshCache", String.class), new Class[]{String.class}, User.class);
+            Constants.REDIS_CACHE_METHOD_INVOCATION_MAP.put(key, cachedMethodInvocation);
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void refreshCache(String username) {
+        log.info("----------------------------- 刷新缓存 -----------------------------");
         User[] user = new User[1];
+        String[] names = new String[1];
+        names[0] = username;
         List<CompletableFuture<User>> futures = new ArrayList<>();
         futures.add(CompletableFuture.supplyAsync(() -> {
-            user[0] = userRepository.findByUsername(username[0]);
+            user[0] = userRepository.findByUsername(names[0]);
             return user[0];
         }, Constants.GLOBAL_THREAD_POOL));
 
@@ -47,10 +63,8 @@ public class RedisService {
         }
 
         String key = redisUtil.keyGenerator(this.getClass().getName(),
-                "getUser", new String[]{username[0]}, 30);
+                "getUser", new String[]{names[0]}, 30);
         redisUtil.set(key, user[0]);
-
-
     }
 
     public User getUser(String username) {
@@ -58,15 +72,6 @@ public class RedisService {
                 "getUser", new String[]{username}, 30);
         User user = redisUtil.get(key, User.class);
         return user;
-    }
-
-    @PostConstruct
-    public void addScheduledTask() throws NoSuchMethodException {
-        String key = redisUtil.keyGenerator(this.getClass().getName(),
-                "getUser", new String[]{"user1"}, 30);
-        CachedMethodInvocation cachedMethodInvocation = new CachedMethodInvocation(key, this.getClass().getName(),
-                this.getClass().getMethod("getUser", String.class), new Class[]{String.class}, new String[]{"user1"});
-        Constants.REDIS_CACHE_METHOD_INVOCATION_MAP.put(key, cachedMethodInvocation);
     }
 
     public User getUser2(String username) {

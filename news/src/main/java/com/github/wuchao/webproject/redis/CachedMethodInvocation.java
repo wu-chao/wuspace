@@ -1,6 +1,5 @@
 package com.github.wuchao.webproject.redis;
 
-import com.github.wuchao.webproject.config.redis.RedisLock;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;
@@ -21,9 +20,13 @@ public final class CachedMethodInvocation {
     private String targetMethod;
     private List<Object> arguments = new ArrayList<>();
     private List<String> parameterTypes = new ArrayList<>();
+    private Class methodReturnClass;
     private RedisLock redisLock = null;
 
-    public CachedMethodInvocation(String key, String targetBean, Method targetMethod, Class[] parameterTypes, Object[] arguments) {
+    public CachedMethodInvocation() {
+    }
+
+    public CachedMethodInvocation(String key, String targetBean, Method targetMethod, Class[] parameterTypes, Object[] arguments, Class methodReturnClass, RedisLock redisLock) {
         this.key = key;
         this.targetBean = targetBean;
         this.targetMethod = targetMethod.getName();
@@ -35,6 +38,16 @@ public final class CachedMethodInvocation {
                 this.parameterTypes.add(clazz.getName());
             }
         }
+        this.methodReturnClass = methodReturnClass;
+        this.redisLock = redisLock;
+    }
+
+    public CachedMethodInvocation(String key, String targetBean, Method targetMethod, Class[] parameterTypes, Object[] arguments) {
+        this(key, targetBean, targetMethod, parameterTypes, arguments, null, null);
+    }
+
+    public CachedMethodInvocation(String key, String targetBean, Method targetMethod, Class[] parameterTypes, Class methodReturnClass) {
+        this(key, targetBean, targetMethod, parameterTypes, null, methodReturnClass, null);
     }
 
     public String getKey() {
@@ -77,6 +90,14 @@ public final class CachedMethodInvocation {
         this.parameterTypes = parameterTypes;
     }
 
+    public Class getMethodReturnClass() {
+        return methodReturnClass;
+    }
+
+    public void setMethodReturnClass(Class methodReturnClass) {
+        this.methodReturnClass = methodReturnClass;
+    }
+
     public RedisLock getRedisLock() {
         return redisLock;
     }
@@ -94,8 +115,7 @@ public final class CachedMethodInvocation {
             return false;
         }
         CachedMethodInvocation that = (CachedMethodInvocation) o;
-        return Objects.equals(key, that.key) &&
-                Objects.equals(targetBean, that.targetBean) &&
+        return Objects.equals(targetBean, that.targetBean) &&
                 Objects.equals(targetMethod, that.targetMethod) &&
                 Objects.equals(arguments, that.arguments) &&
                 Objects.equals(parameterTypes, that.parameterTypes) &&
@@ -105,7 +125,7 @@ public final class CachedMethodInvocation {
     @Override
     public int hashCode() {
 
-        return Objects.hash(key, targetBean, targetMethod, arguments, parameterTypes, redisLock);
+        return Objects.hash(targetBean, targetMethod, arguments, parameterTypes, redisLock);
     }
 }
 

@@ -1,4 +1,4 @@
-package com.github.wuchao.webproject.config.redis;
+package com.github.wuchao.webproject.config;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -90,7 +90,7 @@ public class RedisConfig extends CachingConfigurerSupport {
     public CacheManager cacheManager(RedisTemplate redisTemplate) {
         RedisCacheManager cacheManager = new RedisCacheManager(redisTemplate);
         cacheManager.setUsePrefix(true);
-        cacheManager.setDefaultExpiration(0);
+        cacheManager.setDefaultExpiration(60);
         return cacheManager;
     }
 

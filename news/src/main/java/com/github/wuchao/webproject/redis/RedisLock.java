@@ -45,6 +45,8 @@ public class RedisLock {
 
     private RedisTemplate redisTemplate;
 
+    private Object data;
+
     /**
      * 将key 的值设为value ，当且仅当key 不存在，等效于 SETNX。
      */
@@ -319,6 +321,18 @@ public class RedisLock {
         } catch (InterruptedException e) {
             logger.info("获取分布式锁休眠被中断：", e);
         }
+    }
+
+    public Object getData() {
+        return data;
+    }
+
+    public void setData(Object data) {
+        this.data = data;
+    }
+
+    public void clear() {
+        setData(null);
     }
 
     public String getLockKeyLog() {

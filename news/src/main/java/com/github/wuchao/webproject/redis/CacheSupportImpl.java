@@ -2,7 +2,6 @@ package com.github.wuchao.webproject.redis;
 
 import com.github.wuchao.webproject.common.Constants;
 import com.github.wuchao.webproject.config.redis.CustomizedRedisCache;
-import com.github.wuchao.webproject.config.redis.RedisLock;
 import com.github.wuchao.webproject.config.redis.expression.CacheOperationExpressionEvaluator;
 import com.github.wuchao.webproject.domain.User;
 import com.github.wuchao.webproject.repository.UserRepository;
@@ -111,15 +110,17 @@ public class CacheSupportImpl implements CacheSupport {
                 value[0] = methodInvocation.getValue();
                 if (StringUtils.isNotBlank(key[0])) {
                     Integer schedule = Integer.valueOf(key[0].substring(key[0].lastIndexOf("_") + 1));
-                    ScheduledExecutorService service = new ScheduledThreadPoolExecutor(1, new BasicThreadFactory.Builder().namingPattern("example-schedule-pool-%d").daemon(true).build());
-                    if (key[0].contains("getUser.username_" + schedule)) {
+                    if (key[0].contains("getUser")) {
                         List<User> users = userRepository.findAll();
                         if (CollectionUtils.isNotEmpty(users)) {
                             users.forEach(user -> {
-                                value[0].getArguments().add(user.getUsername());
-                                value[0].setRedisLock(new RedisLock(redisTemplate, key[0]));
+                                String[] cacheKey = {key[0].substring(0, key[0].lastIndexOf("_")) + user.getUsername() + "_" + schedule};
+                                value[0].setArguments(new ArrayList() {{
+                                    add(user.getUsername());
+                                }});
+                                ScheduledExecutorService service = new ScheduledThreadPoolExecutor(1, new BasicThreadFactory.Builder().namingPattern("example-schedule-pool-%d").daemon(true).build());
                                 service.scheduleWithFixedDelay(() ->
-                                        refreshCache(value[0], key[0]), 0, schedule, TimeUnit.SECONDS);
+                                        refreshCache(value[0], cacheKey[0]), 0, schedule, TimeUnit.SECONDS);
                             });
                         }
 
@@ -130,19 +131,43 @@ public class CacheSupportImpl implements CacheSupport {
     }
 
     private void refreshCache(CachedMethodInvocation invocation, String key) {
+        RedisLock redisLock = new RedisLock(redisTemplate, key + "_lock");
+        Class methodReturnClass = invocation.getMethodReturnClass();
+        if (methodReturnClass == List.class) {
+            redisLock.setData(redisUtil.getListWithoutLock(key, methodReturnClass));
+        } else {
+            redisLock.setData(redisUtil.getWithoutLock(key, methodReturnClass));
+        }
+        Constants.REDIS_LOCK_MAP.put(key + "_lock", redisLock);
+
         try {
-            // 通过代理调用方法，并记录返回值
-            Object computed = invoke(invocation);
+            /**
+             * 更新缓存前将缓存放在RedisLock中，查询缓存时判断lock的状态，如果已锁定，就从lock里面取临时数据，
+             * 这里更新完缓存后unlock，然后清除lock中保存的临时数据
+             */
+            if (redisLock.lock()) {
+                log.info(redisLock.getLockKeyLog() + " 已锁定，将加载旧数据\n");
+                Thread.sleep(5);
 
-            // 通过Cache对象更新缓存
-            redisUtil.set(invocation.getKey(), computed);
+                // 通过代理调用方法，并记录返回值
+                Object computed = invoke(invocation);
 
-            // 刷新redis中缓存法信息key的有效时间
-//            redisTemplate.expire(getInvocationCacheKey(redisCache.getCacheKey(invocation.getKey())), expireTime, TimeUnit.SECONDS);
+                // 通过Cache对象更新缓存
+                redisUtil.set(key, computed);
 
-            log.info("缓存：{}-{}，重新加载数据", key, invocation.getKey().toString().getBytes());
+                // 刷新redis中缓存法信息key的有效时间
+//                redisTemplate.expire(key, Long.valueOf(key.substring(key.lastIndexOf("_") + 1)), TimeUnit.SECONDS);
+                redisTemplate.expire(key, 60, TimeUnit.SECONDS);
+
+                log.info("缓存：{}-{}，重新加载数据", key, key.getBytes());
+            }
+
         } catch (Exception e) {
+
             log.info("刷新缓存失败：" + e.getMessage(), e);
+        } finally {
+
+            redisLock.unlock();
         }
 
     }
