@@ -19,14 +19,16 @@ buildscript {
     }
     dependencies {
         classpath "org.springframework.boot:spring-boot-gradle-plugin:${spring_boot_gradle_plugin_version}"
+        classpath 'com.bmuschko:gradle-tomcat-plugin:2.5'
     }
 }
 
 apply plugin: 'java'
+apply plugin: 'checkstyle'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
-apply plugin: 'checkstyle'
-apply plugin: 'spring-boot' //http://docs.spring.io/spring-boot/docs/current/reference/html/build-tool-plugins-gradle-plugin.html
+apply plugin: 'com.bmuschko.tomcat'
+apply plugin: 'org.springframework.boot' //http://docs.spring.io/spring-boot/docs/current/reference/html/build-tool-plugins-gradle-plugin.html
 
 jar {
     baseName = 'blog'

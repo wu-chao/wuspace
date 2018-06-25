@@ -1,5 +1,8 @@
 package com.github.wuchao.webproject.repository;
 
+import com.alicp.jetcache.anno.CacheRefresh;
+import com.alicp.jetcache.anno.CacheType;
+import com.alicp.jetcache.anno.Cached;
 import com.github.wuchao.webproject.domain.MediaInfo;
 import com.github.wuchao.webproject.domain.enumeration.MediaType;
 import org.springframework.data.domain.Page;
@@ -21,8 +24,15 @@ public interface MediaInfoRepository extends JpaRepository<MediaInfo, Long> {
      * @param pageable
      * @return
      */
+    @Cached(expire = 3600, name = "MediaInfoRepository.", cacheType = CacheType.REMOTE)
+    @CacheRefresh(refresh = 3595)
     @EntityGraph(attributePaths = {"author", "category", "mediaContent"})
     Page<MediaInfo> findAll(Specification<MediaInfo> specification, Pageable pageable);
+
+    @Override
+    @Cached(expire = 3600, name = "MediaInfoRepository.", cacheType = CacheType.REMOTE)
+    @CacheRefresh(refresh = 3595)
+    Page<MediaInfo> findAll(Pageable pageable);
 
     /**
      * 查询 Article

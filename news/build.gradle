@@ -26,6 +26,7 @@ buildscript {
          */
         classpath "org.springframework.boot:spring-boot-gradle-plugin:$spring_boot_version"
 //        classpath "io.spring.gradle:dependency-management-plugin:0.5.6.RELEASE"
+        classpath 'com.bmuschko:gradle-tomcat-plugin:2.5'
     }
 }
 
@@ -33,6 +34,7 @@ apply plugin: 'java'
 apply plugin: 'idea'
 apply plugin: 'eclipse'
 apply plugin: 'checkstyle'
+apply plugin: 'com.bmuschko.tomcat'
 // http://docs.spring.io/spring-boot/docs/current/reference/html/build-tool-plugins-gradle-plugin.html
 apply plugin: 'org.springframework.boot'
 //apply plugin: "io.spring.dependency-management"
@@ -78,6 +80,8 @@ repositories {
 
 ext {
 
+    tomcat_version = '9.0.1'
+
     mybatis_generator_version = '1.3.5'
     mybatis_spring_boot_starter_version = '1.3.1'
     mapper_spring_boot_starter_version = '1.1.4'
@@ -114,8 +118,16 @@ dependencies {
     compile "org.springframework.boot:spring-boot-starter-cache"
     compile "org.springframework.boot:spring-boot-starter-data-jpa"
     compile "org.springframework.boot:spring-boot-starter-data-redis"
-    compile "org.springframework.boot:spring-boot-starter-web"
+    compile("org.springframework.boot:spring-boot-starter-web") {
+        exclude module: "spring-boot-starter-tomcat"
+    }
     compile "org.springframework.boot:spring-boot-starter-tomcat"
+
+    tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcat_version}",
+            "org.apache.tomcat.embed:tomcat-embed-logging-juli:9.0.0.M6",
+            "org.apache.tomcat.embed:tomcat-embed-jasper:${tomcat_version}"
+
+    compile "org.springframework.boot:spring-boot-starter-jetty"
     compile "org.springframework.boot:spring-boot-starter-websocket"
 //    compile "org.springframework.boot:spring-boot-starter-amqp"
 
@@ -141,6 +153,9 @@ dependencies {
     compile "com.h2database:h2"
     compile "mysql:mysql-connector-java"
     compile "com.github.ben-manes.caffeine:caffeine"
+    compile "com.alicp.jetcache:jetcache-starter-redis:${jetcache_starter_redis_version}"
+
+    // Liquibase
     compile "org.liquibase:liquibase-core"
 
     // Mybatis
@@ -220,4 +235,9 @@ dependencies {
     compile "org.projectlombok:lombok:${lombok_version}"
 
     testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+
+tomcat {
+    httpProtocol = 'org.apache.coyote.http11.Http11Nio2Protocol'
+    ajpProtocol  = 'org.apache.coyote.ajp.AjpNio2Protocol'
 }

@@ -11,5 +11,5 @@
 ## 介绍
 - 数据库版本控制：Liquibase  
 - ORM 框架：Mybatis、Hibernate
-- 缓存：Redis
+- 缓存：Redis、Alibaba jetcache（缓存自动刷新）
 - 爬虫：
