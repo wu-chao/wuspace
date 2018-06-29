@@ -1,6 +1,7 @@
 package com.github.wuchao.webproject.service.news;
 
 import com.alicp.jetcache.anno.CacheRefresh;
+import com.alicp.jetcache.anno.CacheType;
 import com.alicp.jetcache.anno.Cached;
 import com.github.wuchao.webproject.domain.Category;
 import com.github.wuchao.webproject.domain.MediaInfo;

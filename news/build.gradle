@@ -123,9 +123,9 @@ dependencies {
     }
     compile "org.springframework.boot:spring-boot-starter-tomcat"
 
-    tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcat_version}",
-            "org.apache.tomcat.embed:tomcat-embed-logging-juli:9.0.0.M6",
-            "org.apache.tomcat.embed:tomcat-embed-jasper:${tomcat_version}"
+//    tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcat_version}",
+//            "org.apache.tomcat.embed:tomcat-embed-logging-juli:9.0.0.M6",
+//            "org.apache.tomcat.embed:tomcat-embed-jasper:${tomcat_version}"
 
     compile "org.springframework.boot:spring-boot-starter-jetty"
     compile "org.springframework.boot:spring-boot-starter-websocket"
@@ -237,7 +237,7 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
 
-tomcat {
-    httpProtocol = 'org.apache.coyote.http11.Http11Nio2Protocol'
-    ajpProtocol  = 'org.apache.coyote.ajp.AjpNio2Protocol'
-}
+//tomcat {
+//    httpProtocol = 'org.apache.coyote.http11.Http11Nio2Protocol'
+//    ajpProtocol  = 'org.apache.coyote.ajp.AjpNio2Protocol'
+//}

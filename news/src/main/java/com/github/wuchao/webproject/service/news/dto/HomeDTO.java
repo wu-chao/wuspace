@@ -6,11 +6,12 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.domain.Page;
 
+import java.io.Serializable;
 import java.util.List;
 
 @Getter
 @Setter
-public class HomeDTO {
+public class HomeDTO implements Serializable {
 
     /**
      * 所有目录分类
