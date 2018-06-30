@@ -105,8 +105,8 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
     // Spring
-    compile "org.springframework:spring-context-support"
-    compile "org.springframework:spring-agent:${spring_agent_version}"
+//    compile "org.springframework:spring-context-support"
+//    compile "org.springframework:spring-agent:${spring_agent_version}"
 
     // Spring Boot
     compile "org.springframework.boot:spring-boot-devtools"
