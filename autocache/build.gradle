@@ -1,3 +1,7 @@
+group = 'web-project'
+version = '1.0.0'
+description = 'autocache'
+
 buildscript {
     repositories {
         mavenLocal()
@@ -24,8 +28,6 @@ apply plugin: 'eclipse'
 apply plugin: 'checkstyle'
 apply plugin: 'org.springframework.boot'
 
-version '1.0.0'
-
 sourceCompatibility = 1.8
 
 repositories {
@@ -44,32 +46,10 @@ repositories {
 }
 
 dependencies {
-    compile "org.springframework.boot:spring-boot-starter-data-jpa"
-    compile "org.springframework.boot:spring-boot-starter-test"
+    compile project(':news')
 
-    compile "mysql:mysql-connector-java"
-//    compile "com.mchange:c3p0:0.9.5.2"
-//    compile "commons-dbutils:commons-dbutils:1.7"
-
-    // Web Magic
-    compile "us.codecraft:webmagic-core:${webmagic_version}"
-    compile "us.codecraft:webmagic-extension:${webmagic_version}"
-
-    // HtmlCleaner（可以使用 xpath 的方式解析 xml/html 形式的字符串）
-    compile "net.sourceforge.htmlcleaner:htmlcleaner:${htmlcleaner_version}"
-
-    compile "org.slf4j:slf4j-api:1.7.21"
-    compile "org.slf4j:slf4j-log4j12:1.7.21"
-
-    // Apache Commons
-    compile "org.apache.commons:commons-lang3:${commons_lang_version}"
-    compile("commons-beanutils:commons-beanutils:${commons_beanutils_version}") {
-        exclude(module: 'commons-logging')
-    }
-    compile "commons-logging:commons-logging:${commons_logging_version}"
-    compile "commons-io:commons-io:${commons_io_version}"
-
-    compile "org.projectlombok:lombok:${lombok_version}"
+    compile "com.github.ben-manes.caffeine:caffeine"
+    compile "com.alicp.jetcache:jetcache-starter-redis:${jetcache_starter_redis_version}"
 
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }

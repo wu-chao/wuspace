@@ -1,7 +1,6 @@
-package com.github.wuchao.webproject.spider;
+package com.github.wuchao.webproject.spider.qqnews;
 
 import org.springframework.boot.CommandLineRunner;
-import us.codecraft.webmagic.Spider;
 
 public class SpiderRunner implements CommandLineRunner {
     @Override

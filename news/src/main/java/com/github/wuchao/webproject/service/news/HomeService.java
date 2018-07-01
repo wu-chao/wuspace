@@ -1,7 +1,5 @@
 package com.github.wuchao.webproject.service.news;
 
-import com.alicp.jetcache.anno.CacheRefresh;
-import com.alicp.jetcache.anno.Cached;
 import com.github.wuchao.webproject.domain.Category;
 import com.github.wuchao.webproject.domain.MediaInfo;
 import com.github.wuchao.webproject.repository.CategoryRepository;
@@ -23,8 +21,6 @@ public class HomeService {
     @Autowired
     private MediaInfoRepository mediaInfoRepository;
 
-    @Cached(expire = 60)
-    @CacheRefresh(refresh = 50)
     public HomeDTO initHome(Long categoryId, Long subCategoryId, String keyword, Pageable pageable) {
         HomeDTO homeDTO = new HomeDTO();
         List<Category> categories = listCategories();

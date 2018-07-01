@@ -1,8 +1,5 @@
 package com.github.wuchao.webproject.repository;
 
-import com.alicp.jetcache.anno.CacheRefresh;
-import com.alicp.jetcache.anno.CacheType;
-import com.alicp.jetcache.anno.Cached;
 import com.github.wuchao.webproject.domain.User;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -19,8 +16,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @EntityGraph(attributePaths = "authorities")
     Optional<User> findOneByUsername(String username);
 
-    @Cached(expire = 60, cacheType = CacheType.REMOTE)
-    @CacheRefresh(refresh = 50)
     @EntityGraph(attributePaths = "authorities")
     User findByUsername(String username);
 

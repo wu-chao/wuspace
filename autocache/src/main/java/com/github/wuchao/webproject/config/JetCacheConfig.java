@@ -26,8 +26,13 @@ import redis.clients.util.Pool;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Function;
 
+
+/**
+ * JetCache 方法 news 模块，则其他模块启动不起来
+ * JetCache 缓存的 key 要和 redis 的 key 使用相同的生成规则
+ * JetCache 自定义序列化（Jackson），便于和 redis 这边使用
+ */
 @Slf4j
 @Configuration
 @EnableMethodCache(basePackages = "com.github.wuchao.webproject")

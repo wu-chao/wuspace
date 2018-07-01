@@ -46,9 +46,9 @@ public class HomeController {
         for (int i = 0; i < 10; i++) {
             index[0] = i + 1;
             User user = userRepository.findByUsername("admin");
-            log.info(user.toString());
+            log.info(user != null ? user.toString() : "");
             User user1 = userRepository.findByUsername("user2");
-            log.info(user1.toString());
+            log.info(user1 != null ? user1.toString() : "");
             log.info("第{}次执行查询结果：" + user.equals(user1), index[0]);
         }
 

@@ -3,4 +3,5 @@ rootProject.name = 'web-project'
 include 'admin'
 include 'news'
 include 'web-crawler'
+include 'autocache'
 

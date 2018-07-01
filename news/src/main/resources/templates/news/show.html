@@ -18,9 +18,9 @@
                     <div class="article-meta">
                         <span class="item article-meta-time">
                           <time class="time" data-toggle="tooltip" data-placement="bottom"
-                                th:title="'时间：' + ${#calendars.format(newsDetailDTO.mediaInfo.createdDate, 'yyyy-MM-dd HH:mm:ss')}">
+                                th:title="'时间：' + ${#strings.substring(newsDetailDTO.mediaInfo.createdDate, 0, 10)}">
                               <i class="glyphicon glyphicon-time"></i>&nbsp;<span
-                                  th:text="${#calendars.format(newsDetailDTO.mediaInfo.createdDate, 'yyyy-MM-dd HH:mm:ss')}">2016-1-4 10:29:39</span>
+                                  th:text="${newsDetailDTO.mediaInfo.createdDate}">2016-1-4 10:29:39</span>
                           </time>
                         </span>
                         <span class="item article-meta-source" data-toggle="tooltip" data-placement="bottom"
