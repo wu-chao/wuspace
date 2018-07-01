@@ -72,6 +72,34 @@ public class CacheSupportImpl implements CacheSupport {
         }
     }
 
+    @Override
+    public void invokeAllMethods() {
+        Map<String, CachedMethodInvocation> methodInvocations = Constants.REDIS_CACHE_METHOD_INVOCATION_MAP;
+        if (MapUtils.isNotEmpty(methodInvocations)) {
+            methodInvocations.entrySet().forEach(methodInvocation -> {
+                CachedMethodInvocation invocation = methodInvocation.getValue();
+                if (StringUtils.isNotBlank(methodInvocation.getKey())) {
+                    if (methodInvocation.getKey().contains("getUser")) {
+                        List<User> users = userRepository.findAll();
+                        if (CollectionUtils.isNotEmpty(users)) {
+                            users.forEach(user -> {
+                                invocation.setArguments(new ArrayList() {{
+                                    add(user.getUsername());
+                                }});
+                                try {
+                                    invocation.invoke();
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            });
+                        }
+
+                    }
+                }
+            });
+        }
+    }
+
     private void refreshCache(CachedMethodInvocation invocation, String key) {
         RedisLock redisLock = new RedisLock(redisTemplate, key + "_lock");
         Class methodReturnClass = invocation.getMethodReturnClass();

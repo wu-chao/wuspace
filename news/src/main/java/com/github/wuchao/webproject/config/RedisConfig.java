@@ -8,6 +8,7 @@ import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
@@ -105,12 +106,14 @@ public class RedisConfig extends CachingConfigurerSupport {
     @Override
     public KeyGenerator keyGenerator() {
         return (target, method, params) -> {
-            StringBuilder sb = new StringBuilder();
-            sb.append(target.getClass().getName()).append('.')
-                    .append(method.getName()).append('.');
-            for (Object obj : params) {
-                sb.append(obj.toString());
+            StringBuilder sb = new StringBuilder()
+                    .append(target.getClass().getName()).append('.')
+                    .append(method.getName()).append('.')
+                    .append('(');
+            if (params != null && params.length > 0) {
+                sb.append(StringUtils.join(params, ','));
             }
+            sb.append(')');
             log.info("调用Redis缓存:Key= " + sb.toString());
             return sb.toString();
         };

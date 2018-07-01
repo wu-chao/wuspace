@@ -19,7 +19,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @EntityGraph(attributePaths = "authorities")
     Optional<User> findOneByUsername(String username);
 
-    @Cached(expire = 60, name = "UserRepository.", cacheType = CacheType.REMOTE)
+    @Cached(expire = 60, cacheType = CacheType.REMOTE)
     @CacheRefresh(refresh = 50)
     @EntityGraph(attributePaths = "authorities")
     User findByUsername(String username);

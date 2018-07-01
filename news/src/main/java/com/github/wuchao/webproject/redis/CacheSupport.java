@@ -7,4 +7,6 @@ public interface CacheSupport {
 
     void refreshAllCaches();
 
+    void invokeAllMethods();
+
 }

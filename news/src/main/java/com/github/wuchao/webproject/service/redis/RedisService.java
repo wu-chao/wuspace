@@ -34,17 +34,16 @@ public class RedisService {
     private RedisUtil redisUtil;
 
     @PostConstruct
-
     public void init() {
-        try {
-            String key = redisUtil.keyGenerator(this.getClass().getName(),
-                    "getUser", null, 30);
-            CachedMethodInvocation cachedMethodInvocation = new CachedMethodInvocation(key, RedisService.class.getName(),
-                    RedisService.class.getMethod("refreshCache", String.class), new Class[]{String.class}, User.class);
-            Constants.REDIS_CACHE_METHOD_INVOCATION_MAP.put(key, cachedMethodInvocation);
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            String key = redisUtil.keyGenerator(this.getClass().getName(),
+//                    "getUser", null, 30);
+//            CachedMethodInvocation cachedMethodInvocation = new CachedMethodInvocation(key, RedisService.class.getName(),
+//                    RedisService.class.getMethod("refreshCache", String.class), new Class[]{String.class}, User.class);
+//            Constants.REDIS_CACHE_METHOD_INVOCATION_MAP.put(key, cachedMethodInvocation);
+//        } catch (NoSuchMethodException e) {
+//            e.printStackTrace();
+//        }
     }
 
     public void refreshCache(String username) {
@@ -63,20 +62,20 @@ public class RedisService {
         }
 
         String key = redisUtil.keyGenerator(this.getClass().getName(),
-                "getUser", new String[]{names[0]}, 30);
+                "getUser", new Class[]{names[0].getClass()}, 30);
         redisUtil.set(key, user[0]);
     }
 
     public User getUser(String username) {
         String key = redisUtil.keyGenerator(this.getClass().getName(),
-                "getUser", new String[]{username}, 30);
+                "getUser", new Class[]{username.getClass()}, 30);
         User user = redisUtil.get(key, User.class);
         return user;
     }
 
     public User getUser2(String username) {
         String key = redisUtil.keyGenerator(this.getClass().getName(),
-                "getUser2", new String[]{username}, 0);
+                "getUser2", new Class[]{username.getClass()}, 0);
         User user = redisUtil.get(key, User.class);
         if (user == null) {
             user = userRepository.findByUsername(username);
@@ -88,7 +87,7 @@ public class RedisService {
 
     public List<User> getUsers() {
         String key = redisUtil.keyGenerator(this.getClass().getName(),
-                "getUsers", new Object[]{}, 0);
+                "getUsers", new Class[]{}, 0);
         List<User> users = redisUtil.getList(key, User.class);
         if (users == null) {
             users = userRepository.findAll();

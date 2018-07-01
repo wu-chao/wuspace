@@ -10,7 +10,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 import redis.clients.jedis.JedisPool;
 
-import java.util.Arrays;
+import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Set;
 
@@ -99,16 +99,35 @@ public class RedisUtil {
      * @param params
      * @return
      */
-    public static String keyGenerator(String className, String methodName, Object[] params, long expiration) {
-        StringBuilder sb = new StringBuilder();
-        sb.append(className).append('.');
-        sb.append(methodName).append('.');
+    public static String keyGenerator(String className, String methodName, Class[] params, long expiration) {
+        StringBuilder sb = new StringBuilder()
+                .append(className).append('.')
+                .append(methodName).append('.')
+                .append('(');
         if (params != null && params.length > 0) {
-            Arrays.stream(params).forEach(param -> sb.append(param.toString()));
+            sb.append(StringUtils.join(params, ','));
         }
+        sb.append(')');
         if (expiration > 0) {
             sb.append("_").append(expiration);
         }
+        log.info("调用Redis缓存:Key= " + sb.toString());
+        return sb.toString();
+    }
+
+    public static String keyGenerator(String className, String methodName, Class[] params) {
+        return keyGenerator(className, methodName, params, 0);
+    }
+
+    public static String keyGenerator(Object target, Method method, Class[] params) {
+        StringBuilder sb = new StringBuilder()
+                .append(target.getClass().getName()).append('.')
+                .append(method.getName()).append('.')
+                .append('(');
+        if (params != null && params.length > 0) {
+            sb.append(StringUtils.join(params, ','));
+        }
+        sb.append(')');
         log.info("调用Redis缓存:Key= " + sb.toString());
         return sb.toString();
     }

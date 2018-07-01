@@ -1,6 +1,10 @@
 package com.github.wuchao.webproject.redis;
 
+import com.github.wuchao.webproject.util.ReflectionUtils;
+import com.github.wuchao.webproject.util.SpringContextUtil;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.stereotype.Component;
+import org.springframework.util.MethodInvoker;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -48,6 +52,24 @@ public final class CachedMethodInvocation {
 
     public CachedMethodInvocation(String key, String targetBean, Method targetMethod, Class[] parameterTypes, Class methodReturnClass) {
         this(key, targetBean, targetMethod, parameterTypes, null, methodReturnClass, null);
+    }
+
+    public Object invoke() throws Exception {
+        // 获取执行方法所需要的参数
+        Object[] args = null;
+        if (!CollectionUtils.isEmpty(this.getArguments())) {
+            args = this.getArguments().toArray();
+        }
+        // 通过先获取Spring的代理对象，在根据这个对象获取真实的实例对象
+        Object target = ReflectionUtils.getTarget(SpringContextUtil.getBean(Class.forName(this.getTargetBean())));
+
+        final MethodInvoker invoker = new MethodInvoker();
+        invoker.setTargetObject(target);
+        invoker.setArguments(args);
+        invoker.setTargetMethod(this.getTargetMethod());
+        invoker.prepare();
+
+        return invoker.invoke();
     }
 
     public String getKey() {

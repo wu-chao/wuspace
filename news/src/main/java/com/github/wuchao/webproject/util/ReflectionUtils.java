@@ -187,4 +187,57 @@ public class ReflectionUtils {
         return target;
     }
 
+
+    /**
+     * 从AOP代理对象中获得原对象的类型
+     *
+     * @param proxyObject
+     * @return
+     */
+    @SuppressWarnings("unchecked")
+    public static <T> T getBeanFromProxy(T proxyObject) {
+        Class<?> clazz = proxyObject.getClass();
+//        if (clazz.getName().startsWith("$Proxy")) {
+            try {
+                clazz = clazz.getSuperclass();
+                Field hField = clazz.getDeclaredField("h");
+                hField.setAccessible(true);
+                Object hObject = hField.get(proxyObject);
+
+                Class<?> dynamicProxyClass = hObject.getClass();
+                Field advisedField = dynamicProxyClass.getDeclaredField("advised");
+                advisedField.setAccessible(true);
+                Object advisedObject = advisedField.get(hObject);
+
+                Class<?> advisedSupportClass = advisedObject.getClass().getSuperclass().getSuperclass();
+                Field targetField = advisedSupportClass.getDeclaredField("targetSource");
+                targetField.setAccessible(true);
+                Object targetObject = targetField.get(advisedObject);
+
+                Class<?> targetSourceClass = targetObject.getClass();
+                Field targetClassField = targetSourceClass.getDeclaredField("target");
+                targetClassField.setAccessible(true);
+                return (T) targetClassField.get(targetObject);
+            } catch (SecurityException e) {
+                e.printStackTrace();
+            } catch (NoSuchFieldException e) {
+                e.printStackTrace();
+            } catch (IllegalArgumentException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+//        }
+        return null;
+    }
+
+    public static Object getSourceBeanFromProxy(Object proxy) throws Exception {
+        Field field = proxy.getClass().getSuperclass().getDeclaredField("h");
+        field.setAccessible(true);
+        Object personProxy = field.get(proxy);
+        Field person = personProxy.getClass().getDeclaredField("target");
+        person.setAccessible(true);
+        return person.get(personProxy);
+    }
+
 }  

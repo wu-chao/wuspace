@@ -19,7 +19,7 @@ public class TimingCacheSchedule implements CommandLineRunner {
     @Override
     public void run(String... args) {
         CacheSupport cacheSupport = beanFactory.getBean(CacheSupport.class);
-        cacheSupport.refreshAllCaches();
+        cacheSupport.invokeAllMethods();
     }
 
 }

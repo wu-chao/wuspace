@@ -1,4 +1,4 @@
-package com.github.wuchao.webproject.service.redis;
+package com.github.wuchao.webproject.redis;
 
 /**
  * <p>

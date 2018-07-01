@@ -3,6 +3,8 @@ package com.github.wuchao.webproject.config;
 import com.alicp.jetcache.anno.CacheConsts;
 import com.alicp.jetcache.anno.config.EnableCreateCacheAnnotation;
 import com.alicp.jetcache.anno.config.EnableMethodCache;
+import com.alicp.jetcache.anno.support.CacheNameGenerator;
+import com.alicp.jetcache.anno.support.DefaultCacheNameGenerator;
 import com.alicp.jetcache.anno.support.GlobalCacheConfig;
 import com.alicp.jetcache.anno.support.SpringConfigProvider;
 import com.alicp.jetcache.embedded.EmbeddedCacheBuilder;
@@ -11,6 +13,8 @@ import com.alicp.jetcache.redis.RedisCacheBuilder;
 import com.alicp.jetcache.support.FastjsonKeyConvertor;
 import com.alicp.jetcache.support.JavaValueDecoder;
 import com.alicp.jetcache.support.JavaValueEncoder;
+import com.github.wuchao.webproject.redis.RedisUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -19,9 +23,12 @@ import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.util.Pool;
 
+import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Function;
 
+@Slf4j
 @Configuration
 @EnableMethodCache(basePackages = "com.github.wuchao.webproject")
 @EnableCreateCacheAnnotation
@@ -50,11 +57,29 @@ public class JetCacheConfig {
 
     @Bean
     public SpringConfigProvider springConfigProvider() {
-        return new SpringConfigProvider();
+        return new SpringConfigProvider() {
+            @Override
+            public CacheNameGenerator createCacheNameGenerator(String[] hiddenPackages) {
+                return new CustomCacheNameGenerator(hiddenPackages);
+            }
+
+//            @Override
+//            public Function<Object, byte[]> parseValueEncoder(String valueEncoder) {
+//                if(valueEncoder.equals("xxx")){
+//                    return MyEncoder();
+//                }else{
+//                    return super.parseValueEncoder(valueEncoder);
+//                }
+//            };
+//            @Override
+//            public Function<byte[], Object> parseValueDecoder(String valueDecoder) {
+//                   .........
+//            }
+        };
     }
 
     @Bean
-    public GlobalCacheConfig config(SpringConfigProvider configProvider, Pool<Jedis> pool) {
+    public GlobalCacheConfig globalCacheConfig(SpringConfigProvider configProvider, Pool<Jedis> pool) {
         Map localBuilders = new HashMap();
         EmbeddedCacheBuilder localBuilder = LinkedHashMapCacheBuilder
                 .createLinkedHashMapCacheBuilder()
@@ -78,4 +103,34 @@ public class JetCacheConfig {
 
         return globalCacheConfig;
     }
+
+    public class CustomCacheNameGenerator extends DefaultCacheNameGenerator {
+
+        public CustomCacheNameGenerator(String[] hiddenPackages) {
+            super(hiddenPackages);
+        }
+
+        /**
+         * 最终的 key 是 cacheName + key，该方法是自定义 cacheName
+         *
+         * @param method
+         * @param targetObject
+         * @return
+         */
+        @Override
+        public String generateCacheName(Method method, Object targetObject) {
+            String cacheName = cacheNameMap.get(method);
+            if (cacheName == null) {
+                String className = method.getDeclaringClass().getName();
+                String methodName = method.getName();
+                Class[] params = method.getParameterTypes();
+                String str = RedisUtil.keyGenerator(className, methodName, params);
+                cacheNameMap.put(method, str);
+                return str;
+            }
+
+            return cacheName;
+        }
+    }
+
 }
