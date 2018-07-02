@@ -1,5 +1,6 @@
 package com.github.wuchao.webproject.repository;
 
+import com.alicp.jetcache.anno.Cached;
 import com.github.wuchao.webproject.domain.User;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -16,6 +17,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @EntityGraph(attributePaths = "authorities")
     Optional<User> findOneByUsername(String username);
 
+    @Cached(name = "UserReporitory.", expire = 60)
     @EntityGraph(attributePaths = "authorities")
     User findByUsername(String username);
 

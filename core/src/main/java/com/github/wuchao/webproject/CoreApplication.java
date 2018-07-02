@@ -12,7 +12,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableScheduling
 //@EnableDiscoveryClient
 @EnableCaching
-public class NewsApplication {
+public class CoreApplication {
 //    @Bean
 //    public OpenEntityManagerInViewFilter openEntityManagerInViewFilter() {
 //        return new OpenEntityManagerInViewFilter();

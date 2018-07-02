@@ -1,6 +1,6 @@
 package com.github.wuchao.webproject.redis;
 
-import com.github.wuchao.webproject.NewsApplication;
+import com.github.wuchao.webproject.CoreApplication;
 import com.github.wuchao.webproject.domain.User;
 import com.github.wuchao.webproject.service.redis.RedisService;
 import lombok.extern.slf4j.Slf4j;
@@ -12,7 +12,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = NewsApplication.class)
+@SpringBootTest(classes = CoreApplication.class)
 @WebAppConfiguration
 @Slf4j
 public class RedisTests {

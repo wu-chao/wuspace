@@ -1,5 +1,6 @@
 package com.github.wuchao.webproject.service.redis;
 
+import com.alicp.jetcache.anno.Cached;
 import com.github.wuchao.webproject.domain.User;
 import com.github.wuchao.webproject.redis.RedisUtil;
 import com.github.wuchao.webproject.repository.UserRepository;
@@ -19,9 +20,10 @@ public class JetCacheService {
     @Autowired
     private RedisUtil redisUtil;
 
-    public void invokeMethod(String username) {
+    @Cached(expire = 60)
+    public User invokeMethod(String username) {
         log.info("----------------------------- Caffeine 调用方法 -----------------------------");
-        userRepository.findByUsername(username);
+        return userRepository.findByUsername(username);
     }
 
     public List<User> getUsers() {

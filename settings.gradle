@@ -4,4 +4,5 @@ include 'admin'
 include 'news'
 include 'web-crawler'
 include 'autocache'
+include 'core'
 

@@ -1,6 +1,6 @@
 group = 'web-project'
 version = '1.0.0'
-description = 'news'
+description = 'core'
 
 buildscript {
     repositories {
@@ -52,7 +52,7 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 jar {
-    baseName = 'news'
+    baseName = 'core'
     version = '0.0.1-SNAPSHOT'
 }
 
@@ -103,7 +103,6 @@ ext {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile project(':core')
 
     // Spring
 //    compile "org.springframework:spring-context-support"
@@ -141,13 +140,13 @@ dependencies {
     // Spring Cloud
     //compile 'org.springframework.cloud:spring-cloud-starter-eureka'
 
-    // Thymeleaf 模板
-    compile "org.springframework.boot:spring-boot-starter-thymeleaf"
-    compile "nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect"
-    compile "org.thymeleaf.extras:thymeleaf-extras-springsecurity4"
-
-    // Liquibase
-    compile "org.liquibase:liquibase-core"
+    // 数据库持久化
+    compile "com.h2database:h2"
+    compile "mysql:mysql-connector-java"
+    // Caffeine
+//    compile "com.github.ben-manes.caffeine:caffeine"
+    // JetCache
+    compile "com.alicp.jetcache:jetcache-starter-redis:${jetcache_starter_redis_version}"
 
     // Mybatis
 //    compile "org.mybatis.generator:mybatis-generator-core:${mybatis_generator_version}"
@@ -227,8 +226,3 @@ dependencies {
 
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
-
-//tomcat {
-//    httpProtocol = 'org.apache.coyote.http11.Http11Nio2Protocol'
-//    ajpProtocol  = 'org.apache.coyote.ajp.AjpNio2Protocol'
-//}
