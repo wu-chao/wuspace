@@ -1,12 +1,12 @@
 package com.github.wuchao.webproject.runner;
 
+import com.alicp.jetcache.Cache;
 import com.alicp.jetcache.RefreshPolicy;
-import com.alicp.jetcache.redis.RedisCacheBuilder;
 import com.github.benmanes.caffeine.cache.AsyncLoadingCache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 import com.github.wuchao.webproject.common.CacheConstants;
 import com.github.wuchao.webproject.common.Constants;
-import com.github.wuchao.webproject.redis.RedisUtil;
+import com.github.wuchao.webproject.domain.User;
 import com.github.wuchao.webproject.repository.UserRepository;
 import com.github.wuchao.webproject.service.CacheService;
 import com.github.wuchao.webproject.service.redis.JetCacheService;
@@ -22,7 +22,6 @@ import org.springframework.stereotype.Component;
 import redis.clients.util.Pool;
 
 import javax.annotation.PostConstruct;
-import java.lang.reflect.Method;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
@@ -66,26 +65,29 @@ public class TimingCacheSchedule implements CommandLineRunner {
 //            e.printStackTrace();
 //        }
 
-        try {
-            Method method = JetCacheService.class.getMethod("invokeMethod", new Class[]{String.class});
-            String keyPrefix = RedisUtil.keyGenerator(JetCacheService.class.getName(), method.getName(), method.getParameterTypes());
-            JetCacheService.userCache = RedisCacheBuilder.createRedisCacheBuilder()
-                    .jedisPool(pool)
-                    .keyPrefix(keyPrefix)
-                    .loader(k -> jetCacheService.invokeMethod(String.valueOf(k)))
-                    .refreshPolicy(RefreshPolicy.newPolicy(50, TimeUnit.SECONDS))
-                    .expireAfterWrite(60, TimeUnit.SECONDS)
-                    .buildCache();
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        }
-        log.info("-------------- CacheBuilder 创建 Cache 完成 --------------");
+//        try {
+//            Method method = JetCacheService.class.getMethod("getCacheUser", new Class[]{String.class});
+//            String keyPrefix = RedisUtil.keyGenerator(JetCacheService.class.getName(), method.getName(), method.getParameterTypes());
+//            JetCacheService.userCache = RedisCacheBuilder.createRedisCacheBuilder()
+//                    .jedisPool(pool)
+//                    .keyPrefix(keyPrefix)
+//                    .loader(k -> jetCacheService.getCacheUser(String.valueOf(k)))
+//                    .refreshPolicy(RefreshPolicy.newPolicy(50, TimeUnit.SECONDS))
+//                    .expireAfterWrite(60, TimeUnit.SECONDS)
+//                    .buildCache();
+//        } catch (NoSuchMethodException e) {
+//            e.printStackTrace();
+//        }
+//        log.info("-------------- CacheBuilder 创建 Cache 完成 --------------");
 
+        Cache<String, User> userCache = jetCacheService.getUserCache();
+        userCache.config().setLoader(username -> jetCacheService.getCacheUser(username));
+        userCache.config().setRefreshPolicy(RefreshPolicy.newPolicy(500, TimeUnit.SECONDS));
         AsyncLoadingCache<Object, Object> cache = Caffeine.newBuilder().
                 executor(Constants.CACHE_THREAD_POOL)
                 .buildAsync(key -> {
-                    // 用get方法取缓存，没有命中的话自己去数据库load
-                    return JetCacheService.userCache.get(String.valueOf(key));
+                    // 用 get 方法取缓存，没有命中的话自己去数据库 load
+                    return userCache.get(String.valueOf(key));
                 });
         if (cache != null) {
             CacheConstants.CAFFEINE_CACHE_MAP.put("JetCacheService.userCache", cache);
