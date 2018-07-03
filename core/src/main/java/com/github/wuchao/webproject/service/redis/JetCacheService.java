@@ -52,7 +52,7 @@ public class JetCacheService {
 //        log.info("-------------- CacheBuilder 创建 Cache 完成 --------------");
 //    }
 
-    public User getCacheUser(String username) {
+    public User getCachedUser(String username) {
         log.info("----------------------------- Caffeine 调用方法 -----------------------------");
         return userRepository.findByUsername(username);
     }

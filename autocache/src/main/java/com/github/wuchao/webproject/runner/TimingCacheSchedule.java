@@ -5,21 +5,17 @@ import com.alicp.jetcache.RefreshPolicy;
 import com.github.benmanes.caffeine.cache.AsyncLoadingCache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 import com.github.wuchao.webproject.common.CacheConstants;
-import com.github.wuchao.webproject.common.Constants;
 import com.github.wuchao.webproject.domain.User;
 import com.github.wuchao.webproject.repository.UserRepository;
-import com.github.wuchao.webproject.service.CacheService;
 import com.github.wuchao.webproject.service.redis.JetCacheService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
-import redis.clients.util.Pool;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
@@ -36,19 +32,7 @@ import java.util.stream.Collectors;
 public class TimingCacheSchedule implements CommandLineRunner {
 
     @Autowired
-    private BeanFactory beanFactory;
-
-    @Autowired
-    private Pool pool;
-
-    //    @CreateCache
-
-
-    @Autowired
     private JetCacheService jetCacheService;
-
-    @Autowired
-    private CacheService cacheService;
 
     @Autowired
     private UserRepository userRepository;
@@ -79,12 +63,13 @@ public class TimingCacheSchedule implements CommandLineRunner {
 //            e.printStackTrace();
 //        }
 //        log.info("-------------- CacheBuilder 创建 Cache 完成 --------------");
+//
 
         Cache<String, User> userCache = jetCacheService.getUserCache();
-        userCache.config().setLoader(username -> jetCacheService.getCacheUser(username));
+        userCache.config().setLoader(username -> jetCacheService.getCachedUser(username));
         userCache.config().setRefreshPolicy(RefreshPolicy.newPolicy(500, TimeUnit.SECONDS));
         AsyncLoadingCache<Object, Object> cache = Caffeine.newBuilder().
-                executor(Constants.CACHE_THREAD_POOL)
+                executor(CacheConstants.CACHE_THREAD_POOL)
                 .buildAsync(key -> {
                     // 用 get 方法取缓存，没有命中的话自己去数据库 load
                     return userCache.get(String.valueOf(key));

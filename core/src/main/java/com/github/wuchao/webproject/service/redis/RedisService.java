@@ -1,8 +1,7 @@
 package com.github.wuchao.webproject.service.redis;
 
-import com.github.wuchao.webproject.common.Constants;
+import com.alicp.jetcache.anno.CacheConsts;
 import com.github.wuchao.webproject.domain.User;
-import com.github.wuchao.webproject.redis.CachedMethodInvocation;
 import com.github.wuchao.webproject.redis.RedisUtil;
 import com.github.wuchao.webproject.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -48,22 +47,22 @@ public class RedisService {
 
     public void refreshCache(String username) {
         log.info("----------------------------- 刷新缓存 -----------------------------");
-        User[] user = new User[1];
-        String[] names = new String[1];
-        names[0] = username;
-        List<CompletableFuture<User>> futures = new ArrayList<>();
-        futures.add(CompletableFuture.supplyAsync(() -> {
-            user[0] = userRepository.findByUsername(names[0]);
-            return user[0];
-        }, Constants.GLOBAL_THREAD_POOL));
-
-        if (futures.size() > 0) {
-            CompletableFuture.allOf(futures.toArray(new CompletableFuture[futures.size()])).join();
-        }
-
-        String key = redisUtil.keyGenerator(this.getClass().getName(),
-                "getUser", new Class[]{names[0].getClass()}, 30);
-        redisUtil.set(key, user[0]);
+//        User[] user = new User[1];
+//        String[] names = new String[1];
+//        names[0] = username;
+//        List<CompletableFuture<User>> futures = new ArrayList<>();
+//        futures.add(CompletableFuture.supplyAsync(() -> {
+//            user[0] = userRepository.findByUsername(names[0]);
+//            return user[0];
+//        }, Constants.GLOBAL_THREAD_POOL));
+//
+//        if (futures.size() > 0) {
+//            CompletableFuture.allOf(futures.toArray(new CompletableFuture[futures.size()])).join();
+//        }
+//
+//        String key = redisUtil.keyGenerator(this.getClass().getName(),
+//                "getUser", new Class[]{names[0].getClass()}, 30);
+//        redisUtil.set(key, user[0]);
     }
 
     public User getUser(String username) {
