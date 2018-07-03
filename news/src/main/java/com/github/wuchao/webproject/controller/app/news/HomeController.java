@@ -4,6 +4,7 @@ import com.github.wuchao.webproject.domain.User;
 import com.github.wuchao.webproject.repository.UserRepository;
 import com.github.wuchao.webproject.service.news.HomeService;
 import com.github.wuchao.webproject.service.news.dto.HomeDTO;
+import com.github.wuchao.webproject.service.redis.JetCacheService;
 import com.github.wuchao.webproject.service.redis.RedisService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,9 @@ public class HomeController {
     @Autowired
     private RedisTemplate redisTemplate;
 
+    @Autowired
+    private JetCacheService jetCacheService;
+
     @GetMapping(value = {"", "/", "/index", "/home"})
     public String index(@RequestParam(defaultValue = "1") Long categoryId,
                         @RequestParam(required = false) Long subCategoryId,
@@ -45,9 +49,9 @@ public class HomeController {
         int[] index = {0};
         for (int i = 0; i < 10; i++) {
             index[0] = i + 1;
-            User user = userRepository.findByUsername("admin");
+            User user = jetCacheService.getUser("admin");
             log.info(user != null ? user.toString() : "");
-            User user1 = userRepository.findByUsername("user2");
+            User user1 = jetCacheService.getUser("user2");
             log.info(user1 != null ? user1.toString() : "");
             log.info("第{}次执行查询结果：" + user.equals(user1), index[0]);
         }

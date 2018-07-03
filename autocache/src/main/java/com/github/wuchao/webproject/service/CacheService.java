@@ -37,10 +37,11 @@ public class CacheService {
     @Autowired
     private JetCacheService jetCacheService;
 
-    @Cached(name = "UserReporitory.", expire = 60)
-    @CacheRefresh(refresh = 50)
-    public void findByUsername(String username) {
-        userRepository.findByUsername(username);
+    // 加个 name 属性，userRepository.findByUsername 中的可以覆盖此缓存？不能
+//    @Cached(expire = 60)
+//    @CacheRefresh(refresh = 50)
+    public User findByUsername(String username) {
+        return userRepository.findByUsername(username);
     }
 
 }

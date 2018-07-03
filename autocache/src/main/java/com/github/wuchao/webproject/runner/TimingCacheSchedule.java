@@ -1,13 +1,11 @@
 package com.github.wuchao.webproject.runner;
 
-import com.alicp.jetcache.Cache;
 import com.alicp.jetcache.RefreshPolicy;
 import com.alicp.jetcache.redis.RedisCacheBuilder;
 import com.github.benmanes.caffeine.cache.AsyncLoadingCache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 import com.github.wuchao.webproject.common.CacheConstants;
 import com.github.wuchao.webproject.common.Constants;
-import com.github.wuchao.webproject.domain.User;
 import com.github.wuchao.webproject.redis.RedisUtil;
 import com.github.wuchao.webproject.repository.UserRepository;
 import com.github.wuchao.webproject.service.CacheService;
@@ -45,7 +43,7 @@ public class TimingCacheSchedule implements CommandLineRunner {
     private Pool pool;
 
     //    @CreateCache
-    private Cache<String, User> userCache;
+
 
     @Autowired
     private JetCacheService jetCacheService;
@@ -68,31 +66,29 @@ public class TimingCacheSchedule implements CommandLineRunner {
 //            e.printStackTrace();
 //        }
 
+        try {
+            Method method = JetCacheService.class.getMethod("invokeMethod", new Class[]{String.class});
+            String keyPrefix = RedisUtil.keyGenerator(JetCacheService.class.getName(), method.getName(), method.getParameterTypes());
+            JetCacheService.userCache = RedisCacheBuilder.createRedisCacheBuilder()
+                    .jedisPool(pool)
+                    .keyPrefix(keyPrefix)
+                    .loader(k -> jetCacheService.invokeMethod(String.valueOf(k)))
+                    .refreshPolicy(RefreshPolicy.newPolicy(50, TimeUnit.SECONDS))
+                    .expireAfterWrite(60, TimeUnit.SECONDS)
+                    .buildCache();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+        log.info("-------------- CacheBuilder 创建 Cache 完成 --------------");
+
         AsyncLoadingCache<Object, Object> cache = Caffeine.newBuilder().
                 executor(Constants.CACHE_THREAD_POOL)
                 .buildAsync(key -> {
-                    cacheService.findByUsername(String.valueOf(key));
-                    return jetCacheService.invokeMethod(String.valueOf(key));
-
+                    // 用get方法取缓存，没有命中的话自己去数据库load
+                    return JetCacheService.userCache.get(String.valueOf(key));
                 });
-
         if (cache != null) {
-            CacheConstants.CAFFEINE_CACHE_MAP.put("findDamSafetyCheckById_param_600", cache);
-
-            RefreshPolicy refreshPolicy = RefreshPolicy.newPolicy(50, TimeUnit.SECONDS);
-            try {
-                Method method = jetCacheService.getClass().getMethod("invokeMethod", new Class[]{String.class});
-                String keyPrefix = RedisUtil.keyGenerator(method.getClass().getName(), method.getName(), method.getParameterTypes());
-                userCache = RedisCacheBuilder.createRedisCacheBuilder()
-                        .jedisPool(pool)
-                        .keyPrefix(keyPrefix)
-                        .loader(key -> jetCacheService.invokeMethod(String.valueOf(key)))
-                        .refreshPolicy(refreshPolicy)
-                        .expireAfterWrite(60, TimeUnit.SECONDS)
-                        .buildCache();
-            } catch (NoSuchMethodException e) {
-                e.printStackTrace();
-            }
+            CacheConstants.CAFFEINE_CACHE_MAP.put("JetCacheService.userCache", cache);
         }
     }
 
@@ -103,7 +99,7 @@ public class TimingCacheSchedule implements CommandLineRunner {
                 String key = stringAsyncLoadingCacheEntry.getKey();
                 AsyncLoadingCache cache = stringAsyncLoadingCacheEntry.getValue();
                 if (StringUtils.isNotBlank(key)) {
-                    if (key.indexOf("findDamSafetyCheckById") > -1) {
+                    if (key.indexOf("JetCacheService.userCache") > -1) {
                         List<String> names = userRepository.findAll().stream().map(user -> user.getUsername()).collect(Collectors.toList());
                         if (CollectionUtils.isNotEmpty(names)) {
                             names.stream().forEach(name -> cache.synchronous().refresh(name));
