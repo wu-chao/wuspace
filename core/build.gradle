@@ -140,6 +140,9 @@ dependencies {
     // Spring Cloud
     //compile 'org.springframework.cloud:spring-cloud-starter-eureka'
 
+    // Liquibase
+    compile "org.liquibase:liquibase-core"
+
     // 数据库持久化
     compile "com.h2database:h2"
     compile "mysql:mysql-connector-java"

@@ -1,6 +1,7 @@
 package com.github.wuchao.webproject.service.redis;
 
 import com.alicp.jetcache.Cache;
+import com.alicp.jetcache.CacheGetResult;
 import com.alicp.jetcache.anno.CreateCache;
 import com.github.wuchao.webproject.domain.User;
 import com.github.wuchao.webproject.redis.RedisUtil;
@@ -33,7 +34,7 @@ public class JetCacheService {
      * String 表示 key 的类型
      * User 表示缓存数据类型
      */
-    @CreateCache
+    @CreateCache(expire = 600)
     public Cache<String, User> userCache;
 
 //    @PostConstruct
@@ -59,7 +60,12 @@ public class JetCacheService {
 
     public User getUser(String username) {
         // GET、GET_ALL 这类大写 API 只纯粹访问缓存，不会调用 loader
-        return userCache.GET(username).getValue();
+        CacheGetResult<User> r = userCache.GET(username);
+        if (r.isSuccess()) {
+            return r.getValue();
+        } else {
+            throw new RuntimeException("cache result status: " + r.getResultCode());
+        }
     }
 
     public List<User> getUsers() {

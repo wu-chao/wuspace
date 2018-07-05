@@ -146,9 +146,6 @@ dependencies {
     compile "nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect"
     compile "org.thymeleaf.extras:thymeleaf-extras-springsecurity4"
 
-    // Liquibase
-    compile "org.liquibase:liquibase-core"
-
     // Mybatis
 //    compile "org.mybatis.generator:mybatis-generator-core:${mybatis_generator_version}"
     compile "org.mybatis.spring.boot:mybatis-spring-boot-starter:${mybatis_spring_boot_starter_version}"

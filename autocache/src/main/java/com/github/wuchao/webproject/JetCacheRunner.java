@@ -1,20 +1,13 @@
-package com.github.wuchao.webproject.runner;
+package com.github.wuchao.webproject;
 
 import com.alicp.jetcache.Cache;
 import com.alicp.jetcache.RefreshPolicy;
-import com.github.benmanes.caffeine.cache.AsyncLoadingCache;
-import com.github.benmanes.caffeine.cache.Caffeine;
-import com.github.wuchao.webproject.common.CacheConstants;
 import com.github.wuchao.webproject.domain.User;
 import com.github.wuchao.webproject.repository.UserRepository;
 import com.github.wuchao.webproject.service.redis.JetCacheService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.MapUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -22,14 +15,9 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
-/**
- * 1. 使用 Caffeine 调用一次方法，再定时刷新
- * 2. 重写一个方法，加上 @CacheRefresh 注解
- */
 @Component
-@Order
 @Slf4j
-public class TimingCacheSchedule implements CommandLineRunner {
+public class JetCacheRunner {
 
     @Autowired
     private JetCacheService jetCacheService;
@@ -66,34 +54,15 @@ public class TimingCacheSchedule implements CommandLineRunner {
 //
 
         Cache<String, User> userCache = jetCacheService.getUserCache();
-        userCache.config().setLoader(username -> jetCacheService.getCachedUser(username));
-        userCache.config().setRefreshPolicy(RefreshPolicy.newPolicy(500, TimeUnit.SECONDS));
-        AsyncLoadingCache<Object, Object> cache = Caffeine.newBuilder().
-                executor(CacheConstants.CACHE_THREAD_POOL)
-                .buildAsync(key -> {
-                    // 用 get 方法取缓存，没有命中的话自己去数据库 load
-                    return userCache.get(String.valueOf(key));
-                });
-        if (cache != null) {
-            CacheConstants.CAFFEINE_CACHE_MAP.put("JetCacheService.userCache", cache);
-        }
-    }
-
-    @Override
-    public void run(String... args) {
-        if (MapUtils.isNotEmpty(CacheConstants.CAFFEINE_CACHE_MAP)) {
-            CacheConstants.CAFFEINE_CACHE_MAP.entrySet().forEach(stringAsyncLoadingCacheEntry -> {
-                String key = stringAsyncLoadingCacheEntry.getKey();
-                AsyncLoadingCache cache = stringAsyncLoadingCacheEntry.getValue();
-                if (StringUtils.isNotBlank(key)) {
-                    if (key.indexOf("JetCacheService.userCache") > -1) {
-                        List<String> names = userRepository.findAll().stream().map(user -> user.getUsername()).collect(Collectors.toList());
-                        if (CollectionUtils.isNotEmpty(names)) {
-                            names.stream().forEach(name -> cache.synchronous().refresh(name));
-                        }
-                    }
-                }
-            });
+        // 直接 jetCacheService.userCache 结果为 null ？？？
+        if (userCache != null) {
+            userCache.config().setLoader(username -> jetCacheService.getCachedUser(username));
+            userCache.config().setRefreshPolicy(RefreshPolicy.newPolicy(500, TimeUnit.SECONDS));
+            List<String> names = userRepository.findAll().stream().map(user -> user.getUsername()).collect(Collectors.toList());
+            if (CollectionUtils.isNotEmpty(names)) {
+                // 用 get 方法取缓存，没有命中的话会调用 loader 去查询数据库
+                names.forEach(userCache::get);
+            }
         }
     }
 
