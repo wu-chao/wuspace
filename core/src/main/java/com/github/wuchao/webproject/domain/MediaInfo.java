@@ -1,6 +1,7 @@
 package com.github.wuchao.webproject.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.github.wuchao.webproject.domain.enumeration.CheckStatus;
 import com.github.wuchao.webproject.domain.enumeration.MediaType;
 import lombok.Getter;
@@ -14,6 +15,7 @@ import java.util.Objects;
 @Getter
 @Setter
 @Entity
+@JsonIgnoreProperties(ignoreUnknown = true)
 @Table(name = "media_info")
 public class MediaInfo extends AbstractAuditingEntity {
 

@@ -57,7 +57,7 @@ public class JetCacheRunner {
         // 直接 jetCacheService.userCache 结果为 null ？？？
         if (userCache != null) {
             userCache.config().setLoader(username -> jetCacheService.getCachedUser(username));
-            userCache.config().setRefreshPolicy(RefreshPolicy.newPolicy(500, TimeUnit.SECONDS));
+            userCache.config().setRefreshPolicy(RefreshPolicy.newPolicy(600, TimeUnit.SECONDS));
             List<String> names = userRepository.findAll().stream().map(user -> user.getUsername()).collect(Collectors.toList());
             if (CollectionUtils.isNotEmpty(names)) {
                 // 用 get 方法取缓存，没有命中的话会调用 loader 去查询数据库

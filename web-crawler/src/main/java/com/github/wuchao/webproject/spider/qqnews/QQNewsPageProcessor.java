@@ -1,15 +1,15 @@
 package com.github.wuchao.webproject.spider.qqnews;
 
-import com.github.wuchao.webproject.util.SpringContextUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.log4j.PropertyConfigurator;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.jdbc.core.JdbcTemplate;
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Site;
-import us.codecraft.webmagic.Spider;
 import us.codecraft.webmagic.processor.PageProcessor;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Slf4j
@@ -47,18 +47,20 @@ public class QQNewsPageProcessor implements PageProcessor {
         } else {
             String title = page.getHtml().xpath("//div[@class='LEFT']/h1/text()").get();
             List<String> contents = page.getHtml().xpath("//div[@class='LEFT']/div[@class='content']/div[@class='content-article']/").all();
-            String year = page.getHtml().xpath("//div[@class='LeftTool']/div[@class='left-stick-wp']/div[@class='year']/span/text()").get();
-            String md = page.getHtml().xpath("//div[@class='LeftTool']/div[@class='left-stick-wp']/div[@class='md']/span/text()").get();
-            String time = page.getHtml().xpath("//div[@class='LeftTool']/div[@class='left-stick-wp']/div[@class='time']/span/text()").get();
-
             StringBuilder contentSb = new StringBuilder();
             if (CollectionUtils.isNotEmpty(contents)) {
                 contents.forEach(text -> {
                     contentSb.append(text);
                 });
             }
+            String publishedDateStr = page.getHtml().xpath("//div[@class='a_Info']/span[@class='a_time']/text()").get();
+            if (StringUtils.isNotBlank(publishedDateStr)) {
+                LocalDateTime publishedDate = LocalDateTime.parse(publishedDateStr, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+                page.putField("publishedDate", publishedDate);
+            }
 
-
+            page.putField("title", title);
+            page.putField("content", contentSb.toString());
 
         }
     }
@@ -70,18 +72,7 @@ public class QQNewsPageProcessor implements PageProcessor {
 
     public QQNewsPageProcessor() {
         super();
-        this.jdbcTemplate = (JdbcTemplate) SpringContextUtil.getBean("jdbcTemplate");
-    }
-
-    ///home/wu/IdeaProjects/web-project/web-crawler/src/log4j.properties
-    //log4j.properties
-    public static void main(String[] args) {
-        PropertyConfigurator.configure("log4j.properties");
-        Spider.create(new QQNewsPageProcessor())
-                // 从 ”http://news.qq.com/“ 页面开始爬取
-                .addUrl("http://news.qq.com/")
-                .thread(5)
-                .run();
+//        this.jdbcTemplate = (JdbcTemplate) SpringContextUtil.getBean("jdbcTemplate");
     }
 
 }

@@ -4,12 +4,10 @@ import com.github.wuchao.webproject.domain.MediaContent;
 import com.github.wuchao.webproject.domain.MediaInfo;
 import com.github.wuchao.webproject.domain.enumeration.MediaType;
 import com.github.wuchao.webproject.security.SecurityUtils;
-import com.github.wuchao.webproject.util.HtmlUtils;
+import com.github.wuchao.webproject.support.ArticleSupport;
 import lombok.*;
-import org.apache.commons.collections.CollectionUtils;
 
 import java.time.LocalDateTime;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -48,25 +46,13 @@ public class AdminArticleDTO {
 
         mediaInfo.setMediaContent(mediaContent);
         mediaInfo.setTitle(this.getTitle());
-        mediaInfo.setSummary(this.getContent().length() <= 60 ? HtmlUtils.html2text(this.getContent()) : HtmlUtils.html2text(this.getContent()).substring(0, 60));
         mediaInfo.setMediaType(MediaType.ARTICLE);
         mediaInfo.setPublishedDate(LocalDateTime.now());
         mediaInfo.setAuthorId(SecurityUtils.getCurrentUser().getUserId());
-
+        // 概要
+        ArticleSupport.buildSummary(mediaInfo, 60);
         // 缩略图
-        Set<String> thumbnailUrls = HtmlUtils.parseHtmlImgSrc(this.getContent());
-        if (CollectionUtils.isNotEmpty(thumbnailUrls)) {
-            int size = thumbnailUrls.size();
-            String thumbnailUrlStr = "";
-            mediaInfo.setThumbnailNum(size);
-            if (size > 0 && size < 4) {
-                thumbnailUrlStr = com.github.wuchao.webproject.util.StringUtils.convertArrayToString(thumbnailUrls.toArray(new String[0]), 1);
-            }
-            if (size >= 4) {
-                thumbnailUrlStr = com.github.wuchao.webproject.util.StringUtils.convertArrayToString(thumbnailUrls.toArray(new String[0]), 4);
-            }
-            mediaInfo.setThumbnailUrls(thumbnailUrlStr);
-        }
+        ArticleSupport.buildThumbnailUrl(mediaInfo, 4);
 
         return mediaInfo;
     }

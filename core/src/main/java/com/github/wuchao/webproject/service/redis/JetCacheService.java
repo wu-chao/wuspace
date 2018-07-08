@@ -34,7 +34,7 @@ public class JetCacheService {
      * String 表示 key 的类型
      * User 表示缓存数据类型
      */
-    @CreateCache(expire = 600)
+    @CreateCache
     public Cache<String, User> userCache;
 
 //    @PostConstruct
@@ -54,7 +54,6 @@ public class JetCacheService {
 //    }
 
     public User getCachedUser(String username) {
-        log.info("----------------------------- Caffeine 调用方法 -----------------------------");
         return userRepository.findByUsername(username);
     }
 
