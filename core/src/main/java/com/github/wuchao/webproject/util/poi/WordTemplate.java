@@ -359,7 +359,7 @@ public class WordTemplate {
 
                 if (beginIndex == 0 && endIndex == length - 1) {
                     // 该run标签只有{**}
-                    XWPFRun insertNewRun = xWPFParagraph.insertNewRun(beginRunIndex);
+                    XWPFRun insertNewRun = xWPFParagraph.insertNewRun(beginRunIndex++);
                     insertNewRun.getCTR().setRPr(beginRun.getCTR().getRPr());
                     key.append(beginRunText, 1, endIndex);
                     Object paramValue = getValueByKey(key.toString(), parametersMap);
@@ -371,7 +371,7 @@ public class WordTemplate {
                         // 替换为图片
                         replacePicture(xWPFParagraph, insertNewRun, String.valueOf(((Map) paramValue).get("pictureLocation")));
                     }
-                    xWPFParagraph.removeRun(beginRunIndex + 1);
+                    xWPFParagraph.removeRun(beginRunIndex);
 
                 } else {
                     // 该run标签为**{**}** 或者 **{**} 或者{**}**，替换key后，还需要加上原始key前后的文本
@@ -431,7 +431,7 @@ public class WordTemplate {
                     xWPFParagraph.removeRun(beginRunIndex + 1);
                 } else {
                     // 该run标签为**{**或者 {** ，替换key后，还需要加上原始key前的文本
-                    XWPFRun insertNewRun = xWPFParagraph.insertNewRun(beginRunIndex);
+                    XWPFRun insertNewRun = xWPFParagraph.insertNewRun(beginRunIndex++);
                     insertNewRun.getCTR().setRPr(beginRun.getCTR().getRPr());
                     key.append(beginRunText, beginRunText.indexOf("{") + 1, beginRunText.indexOf("}"));
                     Object paramValue = getValueByKey(key.toString(), parametersMap);
@@ -446,7 +446,7 @@ public class WordTemplate {
                         replacePicture(xWPFParagraph, insertNewRun, String.valueOf(((Map) paramValue).get("pictureLocation")));
                     }
                     // 移除原始的run
-                    xWPFParagraph.removeRun(beginRunIndex + 1);
+                    xWPFParagraph.removeRun(beginRunIndex);
                 }
 
                 // 处理结束标签
@@ -461,7 +461,7 @@ public class WordTemplate {
 
                 } else {
                     // 该run标签为**}**或者 }** 或者**}，替换key后，还需要加上原始key后的文本
-                    XWPFRun insertNewRun = xWPFParagraph.insertNewRun(endRunIndex);
+                    XWPFRun insertNewRun = xWPFParagraph.insertNewRun(endRunIndex++);
                     insertNewRun.getCTR().setRPr(endRun.getCTR().getRPr());
                     Object paramValue = getValueByKey(key.toString(), parametersMap);
                     if (paramValue instanceof String) {
@@ -473,7 +473,7 @@ public class WordTemplate {
                         replacePicture(xWPFParagraph, insertNewRun, String.valueOf(((Map) paramValue).get("pictureLocation")));
                     }
                     // 移除原始的run
-                    xWPFParagraph.removeRun(endRunIndex + 1);
+                    xWPFParagraph.removeRun(endRunIndex);
                 }
 
                 // 处理中间的run标签
@@ -718,12 +718,21 @@ public class WordTemplate {
                     is = new BufferedInputStream(httpUrl.getInputStream());
                 }
 
+                int width = bufferedImage.getWidth();
+                int height = bufferedImage.getHeight();
+                if (width > 552) {
+                    width = 552;
+                }
+                if (height >= 1056 && width >= 552) {
+                    height = 1056;
+                }
+
                 // 图片替换
                 paragraph.setSpacingLineRule(LineSpacingRule.AUTO);
                 String blipId = document.addPictureData(is, Document.PICTURE_TYPE_GIF);
                 int id = document.getAllPackagePictures().size() + 1;
                 CTInline ctinline = run.getCTR().addNewDrawing().addNewInline();
-                document.createPicture(blipId, id, bufferedImage.getWidth(), bufferedImage.getHeight(), ctinline);
+                document.createPicture(blipId, id, width, height, ctinline);
 
             } catch (IOException | InvalidFormatException e) {
                 e.printStackTrace();
@@ -965,6 +974,7 @@ public class WordTemplate {
 //                                    } catch (Exception e) {
 //                                        e.printStackTrace();
 //                                    }
+
                                     // 图片链接
                                     if (content instanceof String) {
                                         replacePicture(paragraph, run, String.valueOf(content));
