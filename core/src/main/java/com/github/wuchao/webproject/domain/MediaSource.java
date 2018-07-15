@@ -27,10 +27,22 @@ public class MediaSource extends AbstractAuditingEntity {
 
 
     /**
-     * logo URL
+     * logo base64
      */
-    @Column(name = "logo_url")
-    private String logoUrl;
+    @Column(name = "logo")
+    private String logo;
+
+    /**
+     * 官网
+     */
+    @Column(name = "website")
+    private String website;
+
+    /**
+     * 域名简称
+     */
+    @Column(name = "short_website")
+    private String shortWebsite;
 
 
     @Column(name = "description")

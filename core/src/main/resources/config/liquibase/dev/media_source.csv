@@ -1,0 +1,15 @@
+id;name;logo;website;short_website;description;created_by;created_date;last_modified_by;last_modified_date;deleted
+1;新华网;NULL;http://www.xinhuanet.com;xinhuanet;新华网;admin;2018-06-02 13:10:44;admin;2018-06-02 13:10:44;false
+2;中国新闻网;NULL;http://www.chinanews.com/;chinanews;中国新闻网;admin;2018-06-02 13:10:44;admin;2018-06-02 13:10:44;false
+3;环球网;NULL;http://www.huanqiu.com/;huanqiu;环球网;admin;2018-06-02 13:10:44;admin;2018-06-02 13:10:44;false
+4;央视网;NULL;http://www.cctv.com/;cctv;央视网;admin;2018-06-02 13:10:44;admin;2018-06-02 13:10:44;false
+5;凤凰网;NULL;http://www.ifeng.com/;ifeng;凤凰网;admin;2018-06-02 13:10:44;admin;2018-06-02 13:10:44;false
+6;光明网;NULL;http://www.gmw.cn/;gmw;光明网;admin;2018-06-02 13:10:44;admin;2018-06-02 13:10:44;false
+7;搜狐新闻;NULL;http://www.sohu.com/;sohu;搜狐新闻;admin;2018-06-02 13:10:44;admin;2018-06-02 13:10:44;false
+8;网易新闻;NULL;https://news.163.com/;163.com;网易新闻;admin;2018-06-02 13:10:44;admin;2018-06-02 13:10:44;false
+9;新浪新闻;NULL;http://news.sina.com.cn/;sina;新浪新闻;admin;2018-06-02 13:10:44;admin;2018-06-02 13:10:44;false
+10;人民网;NULL;http://www.people.com.cn/;people.com.cn;人民网;admin;2018-06-02 13:10:44;admin;2018-06-02 13:10:44;false
+11;电脑报;NULL;http://www.icpcw.com/;icpcw.com;电脑报;admin;2018-06-02 13:10:44;admin;2018-06-02 13:10:44;false
+12;太平洋电脑网;NULL;https://www.pconline.com.cn/;pconline.com.cn;太平洋电脑网;admin;2018-06-02 13:10:44;admin;2018-06-02 13:10:44;false
+13;参考消息;NULL;http://www.cankaoxiaoxi.com/;cankaoxiaoxi.com;参考消息;admin;2018-06-02 13:10:44;admin;2018-06-02 13:10:44;false
+

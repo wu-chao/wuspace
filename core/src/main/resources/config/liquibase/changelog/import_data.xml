@@ -18,6 +18,11 @@
             <column header="activated" name="activated" type="boolean"/>
             <column header="deleted" name="deleted" type="boolean"/>
         </loadData>
+        <loadData file="config/liquibase/dev/media_source.csv"
+                  separator=";"
+                  tableName="media_source">
+            <column header="deleted" name="deleted" type="boolean"/>
+        </loadData>
     </changeSet>
 
 </databaseChangeLog>
