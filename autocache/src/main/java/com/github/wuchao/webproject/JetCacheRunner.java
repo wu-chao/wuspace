@@ -27,32 +27,6 @@ public class JetCacheRunner {
 
     @PostConstruct
     public void init() {
-//        try {
-//            String key = RedisUtil.keyGenerator(this.getClass().getName(),
-//                    "getUser", null, 30);
-//            CachedMethodInvocation cachedMethodInvocation = new CachedMethodInvocation(key, JetCacheService.class.getName(),
-//                    JetCacheService.class.getMethod("invokeMethod", String.class), new Class[]{String.class}, Void.class);
-//            Constants.REDIS_CACHE_METHOD_INVOCATION_MAP.put(key, cachedMethodInvocation);
-//        } catch (NoSuchMethodException e) {
-//            e.printStackTrace();
-//        }
-
-//        try {
-//            Method method = JetCacheService.class.getMethod("getCacheUser", new Class[]{String.class});
-//            String keyPrefix = RedisUtil.keyGenerator(JetCacheService.class.getName(), method.getName(), method.getParameterTypes());
-//            JetCacheService.userCache = RedisCacheBuilder.createRedisCacheBuilder()
-//                    .jedisPool(pool)
-//                    .keyPrefix(keyPrefix)
-//                    .loader(k -> jetCacheService.getCacheUser(String.valueOf(k)))
-//                    .refreshPolicy(RefreshPolicy.newPolicy(50, TimeUnit.SECONDS))
-//                    .expireAfterWrite(60, TimeUnit.SECONDS)
-//                    .buildCache();
-//        } catch (NoSuchMethodException e) {
-//            e.printStackTrace();
-//        }
-//        log.info("-------------- CacheBuilder 创建 Cache 完成 --------------");
-//
-
         Cache<String, User> userCache = jetCacheService.getUserCache();
         // 直接 jetCacheService.userCache 结果为 null ？？？
         if (userCache != null) {
