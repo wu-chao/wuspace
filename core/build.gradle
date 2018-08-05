@@ -13,6 +13,7 @@ buildscript {
         maven { url 'https://oss.sonatype.org/content/repositories/releases' }
         maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
         maven { url 'http://repo.maven.apache.org/maven2' }
+        maven { url 'http://repo.spring.io/plugins-release' }
     }
     ext {
         spring_boot_version = '1.5.9.RELEASE'
@@ -25,8 +26,11 @@ buildscript {
          * 简化依赖：一个典型的Spring应用还是需要很多依赖类库的，想要配置正确这些依赖挺麻烦的，所以这个插件提供了内建的依赖解析器会自动匹配和当前Spring Boot版本匹配的依赖库版本。
          */
         classpath "org.springframework.boot:spring-boot-gradle-plugin:$spring_boot_version"
-//        classpath "io.spring.gradle:dependency-management-plugin:0.5.6.RELEASE"
-//        classpath 'com.bmuschko:gradle-tomcat-plugin:2.5'
+        /**
+         * Provides additional optional and provided dependency configurations for Gradle along with Maven POM generation support.
+         * https://github.com/spring-gradle-plugins/propdeps-plugin
+         */
+        classpath 'io.spring.gradle:propdeps-plugin:0.0.9.RELEASE'
     }
 }
 
@@ -39,6 +43,14 @@ apply plugin: 'checkstyle'
 apply plugin: 'org.springframework.boot'
 //apply plugin: "io.spring.dependency-management"
 //apply plugin: 'jetty'    // 使用 providedCompile
+
+configure(allprojects) {
+    apply plugin: 'propdeps'
+    apply plugin: 'propdeps-maven'
+    apply plugin: 'propdeps-idea'
+    apply plugin: 'propdeps-eclipse'
+}
+
 
 idea {
     module {
@@ -69,6 +81,7 @@ repositories {
     maven { url 'https://oss.sonatype.org/content/repositories/releases' }
     maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
     maven { url 'http://repo.maven.apache.org/maven2' }
+    maven { url 'http://repo.spring.io/plugins-release' }
 }
 
 // 解决 Spring Cloud 冲突
@@ -122,14 +135,11 @@ dependencies {
         exclude module: "spring-boot-starter-tomcat"
     }
     compile "org.springframework.boot:spring-boot-starter-tomcat"
-
-//    tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcat_version}",
-//            "org.apache.tomcat.embed:tomcat-embed-logging-juli:9.0.0.M6",
-//            "org.apache.tomcat.embed:tomcat-embed-jasper:${tomcat_version}"
-
-    compile "org.springframework.boot:spring-boot-starter-jetty"
     compile "org.springframework.boot:spring-boot-starter-websocket"
 //    compile "org.springframework.boot:spring-boot-starter-amqp"
+
+    optional "org.springframework.boot:spring-boot-configuration-processor"
+
 
     // Swagger
 //    compile("io.springfox:springfox-swagger2:${springfox_version}") {
@@ -229,3 +239,5 @@ dependencies {
 
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
+
+compileJava.dependsOn(processResources)
