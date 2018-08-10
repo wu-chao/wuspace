@@ -2,43 +2,12 @@ group = 'web-project'
 version = '1.0.0'
 description = 'news'
 
-buildscript {
-    repositories {
-        mavenLocal()
-        maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
-        jcenter()
-        maven { url 'http://repo.spring.io/milestone' }
-        maven { url 'http://repo.spring.io/snapshot' }
-        maven { url 'https://repository.jboss.org/nexus/content/repositories/releases' }
-        maven { url 'https://oss.sonatype.org/content/repositories/releases' }
-        maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
-        maven { url 'http://repo.maven.apache.org/maven2' }
-    }
-    ext {
-        spring_boot_version = '1.5.9.RELEASE'
-    }
-    dependencies {
-        /**spring-boot-gradle-plugin 的作用：
-         *
-         * 简化执行和发布：它可以把所有classpath的类库构建成一个单独的可执行jar文件，这样可以简化你的执行和发布等操作。
-         * 自动搜索入口文件：它会扫描 public static void main() 函数并且标记这个函数的宿主类为可执行入口。
-         * 简化依赖：一个典型的Spring应用还是需要很多依赖类库的，想要配置正确这些依赖挺麻烦的，所以这个插件提供了内建的依赖解析器会自动匹配和当前Spring Boot版本匹配的依赖库版本。
-         */
-        classpath "org.springframework.boot:spring-boot-gradle-plugin:$spring_boot_version"
-//        classpath "io.spring.gradle:dependency-management-plugin:0.5.6.RELEASE"
-//        classpath 'com.bmuschko:gradle-tomcat-plugin:2.5'
-    }
-}
-
 apply plugin: 'java'
 apply plugin: 'idea'
 apply plugin: 'eclipse'
 apply plugin: 'checkstyle'
-//apply plugin: 'com.bmuschko.tomcat'
-// http://docs.spring.io/spring-boot/docs/current/reference/html/build-tool-plugins-gradle-plugin.html
-apply plugin: 'org.springframework.boot'
-//apply plugin: "io.spring.dependency-management"
-//apply plugin: 'jetty'    // 使用 providedCompile
+apply plugin: 'spring-boot'
+apply plugin: 'war'
 
 idea {
     module {
@@ -51,7 +20,7 @@ idea {
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
-jar {
+war {
     baseName = 'news'
     version = '0.0.1-SNAPSHOT'
 }

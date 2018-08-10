@@ -1,0 +1,13 @@
+
+spring:
+    application:
+        name: news
+    profiles:
+        active: dev
+    jackson:
+        serialization.write_dates_as_timestamps: false
+        time-zone: GMT+8
+        date-format: yyyy-MM-dd HH:mm:ss
+
+server:
+    port: 8081
