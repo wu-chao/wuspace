@@ -23,10 +23,10 @@ buildscript {
     }
 }
 
-apply plugin: 'java'
-apply plugin: 'checkstyle'
-apply plugin: 'eclipse'
 apply plugin: 'idea'
+apply plugin: 'eclipse'
+apply plugin: 'checkstyle'
+apply plugin: 'java'
 apply plugin: 'com.bmuschko.tomcat'
 apply plugin: 'org.springframework.boot' //http://docs.spring.io/spring-boot/docs/current/reference/html/build-tool-plugins-gradle-plugin.html
 
@@ -34,6 +34,7 @@ jar {
     baseName = 'blog'
     version = '0.0.1-SNAPSHOT'
 }
+
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 

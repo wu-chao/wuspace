@@ -4,10 +4,7 @@ import com.github.wuchao.webproject.common.Constants;
 import com.github.wuchao.webproject.config.DefaultProfileUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.SpringBootConfiguration;
-import org.springframework.boot.context.embedded.EmbeddedServletContainerFactory;
-import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory;
-import org.springframework.context.annotation.Bean;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.core.env.Environment;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
@@ -18,10 +15,9 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.TimeZone;
 
-@SpringBootConfiguration
-@EnableScheduling
 @Slf4j
-//@EnableDiscoveryClient
+@EnableScheduling
+@SpringBootApplication
 public class NewsApplication {
 
     private final Environment env;
@@ -99,11 +95,10 @@ public class NewsApplication {
     /**
      * Unable to start EmbeddedWebApplicationContext due to missing EmbeddedServletContainerFactory bean.
      */
-    @Bean
-    public EmbeddedServletContainerFactory servletContainer() {
-        TomcatEmbeddedServletContainerFactory factory = new TomcatEmbeddedServletContainerFactory();
-        return factory;
-    }
-
+//    @Bean
+//    public EmbeddedServletContainerFactory servletContainer() {
+//        TomcatEmbeddedServletContainerFactory factory = new TomcatEmbeddedServletContainerFactory();
+//        return factory;
+//    }
 
 }
