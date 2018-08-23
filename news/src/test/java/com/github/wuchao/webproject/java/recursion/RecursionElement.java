@@ -15,10 +15,24 @@ import lombok.Setter;
 @AllArgsConstructor
 public class RecursionElement {
 
+    /**
+     * 节点 id
+     */
     private String id;
 
+    /**
+     * 节点名称
+     */
     private String name;
 
+    /**
+     * 父节点 id
+     */
     private String parentId;
+
+    /**
+     * 是否是加星标记节点
+     */
+    private Integer hasStar;
 
 }

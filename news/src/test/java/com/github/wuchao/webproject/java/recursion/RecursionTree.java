@@ -1,6 +1,8 @@
 package com.github.wuchao.webproject.java.recursion;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
@@ -13,10 +15,10 @@ import java.util.List;
 @AllArgsConstructor
 public class RecursionTree extends RecursionElement {
 
-    private List<RecursionElement> children;
+    private List<RecursionTree> children;
 
-   public RecursionTree(String id, String name, String parentId) {
-       super(id, name, parentId);
-   }
+    public RecursionTree(String id, String name, String parentId, Integer hasStar) {
+        super(id, name, parentId, hasStar);
+    }
 
 }

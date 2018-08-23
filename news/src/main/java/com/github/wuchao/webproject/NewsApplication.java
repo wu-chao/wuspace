@@ -91,14 +91,4 @@ public class NewsApplication {
 
     }
 
-
-    /**
-     * Unable to start EmbeddedWebApplicationContext due to missing EmbeddedServletContainerFactory bean.
-     */
-//    @Bean
-//    public EmbeddedServletContainerFactory servletContainer() {
-//        TomcatEmbeddedServletContainerFactory factory = new TomcatEmbeddedServletContainerFactory();
-//        return factory;
-//    }
-
 }
