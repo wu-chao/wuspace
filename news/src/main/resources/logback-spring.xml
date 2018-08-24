@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <configuration scan="true">
+<!--<configuration scan="true" scanPeriod="10 seconds">-->
+
     <include resource="org/springframework/boot/logging/logback/base.xml"/>
+    <timestamp key="timestamp" datePattern="yyyy-MM-dd HH:mm:ss"/>
     <property name="LOG_HOME" value="/var/log/web-project"/>
 
-    <!-- The FILE and ASYNC appenders are here as examples for a production configuration -->
+    <!--The FILE and ASYNC appenders are here as examples for a production configuration-->
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <fileNamePattern>${LOG_HOME}/news/news.%d{yyyy-MM-dd}.log</fileNamePattern>
@@ -19,9 +22,26 @@
         </triggeringPolicy>
     </appender>
 
-    <appender name="ASYNC" class="ch.qos.logback.classic.AsyncAppender">
-        <queueSize>512</queueSize>
-        <appender-ref ref="FILE"/>
+    <!--<appender name="ASYNC" class="ch.qos.logback.classic.AsyncAppender">-->
+    <!--<queueSize>512</queueSize>-->
+    <!--<appender-ref ref="FILE"/>-->
+    <!--</appender>-->
+
+    <!--日志导出的到 Logstash-->
+    <appender name="TCP_STASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+        <destination>127.0.0.1:4560</destination>
+        <!-- encoder is required -->
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder"/>
+        <!--<connectionStrategy>-->
+        <!--<roundRobin>-->
+        <!--<connectionTTL>0.5 minutes</connectionTTL>-->
+        <!--</roundRobin>-->
+        <!--</connectionStrategy>-->
+        <!-- Enable SSL using the JVM's default keystore/truststore -->
+        <!--<ssl/>-->
+        <writeBufferSize>81920</writeBufferSize>
+        <!--<keepAliveDuration>5 minutes</keepAliveDuration>
+        <reconnectionDelay>1 second</reconnectionDelay>-->
     </appender>
 
     <logger name="javax.activation" level="WARN"/>
@@ -53,23 +73,25 @@
     <logger name="liquibase" level="WARN"/>
     <logger name="LiquibaseSchemaResolver" level="WARN"/>
     <logger name="sun.rmi.transport" level="WARN"/>
-    <logger name="com.github.wuchao.webproject.controller.app" level="DEBUG"/>
-
-    <contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator">
-        <resetJUL>true</resetJUL>
-    </contextListener>
-
-    <springProfile name="prod">
-        <root level="WARN">
-            <appender-ref ref="FILE"/>
-        </root>
-    </springProfile>
 
     <springProfile name="dev">
+        <logger name="com.github.wuchao.webproject.controller.app" level="DEBUG"/>
         <root level="WARN">
             <appender-ref ref="FILE"/>
             <appender-ref ref="CONSOLE"/>
         </root>
     </springProfile>
+
+    <springProfile name="prod">
+        <logger name="com.github.wuchao.webproject.controller.app" level="WARN"/>
+        <root level="WARN">
+            <appender-ref ref="TCP_STASH"/>
+            <appender-ref ref="CONSOLE"/>
+        </root>
+    </springProfile>
+
+    <contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator">
+        <resetJUL>true</resetJUL>
+    </contextListener>
 
 </configuration>

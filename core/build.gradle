@@ -5,25 +5,30 @@ description = 'core'
 buildscript {
     repositories {
         mavenLocal()
-        maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
-        jcenter()
+        maven { url "https://plugins.gradle.org/m2/" }
+        //mavenCentral()
+        maven { url "http://maven.aliyun.com/nexus/content/repositories/central/" }
+        //jcenter()
         maven { url 'http://repo.spring.io/milestone' }
         maven { url 'http://repo.spring.io/snapshot' }
+        maven { url 'http://repo.spring.io/plugins-release' }
+        maven { url 'http://repo.maven.apache.org/maven2' }
         maven { url 'https://repository.jboss.org/nexus/content/repositories/releases' }
         maven { url 'https://oss.sonatype.org/content/repositories/releases' }
         maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
-        maven { url 'http://repo.spring.io/plugins-release' }
-        maven { url 'http://repo.maven.apache.org/maven2' }
     }
     ext {
-        spring_boot_version = '1.5.9.RELEASE'
+//        spring_boot_version = '1.5.9.RELEASE'
+        spring_boot_version = '1.5.12.RELEASE'
     }
     dependencies {
         /**spring-boot-gradle-plugin 的作用：
          *
-         * 简化执行和发布：它可以把所有classpath的类库构建成一个单独的可执行jar文件，这样可以简化你的执行和发布等操作。
+         * 简化执行和发布：它可以把所有 classpath 的类库构建成一个单独的可执行 jar 文件，这样可以简化你的执行和发布等操作。
          * 自动搜索入口文件：它会扫描 public static void main() 函数并且标记这个函数的宿主类为可执行入口。
-         * 简化依赖：一个典型的Spring应用还是需要很多依赖类库的，想要配置正确这些依赖挺麻烦的，所以这个插件提供了内建的依赖解析器会自动匹配和当前Spring Boot版本匹配的依赖库版本。
+         * 简化依赖：一个典型的 Spring 应用还是需要很多依赖类库的，想要配置正确这些依赖挺麻烦的，所以这个插件提供了内建的依赖解析器会自动匹配和当前 Spring Boot 版本匹配的依赖库版本。
+         *
+         * 不同版本的配置方式：https://plugins.gradle.org/plugin/org.springframework.boot/1.5.9.RELEASE
          */
         classpath "org.springframework.boot:spring-boot-gradle-plugin:$spring_boot_version"
         /**
@@ -70,16 +75,22 @@ repositories {
     flatDir {
         dirs 'libs'
     }
+
     mavenLocal()
-    maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
-    jcenter()
-    maven { url 'http://repo.spring.io/milestone' }
-    maven { url 'http://repo.spring.io/snapshot' }
-    maven { url 'https://repository.jboss.org/nexus/content/repositories/releases' }
-    maven { url 'https://oss.sonatype.org/content/repositories/releases' }
-    maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
-    maven { url 'http://repo.spring.io/plugins-release' }
-    maven { url 'http://repo.maven.apache.org/maven2' }
+
+    //mavenCentral()
+    maven { url "http://maven.aliyun.com/nexus/content/repositories/central/" }
+    //jcenter()
+    maven { url "http://maven.aliyun.com/nexus/content/repositories/jcenter/" }
+
+//    maven { url "https://plugins.gradle.org/m2/" }
+//    maven { url 'http://repo.spring.io/milestone' }
+//    maven { url 'http://repo.spring.io/snapshot' }
+//    maven { url 'http://repo.spring.io/plugins-release' }
+//    maven { url 'http://repo.maven.apache.org/maven2' }
+//    maven { url 'https://repository.jboss.org/nexus/content/repositories/releases' }
+//    maven { url 'https://oss.sonatype.org/content/repositories/releases' }
+//    maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
 }
 
 ext {
@@ -187,6 +198,15 @@ dependencies {
 
     compile "com.dyuproject.protostuff:protostuff-core:${protostuff_core_version}"
     compile "com.dyuproject.protostuff:protostuff-runtime:${protostuff_runtime_version}"
+
+    compile "net.logstash.logback:logstash-logback-encoder:${logstash_logback_encoder_version}"
+
+//    compile("net.logstash.logback:logstash-logback-encoder:${logstash_logback_encoder_version}") {
+//        exclude(group: 'ch.qos.logback')
+//    }
+//    compile "ch.qos.logback:logback-core:${ch_qos_logback_version}"
+//    compile "ch.qos.logback:logback-classic:${ch_qos_logback_version}"
+//    compile "ch.qos.logback:logback-access:${ch_qos_logback_version}"
 
     // Apache Commons
     compile "org.apache.commons:commons-lang3:${commons_lang_version}"

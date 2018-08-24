@@ -1,4 +1,4 @@
 /**
- * Spring Framework configuration files.
+ * Configuration files.
  */
 package com.github.wuchao.webproject.config;

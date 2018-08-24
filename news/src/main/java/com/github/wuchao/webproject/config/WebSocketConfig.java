@@ -9,7 +9,6 @@ import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 /**
  * 参考：spring4 使用websocket（https://www.cnblogs.com/nevermorewang/p/7274217.html）
  */
-
 @Configuration
 @EnableWebSocketMessageBroker
 public class WebSocketConfig extends AbstractWebSocketMessageBrokerConfigurer {

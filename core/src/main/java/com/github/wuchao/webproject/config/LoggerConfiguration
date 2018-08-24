@@ -1,0 +1,337 @@
+package com.github.wuchao.webproject.config;
+
+import ch.qos.logback.classic.AsyncAppender;
+import ch.qos.logback.classic.Level;
+import ch.qos.logback.classic.Logger;
+import ch.qos.logback.classic.LoggerContext;
+import ch.qos.logback.classic.encoder.PatternLayoutEncoder;
+import ch.qos.logback.classic.filter.ThresholdFilter;
+import ch.qos.logback.classic.jul.LevelChangePropagator;
+import ch.qos.logback.classic.spi.ILoggingEvent;
+import ch.qos.logback.core.ConsoleAppender;
+import ch.qos.logback.core.rolling.RollingFileAppender;
+import ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy;
+import ch.qos.logback.core.rolling.TimeBasedRollingPolicy;
+import ch.qos.logback.core.status.InfoStatus;
+import ch.qos.logback.core.status.OnErrorConsoleStatusListener;
+import ch.qos.logback.core.status.StatusManager;
+import ch.qos.logback.core.util.FileSize;
+import ch.qos.logback.core.util.StatusPrinter;
+import com.github.wuchao.webproject.common.Constants;
+import net.logstash.logback.appender.LogstashTcpSocketAppender;
+import net.logstash.logback.encoder.LogstashEncoder;
+import org.apache.commons.lang3.StringUtils;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
+import org.springframework.core.env.Environment;
+
+import javax.annotation.PostConstruct;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.nio.charset.Charset;
+
+
+/**
+ * [Log messages not pushed to Logstash](https://github.com/logstash/logstash-logback-encoder/issues/252)
+ */
+@Configuration
+public class LoggerConfiguration {
+
+    private static final String LOG_LEVEL_PATTERN = System.getProperty("LOG_LEVEL_PATTERN") == null ? "-%5p" : System.getProperty("LOG_LEVEL_PATTERN");
+    private static final String LOG_EXCEPTION_CONVERSION_WORD = System.getProperty("LOG_EXCEPTION_CONVERSION_WORD") == null ? "-%wEx" : System.getProperty("LOG_EXCEPTION_CONVERSION_WORD");
+    private static final String HOME = System.getProperty("user.home") == null ? "/app/logs/" : System.getProperty("user.home");
+
+    private static final String PATTERN = "%d{yyyy-MM-dd HH:mm:ss.SSS}%clr(" + LOG_LEVEL_PATTERN + ") %clr([%15.15t]){faint}%clr(%-40.40logger{39}){cyan} %clr(:){faint}%m%n" + LOG_EXCEPTION_CONVERSION_WORD;
+
+    private static final String ROLLING_FILE_APPENDER_NAME = "ROLLING";
+    private static final String ROLLING_FILENAME = HOME + "/device_inquiry.log";
+    private static final String ROLLING_FILENAME_PATTERN = HOME + "/archived/device_inquiry.%d{yyyy-MM-dd}.%s.log";
+    private static final String MAX_FILE_SIZE = "10MB";
+    private static final String CHARSET = "UTF-8";
+
+    private static final String TCP_APPENDER_NAME = "TCP_LOGSTASH";
+    private static final String TCP_DESTINATION = "127.0.0.1:4560"; //for nc -lk 4560
+    private static final Integer TCP_WRITE_BUFFER_SIZE = 81920; // 32_768;
+
+    private static final String ASYNC_APPENDER_NAME = "ASYNC";
+    private static final String CONSOLE_APPENDER_NAME = "CONSOLE";
+
+    private static final Integer ASYNC_QUEUE_SIZE = 1000;
+    private static final Integer ASYNC_FLUSH_SIZE = 2000;
+    private static final Integer MAX_HISTORY = 30;
+    private static final Integer DISCARDING_THRESHOLD = 0;
+
+    private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(LoggerConfiguration.class);
+
+    private String activatedProfile;
+    private String host;
+    private String port;
+
+    @Autowired
+    private Environment env;
+
+    @Bean("loggerContext")
+    public LoggerContext loggerContext() {
+        LOGGER.info(" configure loggerContext");
+        return (LoggerContext) LoggerFactory.getILoggerFactory();
+    }
+
+    @PostConstruct
+    public void configureLoggerContext() {
+        LOGGER.info("@PostConstruct  configure LoggerContext");
+        LoggerContext loggerContext = loggerContext();
+        //rootLogger(loggerContext);
+        //tcpSocketAppender(loggerContext);
+        //consoleAppender(loggerContext);
+        //asyncAppender(loggerContext, tcpSocketAppender(loggerContext));
+
+        onErrorStatusListener(loggerContext);
+        loggerContext.addListener(levelChangePropogator(loggerContext));
+        setCustomLogLevels(loggerContext);
+
+        StatusManager statusManager = loggerContext.getStatusManager();
+        if (statusManager != null) {
+            statusManager.add(new InfoStatus(" Setting Logger configuration from " + LoggerConfiguration.class.getName(), loggerContext));
+        } else {
+            LOGGER.error("Status Manager for logger does not exist");
+        }
+        StatusPrinter.print(statusManager);
+        StatusPrinter.print(loggerContext);
+        StatusPrinter.printInCaseOfErrorsOrWarnings(loggerContext);
+        LOGGER.info(" configure - created logger");
+    }
+
+    @PostConstruct
+    public void initRunTimeEnvironmentInfo() throws UnknownHostException {
+        host = new StringBuilder()
+                .append(InetAddress.getLocalHost().getCanonicalHostName())
+                .append('(').append(InetAddress.getLocalHost().getHostAddress()).append(')')
+                .toString();
+        port = env.getProperty("server.port");
+        activatedProfile = StringUtils.join(env.getActiveProfiles(), ",");
+    }
+
+    @Bean
+    @DependsOn("loggerContext")
+    public OnErrorConsoleStatusListener onErrorStatusListener(LoggerContext loggerContext) {
+        LOGGER.info(" Set up consoleStatusListener");
+        OnErrorConsoleStatusListener statusListener = new OnErrorConsoleStatusListener();
+        statusListener.setContext(loggerContext);
+        loggerContext.getStatusManager().add(statusListener);
+        statusListener.start();
+        return statusListener;
+    }
+
+    @Bean
+    @DependsOn("loggerContext")
+    public Logger rootLogger(LoggerContext loggerContext) {
+        LOGGER.info(" created rootLogger");
+        Logger rootLogger = loggerContext.getLogger(Logger.ROOT_LOGGER_NAME);
+
+        // dev
+        if (Constants.SPRING_PROFILE_DEVELOPMENT.equalsIgnoreCase(activatedProfile)) {
+            rootLogger.setLevel(Level.INFO);
+        }
+        // staging or prod
+        if (Constants.SPRING_PROFILE_PRODUCTION.equalsIgnoreCase(activatedProfile) ||
+                Constants.SPRING_PROFILE_STAGING.equalsIgnoreCase(activatedProfile)) {
+            rootLogger.setLevel(Level.WARN);
+        }
+
+        return rootLogger;
+    }
+
+    @Bean
+    @DependsOn("loggerContext")
+    public LevelChangePropagator levelChangePropogator(LoggerContext loggerContext) {
+        LOGGER.info(" created levelChangePropogator");
+        LevelChangePropagator levelChangePropagator = new LevelChangePropagator();
+        levelChangePropagator.setResetJUL(true);
+        levelChangePropagator.setContext(loggerContext);
+        return levelChangePropagator;
+    }
+
+    @Bean
+    @DependsOn("rootLogger")
+    public LogstashTcpSocketAppender tcpSocketAppender(LoggerContext loggerContext) {
+        LOGGER.info(" created tcpSocketAppender");
+        LogstashTcpSocketAppender logstashTcpSocketAppender = new LogstashTcpSocketAppender();
+        logstashTcpSocketAppender.setContext(loggerContext);
+        logstashTcpSocketAppender.setName(TCP_APPENDER_NAME);
+        logstashTcpSocketAppender.addDestination(TCP_DESTINATION);
+        logstashTcpSocketAppender.setWriteBufferSize(TCP_WRITE_BUFFER_SIZE);
+        logstashTcpSocketAppender.setEncoder(logstashEncoder(loggerContext));
+        logstashTcpSocketAppender.start();
+        loggerContext.getLogger(Logger.ROOT_LOGGER_NAME).addAppender(logstashTcpSocketAppender);
+        LOGGER.info(" done creating tcpSocketAppender");
+        return logstashTcpSocketAppender;
+    }
+
+    @Bean
+    @DependsOn("rootLogger")
+    public LogstashEncoder logstashEncoder(LoggerContext loggerContext) {
+        LOGGER.info(" created logstashEncoder");
+        LogstashEncoder encoder = new LogstashEncoder();
+        encoder.setContext(loggerContext);
+        encoder.setIncludeContext(true);
+        encoder.setCustomFields(setEnvironmentAttributes());
+        encoder.start();
+        return encoder;
+    }
+
+    @Bean
+    @DependsOn("rootLogger")
+    public ConsoleAppender<ILoggingEvent> consoleAppender(LoggerContext loggerContext) {
+        LOGGER.info(" created consoleAppender");
+        ConsoleAppender<ILoggingEvent> consoleAppender = new ConsoleAppender<>();
+        consoleAppender.setEncoder(logstashEncoder(loggerContext));
+        consoleAppender.setContext(loggerContext);
+        consoleAppender.setName(CONSOLE_APPENDER_NAME);
+        consoleAppender.setEncoder(patternLayoutEncoder(loggerContext));
+        loggerContext.getLogger(Logger.ROOT_LOGGER_NAME).addAppender(consoleAppender);
+        consoleAppender.start();
+        return consoleAppender;
+    }
+
+    @Bean
+    @DependsOn("rootLogger")
+    public RollingFileAppender<ILoggingEvent> rollingFileAppender(LoggerContext loggerContext) {
+        LOGGER.info(" created rollingFileAppender");
+        RollingFileAppender<ILoggingEvent> rollingFileAppender = new RollingFileAppender<>();
+        rollingFileAppender.setContext(loggerContext);
+        rollingFileAppender.setName(ROLLING_FILE_APPENDER_NAME);
+        rollingFileAppender.setFile(ROLLING_FILENAME);
+        rollingFileAppender.setEncoder(patternLayoutEncoder(loggerContext));
+        rollingFileAppender.setAppend(true);
+        rollingFileAppender.setRollingPolicy(timeBasedRollingPolicy(loggerContext, rollingFileAppender));
+        rollingFileAppender.setTriggeringPolicy(sizeBasedTriggeringPolicy(loggerContext));
+        rollingFileAppender.addFilter(thresholdFilter(loggerContext));
+        rollingFileAppender.start();
+        return rollingFileAppender;
+    }
+
+    @Bean
+    @DependsOn("rootLogger")
+    public TimeBasedRollingPolicy<ILoggingEvent> timeBasedRollingPolicy(LoggerContext loggerContext, RollingFileAppender<ILoggingEvent> rollingFileAppender) {
+        LOGGER.info(" created timeBasedRollingPolicy");
+        TimeBasedRollingPolicy<ILoggingEvent> rollingPolicy = new TimeBasedRollingPolicy<>();
+        rollingPolicy.setContext(loggerContext);
+        rollingPolicy.setParent(rollingFileAppender);
+        rollingPolicy.setFileNamePattern(ROLLING_FILENAME_PATTERN);
+        rollingPolicy.setMaxHistory(MAX_HISTORY);
+        rollingPolicy.start();
+        return rollingPolicy;
+    }
+
+    @Bean
+    @DependsOn("rootLogger")
+    public SizeBasedTriggeringPolicy<ILoggingEvent> sizeBasedTriggeringPolicy(LoggerContext loggerContext) {
+        LOGGER.info(" created SizeBasedTriggeringPolicy");
+        SizeBasedTriggeringPolicy<ILoggingEvent> triggeringPolicy = new SizeBasedTriggeringPolicy<>();
+        triggeringPolicy.setContext(loggerContext);
+        triggeringPolicy.setMaxFileSize(FileSize.valueOf(MAX_FILE_SIZE));
+        triggeringPolicy.start();
+        return triggeringPolicy;
+    }
+
+    @Bean
+    @DependsOn("rootLogger")
+    public ThresholdFilter thresholdFilter(LoggerContext context) {
+        LOGGER.info(" created thresholdFilter");
+        ThresholdFilter thresholdFilter = new ThresholdFilter();
+        thresholdFilter.setName("file-thresholdFilter");
+        thresholdFilter.setContext(context);
+        thresholdFilter.setLevel(Level.WARN.toString());
+        thresholdFilter.start();
+        return thresholdFilter;
+    }
+
+    @Bean
+    @DependsOn("rootLogger")
+    public AsyncAppender asyncAppender(LoggerContext loggerContext, LogstashTcpSocketAppender appender) {
+        LOGGER.info(" created asyncAppender");
+        AsyncAppender asyncAppender = new AsyncAppender();
+        asyncAppender.setName(ASYNC_APPENDER_NAME);
+        asyncAppender.setContext(loggerContext);
+        asyncAppender.setDiscardingThreshold(DISCARDING_THRESHOLD);
+        asyncAppender.setQueueSize(ASYNC_QUEUE_SIZE);
+        asyncAppender.setMaxFlushTime(ASYNC_FLUSH_SIZE);
+        asyncAppender.addAppender(appender);
+        loggerContext.getLogger(Logger.ROOT_LOGGER_NAME).addAppender(rollingFileAppender(loggerContext));
+        asyncAppender.start();
+        return asyncAppender;
+    }
+
+    @Bean
+    @DependsOn("rootLogger")
+    public PatternLayoutEncoder patternLayoutEncoder(LoggerContext loggerContext) {
+        LOGGER.info(" created patternLayoutEncoder");
+        PatternLayoutEncoder encoder = new PatternLayoutEncoder();
+        encoder.setContext(loggerContext);
+        encoder.setPattern(PATTERN);
+        encoder.setCharset(Charset.forName(CHARSET));
+        encoder.start();
+        return encoder;
+    }
+
+    private String setEnvironmentAttributes() {
+        String envAttributesAsJsonString = "";
+        try {
+            envAttributesAsJsonString = new JSONObject()
+                    .put("host", host)
+                    .put("port", port)
+                    .put("environment", activatedProfile)
+                    .toString();
+
+        } catch (JSONException jex) {
+            jex.printStackTrace();
+            LOGGER.error("setEnvironmentAttributes method could not set the host, port and environment");
+        }
+        return envAttributesAsJsonString;
+    }
+
+    protected static void setCustomLogLevels(LoggerContext loggerContext) {
+        loggerContext.getLogger("javax.management.modelmbean").setLevel(Level.WARN);
+        loggerContext.getLogger("com.application.package.root").setLevel(Level.INFO);
+        loggerContext.getLogger("org.apache.http.wire").setLevel(Level.WARN);
+        loggerContext.getLogger("javax.activation").setLevel(Level.WARN);
+        loggerContext.getLogger("javax.mail").setLevel(Level.WARN);
+        loggerContext.getLogger("javax.xml.bind").setLevel(Level.WARN);
+        loggerContext.getLogger("ch.qos.logback").setLevel(Level.WARN);
+        loggerContext.getLogger("com.codahale.metrics").setLevel(Level.WARN);
+        loggerContext.getLogger("com.netflix").setLevel(Level.WARN);
+        loggerContext.getLogger("com.netflix.discovery").setLevel(Level.WARN);
+        loggerContext.getLogger("com.ryantenney").setLevel(Level.WARN);
+        loggerContext.getLogger("com.sun").setLevel(Level.WARN);
+        loggerContext.getLogger("com.zaxxer").setLevel(Level.WARN);
+        loggerContext.getLogger("org.apache").setLevel(Level.WARN);
+        loggerContext.getLogger("org.apache.catalina.startup.DigesterFactory").setLevel(Level.OFF);
+        loggerContext.getLogger("org.bson").setLevel(Level.WARN);
+        loggerContext.getLogger("org.I0Itec.zkclient").setLevel(Level.WARN);
+        loggerContext.getLogger("org.hibernate.validator").setLevel(Level.WARN);
+        loggerContext.getLogger("org.hibernate").setLevel(Level.WARN);
+        loggerContext.getLogger("org.hibernate.ejb.HibernatePersistence").setLevel(Level.WARN);
+        loggerContext.getLogger("org.springframework").setLevel(Level.WARN);
+        loggerContext.getLogger("org.springframework.web").setLevel(Level.WARN);
+        loggerContext.getLogger("org.springframework.security").setLevel(Level.WARN);
+        loggerContext.getLogger("org.springframework.cache").setLevel(Level.WARN);
+        loggerContext.getLogger("org.springframework.integration").setLevel(Level.WARN);
+        loggerContext.getLogger("org.springframework.cloud").setLevel(Level.WARN);
+        loggerContext.getLogger("org.springframework.jmx").setLevel(Level.WARN);
+        loggerContext.getLogger("org.springframework.boot.context").setLevel(Level.WARN);
+        loggerContext.getLogger("org.thymeleaf").setLevel(Level.WARN);
+        loggerContext.getLogger("org.xnio").setLevel(Level.WARN);
+        loggerContext.getLogger("springfox").setLevel(Level.WARN);
+        loggerContext.getLogger("sun.rmi").setLevel(Level.WARN);
+        loggerContext.getLogger("sun.net").setLevel(Level.WARN);
+        loggerContext.getLogger("liquibase").setLevel(Level.WARN);
+        loggerContext.getLogger("sun.rmi.transport").setLevel(Level.WARN);
+    }
+
+
+}
