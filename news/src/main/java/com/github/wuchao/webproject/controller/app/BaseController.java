@@ -1,10 +1,5 @@
 package com.github.wuchao.webproject.controller.app;
 
-import com.github.wuchao.webproject.repository.UserRepository;
-import com.github.wuchao.webproject.util.JacksonUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -15,35 +10,9 @@ import org.springframework.web.servlet.ModelAndView;
 @ControllerAdvice
 public class BaseController {
 
-    private final static Logger log = LoggerFactory.getLogger(BaseController.class);
-
-    @Autowired
-    private UserRepository userRepository;
-
-    @ModelAttribute
-    public void testELK() {
-
-        while (true) {
-            try {
-                Thread.sleep(10000);
-
-                userRepository.findOneWithAuthoritiesByUsername("admin").ifPresent(user -> {
-
-                    log.warn(user.toString());
-                    log.error(JacksonUtil.serializeAsString(user));
-
-                });
-
-                log.warn("aaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-                log.error("bbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
-
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-
-    }
-
+//    @Autowired
+//    private UserRepository userRepository;
+//
 //    @ModelAttribute("currentUser")
 //    public User getCurrentUser() {
 //        String username;

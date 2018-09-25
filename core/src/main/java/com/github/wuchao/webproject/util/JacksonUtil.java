@@ -27,9 +27,13 @@ public abstract class JacksonUtil {
             .registerModule(new Jdk8Module())
             // new module, NOT JSR310Module
             .registerModule(new JavaTimeModule())
+            // .findAndRegisterModules(); 会导致对象中加了@Transient注解的字段无法被序列化
+            // 为null的字段不序列化
             .setSerializationInclusion(JsonInclude.Include.NON_NULL)
             .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
-            .configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+            .configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false)
+            // to avoid exception(No serializer found for class org.hibernate.proxy.pojo.javassist.JavassistLazyInitializer and no properties discovered to create BeanSerializer)
+            .disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
 
     /**
      * Jackson：对象转 json 字符串

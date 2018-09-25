@@ -6,7 +6,10 @@ buildscript {
     repositories {
         mavenLocal()
         maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
-        jcenter()
+        maven { url 'http://maven.oschina.net/content/groups/public/' }
+        maven { url "https://plugins.gradle.org/m2/" }
+        //mavenCentral()
+        //jcenter()
         maven { url 'http://repo.spring.io/milestone' }
         maven { url 'http://repo.spring.io/snapshot' }
         maven { url 'https://repository.jboss.org/nexus/content/repositories/releases' }
@@ -61,13 +64,7 @@ repositories {
     }
     mavenLocal()
     maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
-    jcenter()
-    maven { url 'http://repo.spring.io/milestone' }
-    maven { url 'http://repo.spring.io/snapshot' }
-    maven { url 'https://repository.jboss.org/nexus/content/repositories/releases' }
-    maven { url 'https://oss.sonatype.org/content/repositories/releases' }
-    maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
-    maven { url 'http://repo.maven.apache.org/maven2' }
+    maven { url 'http://maven.oschina.net/content/groups/public/' }
 }
 
 // 解决 Spring Cloud 冲突

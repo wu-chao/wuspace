@@ -5,9 +5,10 @@ description = 'core'
 buildscript {
     repositories {
         mavenLocal()
+        maven { url "http://maven.aliyun.com/nexus/content/repositories/central/" }
+        maven { url 'http://maven.oschina.net/content/groups/public/' }
         maven { url "https://plugins.gradle.org/m2/" }
         //mavenCentral()
-        maven { url "http://maven.aliyun.com/nexus/content/repositories/central/" }
         //jcenter()
         maven { url 'http://repo.spring.io/milestone' }
         maven { url 'http://repo.spring.io/snapshot' }
@@ -18,7 +19,7 @@ buildscript {
         maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
     }
     ext {
-//        spring_boot_version = '1.5.9.RELEASE'
+        // spring_boot_version = '1.5.9.RELEASE'
         spring_boot_version = '1.5.12.RELEASE'
     }
     dependencies {
@@ -77,20 +78,8 @@ repositories {
     }
 
     mavenLocal()
-
-    //mavenCentral()
-    maven { url "http://maven.aliyun.com/nexus/content/repositories/central/" }
-    //jcenter()
-    maven { url "http://maven.aliyun.com/nexus/content/repositories/jcenter/" }
-
-//    maven { url "https://plugins.gradle.org/m2/" }
-//    maven { url 'http://repo.spring.io/milestone' }
-//    maven { url 'http://repo.spring.io/snapshot' }
-//    maven { url 'http://repo.spring.io/plugins-release' }
-//    maven { url 'http://repo.maven.apache.org/maven2' }
-//    maven { url 'https://repository.jboss.org/nexus/content/repositories/releases' }
-//    maven { url 'https://oss.sonatype.org/content/repositories/releases' }
-//    maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
+    maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+    maven { url 'http://maven.oschina.net/content/groups/public/' }
 }
 
 ext {

@@ -91,16 +91,16 @@ public abstract class DateTimeUtils {
         StringBuilder year = new StringBuilder();
         char[] yearNum = Integer.valueOf(dateNum[0]).toString().toCharArray();
         for (int i = 0; i < yearNum.length; i++) {
-            year.append(DateTimeUtils.num2Chinese(Integer.valueOf(String.valueOf(yearNum[i]))));
+            year.append(num2Chinese(Integer.valueOf(String.valueOf(yearNum[i]))));
         }
 
         localDataFormatStr = localDataFormatStr.replace(dateNum[0], year.toString());
 
         // 月
-        localDataFormatStr = localDataFormatStr.replace(dateNum[1], DateTimeUtils.num2Chinese(Integer.valueOf(dateNum[1])));
+        localDataFormatStr = localDataFormatStr.replace(dateNum[1], num2Chinese(Integer.valueOf(dateNum[1])));
 
         // 日
-        localDataFormatStr = localDataFormatStr.replace(dateNum[2], DateTimeUtils.num2Chinese(Integer.valueOf(dateNum[2])));
+        localDataFormatStr = localDataFormatStr.replace(dateNum[2], num2Chinese(Integer.valueOf(dateNum[2])));
 
         return localDataFormatStr;
     }

@@ -365,24 +365,61 @@ public class WordTemplate {
                     Object paramValue = getValueByKey(key.toString(), parametersMap);
                     if (paramValue instanceof String) {
                         // 设置文本
-                        insertNewRun.setText(paramValue.toString());
+                        if (paramValue.toString().split("\\\\p").length > 1) {
+                            insertNewRun.setText(paramValue.toString());
+                        } else {
+                            insertNewRun(null, null, insertNewRun, paramValue.toString());
+                        }
                     }
                     if (paramValue instanceof Map) {
                         // 替换为图片
                         replacePicture(xWPFParagraph, insertNewRun, String.valueOf(((Map) paramValue).get("pictureLocation")));
                     }
+                    if (paramValue instanceof List) {
+                        List paramValues = (List) paramValue;
+                        if (CollectionUtils.isNotEmpty(paramValues)) {
+                            // 在段落上循环输出集合内容
+                            for (Object value : paramValues) {
+                                insertNewRun = xWPFParagraph.insertNewRun(beginRunIndex++);
+                                replacePicture(xWPFParagraph, insertNewRun, String.valueOf(value));
+                            }
+                        }
+                    }
                     xWPFParagraph.removeRun(beginRunIndex);
 
                 } else {
                     // 该run标签为**{**}** 或者 **{**} 或者{**}**，替换key后，还需要加上原始key前后的文本
-                    XWPFRun insertNewRun = xWPFParagraph.insertNewRun(beginRunIndex);
+                    XWPFRun insertNewRun = xWPFParagraph.insertNewRun(beginRunIndex++);
                     insertNewRun.getCTR().setRPr(beginRun.getCTR().getRPr());
-                    // 设置文本
                     key.append(beginRunText, beginRunText.indexOf("{") + 1, beginRunText.indexOf("}"));
-                    String textString = beginRunText.substring(0, beginIndex) + getValueByKey(key.toString(), parametersMap)
-                            + beginRunText.substring(endIndex + 1);
-                    insertNewRun.setText(textString);
-                    xWPFParagraph.removeRun(beginRunIndex + 1);
+                    Object paramValue = getValueByKey(key.toString(), parametersMap);
+                    if (paramValue instanceof String) {
+                        // 设置文本
+                        String textString = beginRunText.substring(0, beginIndex) + paramValue.toString()
+                                + beginRunText.substring(endIndex + 1);
+
+                        if (textString.split("\\\\p").length > 1) {
+                            insertNewRun.setText(textString);
+                        } else {
+                            insertNewRun(null, null, insertNewRun, textString);
+                        }
+
+                    }
+                    if (paramValue instanceof Map) {
+                        // 替换为图片
+                        replacePicture(xWPFParagraph, insertNewRun, String.valueOf(((Map) paramValue).get("pictureLocation")));
+                    }
+                    if (paramValue instanceof List) {
+                        List paramValues = (List) paramValue;
+                        if (CollectionUtils.isNotEmpty(paramValues)) {
+                            // 在段落上循环输出集合内容
+                            for (Object value : paramValues) {
+                                insertNewRun = xWPFParagraph.insertNewRun(beginRunIndex++);
+                                replacePicture(xWPFParagraph, insertNewRun, String.valueOf(value));
+                            }
+                        }
+                    }
+                    xWPFParagraph.removeRun(beginRunIndex);
                 }
 
             } else {
@@ -426,24 +463,42 @@ public class WordTemplate {
                     XWPFRun insertNewRun = xWPFParagraph.insertNewRun(beginRunIndex);
                     insertNewRun.getCTR().setRPr(beginRun.getCTR().getRPr());
                     // 设置文本
-                    insertNewRun.setText(getValueByKey(key.toString(), parametersMap).toString());
+                    String textString = getValueByKey(key.toString(), parametersMap).toString();
+                    if (textString.split("\\\\p").length > 1) {
+                        insertNewRun.setText(textString);
+                    } else {
+                        insertNewRun(null, null, insertNewRun, textString);
+                    }
                     // 移除原始的run
                     xWPFParagraph.removeRun(beginRunIndex + 1);
                 } else {
                     // 该run标签为**{**或者 {** ，替换key后，还需要加上原始key前的文本
                     XWPFRun insertNewRun = xWPFParagraph.insertNewRun(beginRunIndex++);
                     insertNewRun.getCTR().setRPr(beginRun.getCTR().getRPr());
-                    key.append(beginRunText, beginRunText.indexOf("{") + 1, beginRunText.indexOf("}"));
+
                     Object paramValue = getValueByKey(key.toString(), parametersMap);
                     if (paramValue instanceof String) {
                         // 设置文本
-                        String textString = beginRunText.substring(0, beginIndex) + paramValue.toString()
-                                + beginRunText.substring(endIndex + 1);
-                        insertNewRun.setText(textString);
+                        String textString = beginRunText.substring(0, beginRunText.indexOf("{")) + paramValue.toString();
+                        if (textString.split("\\\\p").length > 1) {
+                            insertNewRun.setText(textString);
+                        } else {
+                            insertNewRun(null, null, insertNewRun, textString);
+                        }
                     }
                     if (paramValue instanceof Map) {
                         // 替换为图片
                         replacePicture(xWPFParagraph, insertNewRun, String.valueOf(((Map) paramValue).get("pictureLocation")));
+                    }
+                    if (paramValue instanceof List) {
+                        List paramValues = (List) paramValue;
+                        if (CollectionUtils.isNotEmpty(paramValues)) {
+                            // 在段落上循环输出集合内容
+                            for (Object value : paramValues) {
+                                insertNewRun = xWPFParagraph.insertNewRun(beginRunIndex++);
+                                replacePicture(xWPFParagraph, insertNewRun, String.valueOf(value));
+                            }
+                        }
                     }
                     // 移除原始的run
                     xWPFParagraph.removeRun(beginRunIndex);
@@ -461,19 +516,17 @@ public class WordTemplate {
 
                 } else {
                     // 该run标签为**}**或者 }** 或者**}，替换key后，还需要加上原始key后的文本
-                    XWPFRun insertNewRun = xWPFParagraph.insertNewRun(endRunIndex++);
+                    XWPFRun insertNewRun = xWPFParagraph.insertNewRun(endRunIndex);
                     insertNewRun.getCTR().setRPr(endRun.getCTR().getRPr());
-                    Object paramValue = getValueByKey(key.toString(), parametersMap);
-                    if (paramValue instanceof String) {
-                        // 设置文本
-                        insertNewRun.setText(beginRunText.substring(0, beginRunText.indexOf("{")) + paramValue.toString());
-                    }
-                    if (paramValue instanceof Map) {
-                        // 替换为图片
-                        replacePicture(xWPFParagraph, insertNewRun, String.valueOf(((Map) paramValue).get("pictureLocation")));
+                    // 设置文本
+                    String textString = endRunText.substring(endRunText.indexOf("}") + 1);
+                    if (textString.split("\\\\p").length > 1) {
+                        insertNewRun.setText(textString);
+                    } else {
+                        insertNewRun(null, null, insertNewRun, textString);
                     }
                     // 移除原始的run
-                    xWPFParagraph.removeRun(endRunIndex);
+                    xWPFParagraph.removeRun(endRunIndex + 1);
                 }
 
                 // 处理中间的run标签
@@ -500,7 +553,7 @@ public class WordTemplate {
                                         List<XWPFParagraph> paragraphs = tableCell.getParagraphs();
                                         if (CollectionUtils.isNotEmpty(paragraphs)) {
                                             for (XWPFParagraph paragraph : paragraphs) {
-                                                newLine(paragraph);
+//                                                newLine(paragraph);
                                             }
                                         }
                                     });
@@ -513,11 +566,40 @@ public class WordTemplate {
                 // word段落一段文字中包含换行符("\\\\n")，则换行
                 newLine(xWPFParagraph);
 
+                // word段落一段文字中包含自定义分段符号（"\\\\p"），则分段
+                newParagraph(xWPFParagraph);
+
             }// 处理${**}被分成多个run
 
             replaceParagraph(xWPFParagraph, parametersMap);
 
         }//if 有标签
+
+    }
+
+    private void insertNewRun(String fontFamily, Integer fontSize, XWPFRun insertNewRun, String textString) {
+
+        int fontStyleEndIndex = textString.indexOf("]]");
+        if (fontStyleEndIndex >= 2) {
+            String fontStyle = textString.substring(2, fontStyleEndIndex);
+            String[] styles = fontStyle.split(",");
+            if (styles.length == 1) {
+                insertNewRun.setFontFamily(styles[0]);
+            }
+            if (styles.length == 2) {
+                insertNewRun.setFontSize(Integer.valueOf(styles[1]));
+            }
+
+        } else {
+            if (StringUtils.isNotBlank(fontFamily)) {
+                insertNewRun.setFontFamily(fontFamily);
+            }
+            if (fontSize != null) {
+                insertNewRun.setFontSize(fontSize);
+            }
+        }
+
+        insertNewRun.setText(fontStyleEndIndex >= 2 ? textString.substring(fontStyleEndIndex + 2) : textString);
 
     }
 
@@ -556,6 +638,47 @@ public class WordTemplate {
         }
     }
 
+    /**
+     * 根据 \p 将段落内容分成多段
+     *
+     * @param paragraph
+     */
+    private void newParagraph(XWPFParagraph paragraph) {
+        List<XWPFRun> runList = paragraph.getRuns();
+        if (CollectionUtils.isNotEmpty(runList)) {
+
+            String paraText = paragraph.getText().trim();
+            String[] pTexts = paraText.split("\\\\p");
+            if (pTexts.length > 1) {
+                // 首行缩进（https://www.cnblogs.com/dayuruozhi/p/6490793.html）
+                int indentationFirstLine = paragraph.getIndentationFirstLine();
+                XWPFRun oldRun = paragraph.getRuns().get(0);
+                int fontSize = oldRun.getFontSize();
+                String fontFamily = "仿宋";
+
+                XWPFParagraph newParagraph;
+                for (int j = 0; j < pTexts.length; j++) {
+                    if (j == 0) {
+                        int runSize = paragraph.getRuns().size();
+                        for (int i = 0; i < runSize; i++) {
+                            // 删除旧的 XWPFRun
+                            paragraph.removeRun(0);
+                        }
+                        newParagraph = paragraph;
+                    } else {
+                        // 在段落后新增段落
+                        newParagraph = document.createParagraph();
+                        newParagraph.setIndentationFirstLine(indentationFirstLine);
+                    }
+
+                    XWPFRun run = newParagraph.createRun();
+                    insertNewRun(fontFamily, fontSize, run, pTexts[j]);
+                    fontFamily = run.getFontFamily();
+                    fontSize = run.getFontSize();
+                }
+            }
+        }
+    }
 
     /**
      * 复制表格行XWPFTableRow格式
