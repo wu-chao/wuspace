@@ -18,12 +18,12 @@ public class POIExcelUtilTests {
 
     @Test
     public void testExcel() {
-        LocalDate signDate = LocalDate.of(2018, 8, 1);
+        LocalDate signDate = LocalDate.of(2018, 12, 1);
 
         testExcel1(excelFilePath, 1, signDate);
-        testExcel2(excelFilePath, 2, signDate);
-        testExcel3(excelFilePath, 3, signDate);
-        testExcel4(excelFilePath, 4, signDate);
+//        testExcel2(excelFilePath, 2, signDate);
+//        testExcel3(excelFilePath, 3, signDate);
+//        testExcel4(excelFilePath, 4, signDate);
     }
 
     public void testExcel1(String excelFilePath, Integer order, LocalDate signDate) {

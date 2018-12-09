@@ -85,46 +85,46 @@ public class ExcelUtil {
                         }
 
 
-                        while (startIndex < colNum && users.get(rightIndex) != null) {
-                            if (startIndex % 2 == 0 && startIndex < rightIndex) {
-
-                                // 利用 XSSFDrawing 将图片写入 EXCEL
-                                XSSFDrawing patriarch = sheet.createDrawingPatriarch();
-
-                                /**
-                                 * 该构造函数有8个参数
-                                 * 前四个参数是控制图片在单元格的位置，分别是图片距离单元格 left，top，right，bottom 的像素距离
-                                 * 后四个参数，前连个表示图片左上角所在的cellNum和 rowNum，后天个参数对应的表示图片右下角所在的cellNum和 rowNum，
-                                 * excel中的cellNum和rowNum的index都是从0开始的
-                                 */
-
-                                //图片一导出到单元格中
-                                XSSFClientAnchor anchor = new XSSFClientAnchor(1000, 200, 300, 200,
-                                        (short) (startIndex), rowIndex, (short) (startIndex + 1), rowIndex + 1);
-
-                                // 先把读进来的图片放到一个ByteArrayOutputStream中，以便产生ByteArray
-                                ByteArrayOutputStream byteArrayOut = new ByteArrayOutputStream();
-
-                                //将图片读到BufferedImage
-                                bufferImg = ImageIO.read(new File((String) users.get(rightIndex).get(random.nextInt(3) + 1)));
-
-                                // 将图片写入流中
-                                ImageIO.write(bufferImg, "png", byteArrayOut);
-
-                                // 插入图片
-                                patriarch.createPicture(anchor, wb.addPicture(byteArrayOut
-                                        .toByteArray(), XSSFWorkbook.PICTURE_TYPE_PNG));
-
-
-                            }
-
-                            startIndex++;
-
-                            if (startIndex >= rightIndex) {
-                                rightIndex += 4;
-                            }
-
-                        }
+//                        while (startIndex < colNum && users.get(rightIndex) != null) {
+//                            if (startIndex % 2 == 0 && startIndex < rightIndex) {
+//
+//                                // 利用 XSSFDrawing 将图片写入 EXCEL
+//                                XSSFDrawing patriarch = sheet.createDrawingPatriarch();
+//
+//                                /**
+//                                 * 该构造函数有8个参数
+//                                 * 前四个参数是控制图片在单元格的位置，分别是图片距离单元格 left，top，right，bottom 的像素距离
+//                                 * 后四个参数，前连个表示图片左上角所在的cellNum和 rowNum，后天个参数对应的表示图片右下角所在的cellNum和 rowNum，
+//                                 * excel中的cellNum和rowNum的index都是从0开始的
+//                                 */
+//
+//                                //图片一导出到单元格中
+//                                XSSFClientAnchor anchor = new XSSFClientAnchor(1000, 200, 300, 200,
+//                                        (short) (startIndex), rowIndex, (short) (startIndex + 1), rowIndex + 1);
+//
+//                                // 先把读进来的图片放到一个ByteArrayOutputStream中，以便产生ByteArray
+//                                ByteArrayOutputStream byteArrayOut = new ByteArrayOutputStream();
+//
+//                                //将图片读到BufferedImage
+//                                bufferImg = ImageIO.read(new File((String) users.get(rightIndex).get(random.nextInt(3) + 1)));
+//
+//                                // 将图片写入流中
+//                                ImageIO.write(bufferImg, "png", byteArrayOut);
+//
+//                                // 插入图片
+//                                patriarch.createPicture(anchor, wb.addPicture(byteArrayOut
+//                                        .toByteArray(), XSSFWorkbook.PICTURE_TYPE_PNG));
+//
+//
+//                            }
+//
+//                            startIndex++;
+//
+//                            if (startIndex >= rightIndex) {
+//                                rightIndex += 4;
+//                            }
+//
+//                        }
 
                         for (int j = 3; j < colNum; j++) {
 
