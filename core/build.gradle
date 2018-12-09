@@ -214,6 +214,7 @@ dependencies {
     compile "org.apache.poi:poi-ooxml:${apache_poi_ooxml_version}"
 //    compile "org.apache.poi:poi-ooxml-schemas:${poi_ooxml_schemas_version}"
 
+    /*如果（生成下发文）使用了 Plutext-Enterprise-3.3.0.6，则 Docx4j 版本最高只能用 v3.3.3，否则不兼容*/
     compile("org.docx4j:docx4j:${docx4j_version}") {
         exclude(group: 'org.slf4j')
     }
