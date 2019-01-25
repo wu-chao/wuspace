@@ -19,8 +19,8 @@ buildscript {
         maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
     }
     ext {
-        // spring_boot_version = '1.5.9.RELEASE'
-        spring_boot_version = '1.5.12.RELEASE'
+//        spring_boot_version = '1.5.9.RELEASE'
+//        spring_boot_version = '1.5.12.RELEASE'
     }
     dependencies {
         /**spring-boot-gradle-plugin 的作用：
@@ -31,7 +31,7 @@ buildscript {
          *
          * 不同版本的配置方式：https://plugins.gradle.org/plugin/org.springframework.boot/1.5.9.RELEASE
          */
-        classpath "org.springframework.boot:spring-boot-gradle-plugin:$spring_boot_version"
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:${spring_boot_version}"
         /**
          * Provides additional optional and provided dependency configurations for Gradle along with Maven POM generation support.
          * https://github.com/spring-gradle-plugins/propdeps-plugin
@@ -114,6 +114,7 @@ dependencies {
     compile "org.springframework.boot:spring-boot-starter-cache"
     compile "org.springframework.boot:spring-boot-starter-data-jpa"
     compile "org.springframework.boot:spring-boot-starter-data-redis"
+    compile "org.springframework.boot:spring-boot-starter-data-mongodb"
     compile("org.springframework.boot:spring-boot-starter-web") {
         exclude module: 'spring-boot-starter-tomcat'
     }

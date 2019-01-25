@@ -18,9 +18,7 @@ buildscript {
         maven { url 'http://repo.spring.io/plugins-release' }
         maven { url 'http://repo.maven.apache.org/maven2' }
     }
-    ext {
-        spring_boot_version = '1.5.12.RELEASE'
-    }
+
     dependencies {
         classpath "org.springframework.boot:spring-boot-gradle-plugin:$spring_boot_version"
         /**

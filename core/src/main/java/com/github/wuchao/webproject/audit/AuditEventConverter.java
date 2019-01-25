@@ -1,7 +1,6 @@
 package com.github.wuchao.webproject.audit;
 
 import com.github.wuchao.webproject.domain.PersistentAuditEvent;
-import com.github.wuchao.webproject.domain.PersistentAuditEvent;
 import org.springframework.boot.actuate.audit.AuditEvent;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Component;

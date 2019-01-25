@@ -2,7 +2,9 @@ package com.github.wuchao.webproject.config;
 
 import com.fasterxml.jackson.datatype.hibernate5.Hibernate5Module;
 import com.github.wuchao.webproject.common.Constants;
-import com.github.wuchao.webproject.common.Constants;
+import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.gridfs.GridFSBucket;
+import com.mongodb.client.gridfs.GridFSBuckets;
 import org.h2.tools.Server;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,8 +14,10 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.data.mongodb.MongoDbFactory;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import javax.annotation.Resource;
 import java.sql.SQLException;
 
 @Configuration
@@ -46,4 +50,16 @@ public class DatabaseConfig {
     public Hibernate5Module hibernate5Module() {
         return new Hibernate5Module();
     }
+
+    //// MongoDb Config
+
+    @Resource
+    private MongoDbFactory mongoDbFactory;
+
+    @Bean
+    public GridFSBucket getGridFSBuckets() {
+        MongoDatabase db = mongoDbFactory.getDb();
+        return GridFSBuckets.create(db);
+    }
+
 }

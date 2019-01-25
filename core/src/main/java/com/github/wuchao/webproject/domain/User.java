@@ -2,11 +2,8 @@ package com.github.wuchao.webproject.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
-import org.hibernate.validator.constraints.Email;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -27,20 +24,16 @@ public class User extends AbstractAuditingEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
-    @Size(min = 2, max = 50)
     @Column(name = "username", length = 50, unique = true, nullable = false)
     private String username;
 
     @JsonIgnore
-    @NotNull
     @Column(name = "password_hash", length = 60, nullable = false)
     private String password;
 
     @Column(name = "nickname", length = 50, unique = true)
     private String nickname;
 
-    @Email
     @Column(name = "email", unique = true)
     private String email;
 
@@ -56,7 +49,6 @@ public class User extends AbstractAuditingEntity {
     @Column(name = "activated", nullable = false)
     private boolean activated;
 
-    //    @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "user_authority",
@@ -90,8 +82,12 @@ public class User extends AbstractAuditingEntity {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         User user = (User) o;
         return activated == user.activated &&
                 Objects.equals(id, user.id) &&

@@ -1,5 +1,7 @@
 package com.github.wuchao.webproject.util;
 
+import com.aspose.words.Document;
+import com.aspose.words.SaveFormat;
 import lombok.Cleanup;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -17,6 +19,24 @@ import java.util.regex.Pattern;
 
 @Slf4j
 public abstract class FileUtils {
+
+    /**
+     * 创建包含多级目录的文件
+     *
+     * @param path
+     * @throws IOException
+     */
+    public static File createFile(String path) throws IOException {
+        if (StringUtils.isNotEmpty(path)) {
+            File file = new File(path);
+            if (!file.getParentFile().exists()) {
+                file.getParentFile().mkdirs();
+            }
+            file.createNewFile();
+            return file;
+        }
+        throw new RuntimeException("文件目录为空");
+    }
 
     /**
      * 上传文件
@@ -196,6 +216,26 @@ public abstract class FileUtils {
     }
 
     /**
+     * 删除文件/目录（包括该目录下的所有文件）
+     *
+     * @param file
+     */
+    public static void delete(File file) {
+        if (!file.exists()) {
+            return;
+        }
+
+        if (file.isDirectory()) {
+            File[] files = file.listFiles();
+            for (File f : files) {
+                delete(f);
+            }
+        }
+
+        file.delete();
+    }
+
+    /**
      * 获取文件拓展名
      *
      * @param fileName
@@ -204,4 +244,87 @@ public abstract class FileUtils {
     public String getExt(String fileName) {
         return fileName.substring(fileName.lastIndexOf(".") + 1);
     }
+
+    public static boolean getLicense() {
+        boolean result = false;
+        try {
+            // license.xml应放在..\WebRoot\WEB-INF\classes路径下
+            InputStream is = FileUtils.class.getClassLoader().getResourceAsStream("license.xml");
+            com.aspose.words.License aposeLic = new com.aspose.words.License();
+            aposeLic.setLicense(is);
+            result = true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    /**
+     * DOC, DOCX 转 PDF
+     * https://www.cnblogs.com/zhangzhxb/p/5984766.html
+     * https://www.cnblogs.com/qiwu1314/p/6101400.html
+     *
+     * @param inputStream
+     */
+    public static String word2pdf(InputStream inputStream) {
+
+        // 验证 License 若不验证则转化出的pdf文档会有水印产生
+//        if (!getLicense()) {
+//            return;
+//        }
+
+        String pdfPath = System.getProperty("user.dir") + File.separator + "src" + File.separator +
+                "main" + File.separator + "resources" + File.separator + "public" + File.separator + System.currentTimeMillis() + ".pdf";
+
+        try {
+
+            File file = new File(pdfPath);
+            FileOutputStream os = new FileOutputStream(file);
+            // Address 是将要被转化的 word 文档
+            Document doc = new Document(inputStream);
+            // 全面支持 DOC, DOCX, OOXML, RTF HTML, OpenDocument, PDF, EPUB, XPS, SWF 相互转换
+            doc.save(os, SaveFormat.PDF);
+
+            return pdfPath;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+
+    }
+
+    /**
+     * word 转 html
+     * https://github.com/aspose-words/Aspose.Words-for-Java/blob/master/Plugins/Aspose_Words_Java_for_Docx4j/src/main/java/com/aspose/words/examples/featurescomparison/documents/converttoformats/AsposeConvertToFormats.java
+     *
+     * @param inputStream
+     */
+    public static String word2html(InputStream inputStream) {
+        try {
+            String htmlPath = System.getProperty("user.dir") + File.separator + "src" + File.separator +
+                    "main" + File.separator + "resources" + File.separator + "public" + File.separator + System.currentTimeMillis() + ".html";
+
+            com.aspose.words.Document document = new com.aspose.words.Document(inputStream);
+            document.save(htmlPath, SaveFormat.HTML);
+
+            return htmlPath;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    /**
+     * word 转 html
+     * https://docs.aspose.com/display/wordsjava/Convert+Document+to+HTML
+     *
+     * @param inputStream
+     */
+    public static void word2html2(InputStream inputStream) {
+
+    }
+
 }

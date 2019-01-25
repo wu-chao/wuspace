@@ -10,9 +10,7 @@ buildscript {
         maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
         maven { url 'http://repo.maven.apache.org/maven2' }
     }
-    ext {
-        spring_boot_version = '1.5.12.RELEASE'
-    }
+
     dependencies {
         classpath "org.springframework.boot:spring-boot-gradle-plugin:$spring_boot_version"
     }
