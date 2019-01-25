@@ -2,11 +2,15 @@ package com.github.wuchao.webproject;
 
 import com.github.wuchao.webproject.common.Constants;
 import com.github.wuchao.webproject.config.DefaultProfileUtil;
+import com.github.wuchao.webproject.domain.User;
+import com.github.wuchao.webproject.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.env.Environment;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import java.net.InetAddress;
@@ -49,28 +53,28 @@ public class NewsApplication {
     }
 
     public static void main(String args[]) throws UnknownHostException {
-        SpringApplication app = new SpringApplication(NewsApplication.class);
-        DefaultProfileUtil.addDefaultProfile(app);
-        Environment env = app.run(args).getEnvironment();
-        String protocol = "http";
-        if (env.getProperty("server.ssl.key-store") != null) {
-            protocol = "https";
-        }
-        log.info("\n----------------------------------------------------------\n\t" +
-                        "Application '{}' is running! Access URLs:\n\t" +
-                        "Local: \t\t{}://localhost:{}\n\t" +
-                        "External: \t{}://{}:{}\n\t" +
-                        "Profile(s): \t{}\n----------------------------------------------------------",
-                env.getProperty("spring.application.name"),
-                protocol,
-                env.getProperty("server.port"),
-                protocol,
-                InetAddress.getLocalHost().getHostAddress(),
-                env.getProperty("server.port"),
-                env.getActiveProfiles());
+//        SpringApplication app = new SpringApplication(NewsApplication.class);
+//        DefaultProfileUtil.addDefaultProfile(app);
+//        Environment env = app.run(args).getEnvironment();
+//        String protocol = "http";
+//        if (env.getProperty("server.ssl.key-store") != null) {
+//            protocol = "https";
+//        }
+//        log.info("\n----------------------------------------------------------\n\t" +
+//                        "Application '{}' is running! Access URLs:\n\t" +
+//                        "Local: \t\t{}://localhost:{}\n\t" +
+//                        "External: \t{}://{}:{}\n\t" +
+//                        "Profile(s): \t{}\n----------------------------------------------------------",
+//                env.getProperty("spring.application.name"),
+//                protocol,
+//                env.getProperty("server.port"),
+//                protocol,
+//                InetAddress.getLocalHost().getHostAddress(),
+//                env.getProperty("server.port"),
+//                env.getActiveProfiles());
 
 
-//        ConfigurableApplicationContext context = SpringApplication.run(NewsApplication.class, args);
+        ConfigurableApplicationContext context = SpringApplication.run(NewsApplication.class, args);
 
 //        String src = "/home/wu-chao/下载/spring boot实战.pdf";
 //        String dest = "/home/wu-chao/下载/2222.pdf";
@@ -88,6 +92,11 @@ public class NewsApplication {
 //        String filePath = "/home/wu-chao/下载/springboot.pdf";
 //        String imageDirection = "/home/wu-chao/下载/pdftoimages/";
 //        PdfServiceImpl.executorServicePdf2Images(imageDirection, filePath);
+
+        UserRepository userRepository = (UserRepository) context.getBean("userRepository");
+        User user = userRepository.findByUsername("admin");
+        System.out.println(user.getEmail());
+        user.setEmail("admin1@qq.com");
 
     }
 

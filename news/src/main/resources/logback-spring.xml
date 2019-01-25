@@ -78,6 +78,8 @@
         <logger name="com.github.wuchao.webproject.controller.app" level="DEBUG"/>
         <root level="WARN">
             <appender-ref ref="FILE"/>
+        </root>
+        <root level="DEBUG">
             <appender-ref ref="CONSOLE"/>
         </root>
     </springProfile>

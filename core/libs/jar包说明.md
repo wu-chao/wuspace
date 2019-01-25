@@ -1,0 +1,9 @@
+aspose-words-15.8.0-jdk16.jar:
+下载地址：https://downloads.aspose.com/words/java/new-releases/aspose.words-for-java-15.8.0/
+
+Plutext-Enterprise-3.3.0.6.jar:
+下载地址：https://maven.gtri.gatech.edu/repos/external/com/plutext/Plutext-Enterprise/
+
+LibreOffice:
+简介：https://zh-cn.libreoffice.org/discover/about/
+LibreOffice 采用对企业和个人用户均免费的 GPL 2.0 授权协议。

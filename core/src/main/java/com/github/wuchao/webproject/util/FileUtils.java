@@ -19,6 +19,24 @@ import java.util.regex.Pattern;
 public abstract class FileUtils {
 
     /**
+     * 创建包含多级目录的文件
+     *
+     * @param path
+     * @throws IOException
+     */
+    public static File createFile(String path) throws IOException {
+        if (StringUtils.isNotEmpty(path)) {
+            File file = new File(path);
+            if (!file.getParentFile().exists()) {
+                file.getParentFile().mkdirs();
+            }
+            file.createNewFile();
+            return file;
+        }
+        throw new RuntimeException("文件目录为空");
+    }
+
+    /**
      * 上传文件
      *
      * @param fileUploadPath
@@ -196,12 +214,54 @@ public abstract class FileUtils {
     }
 
     /**
+     * 删除文件/目录（包括该目录下的所有文件）
+     *
+     * @param file
+     */
+    public static void delete(File file) {
+        if (!file.exists()) {
+            return;
+        }
+
+        if (file.isDirectory()) {
+            File[] files = file.listFiles();
+            for (File f : files) {
+                delete(f);
+            }
+        }
+
+        file.delete();
+    }
+
+    /**
      * 获取文件拓展名
      *
      * @param fileName
      * @return
      */
-    public String getExt(String fileName) {
+    public static String getExt(String fileName) {
         return fileName.substring(fileName.lastIndexOf(".") + 1);
     }
+
+    /**
+     * 将输入流保存到文件中
+     *
+     * @param inputStream
+     * @param outFile
+     */
+    public static void saveFile(InputStream inputStream, String outFile) {
+        try {
+            @Cleanup OutputStream outputStream = new FileOutputStream(outFile);
+            byte[] bytes = new byte[1024];
+            int length;
+            while ((length = inputStream.read(bytes)) != -1) {
+                outputStream.write(bytes, 0, length);
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

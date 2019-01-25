@@ -1,12 +1,15 @@
 package com.github.wuchao.webproject.config;
 
 import com.github.wuchao.webproject.interceptor.FormTokenInterceptor;
+import org.springframework.boot.web.servlet.MultipartConfigFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 import org.springframework.web.servlet.config.annotation.*;
+
+import javax.servlet.MultipartConfigElement;
 
 @Configuration
 public class WebMvcConfig extends WebMvcConfigurerAdapter {
@@ -47,6 +50,21 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
     @Bean
     public MultipartResolver multipartResolver() {
         return new StandardServletMultipartResolver();
+    }
+
+    /**
+     * 设置文件上传大小限制
+     *
+     * @return
+     */
+    @Bean
+    public MultipartConfigElement multipartConfigElement() {
+        MultipartConfigFactory factory = new MultipartConfigFactory();
+        // 单个上传文件大小（单位：KB,MB）
+        factory.setMaxFileSize("10MB");
+        // 一次提交的所有上传文件总大小
+        factory.setMaxRequestSize("10MB");
+        return factory.createMultipartConfig();
     }
 
 }

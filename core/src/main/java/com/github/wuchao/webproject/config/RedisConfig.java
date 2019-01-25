@@ -89,13 +89,13 @@ public class RedisConfig extends CachingConfigurerSupport {
         return redisTemplate;
     }
 
-    @Bean
-    public CacheManager cacheManager(RedisTemplate redisTemplate) {
-        RedisCacheManager cacheManager = new RedisCacheManager(redisTemplate);
-        cacheManager.setUsePrefix(true);
-        cacheManager.setDefaultExpiration(60);
-        return cacheManager;
-    }
+//    @Bean
+//    public CacheManager cacheManager(RedisTemplate redisTemplate) {
+//        RedisCacheManager cacheManager = new RedisCacheManager(redisTemplate);
+//        cacheManager.setUsePrefix(true);
+//        cacheManager.setDefaultExpiration(60);
+//        return cacheManager;
+//    }
 
     /**
      * Better to use own Keygenerator instead of default as the default

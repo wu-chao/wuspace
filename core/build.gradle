@@ -19,8 +19,8 @@ buildscript {
         maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
     }
     ext {
-        // spring_boot_version = '1.5.9.RELEASE'
-        spring_boot_version = '1.5.12.RELEASE'
+//        spring_boot_version = '1.5.9.RELEASE'
+//        spring_boot_version = '1.5.12.RELEASE'
     }
     dependencies {
         /**spring-boot-gradle-plugin 的作用：
@@ -31,7 +31,7 @@ buildscript {
          *
          * 不同版本的配置方式：https://plugins.gradle.org/plugin/org.springframework.boot/1.5.9.RELEASE
          */
-        classpath "org.springframework.boot:spring-boot-gradle-plugin:$spring_boot_version"
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:${spring_boot_version}"
         /**
          * Provides additional optional and provided dependency configurations for Gradle along with Maven POM generation support.
          * https://github.com/spring-gradle-plugins/propdeps-plugin
@@ -50,7 +50,7 @@ apply plugin: 'checkstyle'
 apply plugin: 'java'
 // http://docs.spring.io/spring-boot/docs/current/reference/html/build-tool-plugins-gradle-plugin.html
 apply plugin: 'org.springframework.boot'
-//apply plugin: "io.spring.dependency-management"
+apply plugin: 'io.spring.dependency-management'
 //apply plugin: "com.bmuschko.tomcat"
 //apply plugin: 'jetty'
 
@@ -114,6 +114,7 @@ dependencies {
     compile "org.springframework.boot:spring-boot-starter-cache"
     compile "org.springframework.boot:spring-boot-starter-data-jpa"
     compile "org.springframework.boot:spring-boot-starter-data-redis"
+    compile "org.springframework.boot:spring-boot-starter-data-mongodb"
     compile("org.springframework.boot:spring-boot-starter-web") {
         exclude module: 'spring-boot-starter-tomcat'
     }
@@ -210,15 +211,20 @@ dependencies {
     compile "org.apache.oro:com.springsource.org.apache.oro:2.0.8"
 
     // Apache POI
+    //（如果要兼容 DocToPDFConverter，要将版本从 3.13 退到 3.12）
     compile "org.apache.poi:poi:${apache_poi_version}"
     compile "org.apache.poi:poi-ooxml:${apache_poi_ooxml_version}"
+    compile "org.apache.poi:poi-scratchpad:${apache_poi_scratchpad_version}"
 //    compile "org.apache.poi:poi-ooxml-schemas:${poi_ooxml_schemas_version}"
 
-    /*如果（生成下发文）使用了 Plutext-Enterprise-3.3.0.6，则 Docx4j 版本最高只能用 v3.3.3，否则不兼容*/
+    /*如果使用了 Plutext-Enterprise-3.3.0.6，则 Docx4j 版本最高只能用 v3.3.3，否则不兼容*/
     compile("org.docx4j:docx4j:${docx4j_version}") {
         exclude(group: 'org.slf4j')
     }
 
+    compile "fr.opensagres.xdocreport:org.apache.poi.xwpf.converter.pdf:1.0.5"
+    compile "fr.opensagres.xdocreport:org.odftoolkit.odfdom.converter.pdf:1.0.5"
+    compile "fr.opensagres.xdocreport:fr.opensagres.xdocreport.itext.extension:1.0.5"
     compile "com.itextpdf:itextpdf:${itextpdf_version}"
     compile "com.itextpdf:itext-asian:${itext_asian_version}"
 
