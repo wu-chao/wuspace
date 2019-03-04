@@ -211,13 +211,12 @@ dependencies {
     compile "org.apache.oro:com.springsource.org.apache.oro:2.0.8"
 
     // Apache POI
-    //（如果要兼容 DocToPDFConverter，要将版本从 3.13 退到 3.12）
     compile "org.apache.poi:poi:${apache_poi_version}"
     compile "org.apache.poi:poi-ooxml:${apache_poi_ooxml_version}"
     compile "org.apache.poi:poi-scratchpad:${apache_poi_scratchpad_version}"
 //    compile "org.apache.poi:poi-ooxml-schemas:${poi_ooxml_schemas_version}"
 
-    /*如果使用了 Plutext-Enterprise-3.3.0.6，则 Docx4j 版本最高只能用 v3.3.3，否则不兼容*/
+    /* 如果使用了 Plutext-Enterprise-3.3.0.6，则 Docx4j 版本最高只能用 v3.3.3，否则不兼容 */
     compile("org.docx4j:docx4j:${docx4j_version}") {
         exclude(group: 'org.slf4j')
     }
@@ -231,6 +230,9 @@ dependencies {
     // maven { url "http://maven.aliyun.com/nexus/content/groups/public/" } module 会错误
     compile "org.icepdf.os:icepdf-core:${icepdf_core_version}"
     compile "org.icepdf.os:icepdf-viewer:${icepdf_viewer_version}"
+
+    // ZipUtils
+    compile "org.apache.ant:ant:${apache_ant_version}"
 
     compile "org.hyperic:sigar:${sigar_version}"
 
