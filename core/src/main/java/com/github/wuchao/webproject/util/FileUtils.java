@@ -4,6 +4,7 @@ import com.aspose.words.Document;
 import com.aspose.words.SaveFormat;
 import lombok.Cleanup;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.MediaType;
 import org.springframework.util.ResourceUtils;
@@ -14,6 +15,7 @@ import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.List;
 import java.util.UUID;
 import java.util.regex.Pattern;
 
@@ -124,7 +126,7 @@ public abstract class FileUtils {
      * @return
      * @throws IOException
      */
-    public static String downloadFile(String fileURL, String saveDir) throws IOException {
+    public static String saveFile(String fileURL, String saveDir) throws IOException {
 
         String url = fileURL;
         String saveFilePath;
@@ -216,6 +218,17 @@ public abstract class FileUtils {
     }
 
     /**
+     * 批量删除文件
+     *
+     * @param fileLocations
+     */
+    public static void delete(List<String> fileLocations) {
+        if (CollectionUtils.isNotEmpty(fileLocations)) {
+            fileLocations.forEach(fileLocation -> delete(fileLocation));
+        }
+    }
+
+    /**
      * 删除文件/目录（包括该目录下的所有文件）
      *
      * @param file
@@ -234,6 +247,7 @@ public abstract class FileUtils {
 
         file.delete();
     }
+
 
     /**
      * 获取文件拓展名
@@ -347,6 +361,55 @@ public abstract class FileUtils {
      */
     public static void word2html2(InputStream inputStream) {
 
+    }
+
+    /**
+     * 预览 pdf
+     *
+     * @param pdfLocation
+     * @param fileName
+     * @param response
+     */
+    public static void previewPDF(String fileName, String pdfLocation, HttpServletResponse response) {
+        InputStream inputStream = null;
+        try {
+
+            try {
+                File outFile = ResourceUtils.getFile(pdfLocation);
+                inputStream = new FileInputStream(outFile);
+                log.info("================================= 获取文件输入流>：{}", "new FileInputStream(ResourceUtils.getFile(resourceLocation))");
+                log.info("================================= 下载的文件路径为>：{}", outFile);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                inputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream(pdfLocation);
+                log.info("================================= 获取文件输入流>：{}", "Thread.currentThread().getContextClassLoader().getResourceAsStream(resourceLocation)");
+            }
+
+            @Cleanup BufferedInputStream br = new BufferedInputStream(inputStream);
+            @Cleanup OutputStream out = response.getOutputStream();
+
+            response.setContentType("application/pdf");
+            response.setHeader("Content-Disposition",
+                    "inline; filename=" + URLEncoder.encode(fileName, "UTF-8"));
+
+            byte[] buf = new byte[1024];
+            int len;
+            while ((len = br.read(buf)) != -1) {
+                out.write(buf, 0, len);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (inputStream != null) {
+                try {
+                    inputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
 }
