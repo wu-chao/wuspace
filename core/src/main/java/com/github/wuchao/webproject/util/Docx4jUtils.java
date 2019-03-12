@@ -252,14 +252,12 @@ public abstract class Docx4jUtils {
     private static void saveTemplate(InputStream fis, String toDocPath) {
         if (fis != null && StringUtils.isNotEmpty(toDocPath)) {
             FileOutputStream fos;
-            int byteSum = 0;
             int byteRead;
             try {
                 fos = new FileOutputStream(toDocPath);
                 byte[] buffer = new byte[1444];
                 while ((byteRead = fis.read(buffer)) != -1) {
                     // 字节数 文件大小
-                    byteSum += byteRead;
                     fos.write(buffer, 0, byteRead);
                 }
                 fis.close();

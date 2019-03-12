@@ -16,6 +16,18 @@ import java.util.Map;
 
 public class POIUtil {
 
+    public static WordTemplate loadDocument(String resourceLocation) throws IOException {
+        if (StringUtils.isNotEmpty(resourceLocation)) {
+            // 读取word模板
+            @Cleanup InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream(resourceLocation);
+            if (is == null) {
+                is = new FileInputStream(ResourceUtils.getFile(resourceLocation));
+            }
+            return new WordTemplate(is);
+        }
+        return null;
+    }
+
     /**
      * 替换模板文件
      *
@@ -25,12 +37,12 @@ public class POIUtil {
     public static WordTemplate replaceDocument(String resourceLocation, Map<String, Object> dataMap) {
         if (StringUtils.isNotEmpty(resourceLocation) && MapUtils.isNotEmpty(dataMap)) {
             try {
-                //读取word模板
-                @Cleanup InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream(resourceLocation);
-                WordTemplate template = new WordTemplate(is);
-                //替换数据
-                template.replaceDocument(dataMap);
-                is.close();
+                WordTemplate template = loadDocument(resourceLocation);
+
+                if (MapUtils.isNotEmpty(dataMap)) {
+                    //替换数据
+                    template.replaceDocument(dataMap);
+                }
 
                 return template;
 
@@ -43,17 +55,7 @@ public class POIUtil {
         }
     }
 
-    /**
-     * 浏览器导出文件（resourceLocation文件中原有的图片丢失了）
-     *
-     * @param resourceLocation 文件模板位置
-     * @param dataMap          模板填充数据
-     * @param outFileName      导出后的文件名称
-     * @param response
-     */
-    public static void exportDocument(String resourceLocation, Map<String, Object> dataMap, String outFileName, HttpServletResponse response) {
-
-        WordTemplate template = replaceDocument(resourceLocation, dataMap);
+    public static void writeFileStream(WordTemplate template, String outFileName, HttpServletResponse response) {
         if (template != null) {
             try {
                 // 文件名称转码，防止文件名称出现乱码
@@ -79,21 +81,27 @@ public class POIUtil {
                 e.printStackTrace();
             }
         }
+    }
+
+    /**
+     * 浏览器导出文件
+     *
+     * @param resourceLocation 文件模板位置
+     * @param dataMap          模板填充数据
+     * @param outFileName      导出后的文件名称
+     * @param response
+     */
+    public static void exportDocument(String resourceLocation, Map<String, Object> dataMap, String outFileName, HttpServletResponse response) {
+
+        WordTemplate template = replaceDocument(resourceLocation, dataMap);
+        writeFileStream(template, outFileName, response);
 
     }
 
-    public static void exportDocument2(String resourceLocation, Map<String, Object> dataMap, String descLocation) {
-        try {
-            @Cleanup InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream(resourceLocation);
-            @Cleanup OutputStream os = new FileOutputStream(ResourceUtils.getFile(descLocation));
-            WordTemplate template = new WordTemplate(is);
-            // 处理段落
-            template.processDocument(dataMap);
-            template.getDocument().write(os);
-            os.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public static void exportDocument(String resourceLocation, String outFileName, HttpServletResponse response) throws IOException {
+
+        WordTemplate template = loadDocument(resourceLocation);
+        writeFileStream(template, outFileName, response);
 
     }
 

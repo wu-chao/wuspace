@@ -41,7 +41,7 @@ public class POIUtilTest {
         parametersMap.put("{test}", "success");
 
         // 测试导出word
-        POIUtil.exportDocument2("files/testPOI.docx", parametersMap,
+        POIUtil.exportDocument("files/testPOI.docx", parametersMap,
                 System.getProperty("user.dir") + "/result.docx");
 
     }

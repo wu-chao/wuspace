@@ -26,7 +26,7 @@ public class OfficeConverter {
      * @param deleteResource
      * @return
      */
-    public String wordToPdfByLibreOffice(String docLocation, boolean deleteResource) {
+    public static String wordToPdfByLibreOffice(String docLocation, boolean deleteResource) {
         String targetLocation = docLocation.substring(0, docLocation.lastIndexOf(File.separator));
         return convertOfficeByLibreOffice(docLocation, targetLocation, "pdf", deleteResource);
     }
@@ -39,7 +39,7 @@ public class OfficeConverter {
      * @param deleteResource
      * @return
      */
-    public String docToDocxByLibreOffice(String docLocation, boolean deleteResource) {
+    public static String docToDocxByLibreOffice(String docLocation, boolean deleteResource) {
         String targetLocation = docLocation.substring(0, docLocation.lastIndexOf(File.separator));
         return convertOfficeByLibreOffice(docLocation, targetLocation, "docx", deleteResource);
     }
@@ -47,12 +47,13 @@ public class OfficeConverter {
     /**
      * Office 文档格式转换
      *
-     * @param docLocation
-     * @param targetFormat
-     * @param deleteResource
+     * @param docLocation    原文件位置
+     * @param targetLocation 目标文件目录，如果目录文件目录是 C:\、D:\、D: 等，则转换后的文件会自动保存到 %LibreOffice_HOME%\program\ 目录下
+     * @param targetFormat   目标格式
+     * @param deleteResource 转换后是否删除原文件
      * @return
      */
-    private String convertOfficeByLibreOffice(String docLocation, String targetLocation, String targetFormat, boolean deleteResource) {
+    private static String convertOfficeByLibreOffice(String docLocation, String targetLocation, String targetFormat, boolean deleteResource) {
         if (StringUtils.isBlank(docLocation) || docLocation.contains(" ")) {
             return "Error:word 文件名不能包含空格";
         }
@@ -60,7 +61,7 @@ public class OfficeConverter {
             String osName = System.getProperty("os.name");
             StringBuilder command = new StringBuilder();
             if (osName.contains("Windows")) {
-                command.append("soffice.bin --headless --invisible --convert-to ").append(targetFormat).append(" ").append(docLocation)
+                command.append("soffice --headless --invisible --convert-to ").append(targetFormat).append(" ").append(docLocation)
                         .append(" --outdir ").append(targetLocation);
             } else {
 
@@ -78,7 +79,7 @@ public class OfficeConverter {
         }
     }
 
-    private void exeLibreOfficeCMD(String command) {
+    private static void exeLibreOfficeCMD(String command) {
         try {
             ProcessBuilder builder = new ProcessBuilder(
                     "cmd.exe", "/c", command);
