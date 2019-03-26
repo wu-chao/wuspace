@@ -42,6 +42,13 @@ public class StreamTests {
         }).collect(Collectors.toList());
         objects2.forEach(o -> System.out.println(o));
 
+
+        System.out.println("----------------- Test Empty Stream Map List ----------------");
+        List<String> emptyList = new ArrayList<>(0);
+        List<Integer> intList = emptyList.stream().map(e -> e.length()).collect(toList());
+        System.out.println(intList.size());
+        intList.forEach(e -> System.out.println(e));
+
     }
 
 

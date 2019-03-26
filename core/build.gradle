@@ -161,7 +161,7 @@ dependencies {
 
     // Hibernate 5.2 版本及以上自动支持 java8 日期，版本低了就加上 hibernate-java8 依赖
     // http://blog.csdn.net/mn960mn/article/details/53141366
-    compile "org.hibernate:hibernate-java8:5.1.2.Final"
+//    compile "org.hibernate:hibernate-java8:5.1.2.Final"
 
 //    org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor
 //    compile "org.hibernate:hibernate-jpamodelgen:5.1.0.Final"
@@ -185,6 +185,7 @@ dependencies {
     compile "com.fasterxml.jackson.datatype:jackson-datatype-json-org:2.8.8"
     compile "com.fasterxml.jackson.datatype:jackson-datatype-hppc:2.8.8"
     compile "com.fasterxml.jackson.datatype:jackson-datatype-hibernate5:2.8.8"
+    compile "org.zalando:problem-spring-web:0.24.0-RC.0"
 
     compile "com.dyuproject.protostuff:protostuff-core:${protostuff_core_version}"
     compile "com.dyuproject.protostuff:protostuff-runtime:${protostuff_runtime_version}"
