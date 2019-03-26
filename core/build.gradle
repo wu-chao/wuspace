@@ -185,6 +185,7 @@ dependencies {
     compile "com.fasterxml.jackson.datatype:jackson-datatype-json-org:2.8.8"
     compile "com.fasterxml.jackson.datatype:jackson-datatype-hppc:2.8.8"
     compile "com.fasterxml.jackson.datatype:jackson-datatype-hibernate5:2.8.8"
+    compile "org.zalando:problem-spring-web:0.24.0-RC.0"
 
     compile "com.dyuproject.protostuff:protostuff-core:${protostuff_core_version}"
     compile "com.dyuproject.protostuff:protostuff-runtime:${protostuff_runtime_version}"
