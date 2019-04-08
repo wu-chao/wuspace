@@ -2,6 +2,7 @@ package com.github.wuchao.webproject.util;
 
 import com.github.wuchao.webproject.util.poi.WordTemplate;
 import lombok.Cleanup;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -14,14 +15,17 @@ import java.net.URLEncoder;
 import java.util.List;
 import java.util.Map;
 
+@Slf4j
 public class POIUtil {
 
     public static WordTemplate loadDocument(String resourceLocation) throws IOException {
         if (StringUtils.isNotEmpty(resourceLocation)) {
             // 读取word模板
             @Cleanup InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream(resourceLocation);
+            log.info("================================= 获取文件输入流>：{}", "Thread.currentThread().getContextClassLoader().getResourceAsStream(resourceLocation)");
             if (is == null) {
                 is = new FileInputStream(ResourceUtils.getFile(resourceLocation));
+                log.info("================================= 获取文件输入流>：{}", "new FileInputStream(ResourceUtils.getFile(resourceLocation))");
             }
             return new WordTemplate(is);
         }

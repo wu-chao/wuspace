@@ -159,9 +159,8 @@ dependencies {
     compile "org.hibernate:hibernate-jcache:${hibernate_version}"
     compile "org.hibernate:hibernate-search-engine:${hibernate_search_version}"
 
-    // Hibernate 5.2 版本及以上自动支持 java8 日期，版本低了就加上 hibernate-java8 依赖
     // http://blog.csdn.net/mn960mn/article/details/53141366
-//    compile "org.hibernate:hibernate-java8:5.1.2.Final"
+    compile "org.hibernate:hibernate-java8:5.1.2.Final"
 
 //    org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor
 //    compile "org.hibernate:hibernate-jpamodelgen:5.1.0.Final"

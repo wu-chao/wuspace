@@ -4,6 +4,8 @@ import com.github.wuchao.webproject.util.DateTimeUtils;
 import com.github.wuchao.webproject.util.NumberUtils;
 import org.junit.Test;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.*;
 import java.time.temporal.TemporalAdjusters;
 
@@ -29,12 +31,13 @@ public class LocalDateTimeTests {
     }
 
     @Test
-    public void testDuration() {
+    public void testDuration() throws ParseException {
         LocalDateTime startTime = LocalDateTime.of(2017, 8, 8, 10, 10, 10);
         LocalDateTime endTime = LocalDateTime.of(2018, 9, 9, 10, 10, 10);
 
         Duration duration = Duration.between(startTime, endTime);
 
+        System.out.println("--------------------------------------");
         System.out.println("duration days: " + duration.toDays() + " == "
                 + DateTimeUtils.dayDuration(startTime, endTime) + " == "
                 + DateTimeUtils.dayDuration(startTime.toLocalDate(), endTime.toLocalDate())); // 天数
@@ -43,12 +46,17 @@ public class LocalDateTimeTests {
         System.out.println("duration millis: " + duration.toMillis() + " == " + DateTimeUtils.milliDuration(startTime, endTime)); // 毫秒
         System.out.println("duration nanos: " + duration.toNanos()); // 纳秒
 
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        System.out.println("duration days: " + DateTimeUtils.dayDuration(simpleDateFormat.parse("2017-08-08"),
+                simpleDateFormat.parse("2018-09-09")));
+
         /**
          * duration days: 397
          * duration hours: 9528
          * duration minutes: 571680
          * duration millis: 34300800000
          * duration nanos: 34300800000000000
+         * duration days: 397
          */
 
     }
