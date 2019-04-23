@@ -5,6 +5,7 @@ description = 'core'
 buildscript {
     repositories {
         mavenLocal()
+        maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
         maven { url "http://maven.aliyun.com/nexus/content/repositories/central/" }
         maven { url 'http://maven.oschina.net/content/groups/public/' }
         maven { url "https://plugins.gradle.org/m2/" }
@@ -37,6 +38,7 @@ buildscript {
          * https://github.com/spring-gradle-plugins/propdeps-plugin
          */
         classpath 'io.spring.gradle:propdeps-plugin:0.0.9.RELEASE'
+        classpath "io.spring.gradle:dependency-management-plugin:0.6.1.RELEASE"
         /**
          * https://www.jianshu.com/p/3a81f0dd4418
          */
@@ -51,8 +53,7 @@ apply plugin: 'java'
 // http://docs.spring.io/spring-boot/docs/current/reference/html/build-tool-plugins-gradle-plugin.html
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
-//apply plugin: "com.bmuschko.tomcat"
-//apply plugin: 'jetty'
+
 
 configure(allprojects) {
     apply plugin: 'propdeps'
@@ -79,6 +80,7 @@ repositories {
 
     mavenLocal()
     maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+    maven { url "http://maven.aliyun.com/nexus/content/repositories/central/" }
     maven { url 'http://maven.oschina.net/content/groups/public/' }
 }
 
@@ -86,7 +88,6 @@ ext {
     mybatis_generator_version = '1.3.5'
     mybatis_spring_boot_starter_version = '1.3.1'
     mapper_spring_boot_starter_version = '1.1.4'
-    pagehelper_spring_boot_starter_version = '1.2.1'
 
     hikaricp_version = '2.6.0'
 
@@ -107,23 +108,18 @@ dependencies {
 
     // Spring Boot
     compile "org.springframework.boot:spring-boot-devtools"
-    compile "org.springframework.boot:spring-boot-starter-aop"
-    compile "org.springframework.boot:spring-boot-starter-test"
+    compile "org.springframework.boot:spring-boot-starter-logging"
     compile "org.springframework.boot:spring-boot-starter-actuator"
+    compile "org.springframework.boot:spring-boot-starter-test"
+    compile "org.springframework.boot:spring-boot-starter-aop"
     compile "org.springframework.boot:spring-boot-starter-security"
     compile "org.springframework.boot:spring-boot-starter-cache"
     compile "org.springframework.boot:spring-boot-starter-data-jpa"
     compile "org.springframework.boot:spring-boot-starter-data-redis"
     compile "org.springframework.boot:spring-boot-starter-data-mongodb"
-    compile("org.springframework.boot:spring-boot-starter-web") {
-        exclude module: 'spring-boot-starter-tomcat'
-    }
-    compile("org.springframework.boot:spring-boot-starter-undertow")
 
     compile "org.springframework.boot:spring-boot-starter-websocket"
-//    compile "org.springframework.boot:spring-boot-starter-amqp"
 
-//    optional "org.springframework.boot:spring-boot-configuration-processor"
 
     // Swagger
 //    compile("io.springfox:springfox-swagger2:${springfox_version}") {

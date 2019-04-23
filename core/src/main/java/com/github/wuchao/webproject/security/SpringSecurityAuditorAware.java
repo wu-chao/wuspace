@@ -11,11 +11,9 @@ import java.util.Optional;
 @Component
 public class SpringSecurityAuditorAware implements AuditorAware<String> {
 
-
     @Override
     public Optional<String> getCurrentAuditor() {
-        String userName = SecurityUtils.getCurrentUsername();
-        userName = userName != null ? userName : "system";
-        return Optional.of(userName);
+        CustomUser user = SecurityUtils.getCurrentUser();
+        return Optional.ofNullable(user != null ? String.valueOf(user.getUserId()) : null);
     }
 }

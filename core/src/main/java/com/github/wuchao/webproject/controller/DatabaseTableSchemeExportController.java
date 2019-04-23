@@ -30,9 +30,9 @@ public class DatabaseTableSchemeExportController {
      * @return
      */
     @GetMapping("/export/databaseTableSchemes")
-    public ResponseEntity exportDamReportRelatedTables(@RequestParam("title") String title,
-                                                       @RequestParam("tableNames") String tableNames,
-                                                       HttpServletResponse response) throws IOException, SQLException {
+    public ResponseEntity exportDatabaseTableSchemes(@RequestParam("title") String title,
+                                                     @RequestParam("tableNames") String tableNames,
+                                                     HttpServletResponse response) throws IOException, SQLException {
 
         if (StringUtils.isNotBlank(tableNames)) {
             String[] tableNameList = tableNames.split(",");

@@ -75,7 +75,7 @@
     <logger name="sun.rmi.transport" level="WARN"/>
 
     <springProfile name="dev">
-        <logger name="com.github.wuchao.webproject" level="DEBUG"/>
+        <logger name="com.github.wuchao.webproject" level="INFO"/>
         <root level="WARN">
             <appender-ref ref="FILE"/>
         </root>
@@ -85,7 +85,7 @@
     </springProfile>
 
     <springProfile name="prod">
-        <logger name="com.github.wuchao.webproject" level="WARN"/>
+        <logger name="com.github.wuchao.webproject" level="INFO"/>
         <root level="WARN">
             <appender-ref ref="TCP_STASH"/>
             <appender-ref ref="CONSOLE"/>

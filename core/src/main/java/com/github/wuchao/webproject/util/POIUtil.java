@@ -177,9 +177,12 @@ public class POIUtil {
      * @param path     生成的 word 文件目录
      */
     public static String richText2Doc(String richText, String fileName, String path) {
+
+        // 这里也可以使用 “.docx” 格式，但是如果用 Docx4j 打开的话则会报错。
+        String docLocation = path + File.separator + fileName + ".doc";
+
         try {
-            String filePath = path + File.separator + fileName + ".docx";
-            @Cleanup FileOutputStream os = new FileOutputStream(filePath);
+            FileOutputStream os = new FileOutputStream(docLocation);
 
             String str = " <!--[if gte mso 9]><xml><w:WordDocument><w:View>Print</w:View><w:TrackMoves>false</w:TrackMoves><w:TrackFormatting/><w:ValidateAgainstSchemas/><w:SaveIfXMLInvalid>false</w:SaveIfXMLInvalid><w:IgnoreMixedContent>false</w:IgnoreMixedContent><w:AlwaysShowPlaceholderText>false</w:AlwaysShowPlaceholderText><w:DoNotPromoteQF/><w:LidThemeOther>EN-US</w:LidThemeOther><w:LidThemeAsian>ZH-CN</w:LidThemeAsian><w:LidThemeComplexScript>X-NONE</w:LidThemeComplexScript><w:Compatibility><w:BreakWrappedTables/><w:SnapToGridInCell/><w:WrapTextWithPunct/><w:UseAsianBreakRules/><w:DontGrowAutofit/><w:SplitPgBreakAndParaMark/><w:DontVertAlignCellWithSp/><w:DontBreakConstrainedForcedTables/><w:DontVertAlignInTxbx/><w:Word11KerningPairs/><w:CachedColBalance/><w:UseFELayout/></w:Compatibility><w:BrowserLevel>MicrosoftInternetExplorer4</w:BrowserLevel><m:mathPr><m:mathFont m:val='Cambria Math'/><m:brkBin m:val='before'/><m:brkBinSub m:val='--'/><m:smallFrac m:val='off'/><m:dispDef/><m:lMargin m:val='0'/> <m:rMargin m:val='0'/><m:defJc m:val='centerGroup'/><m:wrapIndent m:val='1440'/><m:intLim m:val='subSup'/><m:naryLim m:val='undOvr'/></m:mathPr></w:WordDocument></xml><![endif]-->";
             String h = " <html xmlns:v='urn:schemas-microsoft-com:vml'xmlns:o='urn:schemas-microsoft-com:office:office'xmlns:w='urn:schemas-microsoft-com:office:word'xmlns:m='http://schemas.microsoft.com/office/2004/12/omml'xmlns='http://www.w3.org/TR/REC-html40'  ";
@@ -189,7 +192,7 @@ public class POIUtil {
             // 这里是必须要设置编码的，不然导出中文就会乱码。
             byte b[] = richText.getBytes("utf-8");
             // 将字节数组包装到流中
-            @Cleanup ByteArrayInputStream bais = new ByteArrayInputStream(b);
+            ByteArrayInputStream bais = new ByteArrayInputStream(b);
 
             // 生成 word 文件
             POIFSFileSystem document = new POIFSFileSystem();
@@ -197,22 +200,22 @@ public class POIUtil {
             directory.createDocument("WordDocument", bais);
             // 输出文件
             document.writeFilesystem(os);
+            os.flush();
+            os.close();
+            bais.close();
 
-            return filePath;
+            return docLocation;
 
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         return null;
     }
 
     /**
-     * 富文本转 docx
+     * 富文本转 docx（文字大小和颜色没有转换成功）
      * https://github.com/plutext/docx4j-ImportXHTML/blob/master/src/samples/java/org/docx4j/samples/XhtmlToDocxAndBack.java#L77
-     * 问题：
-     * 1. 字体大小
-     * 2. 字体颜色
-     * 3. 图片
      *
      * @throws Docx4JException
      */

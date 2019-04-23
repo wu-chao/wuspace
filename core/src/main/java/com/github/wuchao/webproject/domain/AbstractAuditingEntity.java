@@ -13,6 +13,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.Column;
 import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.Transient;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -44,7 +45,8 @@ public class AbstractAuditingEntity implements Serializable {
     @LastModifiedDate
     private LocalDateTime lastModifiedDate;
 
-    @Column(name = "deleted")
+//    @Column(name = "deleted")
+    @Transient
     private Integer deleted;
 
 }
