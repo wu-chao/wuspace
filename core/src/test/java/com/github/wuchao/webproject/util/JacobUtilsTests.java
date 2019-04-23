@@ -10,22 +10,6 @@ import java.io.File;
  */
 public class JacobUtilsTests {
 
-    @Test
-    public void testDocx2Pdf() {
-        String resourceLocation = System.getProperty("user.dir") + File.separator + "DocxResume2.docx";
-        // 转换后的 pdf 文件路径和文件名（不需要提前新建好该 pdf 文件）
-        String outPdfFileLocation = System.getProperty("user.dir") + File.separator + "DocxResume.pdf";
-        JacobUtils.docx2Pdf(resourceLocation, outPdfFileLocation);
-    }
-
-    @Test
-    public void testWord2Pdf() {
-        String resourceLocation = System.getProperty("user.dir") + File.separator + "Python-Django.doc";
-        String resourceLocation2 = System.getProperty("user.dir") + File.separator + "Python-Django.docx";
-        String outPdfFileLocation = System.getProperty("user.dir") + File.separator + "Python-Django.pdf";
-        JacobUtils.word2pdf(resourceLocation, outPdfFileLocation);
-    }
-
     /**
      * doc 格式
      */
@@ -35,6 +19,27 @@ public class JacobUtilsTests {
      * docx 格式
      */
     private static final int DOCX_FMT = 12;
+
+    /**
+     * pdf 格式
+     */
+    private static final int PDF_FMT = 17;
+
+    @Test
+    public void testWord2Pdf() {
+        String resourceLocation = System.getProperty("user.dir") + File.separator + "Python-Django.doc";
+//        String resourceLocation2 = System.getProperty("user.dir") + File.separator + "Python-Django.docx";
+        String outPdfFileLocation = System.getProperty("user.dir") + File.separator + "Python-Django.pdf";
+        JacobUtils.word2pdf(resourceLocation, outPdfFileLocation);
+    }
+
+    @Test
+    public void testWord2Pdf2() {
+        String resourceLocation = System.getProperty("user.dir") + File.separator + "Python-Django.doc";
+        String resourceLocation2 = System.getProperty("user.dir") + File.separator + "Python-Django.docx";
+        String outPdfFileLocation = System.getProperty("user.dir") + File.separator + "Python-Django.pdf";
+        JacobUtils.convertWordFmt(resourceLocation, outPdfFileLocation, PDF_FMT);
+    }
 
     @Test
     public void testDocx2Doc() {
