@@ -386,18 +386,7 @@ public abstract class FileUtils {
                 log.info("================================= 获取文件输入流>：{}", "Thread.currentThread().getContextClassLoader().getResourceAsStream(resourceLocation)");
             }
 
-            @Cleanup BufferedInputStream br = new BufferedInputStream(inputStream);
-            @Cleanup OutputStream out = response.getOutputStream();
-
-            response.setContentType("application/pdf");
-            response.setHeader("Content-Disposition",
-                    "inline; filename=" + URLEncoder.encode(fileName, "UTF-8"));
-
-            byte[] buf = new byte[1024];
-            int len;
-            while ((len = br.read(buf)) != -1) {
-                out.write(buf, 0, len);
-            }
+            previewPDF(fileName, inputStream, response);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -410,6 +399,33 @@ public abstract class FileUtils {
                 }
             }
         }
+    }
+
+
+    /**
+     * 预览 pdf
+     *
+     * @param fileName
+     * @param inputStream
+     * @param response
+     */
+    public static void previewPDF(String fileName, InputStream inputStream, HttpServletResponse response) throws IOException {
+
+        @Cleanup BufferedInputStream br = new BufferedInputStream(inputStream);
+        @Cleanup OutputStream out = response.getOutputStream();
+
+        response.setContentType("application/pdf");
+        response.setHeader("Content-Disposition",
+                "inline; filename=" + URLEncoder.encode(fileName, "UTF-8"));
+
+        byte[] buf = new byte[1024];
+        int len;
+        while ((len = br.read(buf)) != -1) {
+            out.write(buf, 0, len);
+        }
+
+        inputStream.close();
+
     }
 
 }

@@ -2,12 +2,10 @@ package com.github.wuchao.webproject.util;
 
 import lombok.Cleanup;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.stereotype.Component;
 
 import java.io.*;
 import java.util.concurrent.TimeUnit;
 
-@Component
 public class OfficeConverter {
 
     /**

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <configuration scan="true">
-<!--<configuration scan="true" scanPeriod="10 seconds">-->
+    <!--<configuration scan="true" scanPeriod="10 seconds">-->
 
     <include resource="org/springframework/boot/logging/logback/base.xml"/>
     <timestamp key="timestamp" datePattern="yyyy-MM-dd HH:mm:ss"/>
@@ -75,7 +75,7 @@
     <logger name="sun.rmi.transport" level="WARN"/>
 
     <springProfile name="dev">
-        <logger name="com.github.wuchao.webproject.controller.app" level="DEBUG"/>
+        <logger name="com.github.wuchao.webproject" level="DEBUG"/>
         <root level="WARN">
             <appender-ref ref="FILE"/>
         </root>
@@ -85,7 +85,7 @@
     </springProfile>
 
     <springProfile name="prod">
-        <logger name="com.github.wuchao.webproject.controller.app" level="WARN"/>
+        <logger name="com.github.wuchao.webproject" level="WARN"/>
         <root level="WARN">
             <appender-ref ref="TCP_STASH"/>
             <appender-ref ref="CONSOLE"/>
