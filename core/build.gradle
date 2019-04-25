@@ -117,9 +117,13 @@ dependencies {
     compile "org.springframework.boot:spring-boot-starter-data-jpa"
     compile "org.springframework.boot:spring-boot-starter-data-redis"
     compile "org.springframework.boot:spring-boot-starter-data-mongodb"
-
-    compile "org.springframework.boot:spring-boot-starter-websocket"
-
+    compile "org.springframework.security:spring-security-messaging"
+    compile("org.springframework.boot:spring-boot-starter-websocket") {
+        exclude module: 'spring-boot-starter-web'
+    }
+    compile "io.undertow:undertow-core:${io_undertow_version}"
+    compile "io.undertow:undertow-servlet:${io_undertow_version}"
+    compile "io.undertow:undertow-websockets-jsr:${io_undertow_version}"
 
     // Swagger
 //    compile("io.springfox:springfox-swagger2:${springfox_version}") {
