@@ -23,6 +23,47 @@ import java.util.regex.Pattern;
 public abstract class FileUtils {
 
     /**
+     * 获取文件输入流
+     *
+     * @param resourceLocation
+     * @return
+     */
+    public static InputStream loadFileInputStream(String resourceLocation) {
+        log.info("================================= resourceLocation：{}", resourceLocation);
+        if (StringUtils.isNotEmpty(resourceLocation)) {
+            InputStream is;
+            try {
+
+                try {
+                    is = Thread.currentThread().getContextClassLoader().getResourceAsStream(resourceLocation);
+                    log.info("================================= 获取文件输入流>：{}",
+                            "Thread.currentThread().getContextClassLoader().getResourceAsStream(resourceLocation)");
+
+                } catch (Exception e) {
+                    log.error(e.getMessage());
+                    File file = new File(resourceLocation);
+                    is = new FileInputStream(file);
+                    log.info("================================= 获取文件输入流>：{}",
+                            "new FileInputStream(new File(resourceLocation))");
+                }
+
+                if (is == null) {
+                    is = new FileInputStream(ResourceUtils.getFile(resourceLocation));
+                    log.info("================================= 获取文件输入流>：{}",
+                            "new FileInputStream(ResourceUtils.getFile(resourceLocation))");
+                }
+
+                return is;
+
+            } catch (Exception e) {
+                log.error(e.getMessage());
+            }
+        }
+
+        return null;
+    }
+
+    /**
      * 创建包含多级目录的文件
      *
      * @param path

@@ -73,7 +73,7 @@ public class JacobUtils {
         int fmt = 17;
         long start = System.currentTimeMillis();
         try {
-            ComThread.InitSTA(true);
+            ComThread.InitSTA();
             /**
              * 参数为 Word.Application：需要安装 Office
              * 参数为 kwps.application：需要安装 WPS
@@ -125,7 +125,7 @@ public class JacobUtils {
         long startTime = System.currentTimeMillis();
 
         // 实例化 ComThread 线程与 ActiveXComponent
-        ComThread.InitSTA(true);
+        ComThread.InitSTA();
 
         /**
          * 参数为 Word.Application：需要安装 Office

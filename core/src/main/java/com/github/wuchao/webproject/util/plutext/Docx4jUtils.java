@@ -1,7 +1,11 @@
-package com.github.wuchao.webproject.util;
+package com.github.wuchao.webproject.util.plutext;
 
 import com.aspose.words.Document;
 import com.aspose.words.*;
+import com.github.wuchao.webproject.util.FileUtils;
+import com.github.wuchao.webproject.util.XHtmlUtils;
+import com.github.wuchao.webproject.util.ZipUtils;
+import com.github.wuchao.webproject.util.plutext.htmleditor.HtmlToWordUtils;
 import com.plutext.merge.BlockRange;
 import com.plutext.merge.DocumentBuilder;
 import lombok.Cleanup;
@@ -10,7 +14,10 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.docx4j.Docx4J;
+import org.docx4j.Docx4jProperties;
 import org.docx4j.XmlUtils;
+import org.docx4j.convert.in.xhtml.XHTMLImporterImpl;
+import org.docx4j.convert.out.HTMLSettings;
 import org.docx4j.jaxb.Context;
 import org.docx4j.openpackaging.exceptions.Docx4JException;
 import org.docx4j.openpackaging.packages.WordprocessingMLPackage;
@@ -50,55 +57,6 @@ public abstract class Docx4jUtils {
     private static final String DOC = ".doc";
     private static final String DOCX = ".docx";
 
-    /**
-     * doc 文档转 docx 文档
-     *
-     * @param docLocation
-     * @param deleteResource 是否删除原文件
-     * @return
-     */
-    public static String doc2docx(String docLocation, boolean deleteResource) {
-        String docxLocation = null;
-        try {
-            // 如果是.doc，则转换成 .docx
-            if (docLocation.endsWith(DOC)) {
-                Document doc = new Document(docLocation);
-                docxLocation = docLocation.replace(DOC, DOCX);
-                File docx = new File(docxLocation);
-                if (!docx.exists() && !docx.createNewFile()) {
-                    return null;
-                }
-                doc.save(docxLocation);
-
-                WordprocessingMLPackage mlPackage = WordprocessingMLPackage.load(docx);
-                List<Object> objects = mlPackage.getMainDocumentPart().getContent();
-                Iterator iterator = objects.iterator();
-                String objStr;
-                while (iterator.hasNext()) {
-                    Object obj = iterator.next();
-                    objStr = obj.toString();
-                    if (objStr.contains("Evaluation Only. Created with Aspose.Words.")) {
-                        iterator.remove();
-                    } else if (objStr.contains("it was created using Aspose.Words in Evaluation Mode.")) {
-                        iterator.remove();
-                    }
-                    break;
-                }
-                mlPackage.save(docx);
-            }
-            return docxLocation;
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (deleteResource && docxLocation != null) {
-                FileUtils.delete(docLocation);
-            }
-        }
-
-        return null;
-
-    }
 
     /**
      * 合并文档方法一
@@ -1839,7 +1797,7 @@ public abstract class Docx4jUtils {
     }
 
     /**
-     * 清除段落布局
+     * 清除段落布局（aspose.words）
      * 在设置文档为只读文档时，出现过文档有部分内容格式乱了，但是在 WPS 打开显示正确，WPS 上提示清楚段落布局
      * https://github.com/Aspose/Aspose.Words-for-Java/blob/master/Examples/src/main/java/com/aspose/words/examples/programming_documents/document/RemovePageAndSectionBreaks.java
      *
@@ -1943,6 +1901,56 @@ public abstract class Docx4jUtils {
         return swapStream;
     }
 
+    /**
+     * doc 转 docx
+     *
+     * @param docLocation
+     * @param deleteResource 是否删除原文件
+     * @return
+     */
+    public static String doc2docxByAspose(String docLocation, boolean deleteResource) {
+        String docxLocation = null;
+        try {
+            // 如果是.doc，则转换成 .docx
+            if (docLocation.endsWith(DOC)) {
+                Document doc = new Document(docLocation);
+                docxLocation = docLocation.replace(DOC, DOCX);
+                File docx = new File(docxLocation);
+                if (!docx.exists() && !docx.createNewFile()) {
+                    return null;
+                }
+                doc.save(docxLocation);
+
+                WordprocessingMLPackage mlPackage = WordprocessingMLPackage.load(docx);
+                List<Object> objects = mlPackage.getMainDocumentPart().getContent();
+                Iterator iterator = objects.iterator();
+                String objStr;
+                while (iterator.hasNext()) {
+                    Object obj = iterator.next();
+                    objStr = obj.toString();
+                    if (objStr.contains("Evaluation Only. Created with Aspose.Words.")) {
+                        iterator.remove();
+                    } else if (objStr.contains("it was created using Aspose.Words in Evaluation Mode.")) {
+                        iterator.remove();
+                    }
+                    break;
+                }
+                mlPackage.save(docx);
+            }
+            return docxLocation;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (deleteResource && docxLocation != null) {
+                FileUtils.delete(docLocation);
+            }
+        }
+
+        return null;
+
+    }
+
 
     /**
      * [如何破解aspose.words](https://blog.csdn.net/xiaosanshao9/article/details/51915952)
@@ -2006,7 +2014,7 @@ public abstract class Docx4jUtils {
 
         try {
 
-            // Address 是将要被转化的 word 文档
+            // 将要被转化的 word 文档
             @Cleanup InputStream inputStream = new FileInputStream(ResourceUtils.getFile(docLocation));
             Document doc = new Document(inputStream);
 
@@ -2038,7 +2046,7 @@ public abstract class Docx4jUtils {
      *
      * @param inputStream
      */
-    public static String word2html(InputStream inputStream) {
+    public static String word2htmlByAspose(InputStream inputStream) {
         try {
             String htmlPath = System.getProperty("user.dir") + File.separator + "src" + File.separator +
                     "main" + File.separator + "resources" + File.separator + "public" + File.separator + System.currentTimeMillis() + ".html";
@@ -2055,13 +2063,143 @@ public abstract class Docx4jUtils {
     }
 
     /**
-     * word 转 html
+     * docx 转 html
      * https://docs.aspose.com/display/wordsjava/Convert+Document+to+HTML
+     * https://sourcegraph.com/github.com/plutext/docx4j/-/blob/docx4j-samples-docx4j/src/main/java/org/docx4j/samples/ConvertOutHtml.java
      *
-     * @param inputStream
+     * @param inputfilepath
      */
-    public static void word2html2(InputStream inputStream) {
+    public static void docx2html(String inputfilepath) throws FileNotFoundException, Docx4JException {
+        // Document loading (required)
+        WordprocessingMLPackage wordMLPackage;
+        if (inputfilepath == null) {
+            // Create a docx
+            System.out.println("No imput path passed, creating dummy document");
+            wordMLPackage = WordprocessingMLPackage.createPackage();
+            SampleDocument.createContent(wordMLPackage.getMainDocumentPart());
+        } else {
+            System.out.println("Loading file from " + inputfilepath);
+            wordMLPackage = Docx4J.load(new java.io.File(inputfilepath));
+        }
 
+        // HTML exporter setup (required)
+        // .. the HTMLSettings object
+        HTMLSettings htmlSettings = Docx4J.createHTMLSettings();
+
+        htmlSettings.setImageDirPath(System.getProperty("user.dir") + File.separator + "word_files");
+        htmlSettings.setImageTargetUri("word_files");
+
+        htmlSettings.setWmlPackage(wordMLPackage);
+
+        /* CSS reset, see http://itumbcom.blogspot.com.au/2013/06/css-reset-how-complex-it-should-be.html
+         *
+         * motivated by vertical space in tables in Firefox and Google Chrome.
+
+            If you have unwanted vertical space, in Chrome this may be coming from -webkit-margin-before and -webkit-margin-after
+            (in Firefox, margin-top is set to 1em in html.css)
+
+            Setting margin: 0 on p is enough to fix it.
+
+            See further http://www.css-101.org/articles/base-styles-sheet-for-webkit-based-browsers/
+        */
+        String userCSS = "html, body, div, span, h1, h2, h3, h4, h5, h6, p, a, img,  ol, ul, li, table, caption, tbody, tfoot, thead, tr, th, td " +
+                "{ margin: 0; padding: 0; border: 0;}" +
+                "body {line-height: 1;} ";
+        htmlSettings.setUserCSS(userCSS);
+
+        // output to an OutputStream.
+        OutputStream os;
+        os = new FileOutputStream(inputfilepath + ".html");
+
+        // If you want XHTML output
+        Docx4jProperties.setProperty("docx4j.Convert.Out.HTML.OutputMethodXML", true);
+
+        // Don't care what type of exporter you use
+        //      Docx4J.toHTML(htmlSettings, os, Docx4J.FLAG_NONE);
+        // Prefer the exporter, that uses a xsl transformation
+        Docx4J.toHTML(htmlSettings, os, Docx4J.FLAG_EXPORT_PREFER_XSL);
+        // Prefer the exporter, that doesn't use a xsl transformation (= uses a visitor)
+        // Docx4J.toHTML(htmlSettings, os, Docx4J.FLAG_EXPORT_PREFER_NONXSL);
+
+        System.out.println("Saved: " + inputfilepath + ".html ");
+    }
+
+    /**
+     * 富文本转 docx（文字大小没有转换成功）
+     * https://github.com/plutext/docx4j-ImportXHTML/blob/master/src/samples/java/org/docx4j/samples/XhtmlToDocxAndBack.java#L77
+     *
+     * @throws Docx4JException
+     */
+    public static WordprocessingMLPackage richText2Docx(String richText) {
+        if (StringUtils.isNotBlank(richText)) {
+            try {
+
+                String xhtml = XHtmlUtils.html2xhtmlByTidy(richText);
+                xhtml = xhtml.replaceAll("&nbsp;", "&#160;")
+                        .replaceAll("<br>", "<br/>")
+                        .replaceAll("<p>", "<p>&#160;&#160;&#160;&#160;&#160;&#160;");
+
+                //        String str = " <!--[if gte mso 9]><xml><w:WordDocument><w:View>Print</w:View><w:TrackMoves>false</w:TrackMoves><w:TrackFormatting/><w:ValidateAgainstSchemas/><w:SaveIfXMLInvalid>false</w:SaveIfXMLInvalid><w:IgnoreMixedContent>false</w:IgnoreMixedContent><w:AlwaysShowPlaceholderText>false</w:AlwaysShowPlaceholderText><w:DoNotPromoteQF/><w:LidThemeOther>EN-US</w:LidThemeOther><w:LidThemeAsian>ZH-CN</w:LidThemeAsian><w:LidThemeComplexScript>X-NONE</w:LidThemeComplexScript><w:Compatibility><w:BreakWrappedTables/><w:SnapToGridInCell/><w:WrapTextWithPunct/><w:UseAsianBreakRules/><w:DontGrowAutofit/><w:SplitPgBreakAndParaMark/><w:DontVertAlignCellWithSp/><w:DontBreakConstrainedForcedTables/><w:DontVertAlignInTxbx/><w:Word11KerningPairs/><w:CachedColBalance/><w:UseFELayout/></w:Compatibility><w:BrowserLevel>MicrosoftInternetExplorer4</w:BrowserLevel><m:mathPr><m:mathFont m:val='Cambria Math'/><m:brkBin m:val='before'/><m:brkBinSub m:val='--'/><m:smallFrac m:val='off'/><m:dispDef/><m:lMargin m:val='0'/> <m:rMargin m:val='0'/><m:defJc m:val='centerGroup'/><m:wrapIndent m:val='1440'/><m:intLim m:val='subSup'/><m:naryLim m:val='undOvr'/></m:mathPr></w:WordDocument></xml><![endif]-->";
+                String str = "";
+                String h = "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\"\n" +
+                        "\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">" +
+                        "<html xmlns:v='urn:schemas-microsoft-com:vml' " +
+                        "xmlns:o='urn:schemas-microsoft-com:office:office' " +
+                        "xmlns:w='urn:schemas-microsoft-com:office:word' " +
+                        "xmlns:m='http://schemas.microsoft.com/office/2004/12/omml' " +
+                        "xmlns='http://www.w3.org/TR/REC-html40'> ";
+                xhtml = h + "<head>" + "<meta http-equiv='Content-Type' content='text/html; charset=utf-8' />" + str + "</head><body>" + xhtml + "</body> </html>";
+
+                // To docx, with content controls
+                WordprocessingMLPackage wordMLPackage = WordprocessingMLPackage.createPackage();
+                XHTMLImporterImpl XHTMLImporter = new XHTMLImporterImpl(wordMLPackage);
+                wordMLPackage.getMainDocumentPart().getContent().addAll(
+                        XHTMLImporter.convert(xhtml, null));
+
+                System.out.println(XmlUtils.marshaltoString(wordMLPackage
+                        .getMainDocumentPart().getJaxbElement(), true, true));
+
+                return wordMLPackage;
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        return null;
+
+    }
+
+    public static String richText2Docx(String richText, String fileName, String path) {
+        if (StringUtils.isNotBlank(richText)) {
+            try {
+
+                WordprocessingMLPackage wordMLPackage = richText2Docx(richText);
+
+                String filePath = path + File.separator + fileName;
+                wordMLPackage.save(ResourceUtils.getFile(filePath));
+
+                return filePath;
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        return null;
+
+    }
+
+    /**
+     * 富文本转 docx（文字大小没有转换成功）
+     * https://github.com/plutext/docx-html-editor/blob/master/src/main/java/org/plutext/htmleditor/toDocx/Saver.java
+     *
+     * @param richText
+     * @param fileName
+     * @param path
+     */
+    public static String richText2Docx2(String richText, String fileName, String path) {
+        return HtmlToWordUtils.richText2Docx2(richText, fileName, path);
     }
 
 }
