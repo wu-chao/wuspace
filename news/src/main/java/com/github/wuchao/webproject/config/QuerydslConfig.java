@@ -10,9 +10,9 @@ import javax.persistence.EntityManager;
 @Configuration
 public class QuerydslConfig {
 
-    @Bean
-    public JPAQueryFactory jpaQueryFactory(EntityManager entityManager) {
-        return new JPAQueryFactory(new HQLTemplates(), entityManager);
-    }
+//    @Bean
+//    public JPAQueryFactory jpaQueryFactory(EntityManager entityManager) {
+//        return new JPAQueryFactory(new HQLTemplates(), entityManager);
+//    }
 
 }

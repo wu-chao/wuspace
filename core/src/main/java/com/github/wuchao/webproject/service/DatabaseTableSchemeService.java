@@ -1,8 +1,8 @@
 package com.github.wuchao.webproject.service;
 
-import com.github.wuchao.webproject.util.Docx4jUtils;
+import com.github.wuchao.webproject.util.plutext.Docx4jUtils;
 import com.github.wuchao.webproject.util.FileUtils;
-import com.github.wuchao.webproject.util.POIUtil;
+import com.github.wuchao.webproject.util.poi.POIUtil;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;

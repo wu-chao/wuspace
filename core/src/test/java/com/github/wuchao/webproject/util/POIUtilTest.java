@@ -1,7 +1,9 @@
 package com.github.wuchao.webproject.util;
 
+import com.github.wuchao.webproject.util.poi.POIUtil;
 import org.junit.Test;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -46,6 +48,26 @@ public class POIUtilTest {
 
     }
 
+
+    @Test
+    public void testDocx2Html() throws IOException {
+        String resourceLocation = "D:\\IdeaProjects\\wuchao\\web-project\\core\\DocxResume.docx";
+        String html = POIUtil.docx2html(resourceLocation);
+        System.out.println(html);
+    }
+
+    @Test
+    public void testDocx2Html2() throws IOException {
+        String resourceLocation = "D:\\IdeaProjects\\wuchao\\web-project\\core\\DocxStructures.docx";
+        POIUtil.docx2html2(resourceLocation, System.currentTimeMillis() + ".html");
+    }
+
+    @Test
+    public void testDoc2Pdf() {
+        String resourceLocation = "D:\\IdeaProjects\\wuchao\\web-project\\core\\DocxStructures.doc";
+        POIUtil.doc2pdf(resourceLocation, System.currentTimeMillis() + ".pdf");
+    }
+
     // ueditor 富文本编辑器保存到数据库的内容
     String richText = "<p>虽然 HTTP/2 解决了很多之前旧版本的问题，但是它还是存在一个巨大的问题，主要是底层支撑的 TCP 协议造成的。\n" +
             "&nbsp;</p><p><font color=\"#008080\">上文提到 HTTP/2 使用了多路复用，</font><font face=\"PMingLiU\"><font color=\"#008080\">一般</font><sup style=\"background-color: rgb(0, 255, 255);\">来说同一域名下只需</sup>要</font>使用一个 TCP 连接。<sub style=\"background-color: rgb(0, 255, 255);\">但当这个连接</sub>中出现了丢包的情况，那就会导致 HTTP/2 的表现情况反倒不如 HTTP/1 了。&nbsp;\n" +
@@ -63,7 +85,7 @@ public class POIUtilTest {
 
     @Test
     public void testRichText2Doc() {
-        String docLocation = POIUtil.richText2Doc(richText, String.valueOf(System.currentTimeMillis()), System.getProperty("user.dir"));
+        String docLocation = POIUtil.richText2Doc(richText, System.currentTimeMillis() + ".doc", System.getProperty("user.dir"));
         if (docLocation != null) {
             String docxLocation = docLocation.replace("doc", "docx");
             if (JacobUtils.convertWordFmt(docLocation, docxLocation, JacobUtils.DOCX_FMT)) {
@@ -72,11 +94,6 @@ public class POIUtilTest {
                 System.out.println("转换失败");
             }
         }
-    }
-
-    @Test
-    public void testRichText2Docx() {
-        POIUtil.richText2Docx(richText, String.valueOf(System.currentTimeMillis()), System.getProperty("user.dir"));
     }
 
 }

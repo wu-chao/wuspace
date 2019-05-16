@@ -1,17 +1,23 @@
-package com.github.wuchao.webproject.util;
+package com.github.wuchao.webproject.util.poi;
 
-import com.github.wuchao.webproject.util.poi.WordTemplate;
+import com.lowagie.text.Document;
+import com.lowagie.text.Paragraph;
+import com.lowagie.text.pdf.PdfWriter;
 import lombok.Cleanup;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.hwpf.HWPFDocument;
+import org.apache.poi.hwpf.extractor.WordExtractor;
+import org.apache.poi.hwpf.usermodel.Range;
 import org.apache.poi.poifs.filesystem.DirectoryEntry;
 import org.apache.poi.poifs.filesystem.POIFSFileSystem;
-import org.docx4j.XmlUtils;
-import org.docx4j.convert.in.xhtml.XHTMLImporterImpl;
-import org.docx4j.openpackaging.exceptions.Docx4JException;
-import org.docx4j.openpackaging.packages.WordprocessingMLPackage;
+import org.apache.poi.xwpf.converter.core.FileImageExtractor;
+import org.apache.poi.xwpf.converter.core.FileURIResolver;
+import org.apache.poi.xwpf.converter.xhtml.XHTMLConverter;
+import org.apache.poi.xwpf.converter.xhtml.XHTMLOptions;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.springframework.http.MediaType;
 import org.springframework.util.ResourceUtils;
 
@@ -168,6 +174,109 @@ public class POIUtil {
         }
     }
 
+    /**
+     * https://stackoverflow.com/questions/13103421/converting-a-docx-to-html-using-apache-poi-and-getting-no-text
+     */
+    public static void doc2html() {
+
+    }
+
+
+    /**
+     * docx 转 html
+     * https://stackoverflow.com/questions/24652953/convert-docx-to-html-using-java
+     *
+     * @param inputfilepath
+     * @return
+     * @throws IOException
+     */
+    public static String docx2html(String inputfilepath) throws IOException {
+        @Cleanup InputStream in = new FileInputStream(ResourceUtils.getFile(inputfilepath));
+        XWPFDocument document = new XWPFDocument(in);
+
+        File imageFile = ResourceUtils
+                .getFile(System.getProperty("user.dir") + File.separator + "word_files");
+        XHTMLOptions options = XHTMLOptions.create()
+                .URIResolver(new FileURIResolver(imageFile));
+        options.setExtractor(new FileImageExtractor(imageFile));
+
+        @Cleanup OutputStream out = new ByteArrayOutputStream();
+
+        XHTMLConverter.getInstance().convert(document, out, options);
+
+        return out.toString();
+    }
+
+
+    public static void docx2html2(String inputfilepath, String outfilepath) throws IOException {
+        XHTMLConverter xhtmlConverter = new XHTMLConverter();
+
+        XWPFDocument document = new XWPFDocument(XWPFDocument.openPackage(inputfilepath));
+
+        @Cleanup OutputStream outputStream = new FileOutputStream(ResourceUtils.getFile(outfilepath));
+
+        XHTMLOptions options = XHTMLOptions.create()
+                .URIResolver(new FileURIResolver(ResourceUtils
+                        .getFile(System.getProperty("user.dir"))));
+        options.setExtractor(new FileImageExtractor(ResourceUtils
+                .getFile(System.getProperty("user.dir"))));
+
+        xhtmlConverter.convert(document, outputStream, options);
+    }
+
+    /**
+     * doc 转 pdf（效果不好）
+     * https://stackoverflow.com/questions/6201736/javausing-apache-poi-how-to-convert-ms-word-file-to-pdf
+     *
+     * @param inpufilepath
+     * @param outfilepath
+     */
+    public static void doc2pdf(String inpufilepath, String outfilepath) {
+        POIFSFileSystem fs;
+        Document document = new Document();
+
+        try {
+            System.out.println("Starting the test");
+            fs = new POIFSFileSystem(new FileInputStream(inpufilepath));
+
+            HWPFDocument doc = new HWPFDocument(fs);
+            WordExtractor we = new WordExtractor(doc);
+
+            OutputStream file = new FileOutputStream(new File(outfilepath));
+
+            PdfWriter writer = PdfWriter.getInstance(document, file);
+
+            Range range = doc.getRange();
+            document.open();
+            writer.setPageEmpty(true);
+            document.newPage();
+            writer.setPageEmpty(true);
+
+            String[] paragraphs = we.getParagraphText();
+            for (int i = 0; i < paragraphs.length; i++) {
+
+                org.apache.poi.hwpf.usermodel.Paragraph pr = range.getParagraph(i);
+                // CharacterRun run = pr.getCharacterRun(i);
+                // run.setBold(true);
+                // run.setCapitalized(true);
+                // run.setItalic(true);
+                paragraphs[i] = paragraphs[i].replaceAll("\\cM?\r?\n", "");
+                System.out.println("Length:" + paragraphs[i].length());
+                System.out.println("Paragraph" + i + ": " + paragraphs[i].toString());
+
+                // add the paragraph to the document
+                document.add(new Paragraph(paragraphs[i]));
+            }
+
+            System.out.println("Document testing completed");
+        } catch (Exception e) {
+            System.out.println("Exception during test");
+            e.printStackTrace();
+        } finally {
+            // close the document
+            document.close();
+        }
+    }
 
     /**
      * 富文本转 doc
@@ -179,7 +288,7 @@ public class POIUtil {
     public static String richText2Doc(String richText, String fileName, String path) {
 
         // 这里也可以使用 “.docx” 格式，但是如果用 Docx4j 打开的话则会报错。
-        String docLocation = path + File.separator + fileName + ".doc";
+        String docLocation = path + File.separator + fileName;
 
         try {
             FileOutputStream os = new FileOutputStream(docLocation);
@@ -211,47 +320,6 @@ public class POIUtil {
         }
 
         return null;
-    }
-
-    /**
-     * 富文本转 docx（文字大小和颜色没有转换成功）
-     * https://github.com/plutext/docx4j-ImportXHTML/blob/master/src/samples/java/org/docx4j/samples/XhtmlToDocxAndBack.java#L77
-     *
-     * @throws Docx4JException
-     */
-    public static String richText2Docx(String richText, String fileName, String path) {
-        if (StringUtils.isNotBlank(richText)) {
-            try {
-                String escapeRichText = richText.replaceAll("&nbsp;", "&#160;");
-                escapeRichText = escapeRichText.replace("<br>", "<br/>");
-//                escapeRichText = escapeRichText.replace("<p>", "<p style=\"text-indent: 2em;\" >");
-
-                //        String str = " <!--[if gte mso 9]><xml><w:WordDocument><w:View>Print</w:View><w:TrackMoves>false</w:TrackMoves><w:TrackFormatting/><w:ValidateAgainstSchemas/><w:SaveIfXMLInvalid>false</w:SaveIfXMLInvalid><w:IgnoreMixedContent>false</w:IgnoreMixedContent><w:AlwaysShowPlaceholderText>false</w:AlwaysShowPlaceholderText><w:DoNotPromoteQF/><w:LidThemeOther>EN-US</w:LidThemeOther><w:LidThemeAsian>ZH-CN</w:LidThemeAsian><w:LidThemeComplexScript>X-NONE</w:LidThemeComplexScript><w:Compatibility><w:BreakWrappedTables/><w:SnapToGridInCell/><w:WrapTextWithPunct/><w:UseAsianBreakRules/><w:DontGrowAutofit/><w:SplitPgBreakAndParaMark/><w:DontVertAlignCellWithSp/><w:DontBreakConstrainedForcedTables/><w:DontVertAlignInTxbx/><w:Word11KerningPairs/><w:CachedColBalance/><w:UseFELayout/></w:Compatibility><w:BrowserLevel>MicrosoftInternetExplorer4</w:BrowserLevel><m:mathPr><m:mathFont m:val='Cambria Math'/><m:brkBin m:val='before'/><m:brkBinSub m:val='--'/><m:smallFrac m:val='off'/><m:dispDef/><m:lMargin m:val='0'/> <m:rMargin m:val='0'/><m:defJc m:val='centerGroup'/><m:wrapIndent m:val='1440'/><m:intLim m:val='subSup'/><m:naryLim m:val='undOvr'/></m:mathPr></w:WordDocument></xml><![endif]-->";
-                String str = "";
-                String h = " <html xmlns:v='urn:schemas-microsoft-com:vml' xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns:m='http://schemas.microsoft.com/office/2004/12/omml' xmlns='http://www.w3.org/TR/REC-html40'> ";
-                String xhtml = h + "<head>" + "<meta http-equiv='Content-Type' content='text/html; charset=utf-8' />" + str + "</head><body>" + escapeRichText + "</body> </html>";
-
-                // To docx, with content controls
-                WordprocessingMLPackage wordMLPackage = WordprocessingMLPackage.createPackage();
-                XHTMLImporterImpl XHTMLImporter = new XHTMLImporterImpl(wordMLPackage);
-                wordMLPackage.getMainDocumentPart().getContent().addAll(
-                        XHTMLImporter.convert(xhtml, null));
-
-                System.out.println(XmlUtils.marshaltoString(wordMLPackage
-                        .getMainDocumentPart().getJaxbElement(), true, true));
-
-                String filePath = path + File.separator + fileName + ".docx";
-                wordMLPackage.save(ResourceUtils.getFile(filePath));
-
-                return filePath;
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-
-        return null;
-
     }
 
 }
