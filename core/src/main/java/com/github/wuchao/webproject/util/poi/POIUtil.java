@@ -32,7 +32,6 @@ import java.util.Map;
 public class POIUtil {
 
     public static WordTemplate loadDocument(String resourceLocation) throws IOException {
-        log.info("================================= resourceLocation：{}", resourceLocation);
         if (StringUtils.isNotEmpty(resourceLocation)) {
             InputStream is = null;
             try {
