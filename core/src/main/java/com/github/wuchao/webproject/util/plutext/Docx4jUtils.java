@@ -72,21 +72,10 @@ public abstract class Docx4jUtils {
     public static void mergeDoc(List<String> docLocations, String path) {
         List<InputStream> inList = new ArrayList<>();
         if (CollectionUtils.isNotEmpty(docLocations)) {
+            InputStream i = null;
             for (String docLocation : docLocations) {
-                File file;
-                try {
-                    InputStream i;
-                    file = ResourceUtils.getFile(docLocation);
-                    if (file.exists()) {
-                        i = new FileInputStream(file);
-                    } else {
-                        i = Thread.currentThread().getContextClassLoader().getResourceAsStream(docLocation);
-                    }
-                    inList.add(i);
-                } catch (FileNotFoundException e) {
-                    log.warn("文件不存在");
-                    return;
-                }
+                i = FileUtils.loadFileInputStream(docLocation);
+                inList.add(i);
             }
 
             try {
@@ -96,14 +85,15 @@ public abstract class Docx4jUtils {
                 e.printStackTrace();
             } finally {
                 // 关闭所有文件流
-                for (InputStream stream : inList) {
-                    if (stream != null) {
-                        try {
-                            stream.close();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
+                try {
+                    for (InputStream stream : inList) {
+                        stream.close();
                     }
+                    if (i != null) {
+                        i.close();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
             }
         }
@@ -2200,6 +2190,52 @@ public abstract class Docx4jUtils {
      */
     public static String richText2Docx2(String richText, String fileName, String path) {
         return HtmlToWordUtils.richText2Docx2(richText, fileName, path);
+    }
+
+
+    /**
+     * 设置缩进 同时设置为 true，则为悬挂缩进
+     * https://53873039oycg.iteye.com/blog/2123815
+     *
+     * @param factory
+     * @param p
+     * @param jcEnumeration
+     * @param firstLine
+     * @param firstLineValue
+     * @param hangLine
+     * @param hangValue
+     */
+    public static void setParagraphInd(ObjectFactory factory, P p,
+                                       JcEnumeration jcEnumeration,
+                                       boolean firstLine, String firstLineValue,
+                                       boolean hangLine, String hangValue) {
+        PPr pPr = p.getPPr();
+        if (pPr == null) {
+            pPr = factory.createPPr();
+        }
+        Jc jc = pPr.getJc();
+        if (jc == null) {
+            jc = new Jc();
+        }
+        jc.setVal(jcEnumeration);
+        pPr.setJc(jc);
+
+        PPrBase.Ind ind = pPr.getInd();
+        if (ind == null) {
+            ind = new PPrBase.Ind();
+        }
+        if (firstLine) {
+            if (firstLineValue != null) {
+                ind.setFirstLineChars(new BigInteger(firstLineValue));
+            }
+        }
+        if (hangLine) {
+            if (hangValue != null) {
+                ind.setHangingChars(new BigInteger(hangValue));
+            }
+        }
+        pPr.setInd(ind);
+        p.setPPr(pPr);
     }
 
 }
