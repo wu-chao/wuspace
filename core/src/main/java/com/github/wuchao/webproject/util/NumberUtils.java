@@ -1,5 +1,7 @@
 package com.github.wuchao.webproject.util;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.text.NumberFormat;
 import java.util.HashMap;
 
@@ -163,6 +165,32 @@ public abstract class NumberUtils {
 
             return chineseNumbers.get(chineseNumStr).longValue();
         }
+    }
+
+    /**
+     * 若double是整数则去掉零
+     *
+     * @param d
+     * @return
+     */
+    public static String doubleOrInt(Double d) {
+        if (d == null) {
+            return null;
+        }
+        return d - d.intValue() == 0 ? String.valueOf(d.intValue()) : String.valueOf(d);
+    }
+
+    /**
+     * 判断字符串是否是数字类型（int、long、float、double 之类的）
+     *
+     * @param str
+     * @return
+     */
+    public static boolean isNumber(String str) {
+        if (StringUtils.isNotBlank(str)) {
+            return str.matches("[-+]?[0-9]*\\.?[0-9]+");
+        }
+        return false;
     }
 
 }

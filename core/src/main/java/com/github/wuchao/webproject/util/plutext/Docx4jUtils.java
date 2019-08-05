@@ -739,22 +739,33 @@ public abstract class Docx4jUtils {
     }
 
     /**
-     * 增加分页，从当前行直接跳转到下页
+     * 增加分页，从当前行直接跳转到下页（文档结尾添加一个空白页 ）
      * https://blog.csdn.net/MAOZEXIJR/article/details/78813891
+     * https://stackoverflow.com/questions/28880167/how-can-i-insert-a-page-break
      *
      * @param mainPart 文档主体
      */
     public static void addPageBreak(MainDocumentPart mainPart) {
-        // 换行
-        Br br = new Br();
-        // 换页方式
-        br.setType(STBrType.PAGE);
 
-        // 段落
-        P paragraph = objectFactory.createP();
-        paragraph.getContent().add(br);
+//        // 换行
+//        Br br = new Br();
+//        // 换页方式
+//        br.setType(STBrType.PAGE);
+//
+//        // 段落
+//        P paragraph = objectFactory.createP();
+//        paragraph.getContent().add(br);
 
-        mainPart.getContent().add(paragraph);
+        P p = objectFactory.createP();
+        // Create object for r
+        R r = objectFactory.createR();
+        // Create object for br
+        Br br = objectFactory.createBr();
+        br.setType(org.docx4j.wml.STBrType.PAGE);
+        r.getContent().add(br);
+        p.getContent().add(r);
+
+        mainPart.getContent().add(p);
     }
 
     /**
@@ -1357,6 +1368,58 @@ public abstract class Docx4jUtils {
         return rPr;
     }
 
+
+    /**
+     * 获取 mlPackage.getMainDocumentPart().getContent() 集合里的元素的修订的最终结果值
+     *
+     * @param p mlPackage.getMainDocumentPart().getContent() 集合里的元素
+     * @return
+     */
+    public static String getRevisionValue(Object p) {
+        if (p != null && p instanceof P) {
+
+            P content = (P) p;
+            StringBuilder cb = new StringBuilder();
+
+            if (CollectionUtils.isNotEmpty(content.getContent())) {
+                content.getContent().forEach(r -> {
+                    if (r instanceof R) {
+                        // R
+                        if (CollectionUtils.isNotEmpty(((R) r).getContent())) {
+                            ((R) r).getContent().forEach(c -> {
+                                if (((JAXBElement) c).getValue() instanceof Text) {
+                                    cb.append(((Text) ((JAXBElement) c).getValue()).getValue());
+                                }
+                            });
+                        }
+
+                    } else if (r instanceof RunIns) {
+                        // RunIns
+                        if (CollectionUtils.isNotEmpty(((RunIns) r).getCustomXmlOrSmartTagOrSdt())) {
+                            ((RunIns) r).getCustomXmlOrSmartTagOrSdt().forEach(i -> {
+                                if (i instanceof R && CollectionUtils.isNotEmpty(((R) i).getContent())) {
+                                    ((R) i).getContent().forEach(c -> {
+                                        if (((JAXBElement) c).getValue() instanceof Text) {
+                                            cb.append(((Text) ((JAXBElement) c).getValue()).getValue());
+                                        }
+                                    });
+                                }
+                            });
+                        }
+
+                    } else if (r instanceof RunDel) {
+                        // RunDel
+                        // 删除的内容不需要获取
+                    }
+
+                });
+            }
+
+            return cb.toString();
+        }
+
+        return "";
+    }
 
     // 段落底纹
     public static void setParagraphShdStyle(P p, boolean isShd,

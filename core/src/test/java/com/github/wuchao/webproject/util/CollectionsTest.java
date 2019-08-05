@@ -1,14 +1,9 @@
 package com.github.wuchao.webproject.util;
 
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang3.ArrayUtils;
-import org.apache.commons.lang3.StringUtils;
+import org.assertj.core.util.Lists;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 public class CollectionsTest {
 
@@ -111,4 +106,47 @@ public class CollectionsTest {
         List list1 = Arrays.asList(strAry);
         System.out.println(list1);
     }
+
+
+    @Test
+    public void testMapValues() {
+        Map<String, String> map = new HashMap<>();
+        map.put("1", "AA");
+        map.put("2", "BB");
+        map.put("3", "CC");
+        map.put("4", "DD");
+
+        Collection<String> valueCollection = map.values();
+        List<Object> valueList = new ArrayList<>(valueCollection);
+        valueList.forEach(e -> System.out.println(e));
+    }
+
+    @Test
+    public void testInstanceOf() {
+        List<String> obj = Lists.newArrayList("111", "222", "333");
+
+        if (obj instanceof List) {
+            List<String> list = obj;
+            System.out.println(list.size());
+            System.out.println(list);
+        }
+
+    }
+
+    @Test
+    public void testArray() {
+        int[] ints = {1, 2, 3, 4, 5};
+        List<int[]> intList = Arrays.asList(ints);
+        System.out.println(intList.size());
+
+        /**
+         * 结果：1
+         */
+
+        System.out.println(int.class);
+        System.out.println(ints.getClass());
+        System.out.println(Integer.class);
+        System.out.println(new Integer[1].getClass());
+    }
+
 }
