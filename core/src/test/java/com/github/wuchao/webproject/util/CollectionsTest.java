@@ -1,14 +1,8 @@
 package com.github.wuchao.webproject.util;
 
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang3.ArrayUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 public class CollectionsTest {
 
@@ -111,4 +105,19 @@ public class CollectionsTest {
         List list1 = Arrays.asList(strAry);
         System.out.println(list1);
     }
+
+
+    @Test
+    public void testMapValues() {
+        Map<String, String> map = new HashMap<>();
+        map.put("1", "AA");
+        map.put("2", "BB");
+        map.put("3", "CC");
+        map.put("4", "DD");
+
+        Collection<String> valueCollection = map.values();
+        List<Object> valueList = new ArrayList<>(valueCollection);
+        valueList.forEach(e -> System.out.println(e));
+    }
+
 }

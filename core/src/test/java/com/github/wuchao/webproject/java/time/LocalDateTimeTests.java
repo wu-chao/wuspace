@@ -7,6 +7,7 @@ import org.junit.Test;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.*;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAdjusters;
 
 public class LocalDateTimeTests {
@@ -109,6 +110,31 @@ public class LocalDateTimeTests {
     public void testDateTimeToChinese() {
         LocalDate localDate = LocalDate.of(2018, 9, 10);
         System.out.println("日期是：" + DateTimeUtils.localDateWithChinese(localDate));
+    }
+
+
+    @Test
+    public void testCompareTo() {
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        LocalDateTime t1 = LocalDateTime.parse("2019-06-22 13:40:00", dateTimeFormatter);
+        LocalDateTime t2 = LocalDateTime.parse("2019-06-22 13:40:01", dateTimeFormatter);
+        LocalDateTime t3 = LocalDateTime.parse("2019-06-22 13:40:01", dateTimeFormatter);
+        LocalDateTime t4 = LocalDateTime.parse("2023-03-31 00:00:00", dateTimeFormatter);
+        LocalDateTime t5 = LocalDateTime.parse("2043-04-01 00:00:00", dateTimeFormatter);
+        System.out.println(t1.compareTo(t2));
+        System.out.println(t2.compareTo(t3));
+        System.out.println(t3.compareTo(t1));
+        System.out.println(t4.compareTo(LocalDateTime.now()));
+        System.out.println(t5.compareTo(t4));
+
+        /**
+         * 执行结果为：
+         * -1
+         * 0
+         * 1
+         * 4
+         * 20
+         */
     }
 
 }

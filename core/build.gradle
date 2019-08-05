@@ -62,8 +62,8 @@ configure(allprojects) {
 idea {
     module {
         // 将生成路径src/main/generated也作为源码路径
-        sourceDirs += file('src/main/generated/')
-        generatedSourceDirs += file('src/main/generated/')
+//        sourceDirs += file('src/main/generated/')
+//        generatedSourceDirs += file('src/main/generated/')
     }
 }
 
@@ -155,8 +155,8 @@ dependencies {
 //    compile "org.hibernate:hibernate-jpamodelgen:5.1.0.Final"
 
     // Querydsl
-    compile "com.querydsl:querydsl-jpa:${querydsl_version}"
-    compileOnly "com.querydsl:querydsl-apt:${querydsl_version}:jpa"
+//    compile "com.querydsl:querydsl-jpa:${querydsl_version}"
+//    compileOnly "com.querydsl:querydsl-apt:${querydsl_version}:jpa"
 
     compile("com.zaxxer:HikariCP") {
         exclude(module: 'tools')
