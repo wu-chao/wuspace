@@ -1,6 +1,6 @@
 package com.github.wuchao.webproject.util;
 
-import org.assertj.core.util.Lists;
+import com.google.common.collect.Lists;
 import org.junit.Test;
 
 import java.util.*;
