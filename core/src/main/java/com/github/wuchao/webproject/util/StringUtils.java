@@ -1,13 +1,27 @@
 package com.github.wuchao.webproject.util;
 
-public abstract class StringUtils {
+import org.springframework.core.convert.ConversionService;
+import org.springframework.core.convert.support.DefaultConversionService;
+import org.springframework.lang.Nullable;
+import org.springframework.util.NumberUtils;
 
-    public static boolean isEmpty(final CharSequence cs) {
-        return cs == null || cs.length() == 0;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+
+public abstract class StringUtils extends org.apache.commons.lang3.StringUtils {
+
+    @Nullable
+    private static ConversionService conversionService = DefaultConversionService.getSharedInstance();
+
+    private StringUtils() {
     }
 
     /**
-     * 将
      * @param ig
      * @param count
      * @return
@@ -16,7 +30,7 @@ public abstract class StringUtils {
         if (ig != null && ig.length > 0) {
             StringBuilder str = new StringBuilder("");
             for (int i = 0; i < ig.length && i < count; i++) {
-                str.append(String.valueOf(ig[i])).append(",");
+                str.append(ig[i]).append(",");
             }
             return str.substring(0, str.length() - 1);
         }
@@ -49,4 +63,157 @@ public abstract class StringUtils {
             return (new StringBuilder()).append(Character.toUpperCase(s.charAt(0))).append(s.substring(1)).toString();
         }
     }
+
+    private static Pattern HUMP_PATTERN = Pattern.compile("[A-Z]");
+
+    /**
+     * 驼峰命名转为下划线命名
+     * https://www.cnblogs.com/zhuhui-site/p/10090880.html
+     */
+    public static String hump2lowerCaseUnderline(String name) {
+        Matcher matcher = HUMP_PATTERN.matcher(name);
+        StringBuffer sb = new StringBuffer();
+        while (matcher.find()) {
+            matcher.appendReplacement(sb, "_" + matcher.group(0).toLowerCase());
+        }
+        matcher.appendTail(sb);
+        return sb.toString();
+    }
+
+    /***
+     * 驼峰命名转为下划线命名
+     *
+     * @param name 驼峰命名的字符串
+     *
+     */
+    public static String hump2upperCaseUnderline(String name) {
+        if (isNotBlank(name)) {
+            StringBuilder sb = new StringBuilder(name);
+            // 定位
+            int temp = 0;
+            for (int i = 0; i < name.length(); i++) {
+                if (Character.isUpperCase(name.charAt(i))) {
+                    sb.insert(i + temp, "_");
+                    temp += 1;
+                }
+            }
+            return sb.toString().toUpperCase();
+        }
+        return name;
+    }
+
+    /**
+     * 驼峰命名转为下划线命名
+     * https://blog.csdn.net/sunhuwh/article/details/79016237
+     *
+     * @param name
+     * @return
+     */
+    public static String hump2upperCaseUnderline2(String name) {
+        StringBuilder result = new StringBuilder();
+        if (name != null && name.length() > 0) {
+            // 将第一个字符处理成大写
+            result.append(name.substring(0, 1).toUpperCase());
+            // 循环处理其余字符
+            for (int i = 1; i < name.length(); i++) {
+                String s = name.substring(i, i + 1);
+                // 在大写字母前添加下划线
+                if (s.equals(s.toUpperCase()) && !Character.isDigit(s.charAt(0))) {
+                    result.append("_");
+                }
+                // 其他字符直接转成大写
+                result.append(s.toUpperCase());
+            }
+        }
+        return result.toString();
+    }
+
+    /**
+     * 下划线命名转为驼峰命名
+     * https://blog.csdn.net/sunhuwh/article/details/79016237
+     *
+     * @param name
+     * @return
+     */
+    public static String underline2hump(String name) {
+        StringBuilder result = new StringBuilder();
+        // 快速检查
+        if (name == null || name.isEmpty()) {
+            // 没必要转换
+            return "";
+        } else if (!name.contains("_")) {
+            // 不含下划线，仅将首字母小写
+            return name.substring(0, 1).toLowerCase() + name.substring(1);
+        }
+        // 用下划线将原始字符串分割
+        String camels[] = name.split("_");
+        for (String camel : camels) {
+            // 跳过原始字符串中开头、结尾的下换线或双重下划线
+            if (camel.isEmpty()) {
+                continue;
+            }
+            // 处理真正的驼峰片段
+            if (result.length() == 0) {
+                // 第一个驼峰片段，全部字母都小写
+                result.append(camel.toLowerCase());
+            } else {
+                // 其他的驼峰片段，首字母大写
+                result.append(camel.substring(0, 1).toUpperCase());
+                result.append(camel.substring(1).toLowerCase());
+            }
+        }
+        return result.toString();
+    }
+
+    /**
+     * 将以逗号分隔的字符串转换成指定类型的 List 集合
+     *
+     * @param strs
+     * @param clazz
+     * @return
+     */
+    public static <T> List<T> split(String strs, Class<T> clazz) {
+        if (StringUtils.isNotBlank(strs)) {
+            String[] strAry = strs.split(",");
+
+            if (Objects.isNull(clazz)) {
+                clazz = (Class<T>) String.class;
+            }
+            Class clazz1 = clazz;
+            return Arrays.stream(strAry)
+                    .map(str -> (T) convertValueToRequiredType(str, clazz1))
+                    .collect(Collectors.toList());
+        }
+
+        return Collections.emptyList();
+    }
+
+    /**
+     * 复制自：org.springframework.jdbc.core.SingleColumnRowMapper
+     *
+     * @param value
+     * @param requiredType
+     * @return
+     */
+    @Nullable
+    protected static Object convertValueToRequiredType(Object value, Class<?> requiredType) {
+        if (String.class == requiredType) {
+            return value.toString();
+        } else if (Number.class.isAssignableFrom(requiredType)) {
+            if (value instanceof Number) {
+                // Convert original Number to target Number class.
+                return org.springframework.util.NumberUtils.convertNumberToTargetClass(((Number) value), (Class<Number>) requiredType);
+            } else {
+                // Convert stringified value to target Number class.
+                return NumberUtils.parseNumber(value.toString(), (Class<Number>) requiredType);
+            }
+        } else if (conversionService != null && conversionService.canConvert(value.getClass(), requiredType)) {
+            return conversionService.convert(value, requiredType);
+        } else {
+            throw new IllegalArgumentException(
+                    "Value [" + value + "] is of type [" + value.getClass().getName() +
+                            "] and cannot be converted to required type [" + requiredType.getName() + "]");
+        }
+    }
+
 }

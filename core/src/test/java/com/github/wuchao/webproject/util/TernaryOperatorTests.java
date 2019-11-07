@@ -14,7 +14,14 @@ public class TernaryOperatorTests {
         System.out.println(size);
 
         Double d = null;
-        Integer i = d != null ? d.intValue() : 0;
+        Double dd = (d == null ? d : 200.0);
+    }
+
+    @Test
+    public void test2() {
+        Integer i = null;
+        Integer r = i == null ? i : 1;
+        System.out.println(r);
     }
 
 }
