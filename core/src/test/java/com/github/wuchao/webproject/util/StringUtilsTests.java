@@ -58,4 +58,57 @@ public class StringUtilsTests {
          */
     }
 
+    @Test
+    public void testSubString() {
+        String dateTimeStr = "2019-11-14 20:14:58.000";
+        System.out.println(dateTimeStr.substring(0, 10));
+        System.out.println(dateTimeStr.substring(0, 19));
+
+        String dateStr = "2019-11-14";
+        System.out.println(dateStr.substring(0, 10));
+        System.out.println(dateStr.substring(0, 19));
+    }
+
+    @Test
+    public void testRemoveTrailingZero() {
+        String str1 = "1234";
+        String str2 = "1234.0";
+        String str3 = "1234.10";
+        String str4 = "1234.110000";
+
+        System.out.println(StringUtils.removeTrailingZero(str1));
+        System.out.println(StringUtils.removeTrailingZero(str2));
+        System.out.println(StringUtils.removeTrailingZero(str3));
+        System.out.println(StringUtils.removeTrailingZero(str4));
+
+        /**
+         * 执行结果：
+         * 1234
+         * 1234
+         * 1234.1
+         * 1234.11
+         */
+    }
+
+    @Test
+    public void testRemoveTrailingZero2() {
+        String str1 = "1234";
+        String str2 = "1234.0";
+        String str3 = "1234.10";
+        String str4 = "1234.110000";
+
+        System.out.println(StringUtils.removeTrailingZero2(str1));
+        System.out.println(StringUtils.removeTrailingZero2(str2));
+        System.out.println(StringUtils.removeTrailingZero2(str3));
+        System.out.println(StringUtils.removeTrailingZero2(str4));
+
+        /**
+         * 执行结果：
+         * 1234
+         * 1234
+         * 1234.1
+         * 1234.11
+         */
+    }
+
 }

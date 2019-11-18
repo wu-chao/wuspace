@@ -71,9 +71,9 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 repositories {
-//    flatDir {
-//        dirs 'libs'
-//    }
+    flatDir {
+        dirs 'libs'
+    }
 
     mavenLocal()
     maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
@@ -153,10 +153,6 @@ dependencies {
 
 //    org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor
 //    compile "org.hibernate:hibernate-jpamodelgen:5.1.0.Final"
-
-    // Querydsl
-//    compile "com.querydsl:querydsl-jpa:${querydsl_version}"
-//    compileOnly "com.querydsl:querydsl-apt:${querydsl_version}:jpa"
 
     compile("com.zaxxer:HikariCP") {
         exclude(module: 'tools')

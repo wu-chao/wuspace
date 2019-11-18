@@ -216,4 +216,43 @@ public abstract class StringUtils extends org.apache.commons.lang3.StringUtils {
         }
     }
 
+    /**
+     * 去掉数字字符串中末尾的 0
+     * https://www.ibm.com/developerworks/community/blogs/mrcoolK/entry/How_to_remove_trailing_zero_in_a_string_in_Java?lang=en
+     *
+     * @param numberStr
+     * @return
+     */
+    public static String removeTrailingZero(String numberStr) {
+        return numberStr.indexOf(".") < 0
+                ? numberStr
+                : numberStr.replaceAll("0*$", "").replaceAll("\\.$", "");
+    }
+
+    /**
+     * 去掉数字字符串中末尾的 0
+     * https://www.ibm.com/developerworks/community/blogs/mrcoolK/entry/How_to_remove_trailing_zero_in_a_string_in_Java?lang=en
+     *
+     * @param numberStr
+     * @return
+     */
+    public static String removeTrailingZero2(String numberStr) {
+        return numberStr.indexOf(".") < 0
+                ? numberStr
+                : numberStr.replaceFirst("\\.0*$|(\\.\\d*?)0+$", "$1");
+    }
+
+    /**
+     * 去掉数字字符串中末尾的 0
+     * https://www.ibm.com/developerworks/community/blogs/mrcoolK/entry/How_to_remove_trailing_zero_in_a_string_in_Java?lang=en
+     *
+     * @param numberStr
+     * @return
+     */
+    public static String removeTrailingZero3(String numberStr) {
+        return numberStr.indexOf(".") < 0
+                ? numberStr
+                : numberStr.replaceAll("0*$", "").replaceAll("\\.$", "");
+    }
+
 }

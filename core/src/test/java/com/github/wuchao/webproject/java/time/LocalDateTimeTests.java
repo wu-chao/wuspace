@@ -137,4 +137,12 @@ public class LocalDateTimeTests {
          */
     }
 
+    @Test
+    public void testParseLocalDate() {
+        String dateTimeStr = "2019-11-14 20:22:58";
+        String dateStr = "2019-11-15";
+        System.out.println(LocalDate.parse(dateTimeStr.substring(0, 10)));
+        System.out.println(LocalDate.parse(dateStr.substring(0, 10)));
+    }
+
 }

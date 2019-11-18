@@ -3,6 +3,7 @@ package com.github.wuchao.webproject.java.java8;
 import com.google.common.collect.Lists;
 import org.junit.Test;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,6 +32,30 @@ public class ForeachTests {
                 })
                 .collect(Collectors.toList());
 
+    }
+
+    /**
+     * java.lang.NullPointerException
+     */
+    @Test
+    public void testNullFor() {
+        List<Integer> intList = null;
+        for (Integer i : intList) {
+            System.out.println(i);
+        }
+    }
+
+    @Test
+    public void testEmptyFor() {
+        List<Integer> intList = Collections.emptyList();
+
+        for (Integer i : intList) {
+            System.out.println(i);
+        }
+
+        intList.forEach(i -> {
+            System.out.println(i);
+        });
     }
 
 }

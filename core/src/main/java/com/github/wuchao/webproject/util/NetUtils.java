@@ -10,6 +10,8 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
@@ -26,21 +28,26 @@ public abstract class NetUtils {
      * 根据 Request 获取客户端 IP
      * [根据Request获取客户端IP](https://www.cnblogs.com/icerainsoft/p/3584532.html)
      *
-     * @param request
      * @return
      */
-    public static String getRemoteHost(HttpServletRequest request) {
-        String ip = request.getHeader("x-forwarded-for");
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-            ip = request.getHeader("Proxy-Client-IP");
+    public static String getRemoteHost() {
+        if (RequestContextHolder.getRequestAttributes() != null) {
+            HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+            if (request != null) {
+                String ip = request.getHeader("x-forwarded-for");
+                if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+                    ip = request.getHeader("Proxy-Client-IP");
+                }
+                if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+                    ip = request.getHeader("WL-Proxy-Client-IP");
+                }
+                if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+                    ip = request.getRemoteAddr();
+                }
+                return ip.equals("0:0:0:0:0:0:0:1") ? "127.0.0.1" : ip;
+            }
         }
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-            ip = request.getHeader("WL-Proxy-Client-IP");
-        }
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-            ip = request.getRemoteAddr();
-        }
-        return ip.equals("0:0:0:0:0:0:0:1") ? "127.0.0.1" : ip;
+        return "Unknown";
     }
 
     /**

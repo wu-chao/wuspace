@@ -1,11 +1,12 @@
 package com.github.wuchao.webproject.util;
 
 import com.google.common.collect.Lists;
+import org.apache.commons.collections.CollectionUtils;
 import org.junit.Test;
 
 import java.util.*;
 
-public class CollectionsTest {
+public class CollectionsTests {
 
     ///////////////////////// list new /////////////////////////
     @Test
@@ -147,6 +148,121 @@ public class CollectionsTest {
         System.out.println(ints.getClass());
         System.out.println(Integer.class);
         System.out.println(new Integer[1].getClass());
+    }
+
+    /**
+     * 两集合相减
+     * [JAVA集合操作的利器:CollectionUtils](https://blog.csdn.net/gaozhlzh/article/details/6914859)
+     */
+    @Test
+    public void testCollectionSubtract() {
+        List<Integer> ints1 = Lists.newArrayList(1, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+        List<Integer> ints2 = Lists.newArrayList(1, 1, 2, 10);
+        List<Integer> ints3 = (List<Integer>) CollectionUtils.subtract(ints1, ints2);
+
+        System.out.println(Arrays.toString(ints1.toArray()));
+        System.out.println(Arrays.toString(ints2.toArray()));
+        System.out.println(Arrays.toString(ints3.toArray()));
+        System.out.println("-----------------------------------------------------------------");
+
+        /**
+         * 打印结果：
+         * [1, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+         * [1, 1, 2, 10]
+         * [3, 4, 5, 6, 7, 8, 9]
+         */
+
+        // 减去一个空集合（减去的集合为 null 时，会报空指针异常）
+        System.out.println(CollectionUtils.subtract(ints1, Collections.emptyList()));
+        System.out.println("-----------------------------------------------------------------");
+
+        /**
+         * 打印结果：
+         * [1, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+         */
+
+        // 小集合减去大集合
+        System.out.println(CollectionUtils.subtract(Lists.newArrayList(8, 9, 10, 11, 12), ints1));
+
+        /**
+         * 打印结果：
+         * [11, 12]
+         */
+
+    }
+
+    /**
+     * 求两集合并集
+     * [JAVA集合操作的利器:CollectionUtils](https://blog.csdn.net/gaozhlzh/article/details/6914859)
+     */
+    @Test
+    public void testCollectionUnion() {
+        List<Integer> ints1 = Lists.newArrayList(1, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+        List<Integer> ints2 = Lists.newArrayList(1, 1, 2, 11, 12);
+        List<Integer> ints3 = (List<Integer>) CollectionUtils.union(ints1, ints2);
+
+        System.out.println(Arrays.toString(ints1.toArray()));
+        System.out.println(Arrays.toString(ints2.toArray()));
+        System.out.println(Arrays.toString(ints3.toArray()));
+
+        /**
+         * 打印结果：
+         * [1, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+         * [1, 1, 2, 11, 12]
+         * [1, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+         */
+    }
+
+    /**
+     * 求集合交集
+     * [JAVA集合操作的利器:CollectionUtils](https://blog.csdn.net/gaozhlzh/article/details/6914859)
+     */
+    @Test
+    public void testCollectionIntersection() {
+        List<Integer> ints1 = Lists.newArrayList(1, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+        List<Integer> ints2 = Lists.newArrayList(1, 1, 2, 10, 11, 12);
+
+        System.out.println(Arrays.toString(ints1.toArray()));
+        System.out.println(Arrays.toString(ints2.toArray()));
+
+        if (CollectionUtils.containsAny(ints1, ints2)) {
+            List<Integer> ints3 = (List<Integer>) CollectionUtils.intersection(ints1, ints2);
+            System.out.println(Arrays.toString(ints3.toArray()));
+        }
+        if (CollectionUtils.containsAny(ints2, ints1)) {
+            List<Integer> ints4 = (List<Integer>) CollectionUtils.intersection(ints2, ints1);
+            System.out.println(Arrays.toString(ints4.toArray()));
+        }
+
+        /**
+         * 打印结果：
+         * [1, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+         * [1, 1, 2, 10, 11, 12]
+         * [1, 1, 2, 10]
+         * [1, 1, 2, 10]
+         */
+    }
+
+    /**
+     * 求集合交集的补集
+     * [JAVA集合操作的利器:CollectionUtils](https://blog.csdn.net/gaozhlzh/article/details/6914859)
+     */
+    @Test
+    public void testCollectionDisjunction() {
+        List<Integer> ints1 = Lists.newArrayList(1, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+        List<Integer> ints2 = Lists.newArrayList(8, 9, 10, 11, 12);
+        List<Integer> ints3 = (List<Integer>) CollectionUtils.disjunction(ints1, ints2);
+
+        System.out.println(Arrays.toString(ints1.toArray()));
+        System.out.println(Arrays.toString(ints2.toArray()));
+        System.out.println(Arrays.toString(ints3.toArray()));
+
+        /**
+         * 打印结果：
+         * [1, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+         * [8, 9, 10, 11, 12]
+         * [1, 1, 2, 3, 4, 5, 6, 7, 11, 12]
+         */
     }
 
 }
