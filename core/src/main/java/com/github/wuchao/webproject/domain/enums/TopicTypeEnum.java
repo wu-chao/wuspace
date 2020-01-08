@@ -1,4 +1,4 @@
-package com.github.wuchao.webproject.domain.enumeration;
+package com.github.wuchao.webproject.domain.enums;
 
 import java.util.ArrayList;
 import java.util.List;

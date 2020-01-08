@@ -1,13 +1,7 @@
 package com.github.wuchao.webproject.service.article;
 
 import com.github.wuchao.webproject.domain.MediaInfo;
-import com.github.wuchao.webproject.domain.enumeration.MediaType;
-import com.github.wuchao.webproject.exception.ResourceNotFoundException;
-import com.github.wuchao.webproject.repository.MediaContentRepository;
-import com.github.wuchao.webproject.repository.MediaInfoRepository;
-import com.github.wuchao.webproject.service.article.dto.AdminArticleDTO;
-import com.github.wuchao.webproject.domain.MediaInfo;
-import com.github.wuchao.webproject.domain.enumeration.MediaType;
+import com.github.wuchao.webproject.domain.enums.MediaType;
 import com.github.wuchao.webproject.exception.ResourceNotFoundException;
 import com.github.wuchao.webproject.repository.MediaContentRepository;
 import com.github.wuchao.webproject.repository.MediaInfoRepository;

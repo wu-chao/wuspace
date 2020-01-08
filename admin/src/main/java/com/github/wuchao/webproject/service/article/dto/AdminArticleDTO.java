@@ -2,7 +2,7 @@ package com.github.wuchao.webproject.service.article.dto;
 
 import com.github.wuchao.webproject.domain.MediaContent;
 import com.github.wuchao.webproject.domain.MediaInfo;
-import com.github.wuchao.webproject.domain.enumeration.MediaType;
+import com.github.wuchao.webproject.domain.enums.MediaType;
 import com.github.wuchao.webproject.security.SecurityUtils;
 import com.github.wuchao.webproject.support.ArticleSupport;
 import lombok.*;

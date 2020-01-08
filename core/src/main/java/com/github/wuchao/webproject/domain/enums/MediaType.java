@@ -1,4 +1,4 @@
-package com.github.wuchao.webproject.domain.enumeration;
+package com.github.wuchao.webproject.domain.enums;
 
 public enum MediaType {
     /**
