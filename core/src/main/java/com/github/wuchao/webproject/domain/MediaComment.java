@@ -1,6 +1,6 @@
 package com.github.wuchao.webproject.domain;
 
-import com.github.wuchao.webproject.domain.enumeration.CheckStatus;
+import com.github.wuchao.webproject.domain.enums.CheckStatus;
 import lombok.Getter;
 import lombok.Setter;
 

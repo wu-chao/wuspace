@@ -183,10 +183,12 @@ public class CollectionsTests {
 
         // 小集合减去大集合
         System.out.println(CollectionUtils.subtract(Lists.newArrayList(8, 9, 10, 11, 12), ints1));
+        System.out.println(CollectionUtils.subtract(Lists.newArrayList(8, 9, 10), ints1));
 
         /**
          * 打印结果：
          * [11, 12]
+         * []
          */
 
     }

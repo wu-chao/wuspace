@@ -1,7 +1,7 @@
 package com.github.wuchao.webproject.repository;
 
 import com.github.wuchao.webproject.domain.MediaInfo;
-import com.github.wuchao.webproject.domain.enumeration.MediaType;
+import com.github.wuchao.webproject.domain.enums.MediaType;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;

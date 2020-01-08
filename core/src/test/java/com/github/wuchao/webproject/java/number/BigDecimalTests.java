@@ -44,4 +44,12 @@ public class BigDecimalTests {
          */
     }
 
+    @Test
+    public void testE() {
+        /*BigDecimal bigDecimal1 = new BigDecimal(0E-12);
+        BigDecimal bigDecimal2 = new BigDecimal((Object)"0E-12");
+        System.out.println(bigDecimal1);
+        System.out.println(bigDecimal2);*/
+    }
+
 }

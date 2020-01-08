@@ -168,7 +168,7 @@ public abstract class NumberUtils {
     }
 
     /**
-     * 若double是整数则去掉零
+     * 若 double 是整数则去掉零
      *
      * @param d
      * @return
