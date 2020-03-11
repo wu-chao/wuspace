@@ -33,7 +33,7 @@ public class LoggingAspect {
     /**
      * Pointcut that matches all repositories, services and Web REST endpoints.
      */
-    @Pointcut("within(com.github.wuchao.webproject.repository..*) || within(com.github.wuchao.webproject.applicatioin..*) || within(com.github.wuchao.webproject.controller..*)")
+    @Pointcut("within(com.github.wuchao.webproject.repository..*) || within(com.github.wuchao.webproject.service..*) || within(com.github.wuchao.webproject.controller..*)")
     public void loggingPointcut() {
         // Method is empty as this is just a Pointcut, the implementations are in the advices.
     }
