@@ -2,7 +2,7 @@ package com.github.wuchao.webproject.util;
 
 import org.junit.Test;
 
-public class RegexpUtilTest {
+public class RegexpUtilTests {
 
     @Test
     public void testRegexpUtil() {

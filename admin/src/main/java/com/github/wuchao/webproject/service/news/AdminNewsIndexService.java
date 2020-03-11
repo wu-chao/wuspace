@@ -1,10 +1,7 @@
 package com.github.wuchao.webproject.service.news;
 
 import com.github.wuchao.webproject.domain.MediaInfo;
-import com.github.wuchao.webproject.domain.enumeration.MediaType;
-import com.github.wuchao.webproject.repository.MediaInfoRepository;
-import com.github.wuchao.webproject.domain.MediaInfo;
-import com.github.wuchao.webproject.domain.enumeration.MediaType;
+import com.github.wuchao.webproject.domain.enums.MediaType;
 import com.github.wuchao.webproject.repository.MediaInfoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

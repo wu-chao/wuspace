@@ -5,16 +5,25 @@ import com.aspose.words.SaveFormat;
 import lombok.Cleanup;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.disk.DiskFileItem;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLConnection;
 import java.net.URLEncoder;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.UUID;
 import java.util.regex.Pattern;
@@ -117,45 +126,63 @@ public abstract class FileUtils {
     }
 
     /**
-     * 下载文件
+     * 下载本地系统文件
      *
-     * @param fileDownloadPath
+     * @param filePath
      * @param fileName
+     * @param request
      * @param response
      */
-    public static void download(String fileDownloadPath, String fileName, HttpServletResponse response) {
+    public static void downloadSystemFile(String filePath, String fileName, HttpServletRequest request, HttpServletResponse response) {
+        if (StringUtils.isNotBlank(filePath)) {
+
+            if (StringUtils.isBlank(fileName)) {
+                fileName = filePath.substring(fileName.lastIndexOf(File.separator) + 1);
+            }
+
+            try (InputStream inputStream = new FileInputStream(filePath)) {
+                // 处理文件名称，防止乱码
+                fileName = processFileName(fileName, request);
+
+                response.setCharacterEncoding("UTF-8");
+                response.setContentType(MediaType.APPLICATION_OCTET_STREAM_VALUE);
+                response.setHeader("Content-Disposition", "attachment;filename=" + fileName);
+
+                IOUtils.copy(inputStream, response.getOutputStream());
+
+            } catch (IOException e) {
+                log.error(e.getMessage());
+                e.printStackTrace();
+            }
+        }
+    }
+
+    /**
+     * 处理文件名称，防止乱码
+     *
+     * @param fileName
+     * @param request
+     * @return
+     */
+    public static String processFileName(String fileName, HttpServletRequest request) {
+        String userAgent = request.getHeader("USER-AGENT");
         try {
-            fileName = URLEncoder.encode(fileName, "UTF-8");
+            if (userAgent.toUpperCase().indexOf("MSIE") > 0) {
+                fileName = URLEncoder.encode(fileName, "UTF-8");
+            } else {
+                // Google Chrome 浏览器使用 fileName = URLEncoder.encode(fileName, "UTF-8"); 也行？？？
+                fileName = new String(fileName.getBytes("UTF-8"), "ISO8859-1");
+            }
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        String downloadPath = fileDownloadPath + fileName;
-
-        // response.setContentType("application/x-download");
-        response.setContentType(MediaType.APPLICATION_OCTET_STREAM_VALUE);
-        response.setCharacterEncoding("UTF-8");
-        response.setHeader("Content-Disposition", "attachment; filename=" + fileName);
-
-        try {
-            @Cleanup InputStream in = new FileInputStream(downloadPath);
-            @Cleanup OutputStream out = response.getOutputStream();
-            byte[] b = new byte[1024];
-            int length;
-            while ((length = in.read(b)) > 0) {
-                out.write(b, 0, length);
-            }
-            out.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        return fileName;
     }
 
     /**
      * 匹配中文的正则表达式
      */
     private final static Pattern CHINESE_PATTERN = Pattern.compile("[\u4e00-\u9fa5]");
-
-    private static final int BUFFER_SIZE = 4096;
 
     /**
      * Downloads a file from a URL
@@ -207,26 +234,15 @@ public abstract class FileUtils {
             System.out.println("Content-Length = " + contentLength);
             System.out.println("fileName = " + fileName);
 
-            // opens input stream from the HTTP connection
-            InputStream inputStream = httpConn.getInputStream();
             if (StringUtils.isBlank(saveDir)) {
                 saveDir = System.getProperty("user.dir");
             }
             saveFilePath = saveDir + File.separator + fileName;
 
-            // opens an output stream to save into file
-            FileOutputStream outputStream = new FileOutputStream(saveFilePath);
-
-            int bytesRead = -1;
-            byte[] buffer = new byte[BUFFER_SIZE];
-            while ((bytesRead = inputStream.read(buffer)) != -1) {
-                outputStream.write(buffer, 0, bytesRead);
+            try (InputStream inputStream = httpConn.getInputStream();
+                 FileOutputStream outputStream = new FileOutputStream(saveFilePath)) {
+                IOUtils.copy(inputStream, outputStream);
             }
-
-            outputStream.close();
-            inputStream.close();
-
-            System.out.println("File downloaded");
 
         } else {
 
@@ -301,6 +317,16 @@ public abstract class FileUtils {
     }
 
     /**
+     * 获取 mimeType
+     *
+     * @param fileUrl
+     * @return
+     */
+    public static String getMimeType(String fileUrl) {
+        return URLConnection.getFileNameMap().getContentTypeFor(fileUrl);
+    }
+
+    /**
      * 将输入流保存到文件中
      *
      * @param inputStream
@@ -321,6 +347,45 @@ public abstract class FileUtils {
         }
     }
 
+    /**
+     * File 转 MultipartFile
+     *
+     * @param file
+     * @param contentType
+     * @return
+     */
+    public static MultipartFile file2CommonsMultipartFile(File file, String contentType) {
+        try (InputStream inputStream = new FileInputStream(file)) {
+            Path tmpInputFile = null;
+            FileItem fileItem = new DiskFileItem("file", contentType, false,
+                    tmpInputFile.getFileName().toString(), (int) Files.size(tmpInputFile), tmpInputFile.getParent().toFile());
+            IOUtils.copy(inputStream, fileItem.getOutputStream());
+            return new CommonsMultipartFile(fileItem);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * File 转 MultipartFile
+     *
+     * @param file
+     * @param contentType
+     * @return
+     */
+    public static MultipartFile file2MockMultipartFile(File file, String contentType) {
+        try (InputStream inputStream = new FileInputStream(file)) {
+            return new MockMultipartFile("file", file.getName(), contentType, IOUtils.toByteArray(inputStream));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
     public static boolean getLicense() {
         boolean result = false;
@@ -450,7 +515,8 @@ public abstract class FileUtils {
      * @param inputStream
      * @param response
      */
-    public static void previewPDF(String fileName, InputStream inputStream, HttpServletResponse response) throws IOException {
+    public static void previewPDF(String fileName, InputStream inputStream, HttpServletResponse response) throws
+            IOException {
 
         @Cleanup BufferedInputStream br = new BufferedInputStream(inputStream);
         @Cleanup OutputStream out = response.getOutputStream();

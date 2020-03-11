@@ -2,7 +2,7 @@ package com.github.wuchao.webproject.spider.qqnews;
 
 import com.github.wuchao.webproject.domain.MediaContent;
 import com.github.wuchao.webproject.domain.MediaInfo;
-import com.github.wuchao.webproject.domain.enumeration.MediaType;
+import com.github.wuchao.webproject.domain.enums.MediaType;
 import com.github.wuchao.webproject.repository.MediaContentRepository;
 import com.github.wuchao.webproject.repository.MediaInfoRepository;
 import com.github.wuchao.webproject.support.ArticleSupport;

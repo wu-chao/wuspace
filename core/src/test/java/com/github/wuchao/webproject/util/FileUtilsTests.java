@@ -101,4 +101,18 @@ public class FileUtilsTests {
 
     }
 
+    @Test
+    public void testGetMimeType() {
+        String url1 = "D:/1.txt";
+        String url2 = "http://www.sss.com/222.pdf";
+        System.out.println(FileUtils.getMimeType(url1));
+        System.out.println(FileUtils.getMimeType(url2));
+
+        /**
+         * 打印结果：
+         * text/plain
+         * application/pdf
+         */
+    }
+
 }

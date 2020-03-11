@@ -2,8 +2,8 @@ package com.github.wuchao.webproject.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.github.wuchao.webproject.domain.enumeration.CheckStatus;
-import com.github.wuchao.webproject.domain.enumeration.MediaType;
+import com.github.wuchao.webproject.domain.enums.CheckStatus;
+import com.github.wuchao.webproject.domain.enums.MediaType;
 import lombok.Getter;
 import lombok.Setter;
 

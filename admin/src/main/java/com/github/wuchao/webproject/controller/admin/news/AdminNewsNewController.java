@@ -1,10 +1,8 @@
 package com.github.wuchao.webproject.controller.admin.news;
 
-import com.github.wuchao.webproject.domain.enumeration.MediaType;
+import com.github.wuchao.webproject.domain.enums.MediaType;
 import com.github.wuchao.webproject.repository.CategoryRepository;
 import com.github.wuchao.webproject.domain.Category;
-import com.github.wuchao.webproject.domain.enumeration.MediaType;
-import com.github.wuchao.webproject.repository.CategoryRepository;
 import com.github.wuchao.webproject.service.article.AdminArticleService;
 import com.github.wuchao.webproject.service.article.dto.AdminArticleDTO;
 import org.springframework.beans.factory.annotation.Autowired;

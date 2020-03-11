@@ -1,38 +1,71 @@
 package com.github.wuchao.webproject.util;
 
-import com.github.wuchao.webproject.util.plutext.Docx4jUtils;
-import org.docx4j.openpackaging.exceptions.Docx4JException;
+import com.github.wuchao.webproject.util.poi.POIUtil;
 import org.junit.Test;
-import org.springframework.util.ResourceUtils;
 
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-public class Docx4jUtilsTest {
+public class POIUtilTests {
+
+    @Test
+    public void test() {
+        Map<String, Object> parametersMap = new HashMap<>();
+
+        List<Map<String, Object>> table1 = new ArrayList<Map<String, Object>>();
+        Map<String, Object> map1 = new HashMap<>();
+        map1.put("${name}", "张三\r李四\r王五");
+        map1.put("${age}", "23");
+        map1.put("{email}", "12121@qq.com");
+
+        Map<String, Object> map2 = new HashMap<>();
+        map2.put("${name}", "李四");
+        map2.put("${age}", "45");
+        map2.put("{email}", "45445@qq.com");
+
+        Map<String, Object> map3 = new HashMap<>();
+        map3.put("${name}", "Tom");
+        map3.put("${age}", "34");
+        map3.put("{email}", "6767@qq.com");
+
+        table1.add(map1);
+        table1.add(map2);
+        table1.add(map3);
+        parametersMap.put("{table1}", table1);
+
+        parametersMap.put("{img1}", new HashMap<String, String>() {{
+            put("content", "http://www.baidu.com/img/bd_logo1.png?where=super");
+        }});
+
+        parametersMap.put("{test}", "success");
+
+        // 测试导出word
+        POIUtil.exportDocument("files/testPOI.docx", parametersMap,
+                System.getProperty("user.dir") + "/result.docx");
+
+    }
+
+
+    @Test
+    public void testDocx2Html() throws IOException {
+        String resourceLocation = "D:\\IdeaProjects\\wuchao\\web-project\\core\\DocxResume.docx";
+        String html = POIUtil.docx2html(resourceLocation);
+        System.out.println(html);
+    }
+
+    @Test
+    public void testDocx2Html2() throws IOException {
+        String resourceLocation = "D:\\IdeaProjects\\wuchao\\web-project\\core\\DocxStructures.docx";
+        POIUtil.docx2html2(resourceLocation, System.currentTimeMillis() + ".html");
+    }
 
     @Test
     public void testDoc2Pdf() {
-        String resourceLocation = "classpath:files/DocxStructures.doc";
-        try {
-            File file = ResourceUtils.getFile(resourceLocation);
-            Docx4jUtils.word2PdfByAspose(file.getAbsolutePath(), "DocxStructures.pdf", false);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Test
-    public void testDocx2Pdf() {
-        String resourceLocation = "classpath:files/DocxResume.docx";
-        Docx4jUtils.word2PdfByAspose(resourceLocation, "DocxResume.pdf", false);
-    }
-
-
-    @Test
-    public void testDocx2Html() throws FileNotFoundException, Docx4JException {
-//        String resourceLocation = "D:\\IdeaProjects\\wuchao\\web-project\\core\\DocxResume.docx";
-        String resourceLocation = "D:\\IdeaProjects\\wuchao\\web-project\\core\\DocxStructures.docx";
-        Docx4jUtils.docx2html(resourceLocation);
+        String resourceLocation = "D:\\IdeaProjects\\wuchao\\web-project\\core\\DocxStructures.doc";
+        POIUtil.doc2pdf(resourceLocation, System.currentTimeMillis() + ".pdf");
     }
 
     // ueditor 富文本编辑器保存到数据库的内容
@@ -51,13 +84,16 @@ public class Docx4jUtilsTest {
             "<table border=\"1\" cellpadding=\"1\" cellspacing=\"1\" style=\"width:100%;\"><tbody><tr><td>test</td><td>test</td></tr><tr><td>test</td><td>test</td></tr><tr><td>test</td><td>test</td></tr></tbody></table>";
 
     @Test
-    public void testRichText2Docx() {
-        Docx4jUtils.richText2Docx(richText, System.currentTimeMillis() + ".docx", System.getProperty("user.dir"));
-    }
-
-    @Test
-    public void testRichText2Docx2() {
-        Docx4jUtils.richText2Docx2(richText, "empty.docx", System.getProperty("user.dir"));
+    public void testRichText2Doc() {
+        String docLocation = POIUtil.richText2Doc(richText, System.currentTimeMillis() + ".doc", System.getProperty("user.dir"));
+        if (docLocation != null) {
+            String docxLocation = docLocation.replace("doc", "docx");
+            if (JacobUtils.convertWordFmt(docLocation, docxLocation, JacobUtils.DOCX_FMT)) {
+                System.out.println("转换成功");
+            } else {
+                System.out.println("转换失败");
+            }
+        }
     }
 
 }

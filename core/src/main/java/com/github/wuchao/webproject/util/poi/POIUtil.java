@@ -1,6 +1,5 @@
 package com.github.wuchao.webproject.util.poi;
 
-import com.github.wuchao.webproject.util.FileUtils;
 import com.lowagie.text.Document;
 import com.lowagie.text.Paragraph;
 import com.lowagie.text.pdf.PdfWriter;
@@ -32,14 +31,26 @@ import java.util.Map;
 public class POIUtil {
 
     public static WordTemplate loadDocument(String resourceLocation) throws IOException {
+        log.info("================================= resourceLocation：{}", resourceLocation);
         if (StringUtils.isNotEmpty(resourceLocation)) {
             InputStream is = null;
             try {
-                is = FileUtils.loadFileInputStream(resourceLocation);
-                if (is != null) {
-                    //读取 word 模板
-                    return new WordTemplate(is);
+                //读取word模板
+                try {
+                    is = Thread.currentThread().getContextClassLoader().getResourceAsStream(resourceLocation);
+                    log.info("================================= 获取文件输入流>：{}", "Thread.currentThread().getContextClassLoader().getResourceAsStream(resourceLocation)");
+                } catch (Exception e) {
+                    log.error(e.getMessage());
+                    File file = new File(resourceLocation);
+                    is = new FileInputStream(file);
+                    log.info("================================= 获取文件输入流>：{}", "new FileInputStream(new File(resourceLocation))");
                 }
+
+                if (is == null) {
+                    is = new FileInputStream(ResourceUtils.getFile(resourceLocation));
+                    log.info("================================= 获取文件输入流>：{}", "new FileInputStream(ResourceUtils.getFile(resourceLocation))");
+                }
+                return new WordTemplate(is);
             } catch (Exception e) {
                 log.error(e.getMessage());
             } finally {

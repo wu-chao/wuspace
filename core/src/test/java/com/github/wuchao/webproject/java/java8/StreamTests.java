@@ -12,6 +12,20 @@ import static java.util.stream.Collectors.*;
 
 public class StreamTests {
 
+    @Test
+    public void testEmptyListStream() {
+        List<Integer> ints = new ArrayList<>(0);
+        ints.stream().forEach(e -> System.out.println(e));
+    }
+
+    @Test
+    public void testStreams() {
+        List<Integer> ints = Lists.newArrayList(1, 2, 3);
+        List<Integer> result = ints.stream()
+                .filter(e -> e > 3)
+                .collect(toList());
+        System.out.printf(String.valueOf(result));
+    }
 
     @Test
     public void testMapList() {
