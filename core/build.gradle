@@ -225,6 +225,9 @@ dependencies {
     // ZipUtils
     compile "org.apache.ant:ant:${apache_ant_version}"
 
+    // Chinese to PinYin
+    compile "com.belerweb:pinyin4j:2.5.1"
+
     compile "org.hyperic:sigar:${sigar_version}"
 
     compile "org.projectlombok:lombok:${lombok_version}"

@@ -256,7 +256,12 @@ public abstract class StringUtils extends org.apache.commons.lang3.StringUtils {
     }
 
 
-
+    /**
+     * [最长公共子序列问题（Java）-动态规划](https://blog.csdn.net/Heated_Youth/article/details/53260333)
+     *
+     * @param str1
+     * @param str2
+     */
     //在动态规划矩阵生成方式当中，每生成一行，前面的那一行就已经没有用了，因此这里只需使用一维数组，而不是常用的二位数组
     public static void getLCString(char[] str1, char[] str2) {
         int len1, len2;
