@@ -14,7 +14,7 @@
     "gulp": "3.9.1",
     "gulp-inject": "4.1.0",
     "gulp-sass": "2.3.2",
-    "lodash": "4.15.0",
+    "lodash": "4.17.19",
     "main-bower-files": "2.13.1"
   },
   "engines": {
